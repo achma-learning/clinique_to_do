@@ -1,1 +1,5 @@
+have a to do list
+for observation 
+examen clinique pour medecine generale / +/- urgence a ne pas rater
 
+le but est d'avoir le minimum a ne pas rater par un medecin, pour les autres signes specialise selon les donne que le patient donne, ce arrive avec l'effect et apprentissage
