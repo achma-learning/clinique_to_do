@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist d'Observation Médicale Simplifiée</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3, h4 {
+            color: #0056b3;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .reset-button {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .reset-button:hover {
+            background-color: #c82333;
+        }
+        .section {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .section-header {
+            background-color: #f8f8f8;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-header:hover {
+            background-color: #e9e9e9;
+        }
+        .section-content {
+            padding: 15px;
+            display: none;
+            border-top: 1px solid #eee;
+        }
+        .section-content.expanded {
+            display: block;
+        }
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        .sub-section {
+            margin-left: 20px;
+            border-left: 2px solid #007bff;
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+        .toggle-icon {
+            font-size: 1.2em;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            .section-header {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Checklist d'Observation Médicale</h1>
+
+        <button class="reset-button" onclick="resetChecklist()">Réinitialiser tout</button>
+
+        <script>
+            function toggleSection(element) {
+                const content = element.nextElementSibling;
+                const icon = element.querySelector('.toggle-icon');
+                if (content.classList.contains('expanded')) {
+                    content.classList.remove('expanded');
+                    icon.textContent = '+';
+                } else {
+                    content.classList.add('expanded');
+                    icon.textContent = '-';
+                }
+            }
+
+            function resetChecklist() {
+                if (confirm('Voulez-vous vraiment réinitialiser toute la checklist ?')) {
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(checkbox => checkbox.checked = false);
+
+                    const selects = document.querySelectorAll('select');
+                    selects.forEach(select => select.value = select.options[0].value); // Reset dropdowns to first option
+
+                    alert('Checklist réinitialisée !');
+                }
+            }
+        </script>
+
+        <!-- Section: Identité du Patient (Anamnèse Administrative) -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>2. Identité du Patient (Anamnèse Administrative)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="id_nom_prenom"> Nom et Prénom vérifiés.</label>
+                    <label><input type="checkbox" name="id_age_sexe"> Âge et Sexe notés.</label>
+                    <label>Situation familiale :
+                        <select name="id_situation_familiale">
+                            <option value="">-- Sélectionnez une option --</option>
+                            <option value="Celibataire">Célibataire – personne qui n’a jamais été mariée.</option>
+                            <option value="Marie">Marié(e) – personne liée par un mariage légalement enregistré à l’état civil.</option>
+                            <option value="Divorce">Divorcé(e) – personne dont le mariage a été dissous par divorce (judiciaire ou khol’).</option>
+                            <option value="Veuf">Veuf(ve) – personne dont le conjoint est décédé.</option>
+                        </select>
+                    </label>
+                    <label><input type="checkbox" name="id_origine_residence"> Origine et Résidence actuelle notées.</label>
+                    <label><input type="checkbox" name="id_profession"> Profession (recherche d'expositions toxiques ou stress) notée.</label>
+                    <label>Couverture sociale (Mutuelle) :
+                        <select name="id_couverture_sociale">
+                            <option value="">-- Sélectionnez une option --</option>
+                            <optgroup label="🟢 Couverture Médicale Obligatoire (AMO – Couverture de base)">
+                                <option value="AMO_CNSS">AMO_CNSS [Secteur privé + pensionnés du privé]</option>
+                                <option value="AMO_CNOPS">AMO_CNOPS [Secteur public + pensionnés du public]</option>
+                                <option value="AMO_Achamil">AMO_Achamil (Travailleurs Non Salariés – TNS)</option>
+                                <option value="AMO_Tadamon">AMO_Tadamon (ex RAMED)</option>
+                                <option value="AMO_Etudiants">AMO_Étudiants [Étudiants de l’enseignement supérieur public et privé]</option>
+                            </optgroup>
+                            <optgroup label="🟢 Régimes spécifiques">
+                                <option value="FAR_Regime_Militaire">FAR_Régime_Militaire [Forces Armées Royales et ayants droit]</option>
+                            </optgroup>
+                            <optgroup label="🟢 Mutuelles (Complément de l’AMO)">
+                                <option value="MGPAP">MGPAP – Mutuelle Générale du Personnel des Administrations Publiques</option>
+                                <option value="MGEN">MGEN – Mutuelle Générale de l’Éducation Nationale</option>
+                                <option value="MGPTT">MGPTT – Mutuelle Générale des Postes, Télécommunications et Technologies de l’Information</option>
+                                <option value="Autres_Mutuelles_Sectorielles">Autres mutuelles sectorielles ou d’entreprises</option>
+                            </optgroup>
+                            <optgroup label="🟢 Assurances Santé Privées (Complémentaires ou 100% privées)">
+                                <option value="SANLAM">SANLAM</option>
+                                <option value="AXA">AXA Assurance Maroc</option>
+                                <option value="Allianz">Allianz Maroc</option>
+                                <option value="Wafa_Assurance">Wafa Assurance</option>
+                                <option value="AtlantaSanad">AtlantaSanad</option>
+                                <option value="RMA">RMA (Royale Marocaine d’Assurance)</option>
+                                <option value="Saham_Assurance">Saham Assurance</option>
+                                <option value="MCMA">MCMA</option>
+                                <option value="Zurich">Zurich Assurance Maroc</option>
+                            </optgroup>
+                        </select>
+                    </label>
+                    <label><input type="checkbox" name="id_autonomie"> Autonomie (Capacité physique et intellectuelle pour les tâches courantes) évaluée.</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Motif de Consultation (MDC) -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>3. Motif de Consultation (MDC)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="mdc_plainte_principale"> Plainte principale notée dans les propres mots du patient.</label>
+                    <label><input type="checkbox" name="mdc_rappel"> Rappel : C’est un signe fonctionnel, jamais un diagnostic à ce stade.</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Antécédents (ATCD) -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>4. Antécédents (ATCD)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="atcd_medicaux"> Médicaux (Maladies chroniques, hospitalisations) notés.</label>
+                    <label><input type="checkbox" name="atcd_chirurgicaux"> Chirurgicaux (Types d'interventions, dates et complications) notés.</label>
+                    <label><input type="checkbox" name="atcd_toxiques"> Toxiques (Tabagisme, alcool, drogues) évalués.</label>
+                    <label><input type="checkbox" name="atcd_allergies"> Allergies (Médicamenteuses, alimentaires ou autres) notées.</label>
+                    <label><input type="checkbox" name="atcd_gyn_obst"> Gynéco-obstétriques (DDR, gestité/parité, contraception) notés.</label>
+                    <label><input type="checkbox" name="atcd_familiaux"> Familiaux (Maladies héréditaires, contage tuberculeux) notés.</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Histoire de la Maladie (Mnémotechnique SITI FADMA) -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>5. Histoire de la Maladie (Mnémotechnique SITI FADMA)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <p>Pour chaque symptôme, préciser (vérifier les points suivants) :</p>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="hdm_siege"> Siège (Localisation précise) vérifié.</label>
+                    <label><input type="checkbox" name="hdm_irradiation"> Irradiation (Où la douleur se diffuse-t-elle ?) vérifiée.</label>
+                    <label><input type="checkbox" name="hdm_type"> Type (Brûlure, étau, coup de poignard) caractérisé.</label>
+                    <label><input type="checkbox" name="hdm_impact"> Impact (Retentissement sur la vie quotidienne/sommeil) évalué.</label>
+                    <label><input type="checkbox" name="hdm_facteurs_aggravants"> Facteurs Aggravants (Effort, repas, position) identifiés.</label>
+                    <label><input type="checkbox" name="hdm_accalmie"> Accalmie (Ce qui soulage (médicaments, repos)) notée.</label>
+                    <label><input type="checkbox" name="hdm_duree_rythme"> Durée / Rythme (Horaire diurne ou nocturne) précisé.</label>
+                    <label><input type="checkbox" name="hdm_mode_evolutif"> Mode évolutif (Installation brutale ou progressive) déterminé.</label>
+                    <h3>Signes Généraux (Les 3A+F)</h3>
+                    <div class="sub-section checkbox-group">
+                        <label><input type="checkbox" name="hdm_asthenie"> Asthénie (fatigue) évaluée.</label>
+                        <label><input type="checkbox" name="hdm_anorexie"> Anorexie (perte d'appétit) évaluée.</label>
+                        <label><input type="checkbox" name="hdm_amaigrissement"> Amaigrissement (quantifié en kg/temps) vérifié.</label>
+                        <label><input type="checkbox" name="hdm_fievre"> Fièvre (chiffrée ou apyrexie) notée.</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Examen Physique (Séquence IPPA) -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>6. Examen Physique (Séquence IPPA)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="ep_examen_general"> Examen Général (Score de Glasgow, constantes vitales) effectué.</label>
+                    <label><input type="checkbox" name="ep_morphometrie"> Morphométrie (Poids, taille, IMC, tour de taille) mesurée.</label>
+                    <label><input type="checkbox" name="ep_signes_gravite"> Signes de gravité (Déshydratation, dénutrition, signes de choc) recherchés.</label>
+                    <label><input type="checkbox" name="ep_examen_par_appareil"> Examen par Appareil (Cœur, Poumons, Abdomen, Neuro, etc.) effectué (signes positifs et négatifs).</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Conclusion et Conduite à Tenir (CAT) -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>7. Conclusion et Conduite à Tenir (CAT)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="cat_resume_clinique"> Résumé clinique (Synthèse ordonnée du terrain, des ATCD et des signes clés) rédigé.</label>
+                    <label><input type="checkbox" name="cat_hypotheses_diagnostiques"> Hypothèses diagnostiques (Listées par ordre de probabilité) formulées.</label>
+                    <label><input type="checkbox" name="cat_plan_diagnostique"> Plan Diagnostique (Examens complémentaires hiérarchisés) établi.</label>
+                    <label><input type="checkbox" name="cat_plan_therapeutique"> Plan Thérapeutique (Traitement étiologique et symptomatique) défini.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
