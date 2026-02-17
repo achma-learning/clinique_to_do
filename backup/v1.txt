@@ -1,1 +1,3 @@
 add option to download as .docx or google docs, use google docs mainly
+
+or build a html file , then add a button to download as google docs / word , or pdf
