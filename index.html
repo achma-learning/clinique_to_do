@@ -127,6 +127,10 @@
                 if (confirm('Voulez-vous vraiment réinitialiser toute la checklist ?')) {
                     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                     checkboxes.forEach(checkbox => checkbox.checked = false);
+
+                    const selects = document.querySelectorAll('select');
+                    selects.forEach(select => select.value = select.options[0].value); // Reset dropdowns to first option
+
                     alert('Checklist réinitialisée !');
                 }
             }
@@ -142,10 +146,49 @@
                 <div class="checkbox-group">
                     <label><input type="checkbox" name="id_nom_prenom"> Nom et Prénom vérifiés.</label>
                     <label><input type="checkbox" name="id_age_sexe"> Âge et Sexe notés.</label>
-                    <label><input type="checkbox" name="id_situation_familiale"> Situation familiale (État civil et nombre d’enfants) notée.</label>
+                    <label>Situation familiale :
+                        <select name="id_situation_familiale">
+                            <option value="">-- Sélectionnez une option --</option>
+                            <option value="Celibataire">Célibataire – personne qui n’a jamais été mariée.</option>
+                            <option value="Marie">Marié(e) – personne liée par un mariage légalement enregistré à l’état civil.</option>
+                            <option value="Divorce">Divorcé(e) – personne dont le mariage a été dissous par divorce (judiciaire ou khol’).</option>
+                            <option value="Veuf">Veuf(ve) – personne dont le conjoint est décédé.</option>
+                        </select>
+                    </label>
                     <label><input type="checkbox" name="id_origine_residence"> Origine et Résidence actuelle notées.</label>
                     <label><input type="checkbox" name="id_profession"> Profession (recherche d'expositions toxiques ou stress) notée.</label>
-                    <label><input type="checkbox" name="id_couverture_sociale"> Couverture sociale (Mutuelle) vérifiée.</label>
+                    <label>Couverture sociale (Mutuelle) :
+                        <select name="id_couverture_sociale">
+                            <option value="">-- Sélectionnez une option --</option>
+                            <optgroup label="🟢 Couverture Médicale Obligatoire (AMO – Couverture de base)">
+                                <option value="AMO_CNSS">AMO_CNSS [Secteur privé + pensionnés du privé]</option>
+                                <option value="AMO_CNOPS">AMO_CNOPS [Secteur public + pensionnés du public]</option>
+                                <option value="AMO_Achamil">AMO_Achamil (Travailleurs Non Salariés – TNS)</option>
+                                <option value="AMO_Tadamon">AMO_Tadamon (ex RAMED)</option>
+                                <option value="AMO_Etudiants">AMO_Étudiants [Étudiants de l’enseignement supérieur public et privé]</option>
+                            </optgroup>
+                            <optgroup label="🟢 Régimes spécifiques">
+                                <option value="FAR_Regime_Militaire">FAR_Régime_Militaire [Forces Armées Royales et ayants droit]</option>
+                            </optgroup>
+                            <optgroup label="🟢 Mutuelles (Complément de l’AMO)">
+                                <option value="MGPAP">MGPAP – Mutuelle Générale du Personnel des Administrations Publiques</option>
+                                <option value="MGEN">MGEN – Mutuelle Générale de l’Éducation Nationale</option>
+                                <option value="MGPTT">MGPTT – Mutuelle Générale des Postes, Télécommunications et Technologies de l’Information</option>
+                                <option value="Autres_Mutuelles_Sectorielles">Autres mutuelles sectorielles ou d’entreprises</option>
+                            </optgroup>
+                            <optgroup label="🟢 Assurances Santé Privées (Complémentaires ou 100% privées)">
+                                <option value="SANLAM">SANLAM</option>
+                                <option value="AXA">AXA Assurance Maroc</option>
+                                <option value="Allianz">Allianz Maroc</option>
+                                <option value="Wafa_Assurance">Wafa Assurance</option>
+                                <option value="AtlantaSanad">AtlantaSanad</option>
+                                <option value="RMA">RMA (Royale Marocaine d’Assurance)</option>
+                                <option value="Saham_Assurance">Saham Assurance</option>
+                                <option value="MCMA">MCMA</option>
+                                <option value="Zurich">Zurich Assurance Maroc</option>
+                            </optgroup>
+                        </select>
+                    </label>
                     <label><input type="checkbox" name="id_autonomie"> Autonomie (Capacité physique et intellectuelle pour les tâches courantes) évaluée.</label>
                 </div>
             </div>
