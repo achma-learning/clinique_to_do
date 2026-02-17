@@ -1,0 +1,1 @@
+have a button that generate a template of quesiton of each services, CCV with logo and structure

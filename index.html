@@ -3,476 +3,637 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checklist d'Observation Médicale Simplifiée</title>
+    <title>Checklist d'Observation Médicale</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2, h3, h4 {
-            color: #0056b3;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-            margin-top: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .reset-button {
-            display: block;
-            width: 100%;
-            padding: 10px 15px;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .reset-button:hover {
-            background-color: #c82333;
-        }
-        .section {
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .section-header {
-            background-color: #f8f8f8;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .section-header:hover {
-            background-color: #e9e9e9;
-        }
-        .section-content {
-            padding: 15px;
-            display: none;
-            border-top: 1px solid #eee;
-        }
-        .section-content.expanded {
-            display: block;
-        }
-        .checkbox-group input[type="checkbox"]:checked + span {
-            color: green;
-        }
-
-        .checkbox-group label {
-            display: block;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-        .checkbox-group input[type="checkbox"] {
-            margin-right: 8px;
-        }
-        .sub-section {
-            margin-left: 20px;
-            border-left: 2px solid #007bff;
-            padding-left: 10px;
-            margin-top: 10px;
-        }
-        .toggle-icon {
-            font-size: 1.2em;
-        }
-        @media (max-width: 600px) {
-            .container {
-                margin: 10px;
-                padding: 10px;
-            }
-            h1 {
-                font-size: 24px;
-            }
-            h2 {
-                font-size: 20px;
-            }
-            .section-header {
-                font-size: 16px;
-            }
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: 20px auto; padding: 15px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2, h3, h4, h5 { color: #0056b3; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px; }
+        h1 { text-align: center; }
+        .reset-button { display: block; width: 100%; padding: 10px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-bottom: 20px; }
+        .reset-button:hover { background-color: #c82333; }
+        .section { margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; }
+        .section-header { background-color: #f8f8f8; padding: 10px 15px; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .section-header:hover { background-color: #e9e9e9; }
+        .section-content { padding: 15px; display: none; border-top: 1px solid #eee; }
+        .section-content.expanded { display: block; }
+        .checkbox-group input[type="checkbox"]:checked + span { color: green; }
+        .checkbox-group label { display: block; margin-bottom: 8px; cursor: pointer; }
+        .checkbox-group input[type="checkbox"] { margin-right: 8px; }
+        .sub-section { margin-left: 20px; border-left: 2px solid #007bff; padding-left: 10px; margin-top: 10px; }
+        .toggle-icon { font-size: 1.2em; }
+        select { margin-bottom: 10px; padding: 5px; border-radius: 4px; border: 1px solid #ccc; width: 100%; max-width: 500px; }
+        @media (max-width: 600px) { .container { margin: 10px; padding: 10px; } h1 { font-size: 24px; } h2 { font-size: 20px; } .section-header { font-size: 16px; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Checklist d'Observation Médicale</h1>
+<div class="container">
+    <h1>Checklist d'Observation Médicale</h1>
+    <button class="reset-button" onclick="resetChecklist()">Réinitialiser tout</button>
 
-        <button class="reset-button" onclick="resetChecklist()">Réinitialiser tout</button>
-
-        <script>
-            function toggleSection(element) {
-                const content = element.nextElementSibling;
-                const icon = element.querySelector('.toggle-icon');
-                if (content.classList.contains('expanded')) {
-                    content.classList.remove('expanded');
-                    icon.textContent = '+';
-                } else {
-                    content.classList.add('expanded');
-                    icon.textContent = '-';
-                }
+    <script>
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon');
+            if (content.classList.contains('expanded')) { content.classList.remove('expanded'); icon.textContent = '+'; }
+            else { content.classList.add('expanded'); icon.textContent = '-'; }
+        }
+        function resetChecklist() {
+            if (confirm('Voulez-vous vraiment réinitialiser toute la checklist ?')) {
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                document.querySelectorAll('select').forEach(sel => sel.value = sel.options[0].value);
+                alert('Checklist réinitialisée !');
             }
+        }
+        function updateCheckbox(checkboxId, selectValue) {
+            const checkbox = document.getElementById(checkboxId);
+            if (checkbox) checkbox.checked = (selectValue !== "");
+        }
+    </script>
 
-            function resetChecklist() {
-                if (confirm('Voulez-vous vraiment réinitialiser toute la checklist ?')) {
-                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                    checkboxes.forEach(checkbox => checkbox.checked = false);
-
-                    const selects = document.querySelectorAll('select');
-                    selects.forEach(select => select.value = select.options[0].value); // Reset dropdowns to first option
-
-                    alert('Checklist réinitialisée !');
-                }
-            }
-
-            function updateCheckbox(checkboxId, selectValue) {
-                const checkbox = document.getElementById(checkboxId);
-                if (checkbox) {
-                    checkbox.checked = (selectValue !== "");
-                }
-            }
-        </script>
-
-        <!-- Section: Identité du Patient (Anamnèse Administrative) -->
-        <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>2. Identité du Patient (Anamnèse Administrative)</h2>
-                <span class="toggle-icon">+</span>
+    <!-- ═══════════════════════════════════════════
+         1. IDENTITÉ DU PATIENT
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>1. Identité du Patient (Anamnèse Administrative)</h2>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content">
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="id_nom_prenom"><span> Nom et Prénom vérifiés.</span></label>
+                <label><input type="checkbox" name="id_age_sexe"><span> Âge et Sexe notés.</span></label>
+                <label><input type="checkbox" id="checkbox_id_situation_familiale" name="id_situation_familiale_checked"><span> Situation familiale vérifiée :</span></label>
+                <select name="id_situation_familiale_select" onchange="updateCheckbox('checkbox_id_situation_familiale', this.value)">
+                    <option value="">-- Sélectionnez une option --</option>
+                    <option value="Celibataire">Célibataire – personne qui n'a jamais été mariée.</option>
+                    <option value="Marie">Marié(e) – personne liée par un mariage légalement enregistré à l'état civil.</option>
+                    <option value="Divorce">Divorcé(e) – personne dont le mariage a été dissous par divorce (judiciaire ou khol').</option>
+                    <option value="Veuf">Veuf(ve) – personne dont le conjoint est décédé.</option>
+                </select>
+                <label><input type="checkbox" name="id_origine_residence"><span> Origine et Résidence actuelle notées.</span></label>
+                <label><input type="checkbox" name="id_profession"><span> Profession (recherche d'expositions toxiques ou stress) notée.</span></label>
+                <label><input type="checkbox" id="checkbox_id_couverture_sociale" name="id_couverture_sociale_checked"><span> Couverture sociale (Mutuelle) vérifiée :</span></label>
+                <select name="id_couverture_sociale_select" onchange="updateCheckbox('checkbox_id_couverture_sociale', this.value)">
+                    <option value="">-- Sélectionnez une option --</option>
+                    <optgroup label="🟢 Couverture Médicale Obligatoire (AMO – Couverture de base)">
+                        <option value="AMO_CNSS">AMO_CNSS [Secteur privé + pensionnés du privé]</option>
+                        <option value="AMO_CNOPS">AMO_CNOPS [Secteur public + pensionnés du public]</option>
+                        <option value="AMO_Achamil">AMO_Achamil (Travailleurs Non Salariés – TNS)</option>
+                        <option value="AMO_Tadamon">AMO_Tadamon (ex RAMED)</option>
+                        <option value="AMO_Etudiants">AMO_Étudiants [Étudiants de l'enseignement supérieur public et privé]</option>
+                    </optgroup>
+                    <optgroup label="🟢 Régimes spécifiques">
+                        <option value="FAR_Regime_Militaire">FAR_Régime_Militaire [Forces Armées Royales et ayants droit]</option>
+                    </optgroup>
+                    <optgroup label="🟢 Mutuelles (Complément de l'AMO)">
+                        <option value="MGPAP">MGPAP – Mutuelle Générale du Personnel des Administrations Publiques</option>
+                        <option value="MGEN">MGEN – Mutuelle Générale de l'Éducation Nationale</option>
+                        <option value="MGPTT">MGPTT – Mutuelle Générale des Postes, Télécommunications et Technologies de l'Information</option>
+                        <option value="Autres_Mutuelles_Sectorielles">Autres mutuelles sectorielles ou d'entreprises</option>
+                    </optgroup>
+                    <optgroup label="🟢 Assurances Santé Privées (Complémentaires ou 100% privées)">
+                        <option value="SANLAM">SANLAM</option>
+                        <option value="AXA">AXA Assurance Maroc</option>
+                        <option value="Allianz">Allianz Maroc</option>
+                        <option value="Wafa_Assurance">Wafa Assurance</option>
+                        <option value="AtlantaSanad">AtlantaSanad</option>
+                        <option value="RMA">RMA (Royale Marocaine d'Assurance)</option>
+                        <option value="Saham_Assurance">Saham Assurance</option>
+                        <option value="MCMA">MCMA</option>
+                        <option value="Zurich">Zurich Assurance Maroc</option>
+                    </optgroup>
+                </select>
+                <label><input type="checkbox" name="id_autonomie"><span> Autonomie (Capacité physique et intellectuelle pour les tâches courantes) évaluée.</span></label>
             </div>
-            <div class="section-content">
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="id_nom_prenom"><span> Nom et Prénom vérifiés.</span></label>
-                    <label><input type="checkbox" name="id_age_sexe"><span> Âge et Sexe notés.</span></label>
-                    <label><input type="checkbox" id="checkbox_id_situation_familiale" name="id_situation_familiale_checked"><span> Situation familiale vérifiée :</span></label>
-                    <select name="id_situation_familiale_select" onchange="updateCheckbox('checkbox_id_situation_familiale', this.value)">
-                        <option value="">-- Sélectionnez une option --</option>
-                        <option value="Celibataire">Célibataire – personne qui n’a jamais été mariée.</option>
-                        <option value="Marie">Marié(e) – personne liée par un mariage légalement enregistré à l’état civil.</option>
-                        <option value="Divorce">Divorcé(e) – personne dont le mariage a été dissous par divorce (judiciaire ou khol’).</option>
-                        <option value="Veuf">Veuf(ve) – personne dont le conjoint est décédé.</option>
-                    </select>
-                    <label><input type="checkbox" name="id_origine_residence"><span> Origine et Résidence actuelle notées.</span></label>
-                    <label><input type="checkbox" name="id_profession"><span> Profession (recherche d'expositions toxiques ou stress) notée.</span></label>
-                    <label><input type="checkbox" id="checkbox_id_couverture_sociale" name="id_couverture_sociale_checked"><span> Couverture sociale (Mutuelle) vérifiée :</span></label>
-                    <select name="id_couverture_sociale_select" onchange="updateCheckbox('checkbox_id_couverture_sociale', this.value)">
-                        <option value="">-- Sélectionnez une option --</option>
-                        <optgroup label="🟢 Couverture Médicale Obligatoire (AMO – Couverture de base)">
-                            <option value="AMO_CNSS">AMO_CNSS [Secteur privé + pensionnés du privé]</option>
-                            <option value="AMO_CNOPS">AMO_CNOPS [Secteur public + pensionnés du public]</option>
-                            <option value="AMO_Achamil">AMO_Achamil (Travailleurs Non Salariés – TNS)</option>
-                            <option value="AMO_Tadamon">AMO_Tadamon (ex RAMED)</option>
-                            <option value="AMO_Etudiants">AMO_Étudiants [Étudiants de l’enseignement supérieur public et privé]</option>
-                        </optgroup>
-                        <optgroup label="🟢 Régimes spécifiques">
-                            <option value="FAR_Regime_Militaire">FAR_Régime_Militaire [Forces Armées Royales et ayants droit]</option>
-                        </optgroup>
-                        <optgroup label="🟢 Mutuelles (Complément de l’AMO)">
-                            <option value="MGPAP">MGPAP – Mutuelle Générale du Personnel des Administrations Publiques</option>
-                            <option value="MGEN">MGEN – Mutuelle Générale de l’Éducation Nationale</option>
-                            <option value="MGPTT">MGPTT – Mutuelle Générale des Postes, Télécommunications et Technologies de l’Information</option>
-                            <option value="Autres_Mutuelles_Sectorielles">Autres mutuelles sectorielles ou d’entreprises</option>
-                        </optgroup>
-                        <optgroup label="🟢 Assurances Santé Privées (Complémentaires ou 100% privées)">
-                            <option value="SANLAM">SANLAM</option>
-                            <option value="AXA">AXA Assurance Maroc</option>
-                            <option value="Allianz">Allianz Maroc</option>
-                            <option value="Wafa_Assurance">Wafa Assurance</option>
-                            <option value="AtlantaSanad">AtlantaSanad</option>
-                            <option value="RMA">RMA (Royale Marocaine d’Assurance)</option>
-                            <option value="Saham_Assurance">Saham Assurance</option>
-                            <option value="MCMA">MCMA</option>
-                            <option value="Zurich">Zurich Assurance Maroc</option>
-                        </optgroup>
-                    </select>
-                    <label><input type="checkbox" name="id_autonomie"><span> Autonomie (Capacité physique et intellectuelle pour les tâches courantes) évaluée.</span></label>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         2. MOTIF DE CONSULTATION
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>2. Motif de Consultation (MDC)</h2>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content">
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="mdc_plainte_principale"><span> Plainte principale notée dans les propres mots du patient.</span></label>
+                <label><input type="checkbox" name="mdc_rappel"><span> Rappel : C'est un signe fonctionnel, jamais un diagnostic à ce stade.</span></label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         3. ANTÉCÉDENTS (ATCD)
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>3. Antécédents (ATCD)</h2>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content">
+            <h3>1. Antécédents Personnels</h3>
+            <div class="sub-section checkbox-group">
+                <h4>a) Médicaux :</h4>
+                <div class="sub-section">
+                    <h4>Maladies chroniques :</h4>
+                    <label><input type="checkbox" name="atcd_pers_med_diabete"><span> Diabète (type: 1 / 2 / gestationnel).</span></label>
+                    <label><input type="checkbox" name="atcd_pers_med_hta"><span> Hypertension Artérielle (HTA).</span></label>
+                    <label><input type="checkbox" name="atcd_pers_med_asthme"><span> Asthme.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_med_ulcere"><span> Ulcère gastro-duodénal.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_med_tuberculose"><span> Tuberculose.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_med_hospitalisations"><span> Hospitalisations antérieures : Noter le motif, la date, durée et le lieu.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_med_mst"><span> Maladies Sexuellement Transmissibles (MST) : Nature, type et durée du traitement.</span></label>
+                </div>
+                <h4>f) Traitements en cours :</h4>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="atcd_pers_trait_cours_3mois"><span> Liste de tous les médicaments pris dans ces 3 derniers mois.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_trait_cours_details"><span> Autres : vitamines, traitements à base de plantes, posologies et horaires.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_trait_cours_ordonnances"><span> Vérification des ordonnances.</span></label>
+                </div>
+                <h4>b) Chirurgicaux :</h4>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="atcd_pers_chir_type_intervention"><span> Type d'intervention : Date, motif et type de chirurgie.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_chir_complications"><span> Complications : Infections, phlébite, embolie pulmonaire ou nécessité de transfusion sanguine.</span></label>
+                </div>
+                <h4>c) Toxiques-Allergiques :</h4>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="atcd_pers_tox_tabagisme"><span> Tabagisme : (Active / Passif / Sevrée si > 3ans), quantité calculée en "paquets-années" (PA), usage de cigarettes électroniques.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_tox_alcool_drogues"><span> Alcool et drogues : Type, quantité et fréquence de consommation (ex : cannabis, héroïne).</span></label>
+                    <label><input type="checkbox" name="atcd_pers_allerg_types"><span> Types d'allergie : Médicamenteuses (ex : pénicilline, aspirine, produit de contraste), alimentaires ou environnementales.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_allerg_reactions"><span> Réactions : Description précise de la réaction allergique.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_tox_contact_animaux"><span> Contact avec des animaux : Chiens (risque de kyste hydatique), oiseaux, bovins.</span></label>
+                </div>
+                <h4>e) Gynéco-obstétriques (chez la femme) :</h4>
+                <div class="sub-section">
+                    <h5>Histoire menstruelle :</h5>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="atcd_pers_gyno_menstr_age_premieres_regles"><span> Âge des premières règles.</span></label>
+                        <label><input type="checkbox" name="atcd_pers_gyno_menstr_regularite_abondance"><span> Régularité et abondance des cycles.</span></label>
+                        <label><input type="checkbox" name="atcd_pers_gyno_menstr_ddr"><span> Date des Dernières Règles (DDR).</span></label>
+                    </div>
+                    <h5>Contraception :</h5>
+                    <div class="sub-section">
+                        <label><input type="checkbox" id="checkbox_contrac_type" name="atcd_pers_gyno_contrac_type"><span> Type de contraception :</span></label>
+                        <select name="atcd_pers_gyno_contrac_type_select" onchange="updateCheckbox('checkbox_contrac_type', this.value)">
+                            <option value="">-- Sélectionnez une méthode --</option>
+                            <optgroup label="💊 Contraceptifs hormonaux oraux">
+                                <option value="COC">1 – Contraceptifs oraux combinés (œstroprogestatifs)</option>
+                                <option value="Micro_progestatif">2 – Pilules micro-progestatives</option>
+                            </optgroup>
+                            <optgroup label="💉 Contraceptifs injectables et implants">
+                                <option value="Progestatif_injectable">3 – Progestatifs injectables</option>
+                                <option value="Implant">4 – Implants contraceptifs</option>
+                            </optgroup>
+                            <optgroup label="🔩 Dispositifs intra-utérins (DIU)">
+                                <option value="DIU_cuivre">5 – DIU au cuivre (non hormonal)</option>
+                                <option value="DIU_hormonal">5 – DIU hormonal (stérilet hormonal)</option>
+                            </optgroup>
+                            <optgroup label="🆘 Contraception d'urgence">
+                                <option value="Pilule_urgence">6 – Pilule pour la contraception d'urgence (pilule du lendemain)</option>
+                            </optgroup>
+                            <optgroup label="🔪 Méthodes chirurgicales définitives">
+                                <option value="Ligature_trompes">7 – Ligature des trompes</option>
+                            </optgroup>
+                            <optgroup label="🛡️ Autres méthodes contraceptives">
+                                <option value="Preservatif_masculin">8 – Préservatif masculin</option>
+                                <option value="Anneau_vaginal_patch">8 – Anneau intra-vaginal et patch contraceptif</option>
+                                <option value="Spermicides">8 – Spermicides</option>
+                                <option value="Diaphragme">8 – Diaphragme</option>
+                                <option value="Methodes_naturelles">8 – Méthodes naturelles</option>
+                                <option value="MAMA">8 – Méthode de l'allaitement maternel et de l'aménorrhée (MAMA)</option>
+                                <option value="Coit_interrompu">8 – Coït interrompu</option>
+                            </optgroup>
+                        </select>
+                        <label><input type="checkbox" name="atcd_pers_gyno_contrac_duree"><span> Durée de contraception.</span></label>
+                    </div>
+                    <h5>Grossesses :</h5>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="atcd_pers_gyno_gross_nombre"><span> Nombre (Gestité/Parité) : Gestité = nombre de grossesses / Parité = nombre d'accouchements &gt; 22 SA.</span></label>
+                        <label><input type="checkbox" name="atcd_pers_gyno_gross_deroulement"><span> Déroulement des grossesses.</span></label>
+                        <label><input type="checkbox" name="atcd_pers_gyno_gross_complications"><span> Complications (HTA, diabète gestationnel).</span></label>
+                        <label><input type="checkbox" name="atcd_pers_gyno_gross_mode_accouchement"><span> Mode d'accouchement.</span></label>
+                        <label><input type="checkbox" name="atcd_pers_gyno_gross_interruptions"><span> Interruptions (IVG, fausses couches).</span></label>
+                    </div>
+                </div>
+                <h4>g) Vaccination :</h4>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="atcd_pers_vaccination"><span> Statut vaccinal actuel (notamment BK/BCG, Tétanos, HPV, Hépatites).</span></label>
+                </div>
+                <h4>h) Mode de vie et Autonomie :</h4>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="atcd_pers_vie_profession"><span> Profession : Recherche d'expositions toxiques, polluants (amiante, silice) ou stress.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_vie_autonomie"><span> Autonomie : Capacité physique/intellectuelle, périmètre de marche, utilisation d'aides.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_vie_lateralite"><span> Latéralité : Droitier ou gaucher.</span></label>
+                    <label><input type="checkbox" name="atcd_pers_vie_voyages"><span> Voyages récents : Destinations étrangères et traitements prophylactiques (ex : paludisme).</span></label>
+                </div>
+            </div>
+            <h3>2. Antécédents Familiaux</h3>
+            <div class="sub-section checkbox-group">
+                <label><input type="checkbox" name="atcd_fam_maladies_hereditaires"><span> Maladies héréditaires : Recherche au premier degré (parents, fratrie, enfants) de diabète, HTA, maladies cardiaques, asthme ou cancers.</span></label>
+                <label><input type="checkbox" name="atcd_fam_contage_tuberculeux"><span> Notion de contage tuberculeux : Contact récent avec une personne atteinte de tuberculose.</span></label>
+                <label><input type="checkbox" name="atcd_fam_deces"><span> Décès : Noter l'âge et la cause du décès des membres de la famille (recherche de mort subite).</span></label>
+                <label><input type="checkbox" name="atcd_fam_consanguinite"><span> Consanguinité : Préciser le degré de parenté entre les parents (augmente le risque de maladies génétiques).</span></label>
+                <label><input type="checkbox" name="atcd_fam_cas_similaires"><span> Cas similaires : Existence de symptômes identiques dans l'entourage familial.</span></label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         4. HISTOIRE DE LA MALADIE
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>4. Histoire de la Maladie (Mnémotechnique SITI FADMA)</h2>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content">
+            <p>Pour chaque symptôme, préciser (vérifier les points suivants) :</p>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="hdm_siege"><span> Siège (Localisation précise) vérifié.</span></label>
+                <label><input type="checkbox" name="hdm_irradiation"><span> Irradiation (Où la douleur se diffuse-t-elle ?) vérifiée.</span></label>
+                <label><input type="checkbox" name="hdm_type"><span> Type (Brûlure, étau, coup de poignard) caractérisé.</span></label>
+                <label><input type="checkbox" name="hdm_impact"><span> Impact (Retentissement sur la vie quotidienne/sommeil) évalué.</span></label>
+                <label><input type="checkbox" name="hdm_facteurs_aggravants"><span> Facteurs Aggravants (Effort, repas, position) identifiés.</span></label>
+                <label><input type="checkbox" name="hdm_accalmie"><span> Accalmie (Ce qui soulage : médicaments, repos) notée.</span></label>
+                <label><input type="checkbox" name="hdm_duree_rythme"><span> Durée / Rythme (Horaire diurne ou nocturne) précisé.</span></label>
+                <label><input type="checkbox" name="hdm_mode_evolutif"><span> Mode évolutif (Installation brutale ou progressive) déterminé.</span></label>
+                <h3>Signes Généraux (Les 3A+F)</h3>
+                <div class="sub-section checkbox-group">
+                    <label><input type="checkbox" name="hdm_asthenie"><span> Asthénie (fatigue) évaluée.</span></label>
+                    <label><input type="checkbox" name="hdm_anorexie"><span> Anorexie (perte d'appétit) évaluée.</span></label>
+                    <label><input type="checkbox" name="hdm_amaigrissement"><span> Amaigrissement (quantifié en kg/temps) vérifié.</span></label>
+                    <label><input type="checkbox" name="hdm_fievre"><span> Fièvre (chiffrée ou apyrexie) notée.</span></label>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Section: Motif de Consultation (MDC) -->
-        <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>3. Motif de Consultation (MDC)</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="section-content">
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="mdc_plainte_principale"><span> Plainte principale notée dans les propres mots du patient.</span></label>
-                    <label><input type="checkbox" name="mdc_rappel"><span> Rappel : C’est un signe fonctionnel, jamais un diagnostic à ce stade.</span></label>
-                </div>
-            </div>
+    <!-- ═══════════════════════════════════════════
+         5. EXAMEN CLINIQUE
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>5. Examen clinique</h2>
+            <span class="toggle-icon">+</span>
         </div>
+        <div class="section-content">
+            <div class="checkbox-group">
 
-        <!-- Section: Antécédents (ATCD) -->
-        <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>4. Antécédents (ATCD)</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="section-content">
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="atcd_medicaux"><span> Médicaux (Maladies chroniques, hospitalisations) notés.</span></label>
-                    <label><input type="checkbox" name="atcd_chirurgicaux"><span> Chirurgicaux (Types d'interventions, dates et complications) notés.</span></label>
-                    <label><input type="checkbox" name="atcd_toxiques"><span> Toxiques (Tabagisme, alcool, drogues) évalués.</span></label>
-                    <label><input type="checkbox" name="atcd_allergies"><span> Allergies (Médicamenteuses, alimentaires ou autres) notées.</span></label>
-                    <label><input type="checkbox" name="atcd_gyn_obst"><span> Gynéco-obstétriques (DDR, gestité/parité, contraception) notés.</span></label>
-                    <label><input type="checkbox" name="atcd_familiaux"><span> Familiaux (Maladies héréditaires, contage tuberculeux) notés.</span></label>
+                <!-- ═══ 5.1 EXAMEN GÉNÉRAL ═══ -->
+                <h3>5.1) EXAMEN GÉNÉRAL <a href="https://www.youtube.com/watch?v=UsapZtdGeNk" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>Introduction</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="gen_intro_mains"><span> Lavez vos mains.</span></label>
+                        <label><input type="checkbox" name="gen_intro_presentation"><span> Présentez-vous avec votre nom et rôle.</span></label>
+                        <label><input type="checkbox" name="gen_intro_identite"><span> Confirmez l'identité du patient (nom et date de naissance).</span></label>
+                        <label><input type="checkbox" name="gen_intro_explication"><span> Expliquez l'examen avec des termes simples et rassurants.</span></label>
+                        <label><input type="checkbox" name="gen_intro_consentement"><span> Obtenez le consentement pour continuer.</span></label>
+                    </div>
+                    <label><input type="checkbox" name="ep_gen_conscient"><span> Patient(e) conscient(e), orienté(e) dans le temps et dans l'espace.</span></label>
+                    <label><input type="checkbox" name="ep_gen_gcs"><span> GCS évalué.</span></label>
+                    <h4>Échelle de performance (PS) de l'OMS (ECOG-PS)</h4>
+                    <div class="sub-section">
+                        <p>Dite aussi échelle de performance ECOG (ECOG-PS), de l'Eastern Cooperative Oncology Group ou échelle de Zubrod.</p>
+                        <label><input type="checkbox" name="ep_gen_ecog_ps_0"><span> OMS 0 - Aucune limitation, état fonctionnel identique à celui pré-morbide.</span></label>
+                        <label><input type="checkbox" name="ep_gen_ecog_ps_1"><span> OMS 1 - Restriction aux activités physiques, but ambulant et capable d'effectuer des travaux légers ou sédentaires.</span></label>
+                        <label><input type="checkbox" name="ep_gen_ecog_ps_2"><span> OMS 2 - Ambulant et capable de prendre soin de sa personne but incapable de travailler ; actif pour plus de 50% de la journée.</span></label>
+                        <label><input type="checkbox" name="ep_gen_ecog_ps_3"><span> OMS 3 - Capacité très limitée de prendre soin de sa personne ; confiné au lit ou au fauteuil pour plus de 50% de la journée.</span></label>
+                        <label><input type="checkbox" name="ep_gen_ecog_ps_4"><span> OMS 4 - Incapacité totale ; ne peut prendre soin de sa personne ; confiné au fauteuil ou au lit.</span></label>
+                        <label><input type="checkbox" name="ep_gen_ecog_ps_5"><span> OMS 5 - Décédé.</span></label>
+                    </div>
+                    <h4>Stable sur le plan Hémodynamique et respiratoire ?</h4>
+                    <label><input type="checkbox" name="ep_gen_ta"><span> Tension Artérielle (TA) (MS droit / MS gauche) mmHg.</span></label>
+                    <label><input type="checkbox" name="ep_gen_fc"><span> Fréquence cardiaque (Fc) bpm.</span></label>
+                    <label><input type="checkbox" name="ep_gen_fr"><span> Fréquence respiratoire (Fr) cpm.</span></label>
+                    <label><input type="checkbox" name="ep_gen_spo2"><span> Saturation pulsée en O2 (SpO2) % à l'Air Ambiant (A.A), si &gt;94% à AA normal.</span></label>
+                    <label><input type="checkbox" name="ep_gen_temperature"><span> Température apyrétique (--°C).</span></label>
+                    <h4>Morphologie :</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_gen_poids"><span> Poids en Kg.</span></label>
+                        <label><input type="checkbox" name="ep_gen_taille"><span> Taille en mètre.</span></label>
+                        <label><input type="checkbox" name="ep_gen_imc"><span> IMC calculé = poids/taille².</span></label>
+                        <label><input type="checkbox" name="ep_gen_tour_taille"><span> Tour de taille en cm (normal : &lt;80 cm pour une femme, &lt;94 cm pour un homme).</span></label>
+                    </div>
+                    <h4>État général :</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_gen_conjonctif_normo"><span> Conjonctif normocoloré – état des conjonctives (pâleur, ictère).</span></label>
+                        <label><input type="checkbox" name="ep_gen_pas_deshydratation"><span> Pas de signe de déshydratation : pli cutané pré-sternal, TRC &lt; 3s.</span></label>
+                        <label><input type="checkbox" name="ep_gen_denutrition"><span> Pas de signe de dénutrition : pli cutané abdominal.</span></label>
+                        <label><input type="checkbox" name="ep_gen_pas_signes_choc"><span> Pas de signes de choc : marbrures, froideur des extrémités, TRC &gt; 3s.</span></label>
+                        <label><input type="checkbox" name="ep_gen_omi"><span> OMI (œdèmes des membres inférieurs) recherchés.</span></label>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Section: Histoire de la Maladie (Mnémotechnique SITI FADMA) -->
-        <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>5. Histoire de la Maladie (Mnémotechnique SITI FADMA)</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="section-content">
-                <p>Pour chaque symptôme, préciser (vérifier les points suivants) :</p>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="hdm_siege"><span> Siège (Localisation précise) vérifié.</span></label>
-                    <label><input type="checkbox" name="hdm_irradiation"><span> Irradiation (Où la douleur se diffuse-t-elle ?) vérifiée.</span></label>
-                    <label><input type="checkbox" name="hdm_type"><span> Type (Brûlure, étau, coup de poignard) caractérisé.</span></label>
-                    <label><input type="checkbox" name="hdm_impact"><span> Impact (Retentissement sur la vie quotidienne/sommeil) évalué.</span></label>
-                    <label><input type="checkbox" name="hdm_facteurs_aggravants"><span> Facteurs Aggravants (Effort, repas, position) identifiés.</span></label>
-                    <label><input type="checkbox" name="hdm_accalmie"><span> Accalmie (Ce qui soulage (médicaments, repos)) notée.</span></label>
-                    <label><input type="checkbox" name="hdm_duree_rythme"><span> Durée / Rythme (Horaire diurne ou nocturne) précisé.</span></label>
-                    <label><input type="checkbox" name="hdm_mode_evolutif"><span> Mode évolutif (Installation brutale ou progressive) déterminé.</span></label>
-                    <h3>Signes Généraux (Les 3A+F)</h3>
-                    <div class="sub-section checkbox-group">
-                        <label><input type="checkbox" name="hdm_asthenie"><span> Asthénie (fatigue) évaluée.</span></label>
-                        <label><input type="checkbox" name="hdm_anorexie"><span> Anorexie (perte d'appétit) évaluée.</span></label>
-                        <label><input type="checkbox" name="hdm_amaigrissement"><span> Amaigrissement (quantifié en kg/temps) vérifié.</span></label>
-                        <label><input type="checkbox" name="hdm_fievre"><span> Fièvre (chiffrée ou apyrexie) notée.</span></label>
+                <!-- ═══ 5.2 EXAMEN ABDOMINAL ═══ -->
+                <h3>5.2) EXAMEN ABDOMINAL <a href="https://www.youtube.com/watch?v=xmw01rl-SmA" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>Introduction</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="abd_intro_mains"><span> Se laver les mains.</span></label>
+                        <label><input type="checkbox" name="abd_intro_presentation"><span> Se présenter : nom et rôle.</span></label>
+                        <label><input type="checkbox" name="abd_intro_identite"><span> Confirmer l'identité du patient (nom, date de naissance).</span></label>
+                        <label><input type="checkbox" name="abd_intro_explication"><span> Expliquer l'examen avec des termes simples et rassurants.</span></label>
+                        <label><input type="checkbox" name="abd_intro_consentement"><span> Obtenir le consentement pour continuer.</span></label>
+                        <label><input type="checkbox" name="abd_intro_douleur"><span> Demander si le patient ressent une douleur avant de commencer.</span></label>
+                        <label><input type="checkbox" name="abd_intro_position"><span> Patient en décubitus dorsal, examinateur à droite du patient.</span></label>
+                    </div>
+                    <h4>👀 Inspection</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_abd_insp_respi_normale"><span> La respiration abdominale est normale.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_pas_deformation"><span> Il n'existe pas de déformation de l'abdomen / distension abdominale.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_pas_cicatrices"><span> Il n'existe pas de cicatrices chirurgicales (Mc Burney, thoracotomie...).</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_pas_circulation"><span> Il n'existe pas de circulation veineuse collatérale.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_pas_voussures"><span> Il n'existe pas de voussures, ni de vergetures, ni de points de feu.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_ombilic_plisse"><span> L'ombilic est bien plissé.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_teguments_normaux"><span> Les téguments sont d'aspect normal.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_pas_asterixis"><span> Pas d'astérixis (encéphalopathie hépatique, Sd urémique).</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_pas_leuconychie"><span> Pas de leuconychie, ni érythème palmaire.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_cavite_buccale"><span> Examen cavité buccale (pas de lésions candidosiques, aspect langue normal, présence d'ictère).</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_equipements"><span> Inspecter les équipements autour du patient : stomie, drains, cathéters, etc.</span></label>
+                    </div>
+                    <h4>🖐️ Palpation</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_abd_palp_souple"><span> L'abdomen est souple, dépressible.</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_pas_defense"><span> Il n'existe pas de défense, de contracture, ni de sensibilité localisée.</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_pas_organomegalie"><span> Il n'existe pas d'organomégalie (SPM, HPM – mesurer la flèche si présente).</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_pas_contact_lombaire"><span> Il n'existe pas de contact lombaire.</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_pas_masse_palpable"><span> Il n'existe pas de masse palpable.</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_orifices_herniaires"><span> Orifices herniaires palpés (hernie ou éventration).</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_oedeme_mi"><span> Œdème de membre inférieur (godet).</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_pas_signe_flot"><span> Pas de Signe du flot (présence d'ascite).</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_pas_signe_glacon"><span> Pas de Signe du glaçon pour une masse mobile.</span></label>
+                    </div>
+                    <h4>🔊 Percussion</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_abd_perc_tympanisme_regions"><span> Tympanisme ou matité sur les neuf régions abdominales.</span></label>
+                        <label><input type="checkbox" name="ep_abd_perc_pas_matite"><span> Il n'existe pas de matité déclive ou en damier (ascite).</span></label>
+                        <label><input type="checkbox" name="ep_abd_perc_tympanisme_normal"><span> Le tympanisme est normal.</span></label>
+                        <label><input type="checkbox" name="ep_abd_perc_pas_meteorisme"><span> Pas de météorisme (occlusion intestinale).</span></label>
+                    </div>
+                    <h4>🩺 Auscultation</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_abd_ausc_transit_audible"><span> Bruits hydro-aériques présents (transit audible).</span></label>
+                        <label><input type="checkbox" name="ep_abd_ausc_pas_souffle_aortique"><span> Il n'existe pas de souffle aortique.</span></label>
+                        <label><input type="checkbox" name="ep_abd_ausc_pas_souffle_renal"><span> Il n'existe pas de souffle rénal.</span></label>
+                    </div>
+                    <h4>Toucher rectal</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_abd_tr_non_realise"><span> Non réalisé.</span></label>
+                        <label><input type="checkbox" name="ep_abd_tr_insp_externe"><span> Inspection externe (fissures, hémorroïdes, fistules, excoriations).</span></label>
+                        <label><input type="checkbox" name="ep_abd_tr_eval_interne_tonus"><span> Tonus sphinctérien évalué.</span></label>
+                        <label><input type="checkbox" name="ep_abd_tr_eval_interne_masse"><span> Masse ou fécalome dans l'ampoule rectale recherché.</span></label>
+                        <label><input type="checkbox" name="ep_abd_tr_eval_interne_prostate"><span> Palpation de la prostate (chez l'homme).</span></label>
+                        <label><input type="checkbox" name="ep_abd_tr_eval_interne_doigtier"><span> État du doigtier après examen (sang, pus, etc.).</span></label>
+                        <label><input type="checkbox" name="ep_abd_tr_eval_interne_cri_douglas"><span> Recherche du cri de Douglas = péritonite.</span></label>
+                    </div>
+                    <h4>Conclusion</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="abd_conc_informer"><span> Informer le patient que l'examen est terminé.</span></label>
+                        <label><input type="checkbox" name="abd_conc_remercier"><span> Remercier le patient pour sa coopération.</span></label>
+                        <label><input type="checkbox" name="abd_conc_resume"><span> Résumer les conclusions et proposer des investigations complémentaires si nécessaire.</span></label>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Section: Examen Physique (Séquence IPPA) -->
-        <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>6. Examen Physique (Séquence IPPA)</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="section-content">
-                <div class="checkbox-group">
-                    <h3>EXAMEN GÉNÉRAL</h3>
+                <!-- ═══ 5.3.a EXAMEN CARDIAQUE ═══ -->
+                <h3>5.3.a\ EXAMEN CARDIAQUE <a href="https://www.youtube.com/watch?v=ovV2wSxrxVg" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>Introduction</h4>
                     <div class="sub-section">
-                        <label><input type="checkbox" name="ep_gen_conscient"><span> Patient(e) conscient(e), orienté(e) dans le temps et dans l'espace.</span></label>
-                        <label><input type="checkbox" name="ep_gen_gcs"><span> GCS évalué.</span></label>
-                        <label><input type="checkbox" name="ep_gen_stable_hemo_respi"><span> Stable sur le plan Hémodynamique et respiratoire.</span></label>
-                        <label><input type="checkbox" name="ep_gen_ta"><span> TA (MS droit/gauche) notée.</span></label>
-                        <label><input type="checkbox" name="ep_gen_fc"><span> Fc notée.</span></label>
-                        <label><input type="checkbox" name="ep_gen_fr"><span> Fr notée.</span></label>
-                        <label><input type="checkbox" name="ep_gen_spo2"><span> SpO2 notée.</span></label>
-                        <label><input type="checkbox" name="ep_gen_poids"><span> Poids noté.</span></label>
-                        <label><input type="checkbox" name="ep_gen_taille"><span> Taille notée.</span></label>
-                        <label><input type="checkbox" name="ep_gen_imc"><span> IMC calculé.</span></label>
-                        <label><input type="checkbox" name="ep_gen_temperature"><span> Température apyrétique (--°C).</span></label>
-                        <label><input type="checkbox" name="ep_gen_conjonctif_normo"><span> Conjonctif normocoloré (pas de pâleur, ictère, lésion cutanée, œdème).</span></label>
-                        <label><input type="checkbox" name="ep_gen_pas_deshydratation"><span> Pas de signe de déshydratation (TRC < 3s).</span></label>
-                        <label><input type="checkbox" name="ep_gen_pas_signes_choc"><span> Pas de signes de choc (marbrures, froideurs, cyanoses).</span></label>
+                        <label><input type="checkbox" name="card_intro_mains"><span> Lavez vos mains.</span></label>
+                        <label><input type="checkbox" name="card_intro_presentation"><span> Présentez-vous avec votre nom et rôle.</span></label>
+                        <label><input type="checkbox" name="card_intro_identite"><span> Confirmez le nom et la date de naissance du patient.</span></label>
+                        <label><input type="checkbox" name="card_intro_explication"><span> Expliquez l'examen avec des mots simples.</span></label>
+                        <label><input type="checkbox" name="card_intro_consentement"><span> Obtenez le consentement du patient.</span></label>
+                        <label><input type="checkbox" name="card_intro_position"><span> Ajustez le lit à 45° et exposez le thorax.</span></label>
+                        <label><input type="checkbox" name="card_intro_douleur"><span> Demandez si le patient ressent une douleur avant de continuer.</span></label>
                     </div>
-
-                    <h3>EXAMEN ABDOMINAL</h3>
+                    <h4>Signes périphériques</h4>
                     <div class="sub-section">
-                        <h4>Inspection</h4>
+                        <h5>Mains :</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_abd_insp_respi_normale"><span> La respiration abdominale est normale.</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_pas_deformation"><span> Il n'existe pas de déformation de l'abdomen.</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_pas_cicatrices"><span> Il n'existe pas de cicatrices (mc burney, thoracotomie, ...).</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_pas_circulation"><span> Il n'existe pas de circulation veineuse collatérale.</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_pas_voussures"><span> Il n'existe pas de voussures, ni de vergetures, ni de points de feu.</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_ombilic_plisse"><span> L'ombilic est bien plissé.</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_teguments_normaux"><span> Les téguments sont d'aspect normal.</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_pas_asterixis"><span> Pas d'asthérixis (encéphalopathie hépatique, Sd urémique).</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_pas_leuconychie"><span> Pas de leuconychie, ni érythème palmaire.</span></label>
-                            <label><input type="checkbox" name="ep_abd_insp_cavite_buccale"><span> Examen cavité buccale (pas de lésions candidosiques, aspect langue normal).</span></label>
+                            <label><input type="checkbox" name="card_periph_mains_couleur_temp"><span> Couleur, température.</span></label>
+                            <label><input type="checkbox" name="card_periph_mains_xanthomes"><span> Xanthomes.</span></label>
+                            <label><input type="checkbox" name="card_periph_mains_hippocratisme"><span> Hippocratisme digital.</span></label>
+                            <label><input type="checkbox" name="card_periph_mains_trc"><span> Temps de remplissage capillaire (TRC).</span></label>
                         </div>
-                        <h4>Palpation</h4>
+                        <h5>Jugulaire :</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_abd_palp_souple"><span> L'abdomen est souple, dépressible.</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_pas_defense"><span> Il n'existe pas de défense, de contracture, ni de sensibilité.</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_pas_organomegalie"><span> Il n'existe pas d'organomégalie (SPM, HPM).</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_pas_contact_lombaire"><span> Il n'existe pas de contact lombaire.</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_pas_masse_palpable"><span> Il n'existe pas de masse palpable.</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_pas_hernie"><span> Il n'existe pas d'hernie/éventration.</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_oedeme_mi"><span> Œdème de membre inférieur (godet).</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_pas_signe_flot"><span> Pas de Signe du flot (présence d'ascite).</span></label>
-                            <label><input type="checkbox" name="ep_abd_palp_pas_signe_glaçon"><span> Pas Signe du glaçon pour une masse mobile.</span></label>
+                            <label><input type="checkbox" name="card_periph_jvp"><span> JVP (pression veineuse jugulaire) mesurée correctement positionnée.</span></label>
+                            <label><input type="checkbox" name="card_periph_reflux_hj"><span> Reflux hépato-jugulaire vérifié.</span></label>
                         </div>
-                        <h4>Percussion</h4>
+                        <h5>Visage :</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_abd_perc_pas_matite"><span> Il n'existe pas de matité (déclive, en damier...).</span></label>
-                            <label><input type="checkbox" name="ep_abd_perc_tympanisme_normal"><span> Le tympanisme est normal.</span></label>
-                            <label><input type="checkbox" name="ep_abd_perc_pas_meteorisme"><span> Pas de météorisme (occlusion intestinale).</span></label>
-                        </div>
-                        <h4>Auscultation</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_abd_ausc_transit_audible"><span> Le transit est audible.</span></label>
-                            <label><input type="checkbox" name="ep_abd_ausc_pas_souffle"><span> Il n'existe pas de souffle abdominal.</span></label>
-                        </div>
-                        <h4>Toucher rectal</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_abd_tr_non_realise"><span> Non réalisé.</span></label>
-                            <label><input type="checkbox" name="ep_abd_tr_insp_externe"><span> Inspection externe (fissures, hémorroïdes, fistules, excoriations).</span></label>
-                            <label><input type="checkbox" name="ep_abd_tr_eval_interne_tonus"><span> Tonus sphinctérien évalué.</span></label>
-                            <label><input type="checkbox" name="ep_abd_tr_eval_interne_masse"><span> Masse ou fécalome dans l'ampoule rectale recherché.</span></label>
-                            <label><input type="checkbox" name="ep_abd_tr_eval_interne_prostate"><span> Palpation de la prostate (chez l'homme).</span></label>
-                            <label><input type="checkbox" name="ep_abd_tr_eval_interne_doigtier"><span> État du doigtier après examen (sang, pus, etc.).</span></label>
-                            <label><input type="checkbox" name="ep_abd_tr_eval_interne_cri_douglas"><span> Recherche du cri de Douglas = péritonite.</span></label>
+                            <label><input type="checkbox" name="card_periph_yeux"><span> Yeux : pâleur conjonctivale, arc cornéen, xanthélasma.</span></label>
+                            <label><input type="checkbox" name="card_periph_bouche"><span> Bouche : cyanose centrale, hygiène dentaire.</span></label>
                         </div>
                     </div>
-
-                    <h3>EXAMEN CARDIAQUE</h3>
+                    <h4>👀 Inspection</h4>
                     <div class="sub-section">
-                        <h4>Inspection</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_card_insp_thorax_symetrique"><span> Le thorax est symétrique.</span></label>
-                            <label><input type="checkbox" name="ep_card_insp_pas_deformation"><span> Il n'existe pas de déformation du thorax.</span></label>
-                            <label><input type="checkbox" name="ep_card_insp_pas_circulation"><span> Il n'existe pas de circulation veineuse collatérale.</span></label>
-                            <label><input type="checkbox" name="ep_card_insp_pas_oedeme_mi"><span> Il n'existe pas d'œdème des membres inférieurs.</span></label>
-                            <label><input type="checkbox" name="ep_card_insp_pas_turgescence_jugulaire"><span> Il n'existe pas de turgescence spontanée de la veine jugulaire.</span></label>
-                            <label><input type="checkbox" name="ep_card_insp_pas_cyanose"><span> Il n'existe pas de cyanose des téguments.</span></label>
-                            <label><input type="checkbox" name="ep_card_insp_pas_angiome"><span> Il n'existe pas d'angiome stellaire.</span></label>
-                            <label><input type="checkbox" name="ep_card_insp_pas_cicatrice"><span> Il n'existe pas de cicatrice ni de lésion cutanée.</span></label>
-                        </div>
-                        <h4>Palpation</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_card_palp_choc_pointe"><span> Le choc de pointe est bien perçu.</span></label>
-                            <label><input type="checkbox" name="ep_card_palp_harzer_negatif"><span> Le signe de Harzer est négatif.</span></label>
-                            <label><input type="checkbox" name="ep_card_palp_pas_thrill"><span> Il n'existe pas de thrill sus sternal.</span></label>
-                            <label><input type="checkbox" name="ep_card_palp_pas_reflux"><span> Il n'existe pas de reflux hépato jugulaire.</span></label>
-                        </div>
-                        <h4>Auscultation</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_card_ausc_bruits_coeur_percus"><span> Les bruits du cœur, B1 et B2, sont bien perçus aux 4 foyers.</span></label>
-                            <label><input type="checkbox" name="ep_card_ausc_systole_diastole_libres"><span> La systole et la diastole sont libres à chaque foyer.</span></label>
-                            <label><input type="checkbox" name="ep_card_ausc_pas_frottement"><span> Il n'existe pas de frottement péricardique.</span></label>
-                            <label><input type="checkbox" name="ep_card_ausc_pas_sons_surajoutes"><span> Il n'existe pas de sons surajoutés (B3 ou B4), pas de souffle.</span></label>
-                            <label><input type="checkbox" name="ep_card_ausc_pas_insuffisance"><span> Il n'existe pas d'insuffisance cardiaque.</span></label>
-                        </div>
+                        <label><input type="checkbox" name="ep_card_insp_thorax_symetrique"><span> Le thorax est symétrique.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_pas_deformation"><span> Il n'existe pas de déformation du thorax.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_pas_circulation"><span> Il n'existe pas de circulation veineuse collatérale thoracique.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_pas_oedeme_mi"><span> Il n'existe pas d'œdème des membres inférieurs.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_pas_turgescence_jugulaire"><span> Il n'existe pas de turgescence spontanée de la veine jugulaire.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_pas_cyanose"><span> Il n'existe pas de cyanose des téguments.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_pas_angiome"><span> Il n'existe pas d'angiome stellaire.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_pas_cicatrice"><span> Il n'existe pas de cicatrice ni de lésion cutanée.</span></label>
+                        <label><input type="checkbox" name="ep_card_insp_equipements"><span> Notez les équipements présents : cathéters, pansements, etc.</span></label>
                     </div>
-
-                    <h3>EXAMEN VASCULAIRE</h3>
+                    <h4>🖐️ Palpation</h4>
                     <div class="sub-section">
-                        <label><input type="checkbox" name="ep_vasc_pouls_reguliers"><span> Les pouls sont réguliers, présents de façon bilatérale et symétrique, sans souffle audible.</span></label>
-                        <label><input type="checkbox" name="ep_vasc_pas_pouls_abolis"><span> Pas de pouls abolis ou filant (signe de choc hémorragie).</span></label>
+                        <label><input type="checkbox" name="ep_card_palp_choc_pointe"><span> Le choc de pointe est bien perçu (position et caractère : punctiforme, étalé ou déplacé).</span></label>
+                        <label><input type="checkbox" name="ep_card_palp_harzer_negatif"><span> Le signe de Harzer est négatif.</span></label>
+                        <label><input type="checkbox" name="ep_card_palp_pas_thrill"><span> Il n'existe pas de thrill (frémissement) sus sternal.</span></label>
+                        <label><input type="checkbox" name="ep_card_palp_pas_reflux"><span> Il n'existe pas de reflux hépato-jugulaire.</span></label>
                     </div>
-
-                    <h3>EXAMEN PLEURO-PULMONAIRE</h3>
+                    <h4>🩺 Auscultation</h4>
                     <div class="sub-section">
-                        <h4>Inspection</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_pp_insp_pas_cyanose"><span> Il n'existe pas de cyanose des téguments.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_deformation"><span> Il n'existe pas de déformation du thorax.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_hippocratisme"><span> Il n'existe pas d'hippocratisme digital.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_cicatrices"><span> Il n'existe pas de cicatrices.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_rythme_normal"><span> Le rythme respiratoire est normal et régulier.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_respi_synchronisees"><span> Les respirations thoracique et abdominale sont synchronisées.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_oedeme_cervical"><span> Il n'existe pas d'œdème cervical.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_signe_lutte"><span> Il n'existe pas de signe de lutte respiratoire.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_battement_nez"><span> Il n'existe pas de battement des ailes du nez.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_entonnoir_xiphoidien"><span> Il n'existe pas d'entonnoir xiphoïdien.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_tirage_sus_sternal"><span> Il n'existe pas de tirage sus sternal.</span></label>
-                            <label><input type="checkbox" name="ep_pp_insp_pas_tirage_intercostal"><span> Il n'existe pas de tirage intercostal.</span></label>
-                        </div>
-                        <h4>Palpation</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_pp_palp_pas_points_douloureux"><span> Il n'existe pas de points douloureux.</span></label>
-                            <label><input type="checkbox" name="ep_pp_palp_vv_symetriques"><span> Il y a une bonne transmission des vibrations vocales, VV symétriques et bilatérales.</span></label>
-                        </div>
-                        <h4>Percussion</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_pp_perc_pas_matite"><span> Il n'y a pas de matité.</span></label>
-                            <label><input type="checkbox" name="ep_pp_perc_pas_tympanisme"><span> Il n'y a pas de tympanisme ou d'hyper sonorité.</span></label>
-                        </div>
-                        <h4>Auscultation</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_pp_ausc_bruit_normal"><span> Le bruit laryngo-trachéal est normal.</span></label>
-                            <label><input type="checkbox" name="ep_pp_ausc_murmures_normaux"><span> Les murmures vésiculaires sont bien perçus.</span></label>
-                            <label><input type="checkbox" name="ep_pp_ausc_pas_rale"><span> Il n'y a pas de râle perçus aux niveaux des aires de projection des lobes pulmonaires.</span></label>
-                        </div>
+                        <label><input type="checkbox" name="ep_card_ausc_rythme"><span> Rythme cardiaque régulier ou non évalué.</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_bruits_coeur_percus"><span> Les bruits du cœur, B1 et B2, sont bien perçus aux 4 foyers.</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_systole_diastole_libres"><span> La systole et la diastole sont libres à chaque foyer.</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_pas_frottement"><span> Il n'existe pas de frottement péricardique.</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_pas_sons_surajoutes"><span> Il n'existe pas de sons surajoutés (B3 ou B4), pas de souffle.</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_caracteriser_souffle"><span> Si souffle : caractériser (Siège, Temps proto/méso/télé-systolique ou diastolique, Timbre, Irradiation, Variabilité respiratoire/positionnelle).</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_manoeuvres"><span> Manœuvres positionnelles et respiratoires utilisées si besoin (expiration, décubitus latéral).</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_carotides"><span> Auscultation des axes vasculaires (carotides).</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_pulmonaire"><span> Auscultation pulmonaire (râles crépitants ?).</span></label>
+                        <label><input type="checkbox" name="ep_card_ausc_pas_insuffisance"><span> Il n'existe pas d'insuffisance cardiaque.</span></label>
                     </div>
+                    <h4>Finalisation</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="card_final_dos"><span> Inspecter le dos pour les cicatrices ou déformations.</span></label>
+                        <label><input type="checkbox" name="card_final_bases_pulm"><span> Ausculter les bases pulmonaires.</span></label>
+                        <label><input type="checkbox" name="card_final_oedeme_chevilles"><span> Palper les chevilles et le sacrum pour un œdème.</span></label>
+                    </div>
+                    <h4>Conclusion</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="card_conc_informer"><span> Expliquer au patient que l'examen est terminé.</span></label>
+                        <label><input type="checkbox" name="card_conc_remercier"><span> Remercier le patient.</span></label>
+                        <label><input type="checkbox" name="card_conc_mains"><span> Laver les mains.</span></label>
+                        <label><input type="checkbox" name="card_conc_resume"><span> Résumer les observations et suggérer des investigations complémentaires.</span></label>
+                    </div>
+                </div>
 
-                    <h3>EXAMEN NEUROLOGIQUE</h3>
+                <!-- ═══ 5.3.b EXAMEN VASCULAIRE ═══ -->
+                <h3>5.3.b\ EXAMEN VASCULAIRE</h3>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="ep_vasc_pouls_reguliers"><span> Les pouls sont réguliers, présents de façon bilatérale et symétrique.</span></label>
+                    <label><input type="checkbox" name="ep_vasc_pouls_detail"><span> Pouls vérifiés : radial, ulnaire, brachial, carotidien, aortique, fémoral, poplité, tibial postérieur et pédieux.</span></label>
+                    <label><input type="checkbox" name="ep_vasc_pas_pouls_abolis"><span> Pas de pouls abolis ou filant (signe de choc hémorragique).</span></label>
+                    <label><input type="checkbox" name="ep_vasc_ausc_axes"><span> Auscultation des gros axes : carotidiens, fémoraux, aortique – souffle recherché.</span></label>
+                </div>
+
+                <!-- ═══ 5.4 EXAMEN PLEURO-PULMONAIRE ═══ -->
+                <h3>5.4) EXAMEN PLEURO-PULMONAIRE <a href="https://www.youtube.com/watch?v=mAjc1TGxgtE" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>Introduction</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="pp_intro_mains"><span> Lavez vos mains.</span></label>
+                        <label><input type="checkbox" name="pp_intro_presentation"><span> Présentez-vous avec votre nom et rôle.</span></label>
+                        <label><input type="checkbox" name="pp_intro_identite"><span> Confirmez l'identité du patient (nom et date de naissance).</span></label>
+                        <label><input type="checkbox" name="pp_intro_explication"><span> Expliquez l'examen avec des termes simples et rassurants.</span></label>
+                        <label><input type="checkbox" name="pp_intro_consentement"><span> Obtenez le consentement pour procéder.</span></label>
+                        <label><input type="checkbox" name="pp_intro_douleur"><span> Demandez si le patient ressent une douleur ou une gêne respiratoire avant de continuer.</span></label>
+                    </div>
+                    <h4>👀 Inspection</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_pp_insp_pas_cyanose"><span> Il n'existe pas de cyanose des téguments.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_deformation"><span> Il n'existe pas de déformation / distension du thorax.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_hippocratisme"><span> Il n'existe pas d'hippocratisme digital.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_taches_goudron"><span> Pas de taches de goudron (tabagisme).</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_tvj"><span> Pas de turgescence des veines jugulaires (TVJ).</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_cicatrices"><span> Il n'existe pas de cicatrices chirurgicales thoraciques.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_rythme_normal"><span> Le rythme respiratoire est normal et régulier (fréquence, tachypnée ou bradypnée).</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_respi_synchronisees"><span> Les respirations thoracique et abdominale sont synchronisées.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_thorax_symetrique"><span> Thorax symétrique.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_oedeme_cervical"><span> Il n'existe pas d'œdème cervical / circulation collatérale thoracique.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_signe_lutte"><span> Il n'existe pas de signe de lutte respiratoire / détresse respiratoire.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_battement_nez"><span> Il n'existe pas de battement des ailes du nez.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_entonnoir_xiphoidien"><span> Il n'existe pas d'entonnoir xiphoïdien.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_tirage_sus_sternal"><span> Il n'existe pas de tirage sus sternal.</span></label>
+                        <label><input type="checkbox" name="ep_pp_insp_pas_tirage_intercostal"><span> Il n'existe pas de tirage intercostal.</span></label>
+                    </div>
+                    <h4>🖐️ Palpation</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_pp_palp_pas_points_douloureux"><span> Il n'existe pas de points douloureux.</span></label>
+                        <label><input type="checkbox" name="ep_pp_palp_vv_symetriques"><span> Vibrations vocales bien transmises, symétriques et bilatérales (diminuées ou absentes ?).</span></label>
+                        <label><input type="checkbox" name="ep_pp_palp_expansion"><span> Expansion thoracique symétrique (réduite d'un côté ?).</span></label>
+                    </div>
+                    <h4>🔊 Percussion</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_pp_perc_pas_matite"><span> Il n'y a pas de matité (épanchement pleural).</span></label>
+                        <label><input type="checkbox" name="ep_pp_perc_pas_tympanisme"><span> Il n'y a pas de tympanisme ou d'hyper sonorité (pneumothorax).</span></label>
+                        <label><input type="checkbox" name="ep_pp_perc_sonore_normal"><span> Sonorité thoracique normale.</span></label>
+                    </div>
+                    <h4>🩺 Auscultation</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_pp_ausc_bruit_normal"><span> Le bruit laryngo-trachéal est normal.</span></label>
+                        <label><input type="checkbox" name="ep_pp_ausc_murmures_normaux"><span> Les murmures vésiculaires sont bien perçus (présents, diminués ou absents).</span></label>
+                        <label><input type="checkbox" name="ep_pp_ausc_pas_rale_sibilants"><span> Pas de râles sibilants (obstruction bronchique : asthme, BPCO).</span></label>
+                        <label><input type="checkbox" name="ep_pp_ausc_pas_rale_crepitants"><span> Pas de râles crépitants (œdème pulmonaire, pneumonie, fibrose).</span></label>
+                        <label><input type="checkbox" name="ep_pp_ausc_pas_rale_ronflants"><span> Pas de râles ronflants (sécrétions bronchiques).</span></label>
+                    </div>
+                    <h4>Finalisation</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="pp_final_oedeme_sacre"><span> Vérifier la présence d'œdème sacré et des membres inférieurs.</span></label>
+                        <label><input type="checkbox" name="pp_final_ballotement_mollet"><span> Ballotement du mollet (TVP recherchée).</span></label>
+                        <label><input type="checkbox" name="pp_final_homans"><span> Signe de Homans (TVP).</span></label>
+                    </div>
+                    <h4>Conclusion</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="pp_conc_informer"><span> Expliquer au patient que l'examen est terminé.</span></label>
+                        <label><input type="checkbox" name="pp_conc_remercier"><span> Remercier le patient.</span></label>
+                        <label><input type="checkbox" name="pp_conc_mains"><span> Laver les mains et éliminer les EPI.</span></label>
+                        <label><input type="checkbox" name="pp_conc_resume"><span> Résumer les observations et proposer les examens complémentaires nécessaires.</span></label>
+                    </div>
+                </div>
+
+                <!-- ═══ 5.5 EXAMEN NEUROLOGIQUE ═══ -->
+                <h3>5.5) EXAMEN NEUROLOGIQUE <a href="https://www.youtube.com/watch?v=Us4BapUPRJw" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>Introduction</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="neuro_intro_mains"><span> Lavez vos mains.</span></label>
+                        <label><input type="checkbox" name="neuro_intro_presentation"><span> Présentez-vous avec votre nom et rôle.</span></label>
+                        <label><input type="checkbox" name="neuro_intro_identite"><span> Confirmez l'identité du patient (nom et date de naissance).</span></label>
+                        <label><input type="checkbox" name="neuro_intro_explication"><span> Expliquez ce que l'examen neurologique impliquera en termes simples et rassurants.</span></label>
+                        <label><input type="checkbox" name="neuro_intro_douleur"><span> Vérifiez si le patient a des douleurs ou des gênes avant de commencer.</span></label>
+                        <label><input type="checkbox" name="neuro_intro_consentement"><span> Obtenez le consentement pour procéder.</span></label>
+                        <label><input type="checkbox" name="neuro_intro_position"><span> Positionnez le patient selon les étapes nécessaires (debout, assis ou couché).</span></label>
+                    </div>
+                    <h4>Marche et équilibre</h4>
                     <div class="sub-section">
                         <label><input type="checkbox" name="ep_neuro_conscient_oriente"><span> Patient(e) conscient(e) et bien orienté(e) dans le temps et l'espace.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_marche_normale"><span> Marche normale : symétrie, fluidité, coordination.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_marche_tandem"><span> Démarche en tandem (talon-pointe) évaluée.</span></label>
                         <label><input type="checkbox" name="ep_neuro_station_debout_ok"><span> Examen de la station debout (possible ou non, avec aide).</span></label>
-                        <label><input type="checkbox" name="ep_neuro_romberg_negatif"><span> Le signe de Romberg est négatif.</span></label>
-                        <label><input type="checkbox" name="ep_neuro_marche_normale"><span> Le/la patient(e) marche normalement.</span></label>
-                        <label><input type="checkbox" name="ep_neuro_tonus_normal"><span> Le tonus est normal (ni hypotonie ni hypertonie).</span></label>
-                        <h4>Motricité</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_neuro_mot_globale"><span> Motricité globale conservée aux niveaux des membres supérieurs et inférieurs.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_mot_segmentaire"><span> Motricité segmentaire conservée aux niveaux des différents segments.</span></label>
-                        </div>
-                        <h4>Coordination</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_neuro_coor_pas_trouble"><span> Il n'existe pas de trouble de la coordination.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_coor_marionnettes"><span> L'épreuve des marionnettes se fait en miroir.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_coor_doigt_nez"><span> Le mouvement doigt nez est réalisé sans tremblement.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_coor_talon_genou"><span> Talon-genou (face interne de Tibia) vérifié.</span></label>
-                        </div>
-                        <h4>Réflexes</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_neuro_refl_osteo_tendineux"><span> Les réflexes ostéo-tendineux sont présents bilatéralement et symétriquement.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_refl_cutaneo_abdo"><span> Les réflexes cutanéo-abdominaux sont présents bilatéralement et symétriquement.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_refl_cutaneo_plantaire"><span> Le réflexe cutanéo-plantaire est indifférent.</span></label>
-                        </div>
-                        <h4>Sensibilité</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_neuro_sens_superficielle"><span> Sensibilité superficielle (pas de trouble sensitif tactile et thermo algique).</span></label>
-                            <label><input type="checkbox" name="ep_neuro_sens_profonde"><span> Sensibilité profonde (pas de trouble sensitif proprioceptif ou vibratoire).</span></label>
-                        </div>
-                        <h4>Paires crâniennes</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_neuro_pc_olfactif"><span> I - Olfactif: le/la patient(e) reconnaît toutes les odeurs présentées.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_optique_acuite"><span> II - Optique: pas de trouble de l'acuité visuelle.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_optique_champs"><span> II - Optique: champs visuels non réduits.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_oculomoteur_comm_ptosis"><span> III - Oculomoteur commun: pas de ptosis.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_oculomoteur_comm_mydriase"><span> III - Oculomoteur commun: pas de troubles de la mydriase.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_oculomoteur_comm_strabisme"><span> III - Oculomoteur commun: pas de strabisme divergent.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_trochleaire"><span> IV - Trochléaire: pas de diplopie verticale, poursuite oculaire sans anomalie.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_trijumeau_sensibilite"><span> V - Trijumeau: pas de trouble de la sensibilité, motricité conservée.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_abducens"><span> VI - Abducens: pas de strabisme divergent.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_faciale_mimique"><span> VII - Faciale: pas de trouble de la mimique, gustatifs, sécrétions, sensibilité et muscles peauciers normaux, pas d'hyperacousie.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_cochleo_vestibulaire"><span> VIII - Cochléo-vestibulaire: bonne perception sons/vibrations, Romberg négatif, pas de nystagmus.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_glosso_pharyngien"><span> IX - Glosso-pharyngien: palais mou symétrique, réflexe nauséeux présent.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_vague"><span> X - Vague: pas de dysphonie.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_spinal"><span> XI - Spinal: pas d'élévation épaule, rotation/flexion tête normales.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pc_hypoglosse"><span> XII - Grand hypoglosse: langue régulière, motricité conservée, pas de déviation.</span></label>
-                        </div>
-                        <h4>Nuque</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_neuro_nuque_souple"><span> La nuque est souple.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_pas_meningite"><span> Pas de signes de méningite.</span></label>
-                        </div>
-                        <h4>Fonctions supérieures</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_neuro_fonc_sup_memoire"><span> Pas de trouble de la mémoire ni du langage.</span></label>
-                            <label><input type="checkbox" name="ep_neuro_fonc_sup_apraxie"><span> Pas d'apraxie ni d'agnosie.</span></label>
-                        </div>
+                        <label><input type="checkbox" name="ep_neuro_romberg_negatif"><span> Signe de Romberg : yeux ouverts puis fermés. Oscillation + chute = Romberg positif (atteinte proprioceptive) ; oscillation sans chute = atteinte cérébelleuse.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_tonus_normal"><span> Le tonus est normal (ni hypotonie ni hypertonie ; rechercher hypertonie spastique, plastique, roue dentée).</span></label>
+                        <label><input type="checkbox" name="ep_neuro_clonus"><span> Clonus à la cheville recherché.</span></label>
+                    </div>
+                    <h4>Fonctions supérieures</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_neuro_fonc_sup_memoire"><span> Mémoire (immédiate, différée) et langage (compréhension, expression) évalués.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_fonc_sup_orientation"><span> Orientation spatio-temporelle vérifiée.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_fonc_sup_apraxie"><span> Pas d'apraxie ni d'agnosie.</span></label>
+                    </div>
+                    <h4>Paires crâniennes</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_neuro_pc_olfactif"><span> I - Olfactif : reconnaît les odeurs présentées (café, vanille...).</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_optique_acuite"><span> II - Optique : pas de trouble de l'acuité visuelle.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_optique_champs"><span> II - Optique : champs visuels non réduits ; réflexes pupillaires vérifiés.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_oculomoteur_comm_ptosis"><span> III - Oculomoteur commun : pas de ptosis.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_oculomoteur_comm_mydriase"><span> III - Oculomoteur commun : pas de troubles de la mydriase.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_oculomoteur_comm_strabisme"><span> III/IV/VI - Oculomoteurs : pas de strabisme, mouvements oculaires complets.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_trochleaire"><span> IV - Trochléaire : pas de diplopie verticale, poursuite oculaire sans anomalie.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_trijumeau_sensibilite"><span> V - Trijumeau : sensibilité faciale (front, joue, menton) ; muscles masticateurs palpés ; réflexe cornéen testé.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_abducens"><span> VI - Abducens : pas de strabisme convergent.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_faciale_mimique"><span> VII - Facial : pas d'asymétrie faciale, expressions normales (sourire, froncement de sourcils), pas d'hyperacousie.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_cochleo_vestibulaire"><span> VIII - Cochléo-vestibulaire : audition évaluée, Romberg négatif, pas de nystagmus.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_glosso_pharyngien"><span> IX/X - Glosso-pharyngien / Vague : phonation (« ahh »), réflexe nauséeux présent, déglutition normale, pas de dysphonie.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_spinal"><span> XI - Spinal : force du trapèze et SCM évaluée, rotation/flexion tête normales.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_pc_hypoglosse"><span> XII - Grand hypoglosse : langue régulière, pas d'atrophie ni de fasciculations, pas de déviation.</span></label>
+                    </div>
+                    <h4>Motricité</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_neuro_mot_inspection"><span> Inspection : rechercher une amyotrophie, des mouvements anormaux (tremblements, fasciculations).</span></label>
+                        <label><input type="checkbox" name="ep_neuro_mot_globale"><span> Motricité globale conservée aux membres supérieurs et inférieurs.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_mot_barre"><span> Épreuve de Barré (membres supérieurs) réalisée.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_mot_mingazzini"><span> Épreuve de Mingazzini (membres inférieurs) réalisée.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_mot_segmentaire"><span> Motricité segmentaire testée selon l'échelle MRC (0 à 5) : épaules, coudes, poignets, doigts (MS) ; hanches, genoux, chevilles, orteils (MI).</span></label>
+                    </div>
+                    <h4>Sensibilité</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_neuro_sens_superficielle"><span> Sensibilité superficielle : tactile fine (coton), douloureuse (piqûre d'épingle), thermoalgique.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_sens_profonde"><span> Sensibilité profonde : vibratoire (diapason), proprioceptive (mouvement passif d'un doigt ou orteil).</span></label>
+                        <label><input type="checkbox" name="ep_neuro_sens_dermatomes"><span> Sensibilité évaluée dermatome par dermatome.</span></label>
+                    </div>
+                    <h4>Coordination</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_neuro_coor_doigt_nez"><span> Épreuve doigt-nez : dysmétrie, hypermétrie, dyschronométrie recherchées.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_coor_talon_genou"><span> Épreuve talon-genou (face interne du tibia) : incoordination recherchée.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_coor_marionnettes"><span> Dysdiadochocinésie : épreuve des marionnettes (mouvements alternés rapides).</span></label>
+                    </div>
+                    <h4>Réflexes</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_neuro_refl_osteo_tendineux"><span> Réflexes ostéo-tendineux présents bilatéralement et symétriquement : bicipital, tricipital, stylo-radial (MS) ; rotulien, achilléen (MI).</span></label>
+                        <label><input type="checkbox" name="ep_neuro_refl_cutaneo_abdo"><span> Réflexes cutanéo-abdominaux présents bilatéralement et symétriquement.</span></label>
+                        <label><input type="checkbox" name="ep_neuro_refl_cutaneo_plantaire"><span> Réflexe cutanéo-plantaire : flexion normale ou signe de Babinski (extension pathologique).</span></label>
+                    </div>
+                    <h4>Nuque et Signes méningés</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_neuro_nuque_souple"><span> La nuque est souple (pas de raideur / incapacité de fléchir le cou).</span></label>
+                        <label><input type="checkbox" name="ep_neuro_kernig"><span> Signe de Kernig négatif (pas de douleur en extension du genou, hanche fléchie).</span></label>
+                        <label><input type="checkbox" name="ep_neuro_brudzinski"><span> Signe de Brudzinski négatif (pas de flexion des genoux lors de la flexion de la nuque).</span></label>
                     </div>
 
-                    <h3>EXAMEN CERVICAL</h3>
+                    <!-- 5.5-extra EXAMEN CERVICAL -->
+                    <h4>5.5‑extra\ EXAMEN CERVICAL</h4>
                     <div class="sub-section">
-                        <h4>Inspection</h4>
+                        <h5>👀 Inspection</h5>
                         <div class="sub-section">
                             <label><input type="checkbox" name="ep_cerv_insp_pas_tumefaction"><span> Il n'existe pas de tuméfaction.</span></label>
                             <label><input type="checkbox" name="ep_cerv_insp_pas_turgescence"><span> Il n'existe pas de turgescence de la veine jugulaire.</span></label>
@@ -482,253 +643,472 @@
                             <label><input type="checkbox" name="ep_cerv_insp_pas_goitre"><span> Pas de goitre.</span></label>
                             <label><input type="checkbox" name="ep_cerv_insp_pas_adp"><span> Pas d'ADP cervicales.</span></label>
                         </div>
-                        <h4>Palpation</h4>
+                        <h5>🖐️ Palpation</h5>
                         <div class="sub-section">
                             <label><input type="checkbox" name="ep_cerv_palp_thyroide_normale"><span> Le corps thyroïdien est de taille normale et est mobile à la déglutition.</span></label>
                         </div>
                     </div>
 
-                    <h3>EXAMEN GANGLIONNAIRE</h3>
+                    <h4>Conclusion</h4>
                     <div class="sub-section">
-                        <label><input type="checkbox" name="ep_gang_aires_libres"><span> Les aires ganglionnaires sont libres.</span></label>
-                        <label><input type="checkbox" name="ep_gang_examen_sans_anomalie"><span> L'examen est sans anomalie aux niveaux des différentes aires.</span></label>
+                        <label><input type="checkbox" name="neuro_conc_informer"><span> Expliquer au patient que l'examen est terminé.</span></label>
+                        <label><input type="checkbox" name="neuro_conc_remercier"><span> Remercier le patient pour sa coopération.</span></label>
+                        <label><input type="checkbox" name="neuro_conc_mains"><span> Laver les mains et éliminer les EPI.</span></label>
+                        <label><input type="checkbox" name="neuro_conc_resume"><span> Résumer les observations et proposer des investigations complémentaires (imagerie, examens électrophysiologiques, etc.).</span></label>
                     </div>
+                </div>
 
-                    <h3>EXAMEN DU SEIN</h3>
+                <!-- ═══ 5.6 EXAMEN GANGLIONNAIRE ═══ -->
+                <h3>5.6) EXAMEN GANGLIONNAIRE</h3>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="ep_gang_aires_libres"><span> Les aires ganglionnaires sont libres.</span></label>
+                    <label><input type="checkbox" name="ep_gang_examen_sans_anomalie"><span> L'examen est sans anomalie aux niveaux des différentes aires.</span></label>
+                </div>
+
+                <!-- ═══ 5.7 EXAMEN DU SEIN ═══ -->
+                <h3>5.7) EXAMEN DU SEIN</h3>
+                <div class="sub-section">
+                    <h4>👀 Inspection (positions variées)</h4>
                     <div class="sub-section">
-                        <h4>Inspection</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_sein_insp_mamelon_retracte"><span> Le mamelon est rétracté des 2 côtés.</span></label>
-                            <label><input type="checkbox" name="ep_sein_insp_pas_ecoulement"><span> Il n'existe pas d'écoulement mamelonnaire.</span></label>
-                            <label><input type="checkbox" name="ep_sein_insp_pas_ulceration"><span> Il n'existe pas d'ulcération, d'abcédation ou de signes inflammatoires.</span></label>
-                            <label><input type="checkbox" name="ep_sein_insp_pas_peau_orange"><span> Il n'existe pas d'aspect peau d'orange.</span></label>
-                        </div>
-                        <h4>Palpation</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_sein_palp_normale"><span> La palpation est sans anomalie aux différents quadrants.</span></label>
-                        </div>
+                        <label><input type="checkbox" name="gyno_sein_insp_positions"><span> Face, profil, mains sur les hanches, penchée en avant.</span></label>
+                        <label><input type="checkbox" name="gyno_sein_insp_taille_forme"><span> Taille, forme.</span></label>
+                        <label><input type="checkbox" name="gyno_sein_insp_anomalies"><span> Anomalies : peau d'orange, rougeurs, mamelon ombiliqué, déformation, maladie de Paget.</span></label>
+                        <label><input type="checkbox" name="ep_sein_insp_mamelon_retracte"><span> Le mamelon est rétracté des 2 côtés.</span></label>
+                        <label><input type="checkbox" name="ep_sein_insp_pas_ecoulement"><span> Il n'existe pas d'écoulement mamelonnaire.</span></label>
+                        <label><input type="checkbox" name="ep_sein_insp_pas_ulceration"><span> Il n'existe pas d'ulcération, d'abcédation ou de signes inflammatoires.</span></label>
+                        <label><input type="checkbox" name="ep_sein_insp_pas_peau_orange"><span> Il n'existe pas d'aspect peau d'orange.</span></label>
                     </div>
-
-                    <h3>EXAMEN OSTÉO-ARTICULAIRE</h3>
+                    <h4>🖐️ Palpation</h4>
                     <div class="sub-section">
+                        <label><input type="checkbox" name="gyno_sein_palp_dd_main_sous_tete"><span> DD, main sous la tête, les 4 quadrants systématiquement examinés.</span></label>
+                        <label><input type="checkbox" name="gyno_sein_palp_nodules_douleur_mastose_ecoulements"><span> Recherche de nodules, zones douloureuses, mastose, écoulements mamelonnaires.</span></label>
+                        <label><input type="checkbox" name="gyno_sein_palp_aires_ganglionnaires"><span> Palpation des aires ganglionnaires axillaires, sus-claviculaires et cervicales.</span></label>
+                        <label><input type="checkbox" name="ep_sein_palp_normale"><span> La palpation est sans anomalie aux différents quadrants.</span></label>
+                    </div>
+                </div>
+
+                <!-- ═══ EXAMEN OSTÉO-ARTICULAIRE ═══ -->
+                <h3>EXAMEN OSTÉO-ARTICULAIRE <a href="https://www.youtube.com/watch?v=KU9tNia7NYo" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>Introduction</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="oa_intro_mains"><span> Lavez vos mains.</span></label>
+                        <label><input type="checkbox" name="oa_intro_presentation"><span> Présentez-vous avec votre nom et rôle.</span></label>
+                        <label><input type="checkbox" name="oa_intro_identite"><span> Confirmez l'identité du patient (nom et date de naissance).</span></label>
+                        <label><input type="checkbox" name="oa_intro_explication"><span> Expliquez ce que l'examen impliquera avec des termes simples et rassurants.</span></label>
+                        <label><input type="checkbox" name="oa_intro_consentement"><span> Obtenez le consentement pour procéder.</span></label>
+                        <label><input type="checkbox" name="oa_intro_douleur"><span> Vérifiez si le patient ressent une douleur avant de commencer.</span></label>
+                    </div>
+                    <h4>Inspection générale</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="oa_insp_gen_face_profil_dos"><span> Observer le patient de face, de côté et de dos.</span></label>
                         <label><input type="checkbox" name="ep_oa_douleur_localisation"><span> Localisation de la douleur notée.</span></label>
                         <label><input type="checkbox" name="ep_oa_intensite_eva"><span> Intensité EVA notée.</span></label>
                         <label><input type="checkbox" name="ep_oa_raideur_matinal"><span> Raideur matinale évaluée.</span></label>
                         <label><input type="checkbox" name="ep_oa_rythme_douleur"><span> Rythme de la douleur évalué.</span></label>
                         <label><input type="checkbox" name="ep_oa_type_douleur"><span> Type de douleur identifié.</span></label>
                         <label><input type="checkbox" name="ep_oa_mouvement_responsable"><span> Mouvement responsable de la douleur identifié.</span></label>
-                        <h4>Examen pour l'épaule</h4>
+                        <label><input type="checkbox" name="oa_insp_alignement"><span> Alignement corporel, déformations ou asymétries.</span></label>
+                        <label><input type="checkbox" name="oa_insp_signes_systemiques"><span> Signes de maladies systémiques : amyotrophies, cicatrices, rougeurs.</span></label>
+                    </div>
+                    <h4>GALS Screen : Évaluation générale des articulations</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="oa_gals_marche"><span> Marche : fluidité, symétrie, anomalies.</span></label>
+                        <h5>Membres supérieurs :</h5>
                         <div class="sub-section">
-                            <h5>Inspection</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_epaule_insp_rougeur"><span> Rougeur recherchée.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_insp_asymetrie"><span> Asymétrie des deux moignons de l'épaule.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_insp_surelevation"><span> Surélévation spontanée de la tête humérale.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_insp_amyotrophie"><span> Amyotrophie du muscle infra-épineux.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_insp_rupture_biceps"><span> Rupture du biceps avec rétraction distale.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_insp_bursite"><span> Bursite sous acromiale.</span></label>
-                            </div>
-                            <h5>Mobilisation actives et passives</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_epaule_mob_antepulsion"><span> Antépulsion 180°.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_mob_abduction"><span> Abduction 180°.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_mob_rotation_externe"><span> Rotation externe 80°.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_mob_rotation_interne"><span> Rotation interne.</span></label>
-                            </div>
-                            <h5>Palpation</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_epaule_palp_chaleur"><span> Chaleur recherchée.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_palp_gonflement"><span> Gonflement recherché.</span></label>
-                            </div>
-                            <h5>Examination des tendons</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_epaule_tendon_supra_epineux"><span> Test de Jobe (supra épineux).</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_tendon_infra_epineux"><span> Test de Patté (infra épineux).</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_tendon_sub_scapulaire"><span> Lift-off Test (sub-scapulaire).</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_tendon_lpb"><span> Test Palm up (LPB).</span></label>
-                            </div>
-                            <h5>Tests de conflit</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_epaule_conflit_neer"><span> Signe de Neer.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_conflit_hawkins"><span> Signe Hawkins.</span></label>
-                                <label><input type="checkbox" name="ep_oa_epaule_conflit_yocum"><span> Signe de Yocum.</span></label>
-                            </div>
+                            <label><input type="checkbox" name="oa_gals_ms_flexion_extension"><span> Flexion, extension, mouvements combinés.</span></label>
+                            <label><input type="checkbox" name="oa_gals_ms_prehension"><span> Force de préhension et mouvements fins.</span></label>
+                            <label><input type="checkbox" name="oa_gals_ms_squeeze"><span> Squeeze test (polyarthrite rhumatoïde).</span></label>
                         </div>
-                        <h4>Examen pour genou</h4>
+                        <h5>Membres inférieurs :</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_oa_genou_douleur_tibiale"><span> Douleur fémoro tibiale.</span></label>
-                            <label><input type="checkbox" name="ep_oa_genou_douleur_patellaire"><span> Douleur fémoro patellaire.</span></label>
-                            <label><input type="checkbox" name="ep_oa_genou_vrai_blocage"><span> Vrai blocage.</span></label>
-                            <label><input type="checkbox" name="ep_oa_genou_pseudo_blocage"><span> Pseudo blocage.</span></label>
-                            <label><input type="checkbox" name="ep_oa_genou_derobement"><span> Dérobement.</span></label>
-                            <h5>Inspection</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_genou_insp_valgum"><span> Genu valgum.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_insp_varum"><span> Genu varum.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_insp_recurvatum"><span> Genu recurvatum.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_insp_flessum"><span> Genu flessum.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_insp_inegalite"><span> Inégalité des deux membres.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_insp_amyotrophie"><span> Amyotrophie quadricipitale.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_insp_mouvements_anormaux"><span> Mouvements anormaux recherchés.</span></label>
-                            </div>
-                            <h5>Palpation</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_genou_palp_points_douloureux"><span> Points douloureux recherchés.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_palp_choc_rotulien"><span> Choc rotulien.</span></label>
-                                <label><input type="checkbox" name="ep_oa_genou_palp_signe_rabot"><span> Signe de rabot.</span></label>
-                            </div>
+                            <label><input type="checkbox" name="oa_gals_mi_genou"><span> Flexion/extension passives des genoux.</span></label>
+                            <label><input type="checkbox" name="oa_gals_mi_hanche"><span> Rotation interne des hanches.</span></label>
+                            <label><input type="checkbox" name="oa_gals_mi_squeeze"><span> Squeeze test.</span></label>
                         </div>
-                        <h4>Examen pour Rachis</h4>
+                        <h5>Rachis :</h5>
                         <div class="sub-section">
-                            <h5>Inspection</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_equilibre_rachis"><span> Equilibre du rachis.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_equilibre_epaule"><span> Equilibre épaule.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_equilibre_bassin"><span> Equilibre du bassin.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_scoliose_vraie"><span> Scoliose vraie.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_attitude_scoliotique"><span> Attitude scoliotique.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_lordose"><span> Lordose.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_cyphose"><span> Cyphose.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_gibbosité"><span> Gibbosité.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_insp_double_gibbosité"><span> Double gibbosité.</span></label>
-                            </div>
-                            <h5>Mobilité articulaire</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_rachis_mob_cervical"><span> Rachis cervical (Flexion, Extension, Inclinaison, Rotation).</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_mob_thoracique"><span> Rachis thoracique (Extension).</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_mob_lombaire"><span> Rachis lombaire (Distance main-sol diminuée).</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_mob_lombaire_detail"><span> Mobilité du rachis lombaire (Flexion, Extension, Inclinaisons lat).</span></label>
-                            </div>
-                            <h5>Radiculalgie</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_rachis_radic_signe_sonnette"><span> Signe de sonnette.</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_radic_cervical_compression"><span> Rachis cervical (Compression du vertex).</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_radic_lombaire_lasegue"><span> Rachis lombaire (Signe de Lasègue).</span></label>
-                                <label><input type="checkbox" name="ep_oa_rachis_radic_signe_leri"><span> Signe de Léri.</span></label>
-                            </div>
+                            <label><input type="checkbox" name="oa_gals_rachis_courbures"><span> Courbures : lordose, cyphose.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_mob_cervical"><span> Rachis cervical : Flexion, Extension, Rotation, Inclinaison latérale.</span></label>
+                            <label><input type="checkbox" name="oa_gals_rachis_thoracique"><span> Rachis thoracique : ampliation thoracique.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_mob_lombaire"><span> Rachis lombaire : flexion (distance doigt-sol), extension, rotation, indice de Schöber.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_radic_lombaire_lasegue"><span> Signe de Lasègue (rachis lombaire).</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_radic_signe_leri"><span> Signe de Léri (rachis lombaire).</span></label>
                         </div>
-                        <h4>Examen pour la hanche</h4>
+                        <h5>Sacro-iliaques :</h5>
                         <div class="sub-section">
-                            <h5>Inspection</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_hanche_insp_equilibre_ant"><span> Equilibre antérieur.</span></label>
-                                <label><input type="checkbox" name="ep_oa_hanche_insp_equilibre_post"><span> Equilibre postérieur.</span></label>
-                            </div>
-                            <h5>Mobilité articulaire</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_hanche_mob"><span> Mobilité (Flexion, Abduction, Rotation externe, Extension, Adduction, Rotation interne).</span></label>
-                            </div>
-                            <h5>Palpation</h5>
-                            <div class="sub-section">
-                                <label><input type="checkbox" name="ep_oa_hanche_palp_points_douloureux"><span> Points douloureux recherchés.</span></label>
-                                <label><input type="checkbox" name="ep_oa_hanche_palp_salut_coxal"><span> Salut coxal.</span></label>
-                                <label><input type="checkbox" name="ep_oa_hanche_palp_thomas"><span> Manœuvre de Thomas.</span></label>
-                                <label><input type="checkbox" name="ep_oa_hanche_palp_faber"><span> Test FABER.</span></label>
-                                <label><input type="checkbox" name="ep_oa_hanche_palp_monopodal"><span> Appui et saut monopodal.</span></label>
-                            </div>
+                            <label><input type="checkbox" name="oa_gals_sacro_iliaque_palpation"><span> Palpation de l'interligne sacro-iliaque.</span></label>
+                            <label><input type="checkbox" name="oa_gals_sacro_iliaque_trepied"><span> Signe du Trépied.</span></label>
+                            <label><input type="checkbox" name="oa_gals_sacro_iliaque_ecartement"><span> Test d'écartement / rapprochement.</span></label>
                         </div>
                     </div>
-
-                    <h3>EXAMEN URO-GÉNITAL</h3>
+                    <h4>Examen pour l'épaule</h4>
                     <div class="sub-section">
-                        <h4>Inspection</h4>
+                        <h5>Inspection</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_ug_insp_cavite_buccale"><span> Cavité buccale: Sécheresse des muqueuses.</span></label>
-                            <label><input type="checkbox" name="ep_ug_insp_fosses_lombaires"><span> Fosses lombaires (Cicatrice, Voussure, Rougeur, Ecchymoses, Fistules).</span></label>
-                            <label><input type="checkbox" name="ep_ug_insp_hypogastre"><span> Hypogastre (Cicatrice, Voussure, Malformation, Fistules).</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_insp_rougeur"><span> Rougeur recherchée.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_insp_asymetrie"><span> Asymétrie des deux moignons de l'épaule.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_insp_surelevation"><span> Surélévation spontanée de la tête humérale.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_insp_amyotrophie"><span> Amyotrophie du muscle infra-épineux.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_insp_rupture_biceps"><span> Rupture du biceps avec rétraction distale.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_insp_bursite"><span> Bursite sous acromiale.</span></label>
                         </div>
-                        <h4>Organes génitaux externes masculins</h4>
+                        <h5>Mobilisation actives et passives</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_ug_ogem_scrotum"><span> Scrotum (Normal, Traumatisme, Hydrocèle, Tumeur intra scrotale).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_abces_scrotal"><span> Abcès scrotal.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_orchi_epididymite"><span> Orchi-épididymite.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_hematome"><span> Hématome en ailes de papillon.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_grosse_bourse_inflammatoire"><span> Grosse bourse (sans/avec signe inflammatoire).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_verge"><span> Verge (Normale, Micropénis, Hypospadias, Epispadias, Phimosis).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_coudure"><span> Coudure ventrale de la verge.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_verge_traumatisme"><span> Traumatisme de la verge.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_verge_tumeur"><span> Tumeur de la verge.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_ecoulement_uretral"><span> Écoulement urétral (Purulent, Sanglant).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_hemospermie"><span> Hémospermie.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_cordon_spermatique"><span> Cordon spermatique (Normal, Dure et douloureux, Dure et non douloureux).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_peau_penienne"><span> Peau pénienne (Mince, Souple, Mobile).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_corps_spongieux"><span> Corps spongieux (Souple, Régulier).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogem_corps_caverneux"><span> Corps caverneux (Symétriques, Souples, Réguliers, Induration, Tumeur, Rétrécissement).</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_mob_antepulsion"><span> Antépulsion 180°.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_mob_abduction"><span> Abduction 180°.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_mob_rotation_externe"><span> Rotation externe 80°.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_mob_rotation_interne"><span> Rotation interne.</span></label>
                         </div>
-                        <h4>Toucher rectal (Homme)</h4>
+                        <h5>Palpation</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_ug_tr_douglas"><span> Le cul de sac de Douglas (Douleur, Pas de douleur).</span></label>
-                            <label><input type="checkbox" name="ep_ug_tr_prostate"><span> Prostate (Souple, Régulière, Bilobée, Douloureuse, Adénome, Nodule).</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_palp_chaleur"><span> Chaleur recherchée.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_palp_gonflement"><span> Gonflement recherché.</span></label>
                         </div>
-                        <h4>Organes génitaux externes féminins</h4>
+                        <h5>Examen des tendons</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_ug_ogef_vulve"><span> Vulve (Normale, Irritation, Inflammation, Infection, Déchirures, Fistule, Malformations).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogef_toucher_vaginal"><span> Toucher vaginal (Pertes vaginales sanglantes/purulentes).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogef_culs_sac"><span> Culs de sac vaginaux (Douleur, Masse).</span></label>
-                            <label><input type="checkbox" name="ep_ug_ogef_uterus"><span> Utérus (Douleur, Déformation, Augmentation de taille).</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_tendon_supra_epineux"><span> Test de Jobe (supra épineux).</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_tendon_infra_epineux"><span> Test de Patté (infra épineux et petit rond).</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_tendon_sub_scapulaire"><span> Lift-off Test / Belly press test (sub-scapulaire).</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_tendon_lpb"><span> Palm-up test / Test Palm up (LPB).</span></label>
                         </div>
-                        <h4>Palpation (Femme)</h4>
+                        <h5>Tests de conflit</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_ug_palp_fosses_lombaires"><span> Fosses lombaires (Rein non palpable, Indolore, Masse, Ballotement rénal, Douleur, Défense).</span></label>
-                            <label><input type="checkbox" name="ep_ug_palp_vessie"><span> Vessie (Non palpable, Douleur, Globe Vésicale).</span></label>
-                            <label><input type="checkbox" name="ep_ug_palp_ureteres"><span> Uretères (Points urétéraux indolores/douloureux).</span></label>
-                        </div>
-                        <h4>Auscultation (Femme)</h4>
-                        <div class="sub-section">
-                            <label><input type="checkbox" name="ep_ug_ausc_souffle_systolique"><span> Souffle systolique.</span></label>
-                            <label><input type="checkbox" name="ep_ug_ausc_souffle_continu"><span> Souffle continu.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_conflit_neer"><span> Signe de Neer.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_conflit_hawkins"><span> Signe de Hawkins.</span></label>
+                            <label><input type="checkbox" name="ep_oa_epaule_conflit_yocum"><span> Signe de Yocum.</span></label>
                         </div>
                     </div>
-
-                    <h3>EXAMEN CUTANÉ</h3>
+                    <h4>Examen pour la hanche</h4>
                     <div class="sub-section">
-                        <h4>Sans lésions cutanées</h4>
+                        <h5>Inspection</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_cut_pas_lesion_paleur"><span> Pâleur.</span></label>
-                            <label><input type="checkbox" name="ep_cut_pas_lesion_erytheme"><span> Erythème.</span></label>
-                            <label><input type="checkbox" name="ep_cut_pas_lesion_erythrose"><span> Erythrose.</span></label>
-                            <label><input type="checkbox" name="ep_cut_pas_lesion_dyschromie"><span> Dyschromie.</span></label>
-                            <label><input type="checkbox" name="ep_cut_pas_lesion_cyanose"><span> Cyanose.</span></label>
+                            <label><input type="checkbox" name="ep_oa_hanche_insp_equilibre_ant"><span> Équilibre antérieur.</span></label>
+                            <label><input type="checkbox" name="ep_oa_hanche_insp_equilibre_post"><span> Équilibre postérieur.</span></label>
+                            <label><input type="checkbox" name="oa_hanche_boiterie"><span> Boiterie recherchée.</span></label>
                         </div>
-                        <h4>Lésions cutanées</h4>
+                        <h5>Mobilité articulaire</h5>
                         <div class="sub-section">
-                            <label><input type="checkbox" name="ep_cut_lesion_macule"><span> Macule.</span></label>
-                            <label><input type="checkbox" name="ep_cut_lesion_papule"><span> Papule.</span></label>
-                            <label><input type="checkbox" name="ep_cut_lesion_vesicule"><span> Vésicule.</span></label>
-                            <label><input type="checkbox" name="ep_cut_lesion_bulle"><span> Bulle.</span></label>
-                            <label><input type="checkbox" name="ep_cut_lesion_pustule"><span> Pustule.</span></label>
-                            <label><input type="checkbox" name="ep_cut_lesion_plaie"><span> Plaie.</span></label>
-                            <label><input type="checkbox" name="ep_cut_lesion_hematome"><span> Hématome.</span></label>
-                            <label><input type="checkbox" name="ep_cut_lesion_psoriasis"><span> Psoriasis.</span></label>
+                            <label><input type="checkbox" name="ep_oa_hanche_mob"><span> Mobilité : Flexion, Abduction, Rotation externe, Extension, Adduction, Rotation interne.</span></label>
+                        </div>
+                        <h5>Palpation et Tests spécifiques</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="ep_oa_hanche_palp_points_douloureux"><span> Points douloureux recherchés.</span></label>
+                            <label><input type="checkbox" name="oa_hanche_trendelenburg"><span> Signe de Trendelenburg (faiblesse des abducteurs).</span></label>
+                            <label><input type="checkbox" name="ep_oa_hanche_palp_thomas"><span> Manœuvre de Thomas (déformation en flexion fixe).</span></label>
+                            <label><input type="checkbox" name="ep_oa_hanche_palp_salut_coxal"><span> Manœuvre du salut coxal (incapacité de maintenir le MI tendu à 30° du lit).</span></label>
+                            <label><input type="checkbox" name="ep_oa_hanche_palp_faber"><span> Test FABER.</span></label>
+                            <label><input type="checkbox" name="ep_oa_hanche_palp_monopodal"><span> Appui et saut monopodal.</span></label>
                         </div>
                     </div>
-
-                    <h3>EXAMEN DE LA CAVITÉ BUCCALE</h3>
+                    <h4>Examen pour le genou</h4>
                     <div class="sub-section">
-                        <label><input type="checkbox" name="ep_cb_halene"><span> Halène (Cétonique, Foetor hepaticus).</span></label>
-                        <label><input type="checkbox" name="ep_cb_levres"><span> Lèvres (Perlèche, Cyanose, Chéilite, Télangiectasie).</span></label>
-                        <label><input type="checkbox" name="ep_cb_langue"><span> Langue (Macroglossie, Framboisée, Saburrale, Noire et chevelu).</span></label>
-                        <label><input type="checkbox" name="ep_cb_autres"><span> Autres (Gingivite, Aphte, Angine, Purpura).</span></label>
+                        <label><input type="checkbox" name="ep_oa_genou_douleur_tibiale"><span> Douleur fémoro-tibiale.</span></label>
+                        <label><input type="checkbox" name="ep_oa_genou_douleur_patellaire"><span> Douleur fémoro-patellaire.</span></label>
+                        <label><input type="checkbox" name="ep_oa_genou_vrai_blocage"><span> Vrai blocage.</span></label>
+                        <label><input type="checkbox" name="ep_oa_genou_pseudo_blocage"><span> Pseudo blocage.</span></label>
+                        <label><input type="checkbox" name="ep_oa_genou_derobement"><span> Dérobement.</span></label>
+                        <h5>Inspection</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="ep_oa_genou_insp_valgum"><span> Genu valgum.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_insp_varum"><span> Genu varum.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_insp_recurvatum"><span> Genu recurvatum.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_insp_flessum"><span> Genu flessum.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_insp_inegalite"><span> Inégalité des deux membres.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_insp_amyotrophie"><span> Amyotrophie quadricipitale.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_insp_mouvements_anormaux"><span> Mouvements anormaux recherchés.</span></label>
+                        </div>
+                        <h5>Palpation et mouvements</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="ep_oa_genou_palp_points_douloureux"><span> Points douloureux recherchés.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_palp_crepitations"><span> Crépitations en extension et flexion.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_palp_choc_rotulien"><span> Choc rotulien / Signe du flot.</span></label>
+                            <label><input type="checkbox" name="ep_oa_genou_palp_signe_rabot"><span> Signe de rabot (Zohlen) : atteinte fémoro-patellaire.</span></label>
+                            <label><input type="checkbox" name="oa_genou_flexion_extension"><span> Flexion et extension actives et passives.</span></label>
+                        </div>
+                        <h5>Tests spécifiques</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="oa_genou_tiroir"><span> Tiroir antérieur/postérieur (ligaments croisés).</span></label>
+                            <label><input type="checkbox" name="oa_genou_mcmurray"><span> McMurray (atteinte méniscale).</span></label>
+                        </div>
+                    </div>
+                    <h4>Examen pour le Rachis</h4>
+                    <div class="sub-section">
+                        <h5>Inspection</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_equilibre_rachis"><span> Équilibre du rachis.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_equilibre_epaule"><span> Équilibre épaules.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_equilibre_bassin"><span> Équilibre du bassin.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_scoliose_vraie"><span> Scoliose vraie.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_attitude_scoliotique"><span> Attitude scoliotique.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_lordose"><span> Lordose.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_cyphose"><span> Cyphose.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_gibbosité"><span> Gibbosité.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_insp_double_gibbosité"><span> Double gibbosité.</span></label>
+                        </div>
+                        <h5>Radiculalgie</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="ep_oa_rachis_radic_signe_sonnette"><span> Signe de sonnette.</span></label>
+                            <label><input type="checkbox" name="ep_oa_rachis_radic_cervical_compression"><span> Rachis cervical : Compression du vertex.</span></label>
+                        </div>
+                    </div>
+                    <h4>Conclusion</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="oa_conc_informer"><span> Expliquer au patient que l'examen est terminé.</span></label>
+                        <label><input type="checkbox" name="oa_conc_remercier"><span> Remercier le patient pour sa coopération.</span></label>
+                        <label><input type="checkbox" name="oa_conc_mains"><span> Laver les mains.</span></label>
+                        <label><input type="checkbox" name="oa_conc_resume"><span> Résumer les observations.</span></label>
                     </div>
                 </div>
+
+                <!-- ═══ EXAMEN URO-GÉNITAL ═══ -->
+                <h3>EXAMEN URO-GÉNITAL <a href="https://www.youtube.com/watch?v=P7lr3NQgwzY" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>Introduction</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ug_intro_mains"><span> Lavez vos mains et portez des gants propres.</span></label>
+                        <label><input type="checkbox" name="ug_intro_presentation"><span> Présentez-vous avec votre nom et rôle.</span></label>
+                        <label><input type="checkbox" name="ug_intro_identite"><span> Confirmez l'identité du patient (nom et date de naissance).</span></label>
+                        <label><input type="checkbox" name="ug_intro_explication"><span> Expliquez l'examen en termes simples et rassurants.</span></label>
+                        <label><input type="checkbox" name="ug_intro_consentement"><span> Obtenez le consentement pour l'examen.</span></label>
+                        <label><input type="checkbox" name="ug_intro_intimite"><span> Fournissez de l'intimité pour que le patient se déshabille si nécessaire.</span></label>
+                        <label><input type="checkbox" name="ug_intro_douleur"><span> Demandez si le patient ressent une douleur avant de commencer.</span></label>
+                    </div>
+                    <h4>👀 Inspection générale</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ug_insp_urines"><span> Aspect des urines : Hématurie, Pyurie.</span></label>
+                        <label><input type="checkbox" name="ep_ug_insp_cavite_buccale"><span> Cavité buccale : Sécheresse des muqueuses.</span></label>
+                        <label><input type="checkbox" name="ep_ug_insp_cicatrices_abd"><span> Cicatrices abdominales ou lombaires.</span></label>
+                        <label><input type="checkbox" name="ep_ug_insp_oedeme_mi"><span> Œdème des membres inférieurs.</span></label>
+                        <label><input type="checkbox" name="ep_ug_insp_fosses_lombaires"><span> Fosses lombaires : Cicatrice, Voussure lombaire, Rougeur, Ecchymoses, Fistules.</span></label>
+                        <label><input type="checkbox" name="ep_ug_insp_hypogastre"><span> Hypogastre : Cicatrice, Voussure sus-pubienne, Malformation, Fistules.</span></label>
+                    </div>
+                    <h4>Examen des fosses lombaires</h4>
+                    <div class="sub-section">
+                        <h5>Palpation :</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="ug_fl_contact_lombaire"><span> Contact lombaire : masse perçue au contact de la paroi postérieure.</span></label>
+                            <label><input type="checkbox" name="ug_fl_ballottement_renal"><span> Ballotement rénal : impulsions transmises entre les mains antérieure et postérieure.</span></label>
+                        </div>
+                        <h5>Percussion :</h5>
+                        <div class="sub-section">
+                            <label><input type="checkbox" name="ug_fl_giordano"><span> Signe de Giordano : empâtement douloureux à la percussion lombaire (oriente vers une PNA).</span></label>
+                        </div>
+                    </div>
+                    <h4>Examen de l'hypogastre (globe vésical)</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ug_hypo_masse"><span> Masse hypogastrique palpable.</span></label>
+                        <label><input type="checkbox" name="ep_ug_palp_vessie"><span> Vessie : Non palpable, Douleur, Globe Vésical.</span></label>
+                        <label><input type="checkbox" name="ug_hypo_matite"><span> Percussion : matité à bord supérieur convexe (globe vésical).</span></label>
+                        <label><input type="checkbox" name="ep_ug_palp_ureteres"><span> Uretères : Points urétéraux indolores/douloureux.</span></label>
+                    </div>
+                    <h4>Organes génitaux externes masculins</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_ug_ogem_verge"><span> Verge : position du méat urétral, Normale, Micropénis, Hypospadias, Epispadias, Phimosis, œdème ou hématome.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_coudure"><span> Coudure ventrale de la verge / induration du corps caverneux.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_verge_traumatisme"><span> Traumatisme de la verge.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_verge_tumeur"><span> Tumeur de la verge.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_ecoulement_uretral"><span> Écoulement urétral (Purulent, Sanglant).</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_hemospermie"><span> Hémospermie.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_scrotum"><span> Scrotum : aspect cutané, Hernie inguino-scrotale, Hydrocèle, Cryptorchidie, Varicocèle, Tumeur intra scrotale.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_transillumination"><span> Transillumination systématique : masse liquidienne (positive), masse tissulaire (négative).</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_abces_scrotal"><span> Abcès scrotal.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_orchi_epididymite"><span> Orchi-épididymite.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_hematome"><span> Hématome en ailes de papillon.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_signe_prehn"><span> Signe de Prehn (orchi-épididymite vs torsion testiculaire).</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_reflex_cremasterien"><span> Réflexe crémastérien : aboli si torsion testiculaire.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_cordon_spermatique"><span> Cordon spermatique : volume, consistance, varicocèle (remplissage debout avec effort de toux).</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_corps_spongieux"><span> Corps spongieux (Souple, Régulier).</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogem_corps_caverneux"><span> Corps caverneux (Symétriques, Souples, Réguliers, Induration, Tumeur, Rétrécissement).</span></label>
+                    </div>
+                    <h4>Toucher rectal (Homme)</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_ug_tr_tonus_anal"><span> Tonus anal évalué.</span></label>
+                        <label><input type="checkbox" name="ep_ug_tr_douglas"><span> Le cul de sac de Douglas : Douleur ou pas de douleur.</span></label>
+                        <label><input type="checkbox" name="ep_ug_tr_prostate"><span> Prostate : Normale (petite saillie, deux lobes, sillon médian) / Augmentée souple et indolore (HBP) / Douloureuse (prostatite) / Dure et irrégulière (cancer).</span></label>
+                        <label><input type="checkbox" name="ep_ug_tr_adp_inguinales"><span> Recherche d'adénopathies inguinales.</span></label>
+                    </div>
+                    <h4>Organes génitaux externes féminins</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_ug_ogef_vulve"><span> Grandes et petites lèvres : rougeur, lésion, Irritation, Inflammation, Infection, Déchirures, Fistule, Malformations.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogef_meat_uretral"><span> Méat urétral : écoulement ou anomalie.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogef_toucher_vaginal"><span> Toucher vaginal : Pertes vaginales sanglantes/purulentes.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogef_culs_sac"><span> Culs de sac vaginaux : Douleur, Masse.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ogef_uterus"><span> Utérus : Douleur, Déformation, Augmentation de taille.</span></label>
+                    </div>
+                    <h4>Auscultation (Femme)</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_ug_ausc_souffle_systolique"><span> Souffle systolique.</span></label>
+                        <label><input type="checkbox" name="ep_ug_ausc_souffle_continu"><span> Souffle continu.</span></label>
+                    </div>
+                    <h4>Conclusion</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ug_conc_informer"><span> Expliquer au patient que l'examen est terminé.</span></label>
+                        <label><input type="checkbox" name="ug_conc_remercier"><span> Remercier le patient.</span></label>
+                        <label><input type="checkbox" name="ug_conc_mains"><span> Laver les mains et éliminer les EPI.</span></label>
+                        <label><input type="checkbox" name="ug_conc_resume"><span> Résumer les observations et proposer les investigations nécessaires (échographie, analyses urinaires, etc.).</span></label>
+                    </div>
+                </div>
+
+                <!-- ═══ EXAMEN GYNÉCOLOGIQUE ═══ -->
+                <h3>EXAMEN GYNÉCOLOGIQUE <a href="https://www.youtube.com/watch?v=IM8mhMT77IE" target="_blank" title="Voir vidéo YouTube">🎥</a></h3>
+                <div class="sub-section">
+                    <h4>1. Introduction : Préparation et introduction à la patiente</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="gyno_intro_lavez_mains"><span> Lavez vos mains.</span></label>
+                        <label><input type="checkbox" name="gyno_intro_presentez_vous"><span> Présentez-vous avec votre nom et rôle.</span></label>
+                        <label><input type="checkbox" name="gyno_intro_confirmez_identite"><span> Confirmez l'identité de la patiente (nom et date de naissance).</span></label>
+                        <label><input type="checkbox" name="gyno_intro_expliquez_examen"><span> Expliquez l'examen en termes simples et rassurants.</span></label>
+                        <label><input type="checkbox" name="gyno_intro_obtenez_consentement"><span> Obtenez le consentement pour continuer.</span></label>
+                    </div>
+                    <h4>2. Examen abdominal</h4>
+                    <div class="sub-section">
+                        <h5>Inspection :</h5>
+                        <label><input type="checkbox" name="gyno_abd_insp_cicatrices"><span> Recherchez des cicatrices chirurgicales.</span></label>
+                        <label><input type="checkbox" name="ep_abd_insp_hernies_voussures"><span> Vérifiez la présence de hernies ou de voussures.</span></label>
+                        <h5>Palpation :</h5>
+                        <label><input type="checkbox" name="gyno_abd_palp_masse"><span> Masse abdominale palpable.</span></label>
+                        <label><input type="checkbox" name="ep_abd_palp_sensibilite_douleur"><span> Zones de sensibilité ou douleur.</span></label>
+                    </div>
+                    <h4>3. Examen pelvi-périnéal</h4>
+                    <div class="sub-section">
+                        <h5>Inspection :</h5>
+                        <label><input type="checkbox" name="gyno_pelvi_insp_aspect_organes"><span> Aspect des organes génitaux externes : trophicité, pilosité, pigmentation, développement des grandes et petites lèvres, clitoris.</span></label>
+                        <label><input type="checkbox" name="gyno_pelvi_insp_sequelles_obstetricales"><span> Séquelles obstétricales : épisiotomies, déchirures, fistules.</span></label>
+                        <label><input type="checkbox" name="gyno_pelvi_insp_distance_ano_vulvaire"><span> Distance ano-vulvaire.</span></label>
+                        <label><input type="checkbox" name="gyno_pelvi_insp_effort_toux"><span> Effort de toux pour évaluer un prolapsus.</span></label>
+                        <h5>Palpation vulvaire :</h5>
+                        <label><input type="checkbox" name="gyno_pelvi_palp_masse_nodule"><span> Masse ou nodule.</span></label>
+                    </div>
+                    <h4>4. Examen au spéculum</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="gyno_spec_prep_speculum"><span> Préparez le spéculum et lubrifiez-le au sérum physiologique sans toucher les lames.</span></label>
+                        <label><input type="checkbox" name="gyno_spec_insert_ecartez_levres"><span> Écartez les lèvres avec la main non dominante.</span></label>
+                        <label><input type="checkbox" name="gyno_spec_insert_inserez_speculum"><span> Insérez doucement le spéculum (lames fermées, poignée latérale).</span></label>
+                        <label><input type="checkbox" name="gyno_spec_insert_tournez_poignee"><span> Tournez la poignée vers le haut une fois inséré.</span></label>
+                        <label><input type="checkbox" name="gyno_spec_insert_ouvrez_verrouillez"><span> Ouvrez les lames et verrouillez-les pour visualiser le col utérin.</span></label>
+                        <label><input type="checkbox" name="gyno_spec_obs_col"><span> Col : forme, taille, écoulement, glaire cervicale (quantité, transparence, filance).</span></label>
+                        <label><input type="checkbox" name="gyno_spec_obs_vagin"><span> Vagin : anomalies visibles.</span></label>
+                        <label><input type="checkbox" name="gyno_spec_retrait"><span> Relâchez doucement le spéculum en inspectant les parois vaginales.</span></label>
+                    </div>
+                    <h4>5. Toucher vaginal (TV) avec palpation abdominale</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="gyno_tv_col_uterin"><span> Col utérin : Longueur, mobilité, sensibilité.</span></label>
+                        <label><input type="checkbox" name="gyno_tv_uterus"><span> Utérus : Taille, position, consistance, mobilité.</span></label>
+                        <label><input type="checkbox" name="gyno_tv_annexes"><span> Annexes : Palpation pour masses ou douleurs.</span></label>
+                    </div>
+                    <h4>6. Conclusion et finalisation</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="gyno_conc_expliquez_terminer"><span> Expliquez à la patiente que l'examen est terminé.</span></label>
+                        <label><input type="checkbox" name="gyno_conc_remerciez_patiente"><span> Remerciez la patiente pour sa coopération.</span></label>
+                        <label><input type="checkbox" name="gyno_conc_espace_prive"><span> Fournissez un espace privé pour que la patiente se rhabille.</span></label>
+                        <label><input type="checkbox" name="gyno_conc_lavez_mains_epi"><span> Lavez vos mains et éliminez les EPI.</span></label>
+                        <label><input type="checkbox" name="gyno_conc_resum_observations"><span> Résumez vos observations.</span></label>
+                    </div>
+                </div>
+
+                <!-- ═══ EXAMEN CUTANÉ ═══ -->
+                <h3>EXAMEN CUTANÉ</h3>
+                <div class="sub-section">
+                    <h4>Sans lésions cutanées</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_cut_pas_lesion_paleur"><span> Pâleur.</span></label>
+                        <label><input type="checkbox" name="ep_cut_pas_lesion_erytheme"><span> Erythème.</span></label>
+                        <label><input type="checkbox" name="ep_cut_pas_lesion_erythrose"><span> Erythrose.</span></label>
+                        <label><input type="checkbox" name="ep_cut_pas_lesion_dyschromie"><span> Dyschromie.</span></label>
+                        <label><input type="checkbox" name="ep_cut_pas_lesion_cyanose"><span> Cyanose.</span></label>
+                    </div>
+                    <h4>Lésions cutanées</h4>
+                    <div class="sub-section">
+                        <label><input type="checkbox" name="ep_cut_lesion_macule"><span> Macule.</span></label>
+                        <label><input type="checkbox" name="ep_cut_lesion_papule"><span> Papule.</span></label>
+                        <label><input type="checkbox" name="ep_cut_lesion_vesicule"><span> Vésicule.</span></label>
+                        <label><input type="checkbox" name="ep_cut_lesion_bulle"><span> Bulle.</span></label>
+                        <label><input type="checkbox" name="ep_cut_lesion_pustule"><span> Pustule.</span></label>
+                        <label><input type="checkbox" name="ep_cut_lesion_plaie"><span> Plaie.</span></label>
+                        <label><input type="checkbox" name="ep_cut_lesion_hematome"><span> Hématome.</span></label>
+                        <label><input type="checkbox" name="ep_cut_lesion_psoriasis"><span> Psoriasis.</span></label>
+                    </div>
+                </div>
+
+                <!-- ═══ EXAMEN DE LA CAVITÉ BUCCALE ═══ -->
+                <h3>EXAMEN DE LA CAVITÉ BUCCALE</h3>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="ep_cb_halene"><span> Halène (Cétonique, Foetor hepaticus).</span></label>
+                    <label><input type="checkbox" name="ep_cb_levres"><span> Lèvres (Perlèche, Cyanose, Chéilite, Télangiectasie).</span></label>
+                    <label><input type="checkbox" name="ep_cb_langue"><span> Langue (Macroglossie, Framboisée, Saburrale, Noire et chevelue).</span></label>
+                    <label><input type="checkbox" name="ep_cb_autres"><span> Autres (Gingivite, Aphte, Angine, Purpura).</span></label>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <!-- Section: Conclusion et Conduite à Tenir (CAT) -->
-        <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>7. Conclusion et Conduite à Tenir (CAT)</h2>
-                <span class="toggle-icon">+</span>
+    <!-- ═══════════════════════════════════════════
+         6.1 CONCLUSION CLINIQUE (C/C)
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>6.1) Conclusion Clinique (C/C)</h2>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content">
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="cc_resume_clinique"><span> Résumé clinique rédigé : synthèse ordonnée du terrain, des ATCD et des signes clés.</span></label>
+                <label><input type="checkbox" name="cc_terrain_atcd"><span> Terrain et antécédents pertinents mentionnés.</span></label>
+                <label><input type="checkbox" name="cc_signes_fonctionnels"><span> Signes fonctionnels résumés (symptômes rapportés par le patient).</span></label>
+                <label><input type="checkbox" name="cc_signes_physiques"><span> Signes physiques résumés (trouvailles de l'examen clinique).</span></label>
             </div>
-            <div class="section-content">
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="cat_resume_clinique"><span> Résumé clinique (Synthèse ordonnée du terrain, des ATCD et des signes clés) rédigé.</span></label>
-                    <label><input type="checkbox" name="cat_hypotheses_diagnostiques"><span> Hypothèses diagnostiques (Listées par ordre de probabilité) formulées.</span></label>
-                    <label><input type="checkbox" name="cat_plan_diagnostique"><span> Plan Diagnostique (Examens complémentaires hiérarchisés) établi.</span></label>
-                    <label><input type="checkbox" name="cat_plan_therapeutique"><span> Plan Thérapeutique (Traitement étiologique et symptomatique) défini.</span></label>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         6.2 HYPOTHÈSE DIAGNOSTIQUE
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>6.2) Hypothèse Diagnostique</h2>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content">
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="hd_diagnostic_principal"><span> Diagnostic principal (le plus probable) formulé.</span></label>
+                <label><input type="checkbox" name="hd_diagnostics_differentiels"><span> Diagnostics différentiels listés par ordre de probabilité.</span></label>
+                <label><input type="checkbox" name="hd_arguments_retenus"><span> Arguments cliniques retenus en faveur du diagnostic principal.</span></label>
+                <label><input type="checkbox" name="hd_arguments_contre"><span> Arguments contre les diagnostics alternatifs précisés.</span></label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         7. CAT
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>7. CAT (Conduite À Tenir)</h2>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content">
+            <div class="checkbox-group">
+                <h3>7.1) Diagnostique</h3>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="cat_diag_examens_complementaires"><span> Plan d'examens complémentaires hiérarchisés établi.</span></label>
+                    <label><input type="checkbox" name="cat_diag_biologie"><span> Bilan biologique précisé (NFS, bilan hépatique, rénal, ionogramme…).</span></label>
+                    <label><input type="checkbox" name="cat_diag_imagerie"><span> Imagerie demandée (RX, Echo, TDM, IRM…) justifiée.</span></label>
+                    <label><input type="checkbox" name="cat_diag_autres_examens"><span> Autres examens spécialisés (endoscopie, biopsie, ECG, électrophysiologie…) précisés.</span></label>
+                </div>
+                <h3>7.2) Thérapeutique</h3>
+                <div class="sub-section">
+                    <label><input type="checkbox" name="cat_ther_etiologique"><span> Traitement étiologique défini (traiter la cause).</span></label>
+                    <label><input type="checkbox" name="cat_ther_symptomatique"><span> Traitement symptomatique défini (soulager les symptômes).</span></label>
+                    <label><input type="checkbox" name="cat_ther_mesures_hygiene"><span> Mesures hygiéno-diététiques précisées.</span></label>
+                    <label><input type="checkbox" name="cat_ther_surveillance"><span> Plan de surveillance et de suivi défini.</span></label>
+                    <label><input type="checkbox" name="cat_ther_education"><span> Éducation thérapeutique du patient planifiée.</span></label>
                 </div>
             </div>
         </div>
     </div>
+
+</div>
 </body>
 </html>

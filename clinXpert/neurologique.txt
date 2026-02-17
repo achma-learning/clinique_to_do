@@ -1,0 +1,105 @@
+ 1. Introduction : Préparation et introduction au patient
+
+o	 Lavez vos mains.
+o	 Présentez-vous avec votre nom et rôle.
+o	 Confirmez l’identité du patient (nom et date de naissance).
+o	 Expliquez ce que l’examen neurologique impliquera en termes simples et rassurants.
+o	 Vérifiez si le patient a des douleurs ou des gênes avant de commencer.
+o	 Obtenez le consentement pour procéder.
+o	 Positionnez le patient selon les étapes nécessaires (debout, assis ou couché).
+
+1.Étude de la marche et de l'équilibre
+
+•	 Observez la marche normale : symétrie, fluidité, coordination.
+•	 Évaluez la démarche en tandem (talon-pointe).
+•	 Recherchez un signe de Romberg :
+  o	Yeux ouverts puis fermés.
+  o	 Oscillation + chute = Romberg positif (atteinte proprioceptive).
+  o	 Oscillation sans chute = Romberg négatif (atteinte cérébelleuse).
+
+2. Étude des fonctions supérieures
+
+•	Évaluez :
+o	 Langage (compréhension, expression).
+o	 Mémoire (immédiate, différée).
+o	 Orientation spatio-temporelle.
+
+3. Examen des nerfs crâniens (NC)
+
+•	NC I (Olfactif) :
+o	 café,vanille...
+•	NC II (Optique) :
+o	 Inspectez les pupilles, testez l'acuité visuelle, champs visuels et réflexes pupillaires.
+•	NC III, IV, VI (Oculomoteurs) :
+o	 Inspectez les paupières pour un ptosis.
+o	 Évaluez les mouvements oculaires et recherchez un strabisme.
+•	NC V (Trijumeau) :
+o	 Testez la sensibilité faciale (front, joue, menton).
+o	 Palpez les muscles masticateurs.
+o	 Testez le réflexe cornéen.
+•	NC VII (Facial) :
+o	 Observez les asymétries faciales.
+o	 Testez les expressions faciales (sourire, froncement de sourcils).
+•	NC VIII (Cochléo-vestibulaire) :
+o	 Évaluez l’audition 
+o	 Testez la fonction vestibulaire :Romberg.
+•	NC IX et X (Glosso-pharyngien et Vague) :
+o	 Testez la phonation (« ahh »), le réflexe nauséeux et la déglutition.
+•	NC XI (Accessoire) :
+o	 Évaluez la force du trapèze et du SCM.
+•	NC XII (Hypoglosse) :
+o	 Observez la langue pour atrophie, fasciculations et déviation.
+
+4. Examen moteur :
+
+•	Inspection :
+o	 Recherchez une amyotrophie, des mouvements anormaux (tremblements, fasciculations).
+•	Tonus :
+o	 Évaluez le tonus musculaire (hypertonie spastique ou plastique).
+o	 Recherchez un clonus à la cheville, roue dentée.
+•	Force musculaire :
+o	 Testez globalement :
+	Épreuve de Barré (MS).
+	Épreuve de Mingazzini (MI).
+o	 Testez par segment selon l’échelle MRC (0 à 5) pour :
+	Épaules, coudes, poignets, doigts (MS).
+	Hanches, genoux, chevilles, orteils (MI).
+
+5. Examen sensitif : 
+
+•	Testez :
+o	 Sensibilité tactile fine (coton).
+o	 Sensibilité douloureuse (piqûre d'épingle).
+o	 Sensibilité vibratoire (diapason).
+o	 Sensibilité proprioceptive (mouvement passif d’un doigt ou d’un orteil).
+•	 Évaluez la sensibilité dermatome par dermatome.
+
+6. Étude de la coordination
+
+•	Testez :
+o	 Épreuve doigt-nez : dysmétrie, hypermétrie, dyschronométrie.
+o	 Épreuve talon-genou : incoordination au MI.
+o	 Dysdiadochocinésie (mouvements alternés rapides).
+
+7. Étude des réflexes
+
+•	Réflexes ostéo-tendineux :
+o	 Bicipital, tricipital, stylo-radial (MS).
+o	 Rotulien, achilléen (MI).
+•	Réflexes cutanés :
+o	 Réflexe cutané plantaire : flexion ou signe de Babinski (extension pathologique).
+
+8. Recherche des signes méningés
+
+Raideur de nuque : incapacité de fléchir le cou.
+•	 Signe de Kernig : douleur en extension du genou en position de flexion de la hanche.
+•	 Signe de Brudzinski : flexion des genoux lors de la flexion de la nuque.
+
+9. Conclusion de l’examen
+
+•	 Expliquez au patient que l’examen est terminé.
+•	 Remerciez le patient pour sa coopération.
+•	 Lavez vos mains et éliminez les EPI.
+•	 Résumez vos observations et proposez des investigations complémentaires (imagerie, examens électrophysiologiques, etc.).
+
+source : https://clinxpert.glide.page/dl/ClinXpert/s/85159a/r/67OruJs.T7Cqf64oEvJZMg
