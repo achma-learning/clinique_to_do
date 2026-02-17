@@ -1,0 +1,5 @@
+make a main version for the general practice version, with check list and reset button
+
+then make a version for each service, version_neurologie , version_cardio ...
+
+then add option to export the .docx file 

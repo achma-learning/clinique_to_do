@@ -1,0 +1,49 @@
+I. Identité du Patient
+Cette section recueille les données administratives et sociales essentielles :
+• Nom et prénom.
+• Âge (ou date de naissance).
+• Sexe.
+• Situation familiale : État civil (célibataire, marié, etc.) et nombre d'enfants.
+• Origine (ville ou pays) et Résidence actuelle.
+• Profession (recherche d'expositions professionnelles).
+• Couverture sociale / Mutuelle (RAMED, CNSS, CNOPS, etc.).
+• Numéro de contact (personnel ou d'une personne de confiance en cas d'urgence).
+• Autonomie : Niveau d'indépendance physique et intellectuelle.
+II. Motif de Consultation
+• La plainte principale : Noter le symptôme ou le signe fonctionnel majeur en utilisant les propres mots du patient.
+• Règle d'or : Il s'agit d'une plainte et jamais d'un diagnostic (ex: noter "douleur thoracique" et non "suspicion d'infarctus").
+III. Antécédents (ATCD)
+Ils se divisent en antécédents personnels et familiaux :
+1. Antécédents personnels :
+• Médicaux : Maladies chroniques (Diabète, HTA, Asthme, Tuberculose, etc.), hospitalisations antérieures et maladies sexuellement transmissibles.
+• Chirurgicaux : Type d'intervention, date, lieu et complications éventuelles (hémorragies, infections).
+• Toxico-allergiques :
+    ◦ Tabagisme : Quantifié en "paquets-années" (PA), tabagisme passif ou usage de cigarettes électroniques.
+    ◦ Alcool et drogues : Type et fréquence de consommation.
+    ◦ Allergies : Médicamenteuses (ex: pénicilline), alimentaires ou environnementales.
+• Gynéco-obstétriques (chez la femme) : Date des dernières règles (DDR), régularité des cycles, contraception, nombre de grossesses (Gestité/Parité) et complications.
+• Vaccination : Statut vaccinal (consulter le carnet de santé si possible).
+• Traitements en cours : Liste exhaustive des médicaments actuels et ordonnances récentes.
+2. Antécédents familiaux :
+• Maladies héréditaires au premier degré (parents, fratrie, enfants) : diabète, HTA, cancer, maladies cardiaques.
+• Notion de contage tuberculeux (contact récent avec une personne atteinte).
+• Âge et cause de décès des membres de la famille.
+
+--------------------------------------------------------------------------------
+IV. Histoire de la Maladie (Must-include)
+C'est la partie la plus cruciale pour poser un diagnostic. Pour chaque symptôme cité, vous devez inclure :
+1. La chronologie : Date précise ou délai depuis le début des symptômes. 2. Le mode d'installation : Brutal ou progressif. 3. La caractérisation du symptôme (Mnémonique "SITI FADMA") :
+• Siège : Localisation précise indiquée par le patient.
+• Irradiation : Diffusion du symptôme vers une autre zone.
+• Type : Nature de la sensation (ex: brûlure, coup de poignard).
+• Impact : Retentissement sur la vie quotidienne et le sommeil.
+• Facteurs Aggravants : Ce qui empire le symptôme (effort, repas, position).
+• Durée / Rythme : Durée des crises, horaire diurne ou nocturne.
+• Mode évolutif : Évolution continue, intermittente ou par crises (paroxystique).
+• Accalmie : Ce qui soulage le symptôme (médicaments, repos, position antalgique).
+4. Les Signes Généraux (Les 3A + Fièvre) :
+• Asthénie (fatigue intense).
+• Anorexie (perte d'appétit).
+• Amaigrissement (à quantifier en kg sur une durée donnée).
+• Fièvre, frissons ou sueurs nocturnes.
+5. Les Signes Associés : Autres anomalies survenant en même temps (ex: nausées, troubles du transit). 6. Les Signes Négatifs : Mentionner l'absence de certains signes clés pour orienter le diagnostic différentiel. 7. Évolution sous traitement : Noter les médicaments déjà pris pour cet épisode et leur efficacité.
