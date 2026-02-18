@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist d'Observation Médicale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3, h4 {
+            color: #0056b3;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .reset-button {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .reset-button:hover {
+            background-color: #c82333;
+        }
+        .section {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .section-header {
+            background-color: #f8f8f8;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-header:hover {
+            background-color: #e9e9e9;
+        }
+        .section-content {
+            padding: 15px;
+            display: none;
+            border-top: 1px solid #eee;
+        }
+        .section-content.expanded {
+            display: block;
+        }
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"],
+        .checkbox-group input[type="radio"] {
+            margin-right: 8px;
+        }
+        .sub-section {
+            margin-left: 20px;
+            border-left: 2px solid #007bff;
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .toggle-icon {
+            font-size: 1.2em;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            .section-header {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Checklist d'Observation Médicale</h1>
+
+        <button class="reset-button" onclick="resetChecklist()">Réinitialiser tout</button>
+
+        <!-- Script for toggling sections and resetting -->
+        <script>
+            function toggleSection(element) {
+                const content = element.nextElementSibling;
+                const icon = element.querySelector('.toggle-icon');
+                if (content.classList.contains('expanded')) {
+                    content.classList.remove('expanded');
+                    icon.textContent = '+';
+                } else {
+                    content.classList.add('expanded');
+                    icon.textContent = '-';
+                }
+            }
+
+            function resetChecklist() {
+                if (confirm('Voulez-vous vraiment réinitialiser toute la checklist ?')) {
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(checkbox => checkbox.checked = false);
+
+                    const radioButtons = document.querySelectorAll('input[type="radio"]');
+                    radioButtons.forEach(radio => radio.checked = false);
+
+                    const textInputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
+                    textInputs.forEach(input => input.value = '');
+
+                    alert('Checklist réinitialisée !');
+                }
+            }
+        </script>
+
+        <style>
+            .toggle-detail { transition: all 0.2s ease; }
+            .toggle-detail label { display:block; margin-bottom:6px; }
+        </style>
+
+        <script>
+            function toggleDetail(id) {
+                const el = document.getElementById(id);
+                if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            }
+
+            function toggleGanglioDetail(cb) {
+                // Show detail panel to document anomalies — toggle with a separate button
+                // When "sans anomalie" is checked → hide details
+                // When unchecked → show the detail option button
+                const detail = document.getElementById('ganglio_detail');
+                const btn = document.getElementById('ganglio_show_btn');
+                if (cb.checked) {
+                    if (detail) detail.style.display = 'none';
+                    if (btn) btn.style.display = 'none';
+                } else {
+                    if (btn) btn.style.display = 'inline-block';
+                }
+            }
+            function showGanglioDetail() {
+                const detail = document.getElementById('ganglio_detail');
+                if (detail) detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+            }
+
+            let hypCount = 3;
+            function addHypothese() {
+                hypCount++;
+                const container = document.getElementById('hyp_container');
+                const div = document.createElement('div');
+                div.className = 'hyp-row';
+                div.style = 'border:1px solid #ddd; border-radius:6px; padding:14px; margin-bottom:12px; background:#fafafa;';
+                div.innerHTML = `
+                    <label style="font-weight:600; color:#0056b3; font-size:15px;">Hypothèse n°${hypCount}</label>
+                    <label style="margin-top:8px;">Diagnostic évoqué : <input type="text" name="hyp${hypCount}_diag" style="width:70%; margin-left:8px;" placeholder="Diagnostic…"></label>
+                    <label style="margin-top:6px;">Arguments pour : <textarea name="hyp${hypCount}_pour" rows="2" style="width:90%; margin-top:4px;" placeholder="— Terrain, ATCD&#10;— Signes fonctionnels&#10;— Signes physiques"></textarea></label>
+                    <label style="margin-top:6px;">Arguments contre : <textarea name="hyp${hypCount}_contre" rows="2" style="width:90%; margin-top:4px;"></textarea></label>
+                    <label style="margin-top:6px;">Priorité :
+                        <input type="radio" name="hyp${hypCount}_priorite" value="probable"> Plus probable &nbsp;
+                        <input type="radio" name="hyp${hypCount}_priorite" value="grave"> Plus grave / urgente &nbsp;
+                        <input type="radio" name="hyp${hypCount}_priorite" value="contexte"> Adaptée au contexte
+                    </label>`;
+                container.appendChild(div);
+            }
+        </script>
+
+        <!-- Section: Identité du Patient -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>I. Identité du Patient</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label>Nom et Prénom: <input type="text" name="nom_prenom"></label>
+                    <label>Date de naissance: <input type="date" name="date_naissance"></label>
+                    <label>Sexe:
+                        <input type="radio" name="sexe" value="homme"> Homme
+                        <input type="radio" name="sexe" value="femme"> Femme
+                    </label>
+                    <label>Situation familiale: <input type="text" name="situation_familiale"></label>
+                    <label>Origine et Résidence: <input type="text" name="origine_residence"></label>
+                    <label>Profession: <input type="text" name="profession"></label>
+                    <label>Couverture sociale: <input type="text" name="couverture_sociale"></label>
+                    <label>Numéro de contact: <input type="text" name="numero_contact"></label>
+                    <label>Autonomie: <input type="text" name="autonomie"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Motif de Consultation -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>II. Motif de Consultation</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label>Plainte principale (selon les mots du patient): <textarea name="plainte_principale"></textarea></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Antécédents -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>III. Antécédents (ATCD)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <h3>1. Antécédents personnels :</h3>
+                <div class="sub-section checkbox-group">
+                    <h4>Médicaux</h4>
+                    <label><input type="checkbox" name="atcd_diabete"> Diabète</label>
+                    <label><input type="checkbox" name="atcd_hta"> HTA</label>
+                    <label><input type="checkbox" name="atcd_asthme"> Asthme</label>
+                    <label><input type="checkbox" name="atcd_tuberculose"> Tuberculose</label>
+                    <label><input type="checkbox" name="atcd_mst" onchange="toggleDetail('mst_details')"> Maladies Sexuellement Transmissibles (MST / IST)</label>
+                    <div id="mst_details" class="toggle-detail" style="display:none; margin-left:22px; margin-top:6px; padding:10px; background:#f9f9f9; border-left:3px solid #0056b3; border-radius:4px;">
+                        <label style="font-weight:600; color:#0056b3;">Type de MST / IST :
+                            <input type="text" name="atcd_mst_type" placeholder="Ex : VIH, Syphilis, Gonorrhée, Hépatite B…" style="margin-left:8px; width:70%;">
+                        </label>
+                        <label style="margin-top:6px;">Traitement en cours :
+                            <input type="text" name="atcd_mst_traitement" placeholder="ARV, Antibiotiques, Interféron…" style="margin-left:8px; width:65%;">
+                        </label>
+                        <label style="margin-top:6px;">Depuis :
+                            <input type="date" name="atcd_mst_depuis" style="margin-left:8px;">
+                        </label>
+                    </div>
+                    <label>Autres maladies chroniques: <input type="text" name="atcd_autres_medicaux"></label>
+
+                    <h4>Chirurgicaux</h4>
+                    <label>Type d'intervention: <input type="text" name="atcd_chir_type"></label>
+                    <label>Date: <input type="date" name="atcd_chir_date"></label>
+                    <label>Lieu: <input type="text" name="atcd_chir_lieu"></label>
+                    <label>Complications: <input type="text" name="atcd_chir_complications"></label>
+
+                    <h4>Toxico-allergiques</h4>
+                    <label>Tabagisme: <input type="text" name="atcd_tabagisme" placeholder="Paquets-années, type"></label>
+                    <label>Alcool et drogues: <input type="text" name="atcd_alcool_drogues" placeholder="Type, fréquence"></label>
+                    <label>Allergies: <input type="text" name="atcd_allergies" placeholder="Médicamenteuses, alimentaires, environnementales"></label>
+
+                    <h4>Gynéco-obstétriques (chez la femme)</h4>
+                    <label>Date des dernières règles (DDR): <input type="date" name="atcd_ddr"></label>
+                    <label>Régularité des cycles: <input type="text" name="atcd_cycles"></label>
+                    <label>Contraception :
+                        <select name="atcd_contraception" style="margin-left:8px; padding:4px 8px; border:1px solid #ccc; border-radius:4px; font-size:14px;">
+                            <option value="">— Sélectionner —</option>
+                            <option value="Pilule combinée">Pilule combinée (œstroprogestative)</option>
+                            <option value="Pilule progestative">Pilule progestative seule</option>
+                            <option value="DIU cuivre">Dispositif Intra-Utérin (DIU) au cuivre</option>
+                            <option value="DIU hormonal">Dispositif Intra-Utérin (DIU) hormonal (Mirena…)</option>
+                            <option value="Implant sous-cutané">Implant sous-cutané</option>
+                            <option value="Injection progestative">Injection progestative (Depo-Provera…)</option>
+                            <option value="Préservatif masculin">Préservatif masculin</option>
+                            <option value="Préservatif féminin">Préservatif féminin</option>
+                            <option value="Diaphragme">Diaphragme / Cape cervicale</option>
+                            <option value="Contraception d'urgence">Contraception d'urgence (pilule du lendemain)</option>
+                            <option value="MAMA">Méthode de l'Allaitement Maternel et de l'Aménorrhée (MAMA)</option>
+                            <option value="Méthodes naturelles">Méthodes naturelles (Ogino, température…)</option>
+                            <option value="Stérilisation">Stérilisation tubaire / Ligature des trompes</option>
+                            <option value="Aucune">Aucune contraception</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </label>
+                    <label>Gestité/Parité: <input type="text" name="atcd_gestite_parite"></label>
+                    <label>Complications: <input type="text" name="atcd_gyn_complications"></label>
+
+                    <h4>Vaccination</h4>
+                    <label>Statut vaccinal: <input type="text" name="atcd_vaccination"></label>
+
+                    <h4>Traitements en cours</h4>
+                    <label>Liste de tous les Médicaments pris pendant ces trois derniers mois : <textarea name="atcd_traitements"></textarea></label>
+                </div>
+
+                <h3>2. Antécédents familiaux :</h3>
+                <div class="sub-section checkbox-group">
+                    <p style="font-size:13px; color:#555; font-style:italic; margin-bottom:10px;">💡 Pour chaque pathologie cochée, précisez : chez qui (père, mère, frère…) et les informations cliniques associées.</p>
+
+                    <label><input type="checkbox" name="atcd_fam_diabete" onchange="toggleDetail('fam_diabete_det')"> Diabète familial</label>
+                    <div id="fam_diabete_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#f9f9f9; border-left:3px solid #0056b3; border-radius:4px;">
+                        <label>Chez qui &amp; informations associées : <textarea name="fam_diabete_info" rows="2" placeholder="Ex : père — DT2 depuis 20 ans sous metformine…" style="width:90%; margin-top:4px;"></textarea></label>
+                    </div>
+
+                    <label><input type="checkbox" name="atcd_fam_hta" onchange="toggleDetail('fam_hta_det')"> HTA familiale</label>
+                    <div id="fam_hta_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#f9f9f9; border-left:3px solid #0056b3; border-radius:4px;">
+                        <label>Chez qui &amp; informations associées : <textarea name="fam_hta_info" rows="2" placeholder="Ex : mère — HTA traitée, AVC à 60 ans…" style="width:90%; margin-top:4px;"></textarea></label>
+                    </div>
+
+                    <label><input type="checkbox" name="atcd_fam_cancer" onchange="toggleDetail('fam_cancer_det')"> Cancer familial</label>
+                    <div id="fam_cancer_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#f9f9f9; border-left:3px solid #0056b3; border-radius:4px;">
+                        <label>Chez qui &amp; informations associées : <textarea name="fam_cancer_info" rows="2" placeholder="Ex : oncle maternel — cancer du côlon à 55 ans…" style="width:90%; margin-top:4px;"></textarea></label>
+                    </div>
+
+                    <label><input type="checkbox" name="atcd_fam_cardio" onchange="toggleDetail('fam_cardio_det')"> Maladies cardiaques familiales</label>
+                    <div id="fam_cardio_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#f9f9f9; border-left:3px solid #0056b3; border-radius:4px;">
+                        <label>Chez qui &amp; informations associées : <textarea name="fam_cardio_info" rows="2" placeholder="Ex : grand-père — insuffisance cardiaque…" style="width:90%; margin-top:4px;"></textarea></label>
+                    </div>
+
+                    <label><input type="checkbox" name="atcd_fam_contage_tb" onchange="toggleDetail('fam_tb_det')"> Notion de contage tuberculeux</label>
+                    <div id="fam_tb_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#f9f9f9; border-left:3px solid #0056b3; border-radius:4px;">
+                        <label>Chez qui &amp; informations associées : <textarea name="fam_tb_info" rows="2" placeholder="Ex : frère — tuberculose pulmonaire traitée en 2020…" style="width:90%; margin-top:4px;"></textarea></label>
+                    </div>
+
+                    <label><input type="checkbox" name="atcd_fam_mort_subit" onchange="toggleDetail('fam_mort_subit_det')"> Mort subite (&lt;45 ans)</label>
+                    <div id="fam_mort_subit_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#fff3cd; border-left:3px solid #e67e22; border-radius:4px;">
+                        <label>Chez qui &amp; informations associées : <textarea name="fam_mort_subit_info" rows="2" placeholder="Ex : père — mort subite à 42 ans, causes inconnues…" style="width:90%; margin-top:4px;"></textarea></label>
+                    </div>
+
+                    <label><input type="checkbox" name="atcd_fam_avc_idm" onchange="toggleDetail('fam_avc_idm_det')"> Accident Vasculaire Cérébral (AVC) / Infarctus du Myocarde (IdM)</label>
+                    <div id="fam_avc_idm_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#fff3cd; border-left:3px solid #e67e22; border-radius:4px;">
+                        <label>Chez qui &amp; informations associées : <textarea name="fam_avc_idm_info" rows="2" placeholder="Ex : mère — AVC ischémique à 58 ans ; père — IdM à 50 ans…" style="width:90%; margin-top:4px;"></textarea></label>
+                    </div>
+
+                    <label>Autres maladies héréditaires: <input type="text" name="atcd_fam_autres"></label>
+                    <label>Âge et cause de décès membres famille: <textarea name="atcd_fam_deces"></textarea></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Histoire de la Maladie -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>IV. Histoire de la Maladie (Must-include)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div class="checkbox-group">
+                    <label>Chronologie (date précise ou délai depuis début symptômes): <input type="text" name="hdM_chronologie"></label>
+                    <label>Mode d'installation:
+                        <input type="radio" name="hdM_mode_installation" value="brutal"> Brutal
+                        <input type="radio" name="hdM_mode_installation" value="progressif"> Progressif
+                    </label>
+
+                    <h4>Caractérisation du symptôme (Mnémonique "SITI FADMA")</h4>
+                    <div class="sub-section">
+                        <label>Siège: <input type="text" name="hdM_siege"></label>
+                        <label>Irradiation: <input type="text" name="hdM_irradiation"></label>
+                        <label>Type (brûlure, coup de poignard...): <input type="text" name="hdM_type"></label>
+                        <label>Impact (sur vie quotidienne, sommeil): <input type="text" name="hdM_impact"></label>
+                        <label>Facteurs Aggravants: <input type="text" name="hdM_facteurs_aggravants"></label>
+                        <label>Durée / Rythme (crises, horaire): <input type="text" name="hdM_duree_rythme"></label>
+                        <label>Mode évolutif (continu, intermittent, par crises): <input type="text" name="hdM_mode_evolutif"></label>
+                        <label>Accalmie (ce qui soulage): <input type="text" name="hdM_accalmie"></label>
+                    </div>
+
+                    <h4>Signes Généraux (Les 3A + Fièvre)</h4>
+                    <div class="sub-section checkbox-group">
+                        <label><input type="checkbox" name="hdM_asthenie"> Asthénie</label>
+                        <label><input type="checkbox" name="hdM_anorexie"> Anorexie</label>
+                        <label>Amaigrissement (kg sur durée): <input type="text" name="hdM_amaigrissement"></label>
+                        <label><input type="checkbox" name="hdM_fievre" onchange="toggleDetail('fievre_det')"> Fièvre</label>
+                        <div id="fievre_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:8px 12px; background:#fef9e7; border-left:3px solid #e67e22; border-radius:4px;">
+                            <label>Chiffrée à : <input type="text" name="hdM_fievre_chiffre" placeholder="Ex : 39,5 °C" style="margin-left:8px; width:180px;"></label>
+                        </div>
+                        <label><input type="checkbox" name="hdM_frissons"> Frissons</label>
+                        <label><input type="checkbox" name="hdM_sueurs_nocturnes"> Sueurs nocturnes</label>
+                        <label><input type="checkbox" name="hdM_contexte_traumatique" onchange="toggleDetail('traumatique_det')"> Contexte traumatique</label>
+                        <div id="traumatique_det" class="toggle-detail" style="display:none; margin-left:22px; margin-top:4px; margin-bottom:8px; padding:10px 14px; background:#fdecea; border-left:3px solid #c0392b; border-radius:4px;">
+                            <label>Points d'impact : <input type="text" name="hdM_points_impact" placeholder="Ex : crâne pariétal droit, genou gauche…" style="margin-left:8px; width:70%;"></label>
+                            <label style="margin-top:8px; display:block; font-weight:600; color:#c0392b;">Signes associés :</label>
+                            <div style="margin-left:8px;">
+                                <label><input type="checkbox" name="trauma_vomissement"> Vomissements</label>
+                                <label><input type="checkbox" name="trauma_pdc"> Perte de connaissance (PDC)</label>
+                                <label><input type="checkbox" name="trauma_amnesia"> Amnésie de l'épisode</label>
+                                <label><input type="checkbox" name="trauma_cephalees"> Céphalées post-traumatiques</label>
+                                <label><input type="checkbox" name="trauma_trouble_vision"> Troubles visuels</label>
+                                <label><input type="checkbox" name="trauma_deficit_moteur"> Déficit moteur / sensitif</label>
+                                <label><input type="checkbox" name="trauma_epistaxis"> Épistaxis / Otorragie</label>
+                                <label>Autres signes associés : <input type="text" name="trauma_autres" placeholder="Préciser…" style="margin-left:8px; width:60%;"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label>Signes Associés (nausées, troubles transit...): <textarea name="hdM_signes_associes"></textarea></label>
+                    <label>Signes Négatifs (absence de signes clés): <textarea name="hdM_signes_negatifs"></textarea></label>
+                    <label>Évolution sous traitement: <textarea name="hdM_evolution_traitement"></textarea></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Examen Clinique - Physique (from PDF) -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>V. Examen Clinique - Physique</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <h3>EXAMEN GÉNÉRAL</h3>
+                <div class="sub-section checkbox-group">
+                    <label><input type="checkbox" name="eg_conscient_oriente"> Patient(e) conscient(e), orienté(e) dans le temps et dans l'espace</label>
+                    <label>GCS: <input type="text" name="eg_gcs"></label>
+                    <label><input type="checkbox" name="eg_stable_hemo_respi"> Stable sur le plan Hémodynamique et respiratoire</label>
+                    <label>TA (MS droit): <input type="text" name="eg_ta_droit"> mmHg</label>
+                    <label>TA (MS gauche): <input type="text" name="eg_ta_gauche"> mmHg</label>
+                    <label>Fc: <input type="text" name="eg_fc"> bpm</label>
+                    <label>Fr: <input type="text" name="eg_fr"> cpm</label>
+                    <label>SpO2 (%) à l'Air Ambiant : <input type="text" name="eg_spo2"> %</label>
+                    <label>Poids: <input type="text" name="eg_poids"> Kg</label>
+                    <label>Taille: <input type="text" name="eg_taille"> cm</label>
+                    <label>IMC: <input type="text" name="eg_imc"></label>
+                    <label>Température: <input type="text" name="eg_temp"> °C</label>
+                    <label><input type="checkbox" name="eg_conjonctif_normo"> Conjonctif normocolorée (pas de pâleur cutanéo-muqueuse, ni d'ictère, ni de lésion cutanée, ni d'œdème)</label>
+                    <label><input type="checkbox" name="eg_pas_deshydratation"> Pas de signe de déshydratation (TRC < 3s)</label>
+                    <label><input type="checkbox" name="eg_pas_signes_choc"> Pas de signes de choc (marbrures, froideurs des extrémités, cyanoses ...)</label>
+                </div>
+
+                <h3>EXAMEN ABDOMINAL</h3>
+                <div class="sub-section">
+                    <h4>Inspection</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="abd_resp_normale"> La respiration abdominale est normale</label>
+                        <label><input type="checkbox" name="abd_pas_deformation"> Il n'existe pas de déformation de l'abdomen</label>
+                        <label><input type="checkbox" name="abd_pas_cicatrices"> Il n'existe pas de cicatrices</label>
+                        <label><input type="checkbox" name="abd_pas_circulation_collaterale"> Il n'existe pas de circulation veineuse collatérale</label>
+                        <label><input type="checkbox" name="abd_pas_voussures_vergetures"> Il n'existe pas de voussures, ni de vergetures, ni de points de feu</label>
+                        <label><input type="checkbox" name="abd_ombilic_plisse"> L'ombilic est bien plissé</label>
+                        <label><input type="checkbox" name="abd_teguments_normaux"> Les téguments sont d'aspect normal</label>
+                        <label><input type="checkbox" name="abd_pas_asterixis"> Pas d'asthérixis (encéphalopathie hépatique, Sd urémique)</label>
+                        <label><input type="checkbox" name="abd_pas_leuconychie_erytheme"> Pas de leuconychie, ni erythème palmaire</label>
+                        <label><input type="checkbox" name="abd_examen_buccal_normal"> Examen cavité buccal normal</label>
+                    </div>
+                    <h4>Palpation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="abd_souple_depressible"> L'abdomen est souple, dépressible</label>
+                        <label><input type="checkbox" name="abd_pas_defense_contracture"> Il n'existe pas de défense, de contracture, ni de sensibilité</label>
+                        <label><input type="checkbox" name="abd_pas_organomegalie"> Il n'existe pas d'organomégalie (SPM, HPM)</label>
+                        <label><input type="checkbox" name="abd_pas_contact_lombaire"> Il n'existe pas de contact lombaire</label>
+                        <label><input type="checkbox" name="abd_pas_masse_palpable"> Il n'existe pas de masse palpable</label>
+                        <label><input type="checkbox" name="abd_pas_hernie"> Il n'existe pas d'hernie/éventration (tousse: ombilique, ligne blanche, femorale, inguinale, epigastrique)</label>
+                        <label><input type="checkbox" name="abd_oedeme_membre_inf"> Œdème de membre inférieur, prend godet?</label>
+                        <label><input type="checkbox" name="abd_pas_signe_flot"> Pas de Signe du flot (présence d'ascite)</label>
+                        <label><input type="checkbox" name="abd_pas_signe_glaçon"> Pas Signe du glaçon pour une masse mobile</label>
+                        <label>Zone douloureuse: <input type="text" name="abd_zone_douloureuse"></label>
+                        <label>Sensible: <input type="checkbox" name="abd_palp_sensible"></label>
+                        <label>Masse: <input type="checkbox" name="abd_palp_masse"></label>
+                        <label>Contracture: <input type="checkbox" name="abd_palp_contracture"></label>
+                        <label>Défense abdominale: <input type="checkbox" name="abd_palp_defense"></label>
+                        <label>Hépatomégalie: <input type="checkbox" name="abd_hepatomegalie"></label>
+                        <label>Splénomégalie: <input type="checkbox" name="abd_splenomegalie"></label>
+                        <label>Flèche hépatique: <input type="text" name="abd_fleche_hepatique"> cm</label>
+                        <label><input type="checkbox" name="abd_reflux_hepato_jugulaire"> Reflux hépato-jugulaire</label>
+                        <label>Signe de Murphy:
+                            <input type="radio" name="murphy_sign" value="positif"> Positif
+                            <input type="radio" name="murphy_sign" value="negatif"> Négatif
+                        </label>
+                    </div>
+                    <h4>Percussion</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="abd_pas_matite"> Il n'existe pas de matité</label>
+                        <label><input type="checkbox" name="abd_tympanisme_normal"> Le tympanisme est normal</label>
+                        <label><input type="checkbox" name="abd_pas_meteorisme"> Pas de météorisme (occlusion intestinale)</label>
+                    </div>
+                    <h4>Auscultation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="abd_transit_audible"> Le transit est audible</label>
+                        <label><input type="checkbox" name="abd_pas_souffle_abdominal"> Il n'existe pas de souffle abdominal</label>
+                        <label>Bruits hydro-aériques:
+                            <input type="radio" name="bruits_hya" value="normaux"> Normaux
+                            <input type="radio" name="bruits_hya" value="absents"> Absents
+                            <input type="radio" name="bruits_hya" value="augmentes"> Augmentés
+                        </label>
+                        <label>Souffles vasculaires: <input type="text" name="abd_souffles_vasc"></label>
+                    </div>
+                    <h4>Toucher rectal</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tr_non_realise"> Non réalisé</label>
+                        <label><input type="checkbox" name="tr_fissures"> Fissures</label>
+                        <label><input type="checkbox" name="tr_hemorroides"> Hémorroïdes</label>
+                        <label><input type="checkbox" name="tr_fistules"> Fistules</label>
+                        <label><input type="checkbox" name="tr_excoriations"> Excoriations</label>
+                        <label>Tonus sphinctérien: <input type="text" name="tr_tonus"></label>
+                        <label>Contenu intra rectal: <input type="text" name="tr_contenu"></label>
+                        <label>Prostate: <input type="text" name="tr_prostate"></label>
+                        <label>Cul du sac de Douglas: <input type="text" name="tr_cul_douglas"></label>
+                        <label>État du doigtier après examen: <input type="text" name="tr_doigtier"></label>
+                        <label><input type="checkbox" name="tr_cri_douglas"> Recherche du cri de Douglas = péritonite</label>
+                    </div>
+                </div>
+
+                <h3>EXAMEN CARDIAQUE</h3>
+                <div class="sub-section">
+                    <h4>Inspection</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="card_thorax_symetrique"> Le thorax est symétrique</label>
+                        <label><input type="checkbox" name="card_pas_deformation_thorax"> Il n'existe pas de déformation du thorax</label>
+                        <label><input type="checkbox" name="card_pas_circulation_collaterale"> Il n'existe pas de circulation veineuse collatérale</label>
+                        <label><input type="checkbox" name="card_pas_oedeme_mi"> Il n'existe pas d'œdème des membres inférieurs</label>
+                        <label><input type="checkbox" name="card_pas_turgescence_jugulaire"> Il n'existe pas de turgescence spontannée de la veine jugulaire</label>
+                        <label><input type="checkbox" name="card_pas_cyanose_teguments"> Il n'existe pas de cyanose des téguments</label>
+                        <label><input type="checkbox" name="card_pas_angiome_stellaire"> Il n'existe pas d'angiome stellaire</label>
+                        <label><input type="checkbox" name="card_pas_cicatrice_lesion"> Il n'existe pas de cicatrice ni de lésion cutanée</label>
+                        <label>Position antalgique:
+                            <input type="radio" name="card_pos_antalgique" value="oui"> Oui
+                            <input type="radio" name="card_pos_antalgique" value="non"> Non
+                        </label>
+                        <label>Limitation d'amplitude des mouvements:
+                            <input type="radio" name="card_limit_mouv" value="oui"> Oui
+                            <input type="radio" name="card_limit_mouv" value="non"> Non
+                        </label>
+                        <label>Couleur de la peau et de muqueuses:
+                            <input type="radio" name="card_peau_muqueuses" value="normale"> Normale
+                            <input type="radio" name="card_peau_muqueuses" value="paleur"> Pâleur
+                            <input type="radio" name="card_peau_muqueuses" value="cyanose"> Cyanose des extrémités et péri-buccale
+                            <input type="radio" name="card_peau_muqueuses" value="ictere"> Ictère
+                            <input type="radio" name="card_peau_muqueuses" value="facies_mitral"> Faciès mitral
+                        </label>
+                        <label>Inspection visage et cou:
+                            <input type="radio" name="card_visage_cou" value="normale"> Normale
+                            <input type="radio" name="card_visage_cou" value="exophtalmie"> Exophtalmie
+                            <input type="radio" name="card_visage_cou" value="turgescence_jugulaires"> Turgescence des veines jugulaires
+                            <input type="radio" name="card_visage_cou" value="gerontoxon"> Gérontoxon
+                            <input type="radio" name="card_visage_cou" value="xanthelasma"> Xanthélasma
+                        </label>
+                        <label>Inspection membres:
+                            <input type="radio" name="card_membres" value="normale"> Normale
+                            <input type="radio" name="card_membres" value="xanthomes"> Xanthomes cutanés
+                            <input type="radio" name="card_membres" value="varices"> Varices
+                            <input type="radio" name="card_membres" value="hippocratisme"> Hippocratisme digital
+                            <input type="radio" name="card_membres" value="dilatation"> Dilatation anormale de vaisseaux
+                        </label>
+                        <label><input type="checkbox" name="card_thorax_abdomen_respi"> Voir aspect du thorax et de l'abdomen lors de la respiration (suspecter œdème pulmonaire)</label>
+                    </div>
+                    <h4>Palpation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="card_choc_pointe_perçu"> Le choc de pointe est bien perçu</label>
+                        <label><input type="checkbox" name="card_signe_harzer_negatif"> Le signe de Harzer est négatif</label>
+                        <label><input type="checkbox" name="card_pas_thrill_sternal"> Il n'existe pas de thrill sus sternal</label>
+                        <label><input type="checkbox" name="card_pas_reflux_hepato_jugulaire"> Il n'existe pas de reflux hépato jugulaire</label>
+                        <label>Pouls périphériques:
+                            <input type="radio" name="card_pouls_peripheriques" value="present"> Présent (+)
+                            <input type="radio" name="card_pouls_peripheriques" value="absent"> Absent (-)
+                        </label>
+                        <label>Chaleur:
+                            <input type="radio" name="card_chaleur" value="oui"> Oui
+                            <input type="radio" name="card_chaleur" value="non"> Non
+                        </label>
+                        <label>Si oui ou exactement: <input type="text" name="card_chaleur_detail"></label>
+                        <label>Choc de pointe (5ème espace intercostal gauche):
+                            <input type="radio" name="card_choc_pointe" value="oui"> Oui
+                            <input type="radio" name="card_choc_pointe" value="non"> Non
+                        </label>
+                        <label>Frémissements ou Thrill:
+                            <input type="radio" name="card_fremissements" value="oui"> Oui
+                            <input type="radio" name="card_fremissements" value="non"> Non
+                        </label>
+                        <label>Index pression systolique:
+                            <input type="radio" name="card_index_pression" value="normale"> Normale
+                            <input type="radio" name="card_index_pression" value="bas"> Bas
+                        </label>
+                        <label>Ballotement des mollets:
+                            <input type="radio" name="card_ballotement" value="oui"> Oui
+                            <input type="radio" name="card_ballotement" value="non"> Non
+                        </label>
+                        <label>Signe de Homans:
+                            <input type="radio" name="card_homans" value="positif"> Positif
+                            <input type="radio" name="card_homans" value="negatif"> Négatif
+                        </label>
+                        <label>Perte de battements de mollets:
+                            <input type="radio" name="card_perte_battements" value="oui"> Oui
+                            <input type="radio" name="card_perte_battements" value="non"> Non
+                        </label>
+                    </div>
+                    <h4>Percussion</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="card_percussion_tympanisme"> Tympanisme</label>
+                        <label><input type="checkbox" name="card_percussion_matite"> Matité</label>
+                        <label><input type="checkbox" name="card_percussion_normale"> Normale</label>
+                    </div>
+                    <h4>Auscultation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="card_bruits_coeur_percus"> Les bruits du cœur, B1 et B2, sont bien perçus aux 4 foyers</label>
+                        <label><input type="checkbox" name="card_systole_diastole_libres"> La systole et la diastole sont libres à chaque foyer</label>
+                        <label><input type="checkbox" name="card_pas_frottement_pericardique"> Il n'existe pas de frottement péricardique</label>
+                        <label><input type="checkbox" name="card_pas_sons_surajoutés"> Il n'existe pas de sons surajoutés (B3 ou B4), pas de souffle</label>
+                        <label><input type="checkbox" name="card_pas_insuffisance_cardiaque"> Il n'existe pas d'insuffisance cardiaque (ni droite ni gauche)</label>
+                        <label>B1:
+                            <input type="radio" name="card_b1_normal" value="normal"> Normal
+                            <input type="radio" name="card_b1_diminue"> Diminué au foyer
+                            <input type="radio" name="card_b1_accentue"> Accentué au foyer
+                            <input type="radio" name="card_b1_dedoublement"> Dédoublement
+                        </label>
+                        <label>B2:
+                            <input type="radio" name="card_b2_normal" value="normal"> Normal
+                            <input type="radio" name="card_b2_diminue"> Diminué au foyer
+                            <input type="radio" name="card_b2_accentue"> Accentué au foyer
+                            <input type="radio" name="card_b2_dedoublement"> Dédoublement
+                        </label>
+                        <label><input type="checkbox" name="card_b1b2_diminues"> B1 et B2 diminués</label>
+                        <label><input type="checkbox" name="card_b1b2_augmentes"> B1 et B2 augmentés</label>
+                        <label><input type="checkbox" name="card_bruits_surajoutes_present"> Bruits surajoutés</label>
+                        <label>Souffles cardiaques:
+                            <input type="radio" name="card_souffles" value="diastolique"> Diastolique
+                            <input type="radio" name="card_souffles" value="systolique"> Systolique
+                        </label>
+                        <label>Situation dans le cycle: <input type="text" name="card_souffles_cycle"></label>
+                        <label>Souffles sur les trajets artériels: <input type="text" name="card_souffles_arteriels"></label>
+                    </div>
+                </div>
+
+                <h3>EXAMEN VASCULAIRE</h3>
+                <div class="sub-section checkbox-group">
+                    <label><input type="checkbox" name="vasc_pouls_reguliers_presents"> Les pouls sont réguliers, présents de façon bilatérale et symétrique, sans souffle audible</label>
+                    <label><input type="checkbox" name="vasc_pas_pouls_abolis_filant"> Pas de pouls abolis ou filant (signe de choc hémorragie)</label>
+                </div>
+
+                <h3>EXAMEN PLEURO-PULMONAIRE</h3>
+                <div class="sub-section">
+                    <h4>Inspection</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="pp_pas_cyanose_teguments"> Il n'existe pas de cyanose des téguments</label>
+                        <label><input type="checkbox" name="pp_pas_deformation_thorax"> Il n'existe pas de déformation du thorax</label>
+                        <label><input type="checkbox" name="pp_pas_hippocratisme"> Il n'existe pas d'hippocratisme digital</label>
+                        <label><input type="checkbox" name="pp_pas_cicatrices"> Il n'existe pas de cicatrices</label>
+                        <label><input type="checkbox" name="pp_rythme_normal_regulier"> Le rythme respiratoire est normal et régulier</label>
+                        <label><input type="checkbox" name="pp_respi_synchronisees"> Les respirations thoracique et abdominale sont synchronisées</label>
+                        <label><input type="checkbox" name="pp_pas_oedeme_cervical"> Il n'existe pas d'œdème cervical</label>
+                        <label><input type="checkbox" name="pp_pas_signe_lutte"> Il n'existe pas de signe de lutte respiratoire</label>
+                        <label><input type="checkbox" name="pp_pas_battement_ailes_nez"> Il n'existe pas de battement de ailes du nez</label>
+                        <label><input type="checkbox" name="pp_pas_entonnoir_xiphoidien"> Il n'existe pas d'entonnoir xiphoïdien</label>
+                        <label><input type="checkbox" name="pp_pas_tirage_sus_sternal"> Il n'existe pas de tirage sus sternal</label>
+                        <label><input type="checkbox" name="pp_pas_tirage_intercostal"> Il n'existe pas de tirage intercostal</label>
+                        <label>Morphologie et symétrie du thorax:
+                            <input type="radio" name="pp_morpho_thorax" value="normale"> Morphologie normale
+                            <input type="radio" name="pp_morpho_thorax" value="distension_globale"> Distension du thorax: Globale
+                            <input type="radio" name="pp_morpho_thorax" value="distension_unilaterale"> Distension du thorax: Unilatérale
+                            <input type="radio" name="pp_morpho_thorax" value="retraction_totale"> Rétraction: Totale
+                            <input type="radio" name="pp_morpho_thorax" value="retraction_partielle"> Rétraction: Partielle
+                            <input type="text" name="pp_morpho_thorax_autre" placeholder="Autre"></label>
+                        <label>Déformation de la colonne vertébrale:
+                            <input type="radio" name="pp_def_colonne" value="cyphose"> Cyphose
+                            <input type="radio" name="pp_def_colonne" value="scoliose"> Scoliose
+                            <input type="radio" name="pp_def_colonne" value="lordose"> Lordose
+                            <input type="radio" name="pp_def_colonne" value="gibbosité"> Gibbosité
+                            <input type="radio" name="pp_def_colonne" value="pas_deformation"> Pas de déformation
+                            <input type="text" name="pp_def_colonne_autre" placeholder="Autre"></label>
+                        <label>Déformation de la cage thoracique:
+                            <input type="radio" name="pp_def_cage" value="entonnoir"> Thorax en entonnoir
+                            <input type="radio" name="pp_def_cage" value="carene"> Thorax en carène
+                            <input type="radio" name="pp_def_cage" value="pas_deformation"> Pas de déformation
+                            <input type="text" name="pp_def_cage_autre" placeholder="Autre"></label>
+                        <label>Etude du revêtement cutané:
+                            <input type="radio" name="pp_rev_cutane" value="cicatrice"> Cicatrice
+                            <input type="radio" name="pp_rev_cutane" value="lesion"> Lésion cutanée
+                            <input type="radio" name="pp_rev_cutane" value="gynecomastie"> Gynécomastie
+                            <input type="text" name="pp_rev_cutane_autre" placeholder="Autres"></label>
+                        <label>Fréquence respiratoire: <input type="text" name="pp_freq_respi"></label>
+                        <label>Tirage:
+                            <input type="radio" name="pp_tirage" value="sus_sternal"> Sus-sternal
+                            <input type="radio" name="pp_tirage" value="sus_claviculaire"> Sus-claviculaire
+                            <input type="radio" name="pp_tirage" value="intercostal"> Intercostal
+                            <input type="radio" name="pp_tirage" value="pas_tirage"> Pas de tirage
+                        </label>
+                        <label>Respiration paradoxale:
+                            <input type="radio" name="pp_respi_paradoxale" value="oui"> Oui
+                            <input type="radio" name="pp_respi_paradoxale" value="non"> Non
+                        </label>
+                        <label>Cyanose:
+                            <input type="radio" name="pp_cyanose" value="oui"> Oui
+                            <input type="radio" name="pp_cyanose" value="non"> Non
+                        </label>
+                        <label>Retentissement des affections respiratoires:
+                            <input type="checkbox" name="pp_ret_hippocratisme"> Hippocratisme digital
+                            <input type="checkbox" name="pp_ret_circulation_thoracique"> Circulation collatérale veineuse thoracique
+                            <input type="checkbox" name="pp_ret_oedeme"> Œdème
+                            <input type="checkbox" name="pp_ret_turgescence_jugulaires"> Turgescence des veines jugulaires
+                            <input type="text" name="pp_ret_autres" placeholder="Autres"></label>
+                    </div>
+                    <h4>Palpation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="pp_pas_points_douloureux"> Il n'existe pas de points douloureux</label>
+                        <label><input type="checkbox" name="pp_bonne_transmission_vv"> Il y a une bonne transmission des vibrations vocales, VV symétriques et bilatérales</label>
+                        <label>Anomalies pariétales:
+                            <input type="checkbox" name="pp_anom_parietales_tumefaction"> Tuméfaction
+                            <input type="checkbox" name="pp_anom_parietales_gynecomastie"> Gynécomastie
+                            <input type="checkbox" name="pp_anom_parietales_oedeme"> Œdème
+                            <input type="checkbox" name="pp_anom_parietales_battement"> Battement vasculaire
+                            <input type="checkbox" name="pp_anom_parietales_point_douloureux"> Point douloureux
+                        </label>
+                        <label>Vibrations vocales (44):
+                            <input type="radio" name="pp_vv44" value="normales"> Normales
+                            <input type="radio" name="pp_vv44" value="diminuees_abolies"> Diminuées ou abolies
+                            <input type="radio" name="pp_vv44" value="augmentees"> Augmentées
+                        </label>
+                    </div>
+                    <h4>Percussion</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="pp_pas_matite"> Il n'y a pas de matité</label>
+                        <label><input type="checkbox" name="pp_pas_tympanisme_hyper"> Il n'y a pas de tympanisme ou d'hyper sonorité</label>
+                        <label><input type="checkbox" name="pp_sonorite_normale"> Sonorité normale</label>
+                        <label><input type="checkbox" name="pp_tympanisme"> Tympanisme</label>
+                        <label><input type="checkbox" name="pp_matite"> Matité</label>
+                    </div>
+                    <h4>Auscultation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="pp_bruit_laryngo_tracheal_normal"> Le bruit laryngo-trachéal est normal</label>
+                        <label><input type="checkbox" name="pp_murmures_vesiculaires_percus"> Les murmures vésiculaires sont bien perçus</label>
+                        <label><input type="checkbox" name="pp_pas_rale_lobes_pulmonaires"> Il n'y a pas de râle perçus aux niveaux des aires de projection des lobes pulmonaires</label>
+                        <label><input type="checkbox" name="pp_abolition_murmure"> Abolition ou diminution du murmure vésiculaire</label>
+                        <label><input type="checkbox" name="pp_rales_crepitant"> Râles crépitant</label>
+                        <label><input type="checkbox" name="pp_rales_sibilants"> Râles sibilants</label>
+                        <label><input type="checkbox" name="pp_rales_ronflants"> Râles ronflants</label>
+                        <label><input type="checkbox" name="pp_frottement_pleural"> Frottement pleural</label>
+                        <label><input type="checkbox" name="pp_stridor_cornage"> Stridor et Cornage</label>
+                    </div>
+                </div>
+
+                <h3>EXAMEN NEUROLOGIQUE</h3>
+                <div class="sub-section">
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="neuro_conscient_oriente"> Patient(e) est conscient(e) et bien orienté(e) dans le temps et l'espace</label>
+                        <label><input type="checkbox" name="neuro_station_debout"> Examen de la station debout (possible ou non, avec aide)</label>
+                        <label><input type="checkbox" name="neuro_romberg_negatif"> Le signe de Romberg est négatif</label>
+                        <label><input type="checkbox" name="neuro_marche_normale"> La patient(e) marche normalement</label>
+                        <label><input type="checkbox" name="neuro_tonus_normal"> Le tonus est normal (ni hypotonie ni hypertonie)</label>
+                        <label>La latéralité:
+                            <input type="radio" name="neuro_lateralite" value="droitier"> Droitier
+                            <input type="radio" name="neuro_lateralite" value="gauchier"> Gauchier
+                        </label>
+                        <label>Station debout:
+                            <input type="radio" name="neuro_station_debout_details" value="tient_debout"> Se tient debout
+                            <input type="radio" name="neuro_station_debout_details" value="ne_tient_pas"> Ne se tient pas
+                        </label>
+                        <label>Marche:
+                            <input type="radio" name="neuro_marche_details" value="normale"> Normale
+                            <input type="radio" name="neuro_marche_details" value="ataxique"> Ataxique
+                            <input type="radio" name="neuro_marche_details" value="spastique"> Spastique
+                            <input type="radio" name="neuro_marche_details" value="steppage"> Steppage
+                            <input type="radio" name="neuro_marche_details" value="akinetique"> Akinétique
+                            <input type="radio" name="neuro_marche_details" value="dandinante"> Dandinante
+                        </label>
+                        <h4>Examen de la motricité</h4>
+                        <div class="sub-section checkbox-group">
+                            <label><input type="checkbox" name="neuro_motricite_globale_conservee"> Motricité globale conservée (Barré et Mingazzini)</label>
+                            <label><input type="checkbox" name="neuro_motricite_segmentaire_conservee"> Motricité segmentaire conservée</label>
+                            <label>Force musculaire globale (déficit): <input type="text" name="neuro_fmg_deficit"></label>
+                            <label>Hémiplégie: <input type="checkbox" name="neuro_hemiplagie"></label>
+                            <label>Paraplégie: <input type="checkbox" name="neuro_paraplegie"></label>
+                            <label>Tétraplégie: <input type="checkbox" name="neuro_tetraplegie"></label>
+                            <label>Monoplégie: <input type="checkbox" name="neuro_monoplegie"></label>
+                            <label>Tonus musculaire:
+                                <input type="radio" name="neuro_tonus" value="normal"> Normal
+                                <input type="radio" name="neuro_tonus" value="hypotonie"> Hypotonie
+                                <input type="radio" name="neuro_tonus" value="hypertonie"> Hypertonie
+                            </label>
+                        </div>
+                        <h4>Coordination</h4>
+                        <div class="sub-section checkbox-group">
+                            <label><input type="checkbox" name="neuro_pas_trouble_coordination"> Il n'existe pas de trouble de la coordination</label>
+                            <label><input type="checkbox" name="neuro_epreuve_marionnettes"> L'épreuve des marionnettes se fait en miroir</label>
+                            <label><input type="checkbox" name="neuro_doigt_nez_normal"> Le mouvement doigt nez est réalisé sans tremblement</label>
+                            <label><input type="checkbox" name="neuro_talon_genou_ok"> Talon-genou normal</label>
+                            <label><input type="checkbox" name="neuro_doigt_nez_ok"> Doigt-nez normal</label>
+                            <label>Manœuvre doigt / nez:
+                                <input type="radio" name="neuro_doigt_nez_man" value="normale"> Normale
+                                <input type="radio" name="neuro_doigt_nez_man" value="dismetrie"> Dysmétrie
+                            </label>
+                            <label>Manœuvre talon / genou:
+                                <input type="radio" name="neuro_talon_genou_man" value="normale"> Normale
+                                <input type="radio" name="neuro_talon_genou_man" value="dismetrie"> Dysmétrie
+                            </label>
+                        </div>
+                        <h4>Réflexes</h4>
+                        <div class="sub-section checkbox-group">
+                            <label><input type="checkbox" name="neuro_reflexes_osteo_tendineux"> Réflexes ostéo-tendineux présents et symétriques</label>
+                            <label><input type="checkbox" name="neuro_reflexes_cutaneo_abdo"> Réflexes cutanéo-abdominaux présents et symétriques</label>
+                            <label><input type="checkbox" name="neuro_reflexe_cutaneo_plantaire"> Le réflexe cutanéo-plantaire est indifférent</label>
+                            <label>ROT bicipital (C5):
+                                <input type="radio" name="rot_bicipital" value="aboli"> Aboli
+                                <input type="radio" name="rot_bicipital" value="exagere"> Exagéré
+                            </label>
+                            <label>ROT stylo-radial (C6):
+                                <input type="radio" name="rot_stylo_radial" value="aboli"> Aboli
+                                <input type="radio" name="rot_stylo_radial" value="exagere"> Exagéré
+                            </label>
+                            <label>ROT tricipital (C7):
+                                <input type="radio" name="rot_tricipital" value="aboli"> Aboli
+                                <input type="radio" name="rot_tricipital" value="exagere"> Exagéré
+                            </label>
+                            <label>ROT cubito-pronateur (C8):
+                                <input type="radio" name="rot_cubito_pronateur" value="aboli"> Aboli
+                                <input type="radio" name="rot_cubito_pronateur" value="exagere"> Exagéré
+                            </label>
+                            <label>ROT patellaire (L4):
+                                <input type="radio" name="rot_patellaire" value="aboli"> Aboli
+                                <input type="radio" name="rot_patellaire" value="exagere"> Exagéré
+                            </label>
+                            <label>ROT achilléen (S1):
+                                <input type="radio" name="rot_achilleen" value="aboli"> Aboli
+                                <input type="radio" name="rot_achilleen" value="exagere"> Exagéré
+                            </label>
+                            <label>Signe de Babinski:
+                                <input type="radio" name="babinski" value="positif"> Positif
+                                <input type="radio" name="babinski" value="negatif"> Négatif
+                            </label>
+                            <label>RCA sup (hypochondre vers l'ombilic):
+                                <input type="radio" name="rca_sup" value="normal"> Normal
+                                <input type="radio" name="rca_sup" value="aboli"> Aboli
+                            </label>
+                            <label>RCA moyen (flanc vers l'ombilic):
+                                <input type="radio" name="rca_moyen" value="normal"> Normal
+                                <input type="radio" name="rca_moyen" value="aboli"> Aboli
+                            </label>
+                            <label>RCA inf (fosse iliaque vers l'ombilic):
+                                <input type="radio" name="rca_inf" value="normal"> Normal
+                                <input type="radio" name="rca_inf" value="aboli"> Aboli
+                            </label>
+                        </div>
+                        <h4>Sensibilité</h4>
+                        <div class="sub-section checkbox-group">
+                            <label><input type="checkbox" name="neuro_pas_trouble_sens_superficielle"> Il n'existe pas de trouble sensitif tactile et thermo algique</label>
+                            <label><input type="checkbox" name="neuro_pas_trouble_sens_profonde"> Il n'existe pas de trouble sensitif prorioceptive ou vibratoire</label>
+                            <label>Tactile:
+                                <input type="radio" name="sens_tactile" value="normale"> Normale
+                                <input type="radio" name="sens_tactile" value="diminuee"> Diminuée
+                                <input type="radio" name="sens_tactile" value="abolie"> Abolie
+                                <input type="radio" name="sens_tactile" value="augmentee"> Augmentée
+                            </label>
+                            <label>Douloureuse:
+                                <input type="radio" name="sens_douloureuse" value="normale"> Normale
+                                <input type="radio" name="sens_douloureuse" value="diminuee"> Diminuée
+                                <input type="radio" name="sens_douloureuse" value="abolie"> Abolie
+                                <input type="radio" name="sens_douloureuse" value="augmentee"> Augmentée
+                            </label>
+                            <label>Thermique:
+                                <input type="radio" name="sens_thermique" value="normale"> Normale
+                                <input type="radio" name="sens_thermique" value="perturbee"> Perturbée
+                            </label>
+                            <label>Sensibilité profonde:
+                                <input type="radio" name="sens_profonde_details" value="normale"> Normale
+                                <input type="radio" name="sens_profonde_details" value="diminuee"> Diminuée
+                                <input type="radio" name="sens_profonde_details" value="abolie"> Abolie
+                            </label>
+                        </div>
+                        <h4>Nerfs crâniens</h4>
+                        <div class="sub-section checkbox-group">
+                            <label><input type="checkbox" name="nc_olfactif_ok"> I - Olfactif: le/la patient(e) reconnaît toutes les odeurs</label>
+                            <label>Nerf olfactif I:
+                                <input type="radio" name="nc_olfactif_etat" value="normal"> Normal
+                                <input type="radio" name="nc_olfactif_etat" value="hyposmie"> Hyposmie
+                                <input type="radio" name="nc_olfactif_etat" value="anosmie"> Anosmie
+                                <input type="radio" name="nc_olfactif_etat" value="hallucinations"> Hallucinations olfactives
+                                <input type="radio" name="nc_olfactif_etat" value="parosmie"> Parosmie
+                            </label>
+                            <label><input type="checkbox" name="nc_optique_acuite_visuelle_ok"> II - Optique: Pas de trouble de l'acuité visuelle</label>
+                            <label><input type="checkbox" name="nc_optique_champs_visuels_ok"> II - Optique: Champs visuels non réduits</label>
+                            <label>Acuité visuelle: <input type="text" name="nc_acuite_visuelle"></label>
+
+                            <label><input type="checkbox" name="nc_oculomoteur_pas_ptosis"> III - Oculomoteur commun: Pas de ptosis</label>
+                            <label><input type="checkbox" name="nc_oculomoteur_pas_mydriase"> III - Oculomoteur commun: Pas de troubles de la mydriase</label>
+                            <label><input type="checkbox" name="nc_oculomoteur_pas_strabisme_divergent"> III - Oculomoteur commun: Pas de strabisme divergent</label>
+                            <label>III:
+                                <input type="radio" name="nc_iii" value="diplopie_horizontale"> Diplopie horizontale
+                                <input type="radio" name="nc_iii" value="strabisme_divergent"> Strabisme divergent
+                                <input type="radio" name="nc_iii" value="paralysie_mouvements"> Paralysie de tous les mouvements sauf l'abduction
+                                <input type="radio" name="nc_iii" value="ptosis"> Ptosis
+                            </label>
+                            <label><input type="checkbox" name="nc_trochleaire_pas_diplopie"> IV - Trochléaire: Pas de diplopie verticale</label>
+                            <label><input type="checkbox" name="nc_poursuite_oculaire_normale"> Poursuite oculaire est sans anomalie</label>
+                            <label>IV:
+                                <input type="radio" name="nc_iv" value="diplopie_verticale"> Diplopie verticale
+                            </label>
+
+                            <label><input type="checkbox" name="nc_abducens_pas_strabisme"> VI - Abducens: Pas de strabisme divergent</label>
+                            <label>VI:
+                                <input type="radio" name="nc_vi" value="diplopie_horizontale"> Diplopie horizontale
+                                <input type="radio" name="nc_vi" value="strabisme_convergent"> Strabisme convergent
+                                <input type="radio" name="nc_vi" value="paralysie_abduction"> Paralysie de l'abduction
+                            </label>
+
+                            <label><input type="checkbox" name="nc_trijumeau_sensibilite_ok"> V - Trijumeau: Pas de trouble de la sensibilité</label>
+                            <label><input type="checkbox" name="nc_trijumeau_motricite_ok"> V - Trijumeau: Motricité des muscles masséters et temporaux conservée</label>
+                            <label>Nerf trijumeau V:
+                                <input type="radio" name="nc_v" value="douleur_spontanee"> Douleur spontanée
+                                <input type="radio" name="nc_v" value="troubles_mastication"> Troubles de mastication
+                                <input type="radio" name="nc_v" value="anesthesie"> Anesthésie
+                            </label>
+
+                            <label><input type="checkbox" name="nc_facial_mimique_ok"> VII - Faciale: La patiente ne présente pas de trouble de la mimique</label>
+                            <label><input type="checkbox" name="nc_facial_gout_ok"> VII - Faciale: Pas de troubles gustatifs</label>
+                            <label><input type="checkbox" name="nc_facial_secretions_normales"> VII - Faciale: Sécrétions salivaires et lacrymales normales</label>
+                            <label><input type="checkbox" name="nc_facial_ramsey_hunt_ok"> VII - Faciale: Sensibilité de la zone de Ramsey Hunt normale</label>
+                            <label><input type="checkbox" name="nc_facial_muscles_peauciers_ok"> VII - Faciale: Muscles peauciers du cou non étirés</label>
+                            <label><input type="checkbox" name="nc_facial_pas_hyperacousie"> VII - Faciale: Pas d'hyperacousie</label>
+                            <label>Nerf facial VII:
+                                <input type="checkbox" name="nc_vii_paupieres"> Serrer les paupières
+                                <input type="checkbox" name="nc_vii_sourcils"> Hausser les sourcils
+                                <input type="checkbox" name="nc_vii_sourire"> Sourire
+                                <input type="checkbox" name="nc_vii_siffler"> Siffler
+                                <input type="checkbox" name="nc_vii_souffler"> Souffler
+                                <input type="checkbox" name="nc_vii_joues"> Gonfler les joues
+                                <input type="checkbox" name="nc_vii_hyperacousie"> Hyperacousie
+                                <input type="checkbox" name="nc_vii_agueusie"> Agueusie
+                                <input type="checkbox" name="nc_vii_larmoiement"> Larmoiement
+                            </label>
+
+                            <label><input type="checkbox" name="nc_cochleo_sons_ok"> VIII - Cochléo-vestibulaire (cochléaire): Bonne perception des petits sons et voix chuchotée</label>
+                            <label><input type="checkbox" name="nc_cochleo_vibrations_ok"> VIII - Cochléo-vestibulaire (cochléaire): Bonne perception des vibrations</label>
+                            <label><input type="checkbox" name="nc_vestibulaire_pas_latero_pulsions"> VIII - Cochléo-vestibulaire (vestibulaire): Pas de latéro-pulsions</label>
+                            <label><input type="checkbox" name="nc_vestibulaire_romberg_negatif"> VIII - Cochléo-vestibulaire (vestibulaire): Romberg négatif et non latéralisé</label>
+                            <label><input type="checkbox" name="nc_vestibulaire_pas_nystagmus"> VIII - Cochléo-vestibulaire (vestibulaire): Pas de nystagmus</label>
+                            <label>Nerf cochléo-vestibulaire VIII:
+                                <input type="radio" name="nc_viii" value="hypoacousie"> Hypoacousie
+                                <input type="radio" name="nc_viii" value="acouphenes"> Acouphènes
+                                <input type="radio" name="nc_viii" value="vertiges"> Vertiges
+                                <input type="radio" name="nc_viii" value="nausees"> Nausées
+                            </label>
+
+                            <label><input type="checkbox" name="nc_glosso_pharyngien_palais_ok"> IX - Glosso-pharyngien: Palais mou symétrique</label>
+                            <label><input type="checkbox" name="nc_glosso_pharyngien_rideau_ok"> IX - Glosso-pharyngien: Signe du rideau négatif</label>
+                            <label><input type="checkbox" name="nc_glosso_pharyngien_reflexe_naus_present"> IX - Glosso-pharyngien: Réflexe nauséeux présent</label>
+                            <label>Nerf glosso-pharyngien IX:
+                                <input type="radio" name="nc_ix" value="dysphagie"> Dysphagie
+                                <input type="radio" name="nc_ix" value="dysphonie"> Dysphonie
+                                <input type="radio" name="nc_ix" value="abolition_reflexe"> Abolition du réflexe nauséeux
+                            </label>
+
+                            <label><input type="checkbox" name="nc_vague_pas_dysphonie"> X - Vague: Pas de dysphonie</label>
+
+                            <label><input type="checkbox" name="nc_spinal_pas_elevation_epaule"> XI - Spinal: Pas d'élévation de l'épaule</label>
+                            <label><input type="checkbox" name="nc_spinal_rotation_tete_ok"> XI - Spinal: Rotation de la tête normale</label>
+                            <label><input type="checkbox" name="nc_spinal_flexion_tete_ok"> XI - Spinal: Flexion de la tête normale</label>
+
+                            <label><input type="checkbox" name="nc_grand_hypoglosse_langue_ok"> XII - Grand hypoglosse: Langue régulière</label>
+                            <label><input type="checkbox" name="nc_grand_hypoglosse_motricite_ok"> XII - Grand hypoglosse: Motricité de la langue conservée</label>
+                            <label><input type="checkbox" name="nc_grand_hypoglosse_pas_deviation"> XII - Grand hypoglosse: Pas de déviation de la langue</label>
+                        </div>
+                    </div>
+                    <h4>Nuque</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="neuro_nuque_souple"> La nuque est souple</label>
+                        <label><input type="checkbox" name="neuro_pas_signes_meningite"> Pas de signes de méningite</label>
+                    </div>
+                    <h4>Fonctions supérieures</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="neuro_pas_trouble_memoire"> Il n'existe pas de trouble de la mémoire</label>
+                        <label><input type="checkbox" name="neuro_pas_trouble_langage"> Il n'existe pas de trouble du langage</label>
+                        <label><input type="checkbox" name="neuro_pas_apraxie"> Il n'existe pas d'apraxie</label>
+                        <label><input type="checkbox" name="neuro_pas_agnosie"> Il n'existe pas d'agnosie</label>
+                    </div>
+                    <h4>Praxies</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="praxies_gestes_symboliques"> Gestes symboliques conventionnels</label>
+                        <label><input type="checkbox" name="praxies_gestes_expressifs"> Gestes expressifs</label>
+                        <label><input type="checkbox" name="praxies_gestes_descriptifs"> Gestes descriptifs</label>
+                        <label><input type="checkbox" name="praxies_gestes_sans_signification"> Gestes sans signification sur imitation</label>
+                    </div>
+                </div>
+
+                <h3>EXAMEN CERVICAL</h3>
+                <div class="sub-section">
+                    <h4>Inspection</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="cerv_pas_tumefaction"> Il n'existe pas de tuméfaction</label>
+                        <label><input type="checkbox" name="cerv_pas_turgescence_jugulaire"> Il n'existe pas de turgescence de la veine jugulaire</label>
+                        <label><input type="checkbox" name="cerv_pas_circulation_collaterale"> Il n'existe pas de circulation collatérale</label>
+                        <label><input type="checkbox" name="cerv_pas_oedeme"> Il n'existe pas d'œdème</label>
+                        <label><input type="checkbox" name="cerv_pas_cicatrice"> Il n'existe pas de cicatrice</label>
+                        <label><input type="checkbox" name="cerv_pas_goitre"> Pas de goitre</label>
+                        <label><input type="checkbox" name="cerv_pas_adp_cervicales"> Pas d'ADP cervicales</label>
+                    </div>
+                    <h4>Palpation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="cerv_corps_thyroidien_normal"> Le corps thyroïdien est de taille normale et est mobile à la déglutition</label>
+                    </div>
+                </div>
+
+                <h3>EXAMEN GANGLIONNAIRE</h3>
+                <div class="sub-section">
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="gang_aires_libres"> Les aires ganglionnaires sont libres</label>
+                        <label><input type="checkbox" name="gang_examen_sans_anomalie" onchange="toggleGanglioDetail(this)"> L'examen est sans anomalie aux niveaux des différentes aires</label>
+                        <div id="ganglio_show_btn" style="margin:6px 0 0 22px; display:inline-block;">
+                            <button type="button" onclick="showGanglioDetail()" style="padding:5px 12px; background:#c0392b; color:white; border:none; border-radius:4px; cursor:pointer; font-size:13px;">⚠️ Documenter une adénopathie / anomalie</button>
+                        </div>
+
+                        <!-- Détails adénopathies : visibles quand "sans anomalie" N'est PAS coché -->
+                        <div id="ganglio_detail" style="display:none; margin-top:10px; padding:12px; background:#fef9f9; border-left:3px solid #c0392b; border-radius:4px;">
+                            <p style="font-size:13px; font-weight:bold; color:#c0392b; margin-bottom:8px;">⚠️ Anomalie(s) retrouvée(s) — Préciser :</p>
+                            <label style="display:block; margin-bottom:6px; font-weight:600;">Aires ganglionnaires palpées :</label>
+                            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-left:8px; margin-bottom:10px;">
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_sous_mentales"> Sous-mentales</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_jugulo_carotidiennes"> Jugulo-carotidiennes</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_sus_claviculaires"> Sus-claviculaires</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_occipitales"> Occipitales</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_spinales"> Spinales</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_sous_maxillaires"> Sous-maxillaires</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_mastoidiennes"> Mastoïdiennes</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_pre_auriculaires"> Pré-auriculaires</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_parotidienne"> Parotidienne</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_axillaires"> Axillaires</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_sus_epi_trochleennes"> Sus-épi-trochléennes</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_inguinales"> Inguinales</label>
+                                <label style="min-width:160px;"><input type="checkbox" name="gang_retro_crurales"> Rétro-crurales</label>
+                            </div>
+
+                            <label style="font-weight:600;">Caractéristiques des adénopathies :</label>
+                            <div style="margin-left:8px; margin-top:4px; margin-bottom:8px;">
+                                <label>Nombre :
+                                    <input type="radio" name="adp_nombre" value="unique"> Unique &nbsp;
+                                    <input type="radio" name="adp_nombre" value="polyadenopathie"> Polyadénopathie
+                                </label>
+                                <label style="margin-top:6px;">Taille :
+                                    <input type="radio" name="adp_taille" value="lt1cm"> &lt;1 cm &nbsp;
+                                    <input type="radio" name="adp_taille" value="gt1cm"> &gt;1 cm (pathologique) &nbsp;
+                                    <input type="text" name="adp_taille_cm" placeholder="cm" style="width:60px; margin-left:6px;">
+                                </label>
+                                <label style="margin-top:6px;">Consistance :
+                                    <input type="radio" name="adp_consistance" value="dure"> Dure &nbsp;
+                                    <input type="radio" name="adp_consistance" value="ferme"> Ferme &nbsp;
+                                    <input type="radio" name="adp_consistance" value="souple"> Souple
+                                </label>
+                                <label style="margin-top:6px;">Sensibilité :
+                                    <input type="radio" name="adp_sensibilite" value="douloureuse"> Douloureuse &nbsp;
+                                    <input type="radio" name="adp_sensibilite" value="indolore"> Indolore
+                                </label>
+                                <label style="margin-top:6px;">Mobilité :
+                                    <input type="radio" name="adp_mobilite" value="fixe"> Fixe &nbsp;
+                                    <input type="radio" name="adp_mobilite" value="mobile"> Mobile
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>EXAMEN THYROÏDIEN</h3>
+                <div class="sub-section">
+                    <h4>Inspection</h4>
+                    <div class="checkbox-group">
+                        <label>Inspection:
+                            <input type="radio" name="thy_inspection" value="normale"> Normale
+                            <input type="radio" name="thy_inspection" value="goitre"> Goitre
+                            <input type="radio" name="thy_inspection" value="exophtalmie"> Exophtalmie
+                            <input type="radio" name="thy_inspection" value="amaigrissement"> Amaigrissement
+                            <input type="radio" name="thy_inspection" value="augmentation_poids"> Augmentation du poids
+                        </label>
+                    </div>
+                    <h4>Palpation</h4>
+                    <div class="checkbox-group">
+                        <label>Forme: <input type="text" name="thy_forme"></label>
+                        <label>Taille et volume: <input type="text" name="thy_taille_volume"></label>
+                        <label>Consistance: <input type="text" name="thy_consistance"></label>
+                        <label>Homogénéité: <input type="text" name="thy_homogeneite"></label>
+                        <label>Sensibilité: <input type="text" name="thy_sensibilite"></label>
+                        <label>Caractère vasculaire: <input type="text" name="thy_vasculaire"></label>
+                        <label>Signes de compression:
+                            <input type="checkbox" name="thy_compression_dyspnee"> Dyspnée (trachée)
+                            <input type="checkbox" name="thy_compression_dysphagie"> Dysphagie et troubles de la déglutition (œsophage)
+                            <input type="checkbox" name="thy_compression_dysphonie"> Dysphonie avec une voie bitonale (nerf récurrent)
+                        </label>
+                    </div>
+                    <h4>Auscultation</h4>
+                    <div class="checkbox-group">
+                        <label>Auscultation:
+                            <input type="radio" name="thy_auscultation" value="souffle"> Souffle
+                            <input type="radio" name="thy_auscultation" value="pas_souffle"> Pas de souffle
+                        </label>
+                    </div>
+                </div>
+
+                <h3>EXAMEN DU SEIN (si femme)</h3>
+                <div class="sub-section">
+                    <h4>Inspection</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="sein_mamelon_retracte"> Le mamelon est rétracté des 2 côtés</label>
+                        <label><input type="checkbox" name="sein_pas_ecoulement"> Il n'existe pas d'écoulement mamelonnaire</label>
+                        <label><input type="checkbox" name="sein_pas_ulceration"> Il n'existe pas d'ulcération, d'abcédation ou de signes inflammatoires</label>
+                        <label><input type="checkbox" name="sein_pas_peau_orange"> Il n'existe pas d'aspect peau d'orange</label>
+                        <label>Les seins:
+                            <input type="radio" name="sein_normal" value="normal"> Normal
+                            <input type="radio" name="sein_normal" value="asymetrie"> Asymétrie mammaire
+                            <input type="radio" name="sein_normal" value="ecoulement"> Écoulement
+                            <input type="radio" name="sein_normal" value="zone_inflammatoire"> Zone inflammatoire
+                            <input type="radio" name="sein_normal" value="ride_cutanee"> Ride cutanée
+                            <input type="radio" name="sein_normal" value="peau_orange"> Peau d'orange
+                            <input type="radio" name="sein_normal" value="deviation_mamelon"> Déviation du mamelon
+                            <input type="text" name="sein_autre" placeholder="Autre"></label>
+                    </div>
+                    <h4>Palpation</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="sein_palpation_normale"> La palpation est sans anomalie aux différents quadrants</label>
+                    </div>
+                </div>
+
+                <h3>EXAMEN OSTÉO-ARTICULAIRE</h3>
+                <div class="sub-section">
+                    <div class="checkbox-group">
+                        <label>Localisation de la douleur: <input type="text" name="oa_douleur_localisation"></label>
+                        <label>Intensité EVA: <input type="text" name="oa_douleur_eva">/10</label>
+                        <label>Raideur matinale:
+                            <input type="radio" name="oa_raideur_matinale" value="lt30min"> &lt; 30 min
+                            <input type="radio" name="oa_raideur_matinale" value="gt30min"> &gt; 30 min
+                        </label>
+                        <label>Rythme de la douleur:
+                            <input type="radio" name="oa_rythme_douleur" value="episodique"> Episodique
+                            <input type="radio" name="oa_rythme_douleur" value="permanente"> Permanente
+                        </label>
+                        <label>Type de douleur:
+                            <input type="radio" name="oa_type_douleur" value="mecanique"> Mécanique
+                            <input type="radio" name="oa_type_douleur" value="inflammatoire"> Inflammatoire
+                        </label>
+                        <label>Mouvement responsable de la douleur: <input type="text" name="oa_mouvement_responsable"></label>
+
+                        <h4>Examen pour l'épaule</h4>
+                        <div class="sub-section checkbox-group">
+                            <h5>Inspection</h5>
+                            <label><input type="checkbox" name="epaule_rougueur"> Rougeur</label>
+                            <label><input type="checkbox" name="epaule_asymetrie"> Asymétrie des deux moignons de l'épaule</label>
+                            <label><input type="checkbox" name="epaule_surelevation_humerale"> Surélévation spontanée de la tête humérale</label>
+                            <label><input type="checkbox" name="epaule_amyotrophie_infra_epineaux"> Amyotrophie du muscle infra-épineux</label>
+                            <label><input type="checkbox" name="epaule_rupture_biceps"> Rupture du biceps avec rétraction distale</label>
+                            <label><input type="checkbox" name="epaule_bursite_acromiale"> Bursite sous acromiale</label>
+                            <label>Autre: <input type="text" name="epaule_autre"></label>
+                            <h5>Mobilisation actives et passives</h5>
+                            <label><input type="checkbox" name="epaule_antepulsion_180"> Antépulsion 180°</label>
+                            <label><input type="checkbox" name="epaule_abduction_180"> Abduction 180°</label>
+                            <label><input type="checkbox" name="epaule_rotation_externe_80"> Rotation externe 80°</label>
+                            <label><input type="checkbox" name="epaule_rotation_interne"> Rotation interne</label>
+                            <h5>Palpation</h5>
+                            <label><input type="checkbox" name="epaule_chaleur"> Chaleur</label>
+                            <label><input type="checkbox" name="epaule_gonflement"> Gonflement</label>
+                            <h5>Examination des tendons</h5>
+                            <label>Supra épineux (Test de Jobe):
+                                <input type="radio" name="epaule_supra_epineux" value="resistance"> Résistance (test -)
+                                <input type="radio" name="epaule_supra_epineux" value="pas_resistance"> Pas de résistance (test +)
+                            </label>
+                            <label>Infra épineux (Test de Patté):
+                                <input type="radio" name="epaule_infra_epineux" value="resistance"> Résistance (test -)
+                                <input type="radio" name="epaule_infra_epineux" value="pas_resistance"> Pas de résistance (test +)
+                            </label>
+                            <label>Sub-scapulaire (Lift-off Test):
+                                <input type="radio" name="epaule_sub_scapulaire" value="main_10cm"> Main de 5 à 10cm de la ceinture (test -)
+                                <input type="radio" name="epaule_sub_scapulaire" value="main_frappe_dos"> Main frappe le dos (test +)
+                            </label>
+                            <label>LPB (Test Palm up):
+                                <input type="radio" name="epaule_lpb" value="resistance"> Résistance (test -)
+                                <input type="radio" name="epaule_lpb" value="pas_resistance"> Pas de résistance (test +)
+                            </label>
+                            <h5>Tests de conflit</h5>
+                            <label>Signe de Neer:
+                                <input type="radio" name="epaule_neer" value="signe_neg"> Signe -
+                                <input type="radio" name="epaule_neer" value="signe_pos"> Signe + (douleur pré-acromiale)
+                            </label>
+                            <label>Signe Hawkins:
+                                <input type="radio" name="epaule_hawkins" value="signe_neg"> Signe -
+                                <input type="radio" name="epaule_hawkins" value="signe_pos"> Signe + (douleur pré-acromiale)
+                            </label>
+                            <label>Signe de Yocum:
+                                <input type="radio" name="epaule_yocum" value="signe_neg"> Signe - (résistance contre latéral du coude)
+                                <input type="radio" name="epaule_yocum" value="signe_pos"> Signe + (douleur pré-acromiale)
+                            </label>
+                        </div>
+
+                        <h4>Examen pour genou</h4>
+                        <div class="sub-section checkbox-group">
+                            <label><input type="checkbox" name="genou_douleur_tibiale"> Douleur fémoro tibiale</label>
+                            <label><input type="checkbox" name="genou_douleur_patellaire"> Douleur fémoro patellaire</label>
+                            <label><input type="checkbox" name="genou_vrai_blocage"> Vrai blocage</label>
+                            <label><input type="checkbox" name="genou_pseudo_blocage"> Pseudo blocage</label>
+                            <label><input type="checkbox" name="genou_derobement"> Dérobement</label>
+                            <h5>Inspection</h5>
+                            <label><input type="checkbox" name="genou_valgum"> Genu valgum</label>
+                            <label><input type="checkbox" name="genou_varum"> Genu varum</label>
+                            <label><input type="checkbox" name="genou_recurvatum"> Genu recurvatum</label>
+                            <label><input type="checkbox" name="genou_flessum"> Genu flessum</label>
+                            <label><input type="checkbox" name="genou_inegalite_membres"> Inégalité des deux membres</label>
+                            <label><input type="checkbox" name="genou_amyotrophie"> Amyotrophie quadricipitale</label>
+                            <label>Autres: <input type="text" name="genou_autre_insp"></label>
+                            <label>Mouvements anormaux: <input type="text" name="genou_mouv_anormaux"></label>
+                            <h5>Palpation</h5>
+                            <label>Points douloureux: <input type="text" name="genou_palp_douloureux"></label>
+                            <label>Choc rotulien:
+                                <input type="radio" name="genou_choc_rotulien" value="positif"> Positif
+                                <input type="radio" name="genou_choc_rotulien" value="negatif"> Négatif
+                            </label>
+                            <label>Signe de rabot:
+                                <input type="radio" name="genou_rabot" value="positif"> Positif
+                                <input type="radio" name="genou_rabot" value="negatif"> Négatif
+                            </label>
+                        </div>
+
+                        <h4>Examen pour Rachis</h4>
+                        <div class="sub-section checkbox-group">
+                            <h5>Inspection</h5>
+                            <label><input type="checkbox" name="rachis_equilibre"> Equilibre du rachis</label>
+                            <label><input type="checkbox" name="rachis_epaule"> Equilibre épaule</label>
+                            <label><input type="checkbox" name="rachis_bassin"> Equilibre du bassin</label>
+                            <label><input type="checkbox" name="rachis_scoliose_vraie"> Scoliose vraie</label>
+                            <label><input type="checkbox" name="rachis_attitude_scoliotique"> Attitude scoliotique</label>
+                            <label>Déformation:
+                                <input type="radio" name="rachis_deformation" value="lordose"> Lordose
+                                <input type="radio" name="rachis_deformation" value="cyphose"> Cyphose
+                                <input type="radio" name="rachis_deformation" value="gibbosité"> Gibbosité
+                                <input type="radio" name="rachis_deformation" value="double_gibbosité"> Double gibbosité
+                            </label>
+                            <h5>Mobilité articulaire</h5>
+                            <label>Rachis cervical:
+                                <input type="checkbox" name="rachis_cervical_flexion"> Flexion
+                                <input type="checkbox" name="rachis_cervical_extension"> Extension
+                                <input type="checkbox" name="rachis_cervical_inclinaison"> Inclinaison
+                                <input type="checkbox" name="rachis_cervical_rotation"> Rotation
+                            </label>
+                            <label>Rachis thoracique:
+                                <input type="checkbox" name="rachis_thoracique_extension"> Extension (distance C7-mur)
+                            </label>
+                            <label>Rachis lombaire (Distance main-sol):
+                                <input type="checkbox" name="rachis_lombaire_diminuee"> Diminuée (raideur rachidienne)
+                            </label>
+                            <label>Mobilité du rachis lombaire:
+                                <input type="checkbox" name="rachis_lombaire_flexion"> Flexion
+                                <input type="checkbox" name="rachis_lombaire_extension"> Extension
+                                <input type="checkbox" name="rachis_lombaire_inclinaisons_lat"> Inclinaisons lat
+                            </label>
+                            <label>Manœuvre de Schoeber:
+                                <input type="radio" name="rachis_schoeber" value="positive"> Positive
+                                <input type="radio" name="rachis_schoeber" value="negative"> Négative
+                            </label>
+                            <h5>Radiculalgie</h5>
+                            <label>Signe de sonnette:
+                                <input type="radio" name="radiculalgie_sonnette" value="douleur"> Douleur (radiculalgie)
+                                <input type="radio" name="radiculalgie_sonnette" value="pas_douleur"> Pas de douleur
+                            </label>
+                            <label>Rachis cervical (Compression du vertex):
+                                <input type="radio" name="radiculalgie_cervical" value="douleur"> Douleur
+                                <input type="radio" name="radiculalgie_cervical" value="pas_douleur"> Pas de douleur
+                            </label>
+                            <label>Rachis lombaire (Signe de Lasègue):
+                                <input type="checkbox" name="radiculalgie_lombaire_l5"> Sciatalgie L5
+                                <input type="checkbox" name="radiculalgie_lombaire_s1"> Sciatalgie S1
+                                <input type="radio" name="radiculalgie_lombaire_lasegue_douleur" value="pas_douleur"> Pas de douleur
+                            </label>
+                            <label>Signe de Léri:
+                                <input type="radio" name="radiculalgie_leri" value="cruralgie"> Cruralgie
+                                <input type="radio" name="radiculalgie_leri" value="pas_douleur"> Pas de douleur
+                            </label>
+                        </div>
+
+                        <h4>Examen pour la hanche</h4>
+                        <div class="sub-section checkbox-group">
+                            <h5>Inspection</h5>
+                            <label>Equilibré:
+                                <input type="radio" name="hanche_equilibre" value="anterieur"> Antérieur
+                                <input type="radio" name="hanche_equilibre" value="posterier"> Postérieur
+                            </label>
+                            <h5>Mobilité articulaire</h5>
+                            <label>Mobilité:
+                                <input type="checkbox" name="hanche_flexion"> Flexion
+                                <input type="checkbox" name="hanche_abduction"> Abduction
+                                <input type="checkbox" name="hanche_rotation_externe"> Rotation externe
+                                <input type="checkbox" name="hanche_extension"> Extension
+                                <input type="checkbox" name="hanche_adduction"> Adduction
+                                <input type="checkbox" name="hanche_rotation_interne"> Rotation interne
+                            </label>
+                            <h5>Palpation</h5>
+                            <label>Points douloureux: <input type="text" name="hanche_palp_douloureux"></label>
+                            <label>Atteinte coxo-fémorale (Salut coxal):
+                                <input type="radio" name="hanche_salut_coxal" value="positif"> Positif
+                                <input type="radio" name="hanche_salut_coxal" value="negatif"> Négatif
+                            </label>
+                            <label>Manœuvre de Thomas:
+                                <input type="radio" name="hanche_thomas" value="positif"> Positif
+                                <input type="radio" name="hanche_thomas" value="negatif"> Négatif
+                            </label>
+                            <label>Atteinte sacro-iliaque (Test FABER):
+                                <input type="radio" name="hanche_faber" value="positif"> Positif
+                                <input type="radio" name="hanche_faber" value="negatif"> Négatif
+                            </label>
+                            <label>Appui et saut monopodal:
+                                <input type="radio" name="hanche_monopodal" value="positif"> Positif
+                                <input type="radio" name="hanche_monopodal" value="negatif"> Négatif
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>EXAMEN URO-GÉNITAL</h3>
+                <div class="sub-section">
+                    <h4>Inspection</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="ug_cavite_buccale_secheresse"> Cavité buccale: Sécheresse des muqueuses</label>
+                        <label>Fosses lombaires:
+                            <input type="checkbox" name="ug_fosses_lombaires_cicatrice"> Cicatrice
+                            <input type="checkbox" name="ug_fosses_lombaires_voussure"> Voussure
+                            <input type="checkbox" name="ug_fosses_lombaires_rougeur"> Rougeur ou des ecchymoses
+                            <input type="checkbox" name="ug_fosses_lombaires_fistules"> Fistules (fuite d'urine ou de pus)
+                            <input type="text" name="ug_fosses_lombaires_autres" placeholder="Autres"></label>
+                        <label>L'hypogastre:
+                            <input type="checkbox" name="ug_hypogastre_cicatrice"> Cicatrice
+                            <input type="checkbox" name="ug_hypogastre_voussure"> Voussure
+                            <input type="checkbox" name="ug_hypogastre_malformation"> Malformation
+                            <input type="checkbox" name="ug_hypogastre_fistules"> Fistules (fuite d'urine ou de pus)
+                            <input type="text" name="ug_hypogastre_autres" placeholder="Autres"></label>
+                    </div>
+                    <h4>Organes génitaux externes masculins</h4>
+                    <div class="sub-section checkbox-group">
+                        <label>Scrotum:
+                            <input type="radio" name="ug_scrotum" value="normal"> Normal
+                            <input type="radio" name="ug_scrotum" value="traumatisme"> Traumatisme
+                            <input type="radio" name="ug_scrotum" value="hydrocele"> Hydrocèle
+                            <input type="radio" name="ug_scrotum" value="tumeur"> Tumeur intra scrotale
+                        </label>
+                        <label><input type="checkbox" name="ug_abces_scrotal"> Abcès scrotal</label>
+                        <label><input type="checkbox" name="ug_orchi_epididymite"> Orchi-épididymite</label>
+                        <label><input type="checkbox" name="ug_hematome_papillon"> Hématome en ailes de papillon</label>
+                        <label><input type="checkbox" name="ug_grosse_bourse_sans_signe_inflammatoire"> Grosse bourse sans signe inflammatoire</label>
+                        <label><input type="checkbox" name="ug_grosse_bourse_avec_signe_inflammatoire"> Grosse bourse avec signe inflammatoire</label>
+                        <label>Verge:
+                            <input type="radio" name="ug_verge" value="normale"> Normale
+                            <input type="radio" name="ug_verge" value="micropenis"> Micropénis
+                            <input type="radio" name="ug_verge" value="hypospadias"> Hypospadias
+                            <input type="radio" name="ug_verge" value="epispadias"> Epispadias
+                            <input type="radio" name="ug_verge" value="phimosis"> Phimosis
+                        </label>
+                        <label><input type="checkbox" name="ug_coudure_ventrale"> Coudure ventrale de la verge</label>
+                        <label><input type="checkbox" name="ug_verge_traumatisme"> Traumatisme</label>
+                        <label><input type="checkbox" name="ug_verge_tumeur"> Tumeur</label>
+                        <label>Écoulement urétral:
+                            <input type="radio" name="ug_ecoulement" value="purulent"> Purulent
+                            <input type="radio" name="ug_ecoulement" value="sanglant"> Sanglant
+                        </label>
+                        <label><input type="checkbox" name="ug_hemospermie"> Hémospermie</label>
+                        <label>Cordon spermatique:
+                            <input type="radio" name="ug_cordon_spermatique" value="normal"> Normal
+                            <input type="radio" name="ug_cordon_spermatique" value="douloureux"> Dure et douloureux (funiculite)
+                            <input type="radio" name="ug_cordon_spermatique" value="non_douloureux"> Dure et non douloureux (tumeur)
+                        </label>
+                        <label>La peau pénienne:
+                            <input type="radio" name="ug_peau_penienne" value="mince"> Mince
+                            <input type="radio" name="ug_peau_penienne" value="souple"> Souple
+                            <input type="radio" name="ug_peau_penienne" value="mobile"> Mobile
+                        </label>
+                        <label>Le corps spongieux:
+                            <input type="radio" name="ug_corps_spongieux" value="souple"> Souple
+                            <input type="radio" name="ug_corps_spongieux" value="regulier"> Régulier
+                        </label>
+                        <label>Les corps caverneux:
+                            <input type="radio" name="ug_corps_caverneux" value="symetriques"> Symétriques
+                            <input type="radio" name="ug_corps_caverneux" value="souples"> Souples
+                            <input type="radio" name="ug_corps_caverneux" value="reguliers"> Réguliers
+                            <input type="radio" name="ug_corps_caverneux" value="induration"> Induration
+                            <input type="radio" name="ug_corps_caverneux" value="tumeur"> Tumeur
+                            <input type="radio" name="ug_corps_caverneux" value="retrecissement"> Rétrécissement
+                        </label>
+                    </div>
+                    <h4>Toucher rectal (Homme)</h4>
+                    <div class="sub-section checkbox-group">
+                        <label>Le cul de sac de Douglas:
+                            <input type="radio" name="ug_tr_douglas" value="douleur"> Douleur (péritonite)
+                            <input type="radio" name="ug_tr_douglas" value="pas_douleur"> Pas de douleur
+                        </label>
+                        <label>Prostate:
+                            <input type="radio" name="ug_tr_prostate" value="souple"> Souple
+                            <input type="radio" name="ug_tr_prostate" value="reguliere"> Régulière
+                            <input type="radio" name="ug_tr_prostate" value="bilobee"> Bilobée
+                            <input type="radio" name="ug_tr_prostate" value="douloureuse"> Douloureuse (prostatite)
+                            <input type="radio" name="ug_tr_prostate" value="adenome"> Adénome son sillon médian
+                            <input type="radio" name="ug_tr_prostate" value="nodule"> Nodule
+                        </label>
+                    </div>
+                    <h4>Organes génitaux externes féminins</h4>
+                    <div class="sub-section checkbox-group">
+                        <label>La vulve:
+                            <input type="radio" name="ug_vulve" value="normale"> Normale
+                            <input type="radio" name="ug_vulve" value="irritation"> Irritation
+                            <input type="radio" name="ug_vulve" value="inflammation"> Inflammation
+                            <input type="radio" name="ug_vulve" value="infection"> Infection
+                            <input type="radio" name="ug_vulve" value="dechires"> Déchirures
+                            <input type="radio" name="ug_vulve" value="fistule"> Fistule
+                            <input type="radio" name="ug_vulve" value="malformations"> Malformations vulvo-vaginales
+                            <input type="text" name="ug_vulve_autre" placeholder="Autre"></label>
+                        <label>Toucher vaginal:
+                            <input type="checkbox" name="ug_tv_pertes_sanguines"> Pertes vaginales sanglantes (métrorragies)
+                            <input type="checkbox" name="ug_tv_pertes_purulentes"> Pertes purulentes (leucorrhées)
+                        </label>
+                        <label>Culs de sac vaginaux:
+                            <input type="radio" name="ug_tv_culs_sac" value="douleur"> Douleur
+                            <input type="radio" name="ug_tv_culs_sac" value="masse"> Masse
+                        </label>
+                        <label>Utérus (mobilisation):
+                            <input type="radio" name="ug_tv_uterus" value="douleur"> Douleur
+                            <input type="radio" name="ug_tv_uterus" value="deformation"> Déformation
+                            <input type="radio" name="ug_tv_uterus" value="augmentation_taille"> Augmentation de taille
+                        </label>
+                    </div>
+                    <h4>Palpation (Femme)</h4>
+                    <div class="sub-section checkbox-group">
+                        <label>Fosses lombaires:
+                            <input type="checkbox" name="ug_palp_fosses_non_palpable"> Rein non palpable
+                            <input type="checkbox" name="ug_palp_fosses_indolore"> Indolore
+                            <input type="checkbox" name="ug_palp_fosses_masse"> Une masse (gros rein) = contact lombaire
+                            <input type="checkbox" name="ug_palp_fosses_ballotement"> Un ballotement rénal
+                            <input type="checkbox" name="ug_palp_fosses_douleur"> Douleur
+                            <input type="checkbox" name="ug_palp_fosses_defense"> Une défense
+                        </label>
+                        <label>La vessie:
+                            <input type="checkbox" name="ug_palp_vessie_non_palpable"> Vessie non palpable
+                            <input type="checkbox" name="ug_palp_vessie_douleur"> Douleur
+                            <input type="checkbox" name="ug_palp_vessie_globe"> Globe Vésicale
+                        </label>
+                        <label>Les uretères (3 points urétéraux):
+                            <input type="radio" name="ug_palp_ureteres_sup" value="indolore"> Point urétéral sup: Indolore
+                            <input type="radio" name="ug_palp_ureteres_sup" value="douleur"> Point urétéral sup: Douleur
+                            <input type="radio" name="ug_palp_ureteres_moyen" value="indolore"> Point urétéral moyen: Indolore
+                            <input type="radio" name="ug_palp_ureteres_moyen" value="douleur"> Point urétéral moyen: Douleur
+                            <input type="radio" name="ug_palp_ureteres_inf" value="indolore"> Point urétéral inf: Indolore
+                            <input type="radio" name="ug_palp_ureteres_inf" value="douleur"> Point urétéral inf: Douleur
+                        </label>
+                    </div>
+                    <h4>Auscultation (Femme)</h4>
+                    <div class="sub-section checkbox-group">
+                        <label><input type="checkbox" name="ug_auscultation_souffle_systolique"> Souffle systolique (région lombaire ou abdominal + hypertendu)</label>
+                        <label><input type="checkbox" name="ug_auscultation_souffle_continu"> Souffle continu avec un «Thrill»</label>
+                    </div>
+                </div>
+
+                <!-- Examen cutané (from Checklist PDF) -->
+                <h3>EXAMEN CUTANÉ</h3>
+                <div class="sub-section">
+                    <h4>Sans lésions cutanées</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="cutane_paleur"> Pâleur</label>
+                        <label><input type="checkbox" name="cutane_erytheme"> Erythème</label>
+                        <label><input type="checkbox" name="cutane_erythrose"> Erythrose</label>
+                        <label><input type="checkbox" name="cutane_dyschromie"> Dyschromie</label>
+                        <label><input type="checkbox" name="cutane_cyanose"> Cyanose</label>
+                    </div>
+                    <h4>Lésions cutanées</h4>
+                    <div class="checkbox-group">
+                        <label>Macule: <input type="checkbox" name="cutane_macule"></label>
+                        <label>Siège (macule): <input type="text" name="cutane_macule_siege"></label>
+                        <label>Ex (macule): <input type="text" name="cutane_macule_ex"></label>
+                        <label>Papule: <input type="checkbox" name="cutane_papule"></label>
+                        <label>Siège (papule): <input type="text" name="cutane_papule_siege"></label>
+                        <label>Vésicule: <input type="checkbox" name="cutane_vesicule"></label>
+                        <label>Siège (vésicule): <input type="text" name="cutane_vesicule_siege"></label>
+                        <label>Bulle: <input type="checkbox" name="cutane_bulle"></label>
+                        <label>Siège (bulle): <input type="text" name="cutane_bulle_siege"></label>
+                        <label>Pustule: <input type="checkbox" name="cutane_pustule"></label>
+                        <label>Siège (pustule): <input type="text" name="cutane_pustule_siege"></label>
+                        <label>Autre lésion cutanée:
+                            <input type="radio" name="cutane_autre_lesion" value="plaie"> Plaie
+                            <input type="radio" name="cutane_autre_lesion" value="hematome"> Hématome
+                            <input type="radio" name="cutane_autre_lesion" value="psoriasis"> Psoriasis
+                            <input type="text" name="cutane_autre_lesion_detail" placeholder="Autre"></label>
+                    </div>
+                </div>
+
+                <!-- Examen de la cavité buccale (from Checklist PDF, some overlap with general) -->
+                <h3>EXAMEN DE LA CAVITÉ BUCCALE</h3>
+                <div class="sub-section">
+                    <label>Halène:
+                        <input type="radio" name="cb_halene" value="cetonique"> Cétonique
+                        <input type="radio" name="cb_halene" value="foetor_hepaticus"> Foetor hepaticus
+                    </label>
+                    <label>Lèvres:
+                        <input type="checkbox" name="cb_levres_perleche"> Perlèche
+                        <input type="checkbox" name="cb_levres_cyanose"> Cyanose
+                        <input type="checkbox" name="cb_levres_cheilite"> Chéilite
+                        <input type="checkbox" name="cb_levres_telangiectasie"> Télangiectasie
+                    </label>
+                    <label>Langue:
+                        <input type="checkbox" name="cb_langue_macroglossie"> Macroglossie
+                        <input type="checkbox" name="cb_langue_framboisee"> Framboisée
+                        <input type="checkbox" name="cb_langue_saburrale"> Saburrale
+                        <input type="checkbox" name="cb_langue_noire_chevelu"> Noire et chevelu
+                    </label>
+                    <label>Autres:
+                        <input type="checkbox" name="cb_autres_gingivite"> Gingivite
+                        <input type="checkbox" name="cb_autres_aphte"> Aphte
+                        <input type="checkbox" name="cb_autres_angine"> Angine
+                        <input type="checkbox" name="cb_autres_purpura"> Purpura
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- Section: Hypothèses Diagnostiques -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>VII. Hypothèses Diagnostiques</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-content">
+                <div style="background:#e8f4fd; border-left:4px solid #0056b3; padding:12px 16px; border-radius:4px; margin-bottom:16px; font-size:14px; color:#003d80;">
+                    <strong>💡 Guide de raisonnement clinique :</strong><br>
+                    <ul style="margin:8px 0 0 18px; line-height:1.9;">
+                        <li><strong>Les diagnostics les plus probables</strong> — ceux qui correspondent le mieux au tableau clinique et aux antécédents du patient.</li>
+                        <li><strong>Les diagnostics les plus graves / urgents</strong> — à ne jamais manquer, même s'ils semblent moins probables (ex : embolie pulmonaire, IDM, méningite…).</li>
+                        <li><strong>Les diagnostics les plus adaptés au contexte</strong> — terrain du patient (âge, sexe, ATCD, contexte épidémiologique, géographique, immunodépression…).</li>
+                    </ul>
+                </div>
+
+                <div id="hyp_container">
+                    <div class="hyp-row" style="border:1px solid #ddd; border-radius:6px; padding:14px; margin-bottom:12px; background:#fafafa;">
+                        <label style="font-weight:600; color:#0056b3; font-size:15px;">Hypothèse n°1</label>
+                        <label style="margin-top:8px;">Diagnostic évoqué : <input type="text" name="hyp1_diag" style="width:70%; margin-left:8px;" placeholder="Ex : Pneumonie communautaire…"></label>
+                        <label style="margin-top:6px;">Arguments pour :
+                            <textarea name="hyp1_pour" rows="2" style="width:90%; margin-top:4px;" placeholder="— Terrain, ATCD&#10;— Signes fonctionnels&#10;— Signes physiques"></textarea>
+                        </label>
+                        <label style="margin-top:6px;">Arguments contre :
+                            <textarea name="hyp1_contre" rows="2" style="width:90%; margin-top:4px;" placeholder="— Éléments qui ne cadrent pas…"></textarea>
+                        </label>
+                        <label style="margin-top:6px;">Priorité :
+                            <input type="radio" name="hyp1_priorite" value="probable"> Plus probable &nbsp;
+                            <input type="radio" name="hyp1_priorite" value="grave"> Plus grave / urgente &nbsp;
+                            <input type="radio" name="hyp1_priorite" value="contexte"> Adaptée au contexte
+                        </label>
+                    </div>
+
+                    <div class="hyp-row" style="border:1px solid #ddd; border-radius:6px; padding:14px; margin-bottom:12px; background:#fafafa;">
+                        <label style="font-weight:600; color:#0056b3; font-size:15px;">Hypothèse n°2</label>
+                        <label style="margin-top:8px;">Diagnostic évoqué : <input type="text" name="hyp2_diag" style="width:70%; margin-left:8px;" placeholder="Ex : Tuberculose pulmonaire…"></label>
+                        <label style="margin-top:6px;">Arguments pour :
+                            <textarea name="hyp2_pour" rows="2" style="width:90%; margin-top:4px;" placeholder="— Terrain, ATCD&#10;— Signes fonctionnels&#10;— Signes physiques"></textarea>
+                        </label>
+                        <label style="margin-top:6px;">Arguments contre :
+                            <textarea name="hyp2_contre" rows="2" style="width:90%; margin-top:4px;" placeholder="— Éléments qui ne cadrent pas…"></textarea>
+                        </label>
+                        <label style="margin-top:6px;">Priorité :
+                            <input type="radio" name="hyp2_priorite" value="probable"> Plus probable &nbsp;
+                            <input type="radio" name="hyp2_priorite" value="grave"> Plus grave / urgente &nbsp;
+                            <input type="radio" name="hyp2_priorite" value="contexte"> Adaptée au contexte
+                        </label>
+                    </div>
+
+                    <div class="hyp-row" style="border:1px solid #ddd; border-radius:6px; padding:14px; margin-bottom:12px; background:#fafafa;">
+                        <label style="font-weight:600; color:#0056b3; font-size:15px;">Hypothèse n°3</label>
+                        <label style="margin-top:8px;">Diagnostic évoqué : <input type="text" name="hyp3_diag" style="width:70%; margin-left:8px;" placeholder="Ex : Embolie pulmonaire…"></label>
+                        <label style="margin-top:6px;">Arguments pour :
+                            <textarea name="hyp3_pour" rows="2" style="width:90%; margin-top:4px;" placeholder="— Terrain, ATCD&#10;— Signes fonctionnels&#10;— Signes physiques"></textarea>
+                        </label>
+                        <label style="margin-top:6px;">Arguments contre :
+                            <textarea name="hyp3_contre" rows="2" style="width:90%; margin-top:4px;" placeholder="— Éléments qui ne cadrent pas…"></textarea>
+                        </label>
+                        <label style="margin-top:6px;">Priorité :
+                            <input type="radio" name="hyp3_priorite" value="probable"> Plus probable &nbsp;
+                            <input type="radio" name="hyp3_priorite" value="grave"> Plus grave / urgente &nbsp;
+                            <input type="radio" name="hyp3_priorite" value="contexte"> Adaptée au contexte
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" onclick="addHypothese()" style="padding:8px 18px; background:#0056b3; color:white; border:none; border-radius:5px; cursor:pointer; font-size:14px; margin-top:4px;">+ Ajouter une hypothèse</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
