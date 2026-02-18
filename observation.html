@@ -78,13 +78,34 @@
   .home-button:hover {
       background-color: #0056b3 !important;
   }
-
-  /* Header */
-  .app-header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; text-align: center; padding: 20px 16px 16px; position: sticky; top: 75px; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
-  .app-header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px; }
-  .app-header p { font-size: 0.82rem; opacity: 0.85; margin-top: 4px; }
-  .progress-bar-wrap { background: rgba(255,255,255,0.2); height: 5px; margin-top: 12px; border-radius: 3px; overflow: hidden; }
-  .progress-bar { background: #7ecfff; height: 100%; width: 0%; transition: width 0.4s; border-radius: 3px; }
+  .island-center {
+    text-align: center;
+    color: white;
+  }
+  .island-center h1 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    border: 0;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .island-center p {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin: 0;
+  }
+  .app-header { display:none; }
+  
+  .progress-bar-wrap {
+    position: absolute;
+    bottom: -2px;
+    left: 10px;
+    right: 10px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .progress-bar { background: #7ecfff; height: 100%; width: 0%; transition: width 0.4s; border-radius: 2px; }
 
   /* Container */
   .container { max-width: 780px; margin: 0 auto; padding: 14px 12px; }
@@ -198,13 +219,16 @@
         <a href="clinXpert/+++ these interne - observation médicale.docx" target="_blank">ClinXpert Word</a>
         <a href="https://clinxpert.glide.page/dl/ClinXpert" target="_blank">ClinXpert</a>
     </div>
+    <div class="island-center">
+        <h1>📋 Observation Médicale</h1>
+        <p>Médecine Générale · Saisie · Checklist · Export Word</p>
+    </div>
     <a href="index.html" class="home-button">🏠</a>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 </div>
 
-<div class="app-header">
-  <h1>📋 Observation Médicale</h1>
-  <p>Médecine Générale · Saisie · Checklist · Export Word</p>
-  <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+<div class="app-header" style="display:none;">
+  
 </div>
 
 <div id="toast"></div>

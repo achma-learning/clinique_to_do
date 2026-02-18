@@ -1,0 +1,451 @@
+@charset "utf-8";
+
+/* ==== Polices ==== */
+@font-face {
+    font-family: "font_title";
+    src: url("baskerville.ttf");
+}
+
+@font-face {
+    font-family: "font_body1";
+    src: local("Arial");
+}
+
+@font-face {
+    font-family: "font_serif";
+    src: local("Times New Roman");
+}
+
+
+/* ==== Style de page d'index principal (web/android) ==== */
+@media screen {
+    .indexbody {
+        background-color:#FFFFFF;
+        background-image: url("fond_blue_band.png");
+        background-position:left top;
+        background-repeat:repeat-y;
+        color:#000000;
+        margin-left: 0.6em;
+        margin-right: 0.6em;
+        font-family: serif;
+    }
+}
+@media print {
+    .indexbody {
+        background-color:#ffffff;
+        color:#000000;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+        font-family: serif;
+    }
+}
+.indexbody a:link {
+    color:#000000;
+}
+.indexbody a:visited {
+    color:#000000;
+}
+.indexbody a:active {
+    color:#000000;
+}
+
+
+/* ==== Styles pour les index ==== */
+.idx_mainpagetitle { /* Partie Titre de l'index principal */
+    text-align: center;
+    width: calc(100%+1.2em);
+    background-color: #000088;
+    margin-top: -1em;
+    margin-left: -0.6em;
+    margin-right: -0.6em;
+    padding-top: 1.5em;
+    padding-bottom: 1em;
+}
+
+.idx_maintoidx { /* Liens vers les deux index */
+    font-weight: bold;
+    font-size: 1.5em;
+    line-height: 2em;
+    color: #990000;
+    text-decoration: none;
+    font-family: "font_title", serif;
+}
+
+.idx_maintoidx a:link {
+    color:#990000;
+    text-decoration: none;
+}
+.idx_maintoidx a:visited {
+    color:#990000;
+    text-decoration: none;
+}
+.idx_maintoidx a:active {
+    color:#990000;
+    text-decoration: none;
+}
+
+@media screen {
+    .idx_maintitle { /* Titres index alphabétique et par spécialité */
+        font-weight: bolder;
+        font-size: 1.8em;
+        text-align: center;
+        width: calc(100%+1.3em);
+        color: #EFBF04;
+        font-family: "font_title", serif;
+        background-color: #000088;
+        margin-top: -1em;
+        margin-left: -0.4em;
+        margin-right: -0.33em;
+        padding-top: 1.3em;
+        padding-bottom: 0.7em;
+        margin-bottom: 0.3em;
+    }
+
+    .idx_p_opencloseall { /* Partie icones Expand / Collapse  des index */
+        background-color:#FFFFFF;
+        background-image: url("fond_blue_band.png");
+        background-position:left top;
+        background-repeat:repeat-y;
+        text-align: center;
+        position: sticky;
+        top:0em;
+        padding-top: 0.4em;
+        padding-bottom: 0.3em;
+        margin-left: -0.6em;
+        margin-right: -0.6em;
+    }
+}
+@media print {
+    .idx_maintitle { /* Titres index alphabétique et par spécialité */
+        font-weight: bolder;
+        font-size: 1.8em;
+        text-align: center;
+        color: #000088;
+        margin-left: .6em;
+        margin-right: .6em;
+        margin-bottom: .65em;
+        font-family: "font_title", serif;
+        background-color: #FFFFFF;
+        margin-top: -1em;
+        margin-left: -0.4em;
+        margin-right: -0.33em;
+        padding-top: 1.3em;
+        padding-bottom: 0.5em;
+        margin-bottom: 0.3em;
+    }
+
+    .idx_p_opencloseall { /* Partie icones Expand / Collapse  des index */
+        display: none;
+    }
+}
+
+.idx_maintable {
+    border-collapse: collapse; /* remplace cellspacing=0 */
+    border-spacing: 0;         /* sécurité */
+    margin-left: auto;         /* remplace align="center" */
+    margin-right: auto;
+}
+
+.idx_maintable td {
+    padding : 0;
+}
+
+.idx_close_all { /* Style d'affichage de l'item [Fermer Tout] */
+    color:#900;
+    font-size: 0.9em;
+    font-weight: normal;
+    font-family: "font_title", serif;
+}
+
+.idx_open_all { /* Style d'affichage de l'item [Ouvrir Tout] */
+    color:#070;
+    font-size: 0.9em;
+    font-weight: normal;
+    font-family: "font_title", serif;
+}
+
+.idx_alpha_chapter { /* Chapitre dans un index alphabétique */
+    font-size: xx-large;
+    font-weight:bolder;
+    text-align: left;
+    color: #990000;
+    margin-top: .7em;
+    font-family: "font_title", serif;
+    word-break: break-all;
+}
+
+.idx_spe_chapter { /* Chapitre dans un index par spécialité */
+    font-size: larger;
+    font-weight:bolder;
+    text-align: left;
+    color: #990000;
+    margin-top: 1.3em;
+    font-family: "font_title", serif;
+    word-break: break-all;
+}
+
+.idx_collapse_icon_alpha { /* Icone expand/collapse chapitre index alpha */
+    height: 0.9em;
+    vertical-align: baseline;
+    margin-left: 0.2em;
+    margin-right: 0.6em;
+}
+
+.idx_collapse_icon_spe { /* Icone expand/collapse chapitre index alpha */
+    height: 0.9em;
+    vertical-align: baseline;
+    margin-left: 0.6em;
+    margin-right: 0.3em;
+}
+
+.idx_spe_img { /* Image de chapitre ds index par spécialités */
+    width:2.2em;
+    height:2.2em;
+    vertical-align: -0.5em;
+}
+
+.idx_lines { /* Lignes d'index, niveau <ul> */
+    font-family: "font_body1", sans-serif;
+}
+.idx_lines a:link {
+    text-decoration:none;
+}
+
+.idx_liline { /* Ligne d'index, niveau <li> */
+    padding-bottom:0.8em;
+    line-height: 1em;
+    font-size: large;
+}
+
+.idx_note { /* Note en italique et plus petit sur les index*/
+    font-size:70%;
+    font-style:italic;
+    display: block;
+    color: #666666;
+}
+
+.idx_image { /* Image spé dans index alphabétique */
+    width: 1.7em;
+    height: 1.7em;
+    float: left;
+    margin: 0.1em 0.2em 0 0;
+    vertical-align: top;
+    text-align: left;
+    border: 0;
+}
+
+.idx_illust_image { /* Image illustrative en tête ou dans le texte */
+    width: 1.3em;
+    height: 1.3em;
+    margin: 0.4em 0.4em -0.1em 0;
+    vertical-align: text-bottom;
+    text-align: left;
+    border: 0;
+}
+
+
+/* ==== Style de page de score ==== */
+@media screen {
+    .scorebody {
+        background-color:#FFFFFF;
+        background-image: url("fond_yellow_band.png");
+        background-position:left top;
+        background-repeat:repeat-y;
+        margin-left: 0.6em;
+        margin-right: 0.6em;
+        color:#000000;
+        font-family: "font_body1", sans-serif;
+    }
+}
+@media print {
+    .scorebody {
+        background-color:#FFFFFF;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+        color:#000000;
+        font-family: "font_body1", sans-serif;
+    }
+}
+.scorebody a:link {
+    color:#0000CC;
+}
+.scorebody a:visited {
+    color:#0000CC;
+}
+.scorebody a:active {
+    color:#0000CC;
+}
+.scorebody input {
+    font-size: 100%;
+}
+.scorebody input[type="checkbox"] {
+    margin-bottom: 0.7em;
+}
+.scorebody input[type="radio"] {
+    margin-bottom: 0.3em;
+}
+
+/* ==== Styles pour la page d'un score ==== */
+.scoretitle_title { /* Titre principal */
+    font-weight: bolder;
+    font-size: 1.4em;
+    text-align: center;
+    color: #0000FF;
+    font-family: serif;
+}
+.scoretitle_image { /* Image du titre, imbriquée avec .scoretitle_title */
+    width: 2em;
+    height: 2em;
+    margin-top: 0.5em;
+    vertical-align: middle;
+    text-align: center;
+}
+
+@media screen {
+    .scoretitle_separator { /* Séparateur du titre avec le corps du score, imbriquée avec .scoretitle_title */
+        color: #990000;
+        background-color: #990000;
+        border: none;
+        width: 6em;
+        height: 0.15em;
+        margin-bottom: 1.5em;
+    }
+}
+@media print {
+    .scoretitle_separator { /* Séparateur du titre avec le corps du score, imbriquée avec .scoretitle_title */
+        border-color: #990000;
+        width: 6em;
+        height: 0;
+        margin-bottom: 1.5em;
+    }
+}
+
+.score_result { /* Format de résultat de score */
+    text-align: center;
+    font-weight:bolder;
+    color: #990000;
+}
+
+.score_inter { /* Format du bloc Interprétation */
+    text-align:left;
+    font-size:smaller;
+    color: #006600;
+    font-style:italic;
+}
+
+.score_ref { /* Format du bloc Références */
+    text-align:left;
+    font-size:smaller;
+    color: #666666;
+    font-style:italic;
+    overflow-wrap: break-word;
+}
+
+.score_note { /* Note en italique et plus petit */
+    font-size:smaller;
+    font-style:italic;
+}
+
+.score_tnm_title { /* Titre de la classification TNM */
+    font-weight: bolder;
+    font-size: 1.18em;
+    text-align: center;
+    color: #008800;
+}
+
+.score_table { /* Table standard utilisés dans les scores */
+    border-width: 0;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px;
+}
+
+.sampledoc_table { /* Document d'exemple - table */
+    border: 4px solid #808080;     /* border + bordercolordark approx */
+    border-collapse: separate;
+    border-spacing: 4px;           /* cellspacing */
+    background-color: #C0C0C0;     /* bgcolor */
+    margin-left: auto;             /* align=center */
+    margin-right: auto;
+}
+
+.sampledoc_td { /* Document d'exemple - td */
+    padding: 5px;                  /* cellpadding */
+    vertical-align: middle;        /* valign */
+    background-color: #FFFFFF;     /* bgcolor */
+    /* effet relief old-school */
+    border-top: 1px solid #C0C0C0;
+    border-left: 1px solid #C0C0C0;
+    border-bottom: 1px solid #000000;
+    border-right: 1px solid #000000;
+}
+
+
+/* ==== Styles pour les pieds de page ==== */
+@media screen {
+    .footprint {
+        display: none;
+    }
+    .footscreen {
+        display: block;
+        text-align: center;
+        margin-top : 2em;
+        margin-bottom: 2em;
+        font-family: "font_title", serif;
+        font-weight: normal;
+        font-size: 0.9em;
+    }
+}
+@media print {
+    .footprint {
+        display: block;
+        text-align: center;
+        font-style: italic;
+    }
+    .footscreen {
+        display: none;
+    }
+}
+.footscreen a:link {
+    text-decoration: none;
+}
+.footscreen a:visited {
+    text-decoration: none;
+}
+.footscreen a:active {
+    text-decoration: none;
+}
+
+.footicon { /* Icones utilisées en fin de page */
+    height: 1.8em;
+    vertical-align: middle;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+}
+
+@media screen {
+    .idx_footer {
+        display: block;
+        text-align: center;
+        margin-top : 2em;
+        margin-bottom: 2em;
+        font-family: "font_title", serif;
+        font-weight: normal;
+        font-size: 0.9em;
+    }
+}
+@media print {
+    .idx_footer {
+        display: none;
+    }
+}
+.idx_footer a:link {
+    text-decoration: none;
+}
+.idx_footer a:visited {
+    text-decoration: none;
+}
+.idx_footer a:active {
+    text-decoration: none;
+}

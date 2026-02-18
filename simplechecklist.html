@@ -76,12 +76,33 @@
       .home-button:hover {
           background-color: #0056b3 !important;
       }
+      .island-center {
+        text-align: center;
+        color: white;
+      }
+      .island-center h1 {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin: 0;
+        border: 0;
+      }
+       .island-center p {
+        font-size: 0.8em;
+        opacity: 0.8;
+        margin: 0;
+      }
 
-      .app-header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; text-align: center; padding: 16px; position: sticky; top: 75px; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
-      .app-header h1 { font-size: 1.3rem; font-weight: 700; }
-      .app-header p { font-size: 0.85rem; opacity: 0.9; margin-top: 6px; }
-      .progress-bar-wrap { background: rgba(255,255,255,0.2); height: 6px; margin-top: 12px; border-radius: 3px; overflow: hidden; }
-      .progress-bar { background: #7ecfff; height: 100%; width: 0%; transition: width 0.4s; border-radius: 3px; }
+      .app-header { display:none; }
+
+      .progress-bar-wrap {
+        position: absolute;
+        bottom: -2px;
+        left: 10px;
+        right: 10px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .progress-bar { background: #7ecfff; height: 100%; width: 0%; transition: width 0.4s; border-radius: 2px; }
 
       .container { max-width: 800px; margin: 0 auto; padding: 12px; }
 
@@ -116,13 +137,16 @@
         <a href="clinXpert/+++ these interne - observation médicale.docx" target="_blank">ClinXpert Word</a>
         <a href="https://clinxpert.glide.page/dl/ClinXpert" target="_blank">ClinXpert</a>
     </div>
+    <div class="island-center">
+        <h1>Checklist Mobile</h1>
+        <p id="current-datetime"></p>
+    </div>
     <a href="index.html" class="home-button">🏠</a>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 </div>
 
-<div class="app-header">
-    <h1>Checklist Mobile</h1>
-    <p id="current-datetime"></p>
-    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+<div class="app-header" style="display:none;">
+    
 </div>
 
 <div class="container">
