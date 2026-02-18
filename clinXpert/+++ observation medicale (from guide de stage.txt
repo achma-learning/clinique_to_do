@@ -1,0 +1,105 @@
+a. L’observation médicale :
+L'externe de 3ème année doit être en mesure de rédiger l’observation clinique avec les étapes suivantes :
+
+	- La 1ère étape est l’interrogatoire (ou anamnèse) comprenant le motif d’hospitalisation, un recueil détaillé des antécédents personnels et familiaux.
+Par la suite, il doit relater l’histoire détaillée de la maladie avec les signes fonctionnels dont il convient d’en préciser le mode de début, l’évolution et l’état actuel en précisant les points positifs et négatifs pertinents.
+L’externe doit également préciser l’existence ou l’absence de signes généraux représentés par les signes fonctionnels qui n’orientent pas directement vers un organe ou maladie donnée (fèvre, sueurs, asthénie, amaigrissement).
+
+	- La 2ème étape importante est celle de l’examen physique qui comprend un examen détaillé des divers appareils et organes.
+		b. L’examen physique
+En premier, il faut d’abord apprécier l’état général, le pouls, le poids, la température, l’état des téguments, des conjonctives, des phanères. **On commencera toujours par l’étude de l’appareil concerné.**
+=== Examen de l’appareil respiratoire :
+Inspection :
+- Apprécier la morphologie et la symétrie d’un thorax
+- Rechercher une cyanose des téguments
+- Apprécier la fréquence et le rythme respiratoire
+- Reconnaître un hippocratisme digital
+Palpation :
+- Connaître la technique de palpation du thorax
+- Savoir apprécier l’ampliation thoracique normale
+- Savoir apprécier la transmission des vibrations vocales
+Percussion :
+- Connaître la technique de percussion du thorax
+- Savoir reconnaître la sonorité normale lors de la percussion d’un thorax
+- Reconnaître une matité, une sonorité.
+Auscultation :
+- Connaître le principe d’utilisation d’un stéthoscope
+- Reconnaître le bruit laryngé-trachéal normal
+- Reconnaître le murmure vésiculaire
+=== Examen cardio-vasculaire :
+- Reconnaître les quatre foyers d’auscultation cardiaque
+- Reconnaître les bruits du cœur normal
+- Savoir pratiquer les gestes suivants :
+	o Palpation de la région précordiale et localisation du choc de pointe
+	o Palpation des pouls périphériques
+	o Mesure de la pression artérielle humérale au brassard
+	o Auscultation des trajets artériels
+=== Examen ostéo-articulaire :
+- Examen physique d’une articulation : inspection, palpation des repères osseux, recherche d’un épanchement, étude de la mobilité active et passive.
+- Examen physique du rachis :
+	o Savoir examiner la mobilité sagittale et frontale du rachis
+	o Savoir pratiquer la manœuvre de Lasègue
+=== Examen neurologique
+- Evaluer l’état des fonctions supérieures et de la conscience.
+- Apprécier la coordination des mouvements et l’équilibre.
+- Evaluer l’échelle de Glasgow.
+- Examen des réfexes :
+	o Savoir rechercher les réfexes ostéo-tendineux (stylo radial, bicipital, tricipital, cubito-pronateur, rotulien, achilléen)
+	o Savoir rechercher les réfexes cutanés (cutanés plantaires, cutanés abdominaux)
+	o Savoir rechercher les réfexes cutanéomuqueux (cornéen, vélo palatin)
+- Examen de la motricité :
+	o Savoir explorer la force musculaire (des membres supérieurs et inférieurs)
+	o Savoir apprécier le tonus musculaire
+- Examen de la sensibilité : Savoir rechercher un défcit de la sensibilité tactile, thermo-algique, proprioceptive
+- Examen des paires crâniennes :
+	o Savoir rechercher un trouble de l'olfaction
+	o Savoir rechercher au doigt un trouble du champ visuel
+	o Savoir explorer l'oculomotricité
+	o Savoir rechercher un défcit sensitif et moteur de la face
+	o Savoir rechercher un nystagmus, une surdité
+	o Savoir rechercher une agueusie, une anesthésie des amygdales, du voile, du pharynx, un réfexe nauséeux
+	o Savoir rechercher une paralysie du voile, du larynx, du pharynx ou de la langue
+=== Examen de l’abdomen et sémiologie digestive
+- Examen de la cavité buccale, de la denture et des téguments (ictère, angiomes stellaires)
+- Inspection et percussion de l’abdomen :
+	o Repérer les quadrants et régions de l’abdomen
+	o Savoir identifer les cicatrices post-traumatiques ou chirurgicales : médiane sus-ombilicale, médiane sous-ombilicale, xypho-pubienne, sous costale et post-cœlioscopie.
+	o Reconnaître une circulation veineuse collatérale porto-cave.
+- Auscultation de l’abdomen :
+	o Rechercher et reconnaître un soufe abdominal
+	o Rechercher des bruits hydro-aériques.
+- Palpation de l’abdomen :
+	o Rechercher une douleur au point de Mac Burney, un signe de Murphy.
+	o Reconnaître une contracture abdominale et différencier une contracture d’une défense.
+	o Rechercher et mesurer une hépatomégalie (fèche hépatique), apprécier la consistance du bord inférieur et la surface du foie (malade en décubitus dorsal, inspiration profonde, examinateur à droite du malade).
+	o Rechercher et mesurer une splénomégalie (malade en décubitus dorsal ou en décubitus latéral droit, examinateur à gauche du malade.
+	o Rechercher une masse palpable
+	o Rechercher une ascite et apprécier son abondance.
+	o Savoir rechercher une hernie crurale et inguinale.
+	o Réaliser des touchers pelviens.
+=== Examen uro-génital :
+- Examiner les fosses lombaires
+- Examiner les organes génitaux externes chez l’homme
+- Faire un toucher rectal (examen de la prostate)
+- Faire un toucher vaginal (examen du col utérin)
+- Reconnaître les caractères d’une miction normale chez l’homme
+- Faire l’examen macroscopique des urines
+=== Autres :
+- Savoir palper et reconnaître les aires ganglionnaires superfcielles (cervicales, sus-claviculaires, axillaires et inguinaux).
+- Examiner la glande thyroïde
+- Savoir examiner les glandes mammaires
+
+Synthèse clinique : Une conclusion est rédigée à la fn de l’interrogatoire et de l’examen clinique. Elle doit rassembler les signes en syndrome, souligner les signes essentiels de l’examen clinique, et souligner l’absence de signes cliniques comme signes négatifs.
+Finalement, la conclusion clinique doit clairement rappeler l’identité du patient, le motif de consultation, les principaux antécédents pathologiques personnels et familiaux, l’histoire de la maladie et les signes pathologiques retrouvés à l’examen physique, regroupés en syndrome (s) ou problème (s). A partir de cette conclusion pertinente, l’externe doit évoquer un certain nombre de diagnostics.
+
+Discussion diagnostic : Les diagnostics plausibles sont cités du plus probable au moins probable, en citant les arguments en faveur et les arguments contre.
+
+Les examens complémentaires : Ne sont pas toujours indispensables pour retenir un diagnostic. Ils sont demandés pour deux raisons :
+- Pour évaluer ou rechercher un retentissement possible
+- Et pour confrmer un des diagnostics suspecter
+
+Prise en charge : Après le bilan, si un diagnostic est retenu, une prise en charge du malade est proposée.
+
+Evolution et Pronostic : Le mode évolutif et le pronostic à cours et à long terme de la pathologie retenue sont établis
+
+la mettre dans le dossier du malade

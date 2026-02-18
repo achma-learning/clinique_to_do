@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>📋 Checklist Mobile</title>
+    <style>
+      :root {
+        --blue: #1a5fa8;
+        --blue-light: #e8f0fc;
+        --blue-dark: #0d3d72;
+        --green: #0a7c3e;
+        --red: #c0392b;
+        --gray: #6c757d;
+        --border: #dee2e6;
+        --bg: #ffffff;
+        --section-bg: #f8faff;
+        --text: #212529;
+        --subtext: #495057;
+        --radius: 12px;
+        --shadow: 0 2px 8px rgba(26,95,168,0.10);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 90px; padding-top: 80px; }
+
+      .floating-island {
+        position: fixed; /* Changed to fixed to stay on screen */
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        max-width: 95%;
+        background-color: rgba(20, 20, 20, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        z-index: 1001; /* Higher than app-header */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+      .floating-buttons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          padding: 0 5px;
+      }
+      .floating-island a {
+          color: white;
+          text-decoration: none;
+          padding: 8px 12px;
+          border-radius: 30px;
+          font-size: 0.85em;
+          font-weight: 500;
+          transition: background-color 0.2s ease-in-out;
+          white-space: nowrap;
+      }
+      .floating-island a:not(.home-button):hover {
+          background-color: rgba(255, 255, 255, 0.15);
+      }
+      .home-button {
+          background-color: #007bff;
+          font-size: 1.4em !important;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50% !important;
+          padding: 0 !important;
+      }
+      .home-button:hover {
+          background-color: #0056b3 !important;
+      }
+
+      .app-header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; text-align: center; padding: 16px; position: sticky; top: 75px; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+      .app-header h1 { font-size: 1.3rem; font-weight: 700; }
+      .app-header p { font-size: 0.85rem; opacity: 0.9; margin-top: 6px; }
+      .progress-bar-wrap { background: rgba(255,255,255,0.2); height: 6px; margin-top: 12px; border-radius: 3px; overflow: hidden; }
+      .progress-bar { background: #7ecfff; height: 100%; width: 0%; transition: width 0.4s; border-radius: 3px; }
+
+      .container { max-width: 800px; margin: 0 auto; padding: 12px; }
+
+      .section-card { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; border: 1px solid var(--border); overflow: hidden; }
+      .section-header { display: flex; align-items: center; padding: 16px; cursor: pointer; user-select: none; background: var(--section-bg); gap: 12px; transition: background 0.2s; -webkit-tap-highlight-color: transparent; }
+      .section-header:hover { background: var(--blue-light); }
+      .section-title { flex: 1; font-weight: 600; font-size: 1.1rem; color: var(--blue-dark); }
+      .toggle-icon { font-size: 1.6rem; color: var(--blue); font-weight: 300; transition: transform 0.25s; }
+      .toggle-icon.open { transform: rotate(45deg); }
+      .section-body { display: none; padding: 16px; border-top: 1px solid var(--border); }
+      .section-body.open { display: block; }
+      
+      .check-list { display: flex; flex-direction: column; gap: 10px; }
+      .check-item { display: flex; align-items: flex-start; gap: 15px; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent; }
+      .check-item:hover { background: var(--blue-light); }
+      .check-item input[type="checkbox"] { width: 28px; height: 28px; min-width: 28px; border-radius: 7px; border: 2px solid #aaa; cursor: pointer; margin-top: 1px; accent-color: var(--blue); flex-shrink: 0; }
+      .check-item span { font-size: 1rem; color: var(--text); line-height: 1.5; padding-top: 3px; }
+      .check-item input[type="checkbox"]:checked ~ span { color: var(--green); text-decoration: line-through; }
+      .sub-section { margin-left: 20px; margin-top: 15px; padding-left: 15px; border-left: 3px solid var(--blue-light); }
+      h3, h4, h5 { color: var(--blue); border-bottom: none; font-size: 1rem; margin-bottom: 10px; }
+      select { width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1rem; background: #fff; margin-top: 5px; }
+
+      .sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: white; padding: 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
+      .reset-button { display: block; width: 100%; padding: 15px; background-color: var(--red); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1em; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="floating-island">
+    <div class="floating-buttons">
+        <a href="+++generate docx version/these interne - observation médicale.pdf" target="_blank">ClinXpert PDF</a>
+        <a href="clinXpert/+++ these interne - observation médicale.docx" target="_blank">ClinXpert Word</a>
+        <a href="https://clinxpert.glide.page/dl/ClinXpert" target="_blank">ClinXpert</a>
+    </div>
+    <a href="index.html" class="home-button">🏠</a>
+</div>
+
+<div class="app-header">
+    <h1>Checklist Mobile</h1>
+    <p id="current-datetime"></p>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+
+<div class="container">
+
+    <!-- Sections will be inserted here from the old file -->
+    
+</div>
+
+<div class="sticky-bar">
+    <button class="reset-button" onclick="resetChecklist()">Réinitialiser la Checklist</button>
+</div>
+
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+        const dayName = days[now.getDay()];
+        const date = now.toLocaleDateString('fr-FR');
+        const time = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h');
+        
+        document.getElementById('current-datetime').textContent = `${dayName}, le ${date} | vers ${time}`;
+    }
+
+    function toggleSection(header) {
+        const body = header.nextElementSibling;
+        const icon = header.querySelector('.toggle-icon');
+        const isOpen = body.classList.toggle('open');
+        icon.textContent = isOpen ? '−' : '+';
+        icon.classList.toggle('open', isOpen);
+    }
+
+    function updateProgress() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+        const total = checkboxes.length;
+        if (total === 0) return;
+        const percentage = (checked.length / total) * 100;
+        document.getElementById('progressBar').style.width = percentage + '%';
+    }
+
+    function resetChecklist() {
+        if (confirm('Voulez-vous vraiment réinitialiser toute la checklist ?')) {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('select').forEach(sel => sel.value = sel.options[0].value);
+            updateProgress();
+        }
+    }
+    
+    function setupChecklist() {
+        // Add onchange listeners to all inputs
+        document.querySelectorAll('input[type="checkbox"], select').forEach(input => {
+            input.addEventListener('change', updateProgress);
+        });
+
+        // Initialize progress bar
+        updateProgress();
+
+        // Initialize date and time, and update it every minute
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+    }
+    
+    // This function will be called after we inject the old content
+    document.addEventListener('DOMContentLoaded', () => {
+      // The body of the old file needs to be injected here first.
+      const oldBody = `
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">1. Identité du Patient</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="id_nom_prenom"><span> Nom et Prénom vérifiés.</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_age_sexe"><span> Âge et Sexe notés.</span></label>
+                    <label class="check-item"><input type="checkbox" id="checkbox_id_situation_familiale" name="id_situation_familiale_checked"><span> Situation familiale vérifiée.</span></label>
+                    <select name="id_situation_familiale_select" onchange="updateCheckbox('checkbox_id_situation_familiale', this.value)">
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="Celibataire">Célibataire</option>
+                        <option value="Marie">Marié(e)</option>
+                        <option value="Divorce">Divorcé(e)</option>
+                        <option value="Veuf">Veuf(ve)</option>
+                    </select>
+                    <label class="check-item"><input type="checkbox" name="id_origine_residence"><span> Origine et Résidence actuelle notées.</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_profession"><span> Profession notée.</span></label>
+                    <label class="check-item"><input type="checkbox" id="checkbox_id_couverture_sociale" name="id_couverture_sociale_checked"><span> Couverture sociale vérifiée.</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_autonomie"><span> Autonomie évaluée.</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">2. Motif de Consultation</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="mdc_plainte_principale"><span> Plainte principale notée (mots du patient).</span></label>
+                    <label class="check-item"><input type="checkbox" name="mdc_rappel"><span> Rappel : C'est un signe fonctionnel.</span></label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">3. Antécédents (ATCD)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <h3>Antécédents Personnels</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_diabete"><span>Diabète</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_hta"><span>HTA</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_asthme"><span>Asthme</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_ulcere"><span>Ulcère</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_tuberculose"><span>Tuberculose</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_hospitalisations"><span>Hospitalisations antérieures</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_mst"><span>MST</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_trait_cours_3mois"><span>Traitements en cours</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_chir_type_intervention"><span>Antécédents chirurgicaux</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_tox_tabagisme"><span>Toxiques (Tabac, Alcool, Drogues)</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_allerg_types"><span>Allergies</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Antécédents Familiaux</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_maladies_hereditaires"><span>Maladies héréditaires</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_contage_tuberculeux"><span>Contage tuberculeux</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_deces"><span>Décès dans la famille (cause, âge)</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">4. Histoire de la Maladie</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="hdm_siege"><span>Siège</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_irradiation"><span>Irradiation</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_type"><span>Type</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_impact"><span>Impact / Intensité</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_facteurs_aggravants"><span>Facteurs aggravants / calmants</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_duree_rythme"><span>Durée / Rythme</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_mode_evolutif"><span>Mode évolutif</span></label>
+                    <div class="sub-section">
+                        <h3>Signes Généraux (3A+F)</h3>
+                        <label class="check-item"><input type="checkbox" name="hdm_asthenie"><span>Asthénie</span></label>
+                        <label class="check-item"><input type="checkbox" name="hdm_anorexie"><span>Anorexie</span></label>
+                        <label class="check-item"><input type="checkbox" name="hdm_amaigrissement"><span>Amaigrissement</span></label>
+                        <label class="check-item"><input type="checkbox" name="hdm_fievre"><span>Fièvre</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">5. Examen Clinique</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="ex_gen"><span>Examen Général (Constantes, Conscience)</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_abd"><span>Examen Abdominal</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_card"><span>Examen Cardiaque</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_vasc"><span>Examen Vasculaire</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_pleuro"><span>Examen Pleuro-pulmonaire</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_neuro"><span>Examen Neurologique</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_gang"><span>Examen Ganglionnaire</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_osteo"><span>Examen Ostéo-articulaire</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_uro"><span>Examen Uro-génital</span></label>
+                    <label class="check-item"><input type="checkbox" name="ex_cut"><span>Examen Cutané</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">6. Conclusion</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="cc_resume"><span>Résumé clinique</span></label>
+                    <label class="check-item"><input type="checkbox" name="hd_hypotheses"><span>Hypothèses diagnostiques</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">7. Conduite à Tenir (CAT)</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="cat_diag"><span>CAT Diagnostique (examens)</span></label>
+                    <label class="check-item"><input type="checkbox" name="cat_ther"><span>CAT Thérapeutique (traitement)</span></label>
+                </div>
+            </div>
+        </div>
+      `;
+      document.querySelector('.container').innerHTML = oldBody;
+      setupChecklist();
+    });
+
+    // Kept for the select dropdowns
+    function updateCheckbox(checkboxId, selectValue) {
+        const checkbox = document.getElementById(checkboxId);
+        if (checkbox) {
+            checkbox.checked = (selectValue !== "");
+        }
+    }
+</script>
+</body>
+</html>

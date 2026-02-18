@@ -23,10 +23,64 @@
     --shadow: 0 2px 8px rgba(26,95,168,0.10);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 90px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 90px; padding-top: 80px; }
+  
+  .floating-island {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 95%;
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .floating-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 0 5px;
+  }
+  .floating-island a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.85em;
+      font-weight: 500;
+      transition: background-color 0.2s ease-in-out;
+      white-space: nowrap;
+  }
+  .floating-island a:not(.home-button):hover {
+      background-color: rgba(255, 255, 255, 0.15);
+  }
+  .home-button {
+      background-color: #007bff;
+      font-size: 1.4em !important;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50% !important;
+      padding: 0 !important;
+  }
+  .home-button:hover {
+      background-color: #0056b3 !important;
+  }
 
   /* Header */
-  .app-header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; text-align: center; padding: 20px 16px 16px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+  .app-header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; text-align: center; padding: 20px 16px 16px; position: sticky; top: 75px; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
   .app-header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px; }
   .app-header p { font-size: 0.82rem; opacity: 0.85; margin-top: 4px; }
   .progress-bar-wrap { background: rgba(255,255,255,0.2); height: 5px; margin-top: 12px; border-radius: 3px; overflow: hidden; }
@@ -137,6 +191,15 @@
 </style>
 </head>
 <body>
+
+<div class="floating-island">
+    <div class="floating-buttons">
+        <a href="+++generate docx version/these interne - observation médicale.pdf" target="_blank">ClinXpert PDF</a>
+        <a href="clinXpert/+++ these interne - observation médicale.docx" target="_blank">ClinXpert Word</a>
+        <a href="https://clinxpert.glide.page/dl/ClinXpert" target="_blank">ClinXpert</a>
+    </div>
+    <a href="index.html" class="home-button">🏠</a>
+</div>
 
 <div class="app-header">
   <h1>📋 Observation Médicale</h1>
