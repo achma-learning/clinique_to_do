@@ -1,0 +1,23 @@
+make a two version first
+one is simple named - simplechecklist.html
+one is normal named (current secret.html) - observation.html
+
+one add a dropdown menu with different template ready for each services, use the ccv.html for Chirurgie Cardio-vasculaire template and so one
+
+so if user want a simple check list to follow along with his mobile phone he has version
+so if user want a normal version to use in desktop , he has a version (just add option to download output at end since current version as of 18/02/2026 aren't eay to use for export, the docx doesn't work, and for google docs the user have to manually past them, i think of creating a html version , and at the same time the copy into clipboard and ask user to manually (ctrl + A : select all content, ctrl+v: paste: past it in a word documents, or open a google docs. but for now the google docs works)
+
+and if a user want a premade template for each services he has an option,
+
+so index.html = has two button, and a dropdown menu :
+	button1: simple checklist, open the simplechecklist.html
+	button2: normal version, open the observation.html
+	search bar with autocomplete, to open the service/specialité pre-made template, like ccv, for auto complete use two , the name of html file and the name of website, for example : ccv.html or Chirurgie Cardio Vasculaire, the link of each service is under folder "services/spe" , under the folder with same name as the html file, for ccv.html is under ccv folder, and each service folder has two item the .html file, and a folder named ressources (service) = countains observation related to that service
+
+# task 1 : optimise the simple check list for mobile
+# task 2 : optimise the normal observation generator
+# task 3 : create folders under folder "services/spe",
+	## task 3.1 - start with services that you passed in, and add ressouces files and remove the names for privacy respect
+	## task 3.2 - use gemini-cli and claude-code, and use the normal version (observation.html) and a the interne version pdf (2page) and the ressources folder of that services
+	## task 3.3 - create the index.html
+	
