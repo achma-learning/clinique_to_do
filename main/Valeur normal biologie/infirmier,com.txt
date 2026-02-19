@@ -1,0 +1,84 @@
+I. Ionogramme sanguin
+ 
+Attention, il s'agit ici de valeurs usuelles majoritairement reconnues mais les résultats pour un patient doivent d'abord tenir compte des références du laboratoire ayant réalisé les examens sanguins.
+
+ 	Anciennes normes	Nouvelles normes
+Sodium	133 à 143 mEq/l	133 à 143 mmol/l
+Potassium	3,5 à 5 mEq/l	3,5 à 5 mmol
+Chlore	95 à 105 mEq/l	95 à 105 mmol/l
+Bicarbonates	22 à 30 mEq/l	22 à 30 mmol
+Protéines totales	65 à 75 g/l
+Phosphore	25 à 42 mEq/l	0,8 à 1,35 mmol
+Magnésium	18 à 24 mg/l	0,75 à 1 mmol
+Calcium	90 à 100 mg/l	2,25 à 2,5 mmol
+Glucose	0,8 à 1 g/l	3,6 à 5,5 mmol/l
+Urée	0,15 à 0,45 g/l	2,5 à 7,5 mmol/l
+Créatinine	4,5 à 12 mg/l	50 à 115 µmol/l
+Acide Urique	20 à 70 mg/l	120 à 420 µmol/l
+Fer	H : 55 à 170 µg / 100ml	10 à 30 µmol
+ 	F : 55 à 150 µg / 100ml	10 à 27 µmol
+Capacité fixation	45 à 72 µmol/l
+Coeff saturation	30 à 40 %
+II. Ionogramme urinaire
+ 	Anciennes normes	Nouvelles normes
+Sodium	2,3 à 6,9 g/24h	100 à 300 mmol/24h
+Potassium	2 à 4 g/24h	50 à 100 mmol/24h
+Chlores	2,8 à 9,6 g/24h	80 à 270 mmol/24h
+Phosphore	0,5 1,5 g/24h	16 à 48 mmol/24h
+Albumine	0	0
+Acétone	0	0
+Glucose	0	0
+Urée	20 à 30 g/24h	335 à 500 mmol/24h
+Créatinine	F : 1,1 à 2,15 g/24h	F : 9 à 12 mmol/24h
+ 	H : 1 à 1,35 g/24h	H : 10 à 22 mmol/24h
+Acide Urique	0,4 à 0,8 g/24h	2,4 4,75 mmol/24h
+Amylase	6000 U/l
+III. Bilan hépatique
+ALAT = SGPT	 
+ASAT = SGOT	 
+LDH	190 – 400 Ui/l.
+CPK	
+Homme : 0 - 195 UI /l 
+Femme : 0 - 170 UI /l
+CPK MB	1 à 10 U/l ou
+Gamma GT	21 à 58 U/l
+Phosphatases alcalines	1 à 34 U/100ml
+Amylase	60 à 100 U/l
+ 	 
+BILIRUBINES	 
+Totale	 	 
+non conjuguée	moins de 10 mg/L (18 mmol/L)	 
+conjugué	inférieur à 2 mg/L (4 mmol/L).	 
+Cholestérol enz	1,5 à 2,5 g/l	4,5 à 6,6 mmol/l
+HDL Chol	0,6 g/l	0,85 à 2,15 mmol/l
+Triglycérides	0,7 à 1,6 g/l	0,8 à 1,8 mmol/l
+Myoglobines	0 à 90 g/l
+IV. Numération Formule Sanguine
+ 	Femmes	Hommes
+Hématies (millions /mm3)	4.0 - 5.3	4.2 - 5.7
+Hémoglobine (g /100 ml)	12.5 - 15.5	14.0 - 17.0
+Hématocrite (%)	37 - 46	40 - 52
+VGM (µ3) Volume Globulaire Moyen	80 - 95	80 - 95
+TCMH (pg) Teneur Corpusculaire Moyenne en Hémoglobine	24 - 30	28 - 32
+CCMH (%) Concentration Corpusculaire Moyenne en Hémoglobine	30 - 35	30 - 35
+Leucocytes(/mm3)	4000 - 10000	4000 - 10000
+Plaquettes (/mm3x1000)	150 - 400	150 - 400
+V. Gaz du sang
+ 	
+Artériel
+
+Veineux
+
+pH
+
+7,38 - 7,42
+
+7,35 - 7,37
+
+pCO2 mm Hg	38 - 42	45 - 48
+Bicar mmol/l	22 - 26	26 - 27
+CO2 total mmol/l	25 - 27	 
+pO2 mm Hg	75 - 95	38
+Sa O2 %	92 - 96	68 - 78
+
+source : https://www.infirmiers.com/etudiants/cours-et-tests/cours-connaitre-les-normes-biologiques

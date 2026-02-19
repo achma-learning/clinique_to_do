@@ -1,0 +1,83 @@
+Récapitulatif des principales normes biologiques…
+
+1- Hématologie
+Examen	Homme	Femme	Enfant	Nouveau né
+Hématies (G. rouges)	4,3 à 5,8 x106/mm3	4 à 5,3 x106/mm3	3,7 à 5,2 x106/mm3	4,8 à 6 x106/mm3
+Hémoglobine	14 à 18 g/dL	12 à 16 g/dL	11,5 à 15 g/dL	14 à 20 g/dL
+Hématocrite	40 à 53 %	37 à 46 %	35 à 44 %	47 à 64 %
+Vol. Globulaire moyen (VGM)	82 à 97 fL	82 à 97 fL	70 à 87 fL	100 à 115 fL
+Leucocytes (PNN + PNE + PNB + Lymphocytes + Monocytes)	4 à 10 G/L	4 à 10 G/L	5 à 12 G/L	10 à 25 G/L
+Polynucléaires neutrophiles (PNN)	2 à 8 G/L(50-80% )	2 à 8 G/L(50-80%)	1 à 4,8 G/L(20-40%)	4 à 20 G/L(40-80%)
+PN éosino-philes  (PNE)	< 500 G/L	< 500 G/L	< 500 G/L	< 1 000 G/L
+PN basophiles (PNB)	< 100 G/L	< 100 G/L	< 150 G/L	< 150 G/L
+Lymphocytes	0,8 à 4 G/L(20-40%)	0,8 à 4 G/L(20-40%)	3 à 8,4 G/L(60 -70%)	2 à 10 G/L(20-40%)
+Monocytes	0,1 à 1 G/L(2-10%)	0,1 à 1 G/L(2-10%)	0,1 à 1,2 G/L(2-10%)	0,2 à 2,5 G/L(2-10%)
+Plaquettes 	150 à 450 G/L	150 à 450 G/L	150 à 450 G/L	150 à 450 G/L
+2- Hémostase
+Examen	Normes
+TP (Taux de prothrombine)	70 à 100 % (13 à 15s)
+TCA (Temps de céphaline activé)	30 à 40 secondes
+INR (International Normalized Ratio)	Patient sain : 1Traitement thrombose ou prévention : 2 à 3Prothèses cardiaques mécaniques : 3 à 4,5
+Fibrinogène	2 à 4 g/L
+D-Dimères	< 450 μg/L
+3- Gaz du sang
+Examen	Artériel	Veineux
+pH (Potentiel Hydrogène)	7,35- 7,45	7,32 – 7,42
+PO2 (Pression partielle exercée par l’O2)	80 – 100 mmHg	35 – 40 mmHg
+PCO2 (Pression partielle exercée par le CO2)	35 – 45 mmHg	42 – 48 mmHg
+HCO3- (Ions Bicarbonates)	22 – 28 mmol/L	24 – 30 mmol/L
+Sat O2 (Saturation en O2)	95 – 100 %	70 – 80 %
+Excès de bases	0 +/- 2	0 +/- 2
+4- Ionogramme sanguin
+Examen	Normes
+Sodium (Na)	135 – 145 mmol/L
+Potassium (K)	3,5 – 4,5 mmol/L
+Chlore (Cl)	100 – 110 mmol/L
+Bicarbonates (HCO3)	23 – 28 mmol/L
+Calcium (Ca)	2,2 – 2,6 mmol/L
+Magnésium (Mg)	0,7 – 0,9 mmol/L
+Phosphore (P)	0,8 – 1,3 mmol/L
+5- Fonction rénale
+Examen	Normes
+Urée	2,5 – 9 mmol/L
+Créatinine	Homme 70 – 110 μmmol/LFemme 60 – 100 μmmol/L
+Clairance de la créatinine	80 – 110 mL/min
+6- Bilan glycémique
+Examen	Normes
+Glycémie	A jeun : 3,8 –  6,1 mmol/L (0,70 – 1,10 g/L)
+Hémoglobine Glyquée	Patient sain : 4,5 – 6%Patient diabétique < 7%
+7- Bilan infectieux
+Examen	Normes
+CRP	< 6 mg/L
+Procalcitonine (PCT)	< 0,5 ng/mL 
+8- Bilan enzymatique
+Examen	Normes
+ASAT (SGOT)	5 – 50 UI/L
+ALAT (SGPT)	5 – 50 UI/L
+Amylase	10 – 50 UI/L
+CPK	20 – 171 UI/L
+Gamma-GT	< 55 UI/L
+LDH	< 350 UI/L
+Lipase	< 160 UI/L
+Phosphatases alcalines (PAL)	5 – 140 UI/L
+9- Bilan lipidique
+Examen	Normes
+Cholestérol	5 mmol/L (2 g/L)
+HDL	Homme 1 – 1,3 mmol/L (0,4 à 0,5 g/L)Femme 1,3 – 1,6 mmol/L (0,5 à 0,6 g/L)
+LDL	< 4,1 mmol/L (< 1,60 g/L)
+Triglycérides	Homme < 1,6 mmol/L (< 1,3 g/L)Femme < 1,3 mmol/L (< 1,2 g/L)
+10- Autres examens
+Examen	Normes
+Albumine	40 – 50 g/L
+Bêta-HCG	Négatifs si < 5 UI/L
+Bilirubine totale	< 20 μmol/L (< 12 mg/L)
+Bilirubine libre	< 17 μmol/L (< 10 mg/L)
+Bilirubine conjuguée	< 4 μmol/L (< 2 mg/L)
+BNP	Sujet < 75 ans : < 75 pg/mLSujet > 75 ans : < 100 pg/mL
+Ferritine	Homme et femme ménopausée 80 – 250 μg/LFemme non ménopausée : 30 – 120 μg/L
+Fer sérique	Homme 12 – 30 μmol/LFemme 11 – 28 μmol/L
+Lactate	0,5 –  2,2 mmol/L
+NT-Pro-BNP	Sujet < 75 ans : < 125 pg/mLSujet > 75 ans : < 350 pg/mL
+Troponine	< 0,05 ng/mL
+
+source : https://entraide-esi-ide.com/normes-biologiques/
