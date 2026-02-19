@@ -314,16 +314,81 @@
             </div>
             <div class="section-body">
                 <div class="check-list">
-                    <label class="check-item"><input type="checkbox" name="ex_gen"><span>Examen Général (Constantes, Conscience)</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_abd"><span>Examen Abdominal</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_card"><span>Examen Cardiaque</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_vasc"><span>Examen Vasculaire</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_pleuro"><span>Examen Pleuro-pulmonaire</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_neuro"><span>Examen Neurologique</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_gang"><span>Examen Ganglionnaire</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_osteo"><span>Examen Ostéo-articulaire</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_uro"><span>Examen Uro-génital</span></label>
-                    <label class="check-item"><input type="checkbox" name="ex_cut"><span>Examen Cutané</span></label>
+                    <div class="sub-section">
+                        <h3>Examen Général</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_conscience"><span>Niveau de conscience (Glasgow)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_apparence"><span>Apparence générale et coloration</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_constantes"><span>Constantes vitales (TA, FC, FR, Temp, SpO2)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_morpho"><span>Morphologie (Poids, Taille, IMC)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_hydratation"><span>État d'hydratation et de nutrition</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_choc"><span>Recherche de signes de choc</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_omi"><span>Œdèmes des membres inférieurs (OMI)</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Examen Abdominal</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_intro"><span>Introduction & Positionnement</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_insp"><span>Inspection (distension, cicatrices, circulation)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_palp"><span>Palpation (souplesse, défense, organomégalie)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_perc"><span>Percussion (matité, tympanisme)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_ausc"><span>Auscultation (bruits hydro-aériques)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_tr"><span>Toucher rectal (si indiqué)</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Examen Cardio-vasculaire</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_card_intro"><span>Introduction & Positionnement</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_insp"><span>Inspection (déformations, turgescence jugulaire)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_palp"><span>Palpation (choc de pointe, frémissements)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_ausc"><span>Auscultation (B1/B2, souffles)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_vasc"><span>Examen vasculaire (pouls, auscultation des axes)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_periph"><span>Signes périphériques (mains, visage)</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Examen Gynécologique</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_intro"><span>Introduction & Consentement</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_abd"><span>Examen abdominal</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_seins"><span>Examen des seins</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_pelvi"><span>Examen pelvi-périnéal</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_speculum"><span>Examen au spéculum</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_tv"><span>Toucher vaginal</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Examen Neurologique</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_intro"><span>Introduction</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_marche"><span>Marche et équilibre (Romberg)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_fonctions"><span>Fonctions supérieures</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_nc"><span>Nerfs crâniens</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_moteur"><span>Examen moteur (force, tonus)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_sensitif"><span>Examen sensitif</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_coordination"><span>Coordination (doigt-nez, talon-genou)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_reflexes"><span>Réflexes ostéo-tendineux et cutanés</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_meninges"><span>Signes méningés</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Examen Ostéo-articulaire</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_intro"><span>Introduction</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_insp"><span>Inspection générale (alignement, déformations)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_gals"><span>GALS Screen (marche, membres, rachis)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_epaule"><span>Examen de l’épaule</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_hanche"><span>Examen de la hanche</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_genou"><span>Examen du genou</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Examen Pleuro-pulmonaire</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_intro"><span>Introduction</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_insp"><span>Inspection (cyanose, détresse respi, symétrie)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_palp"><span>Palpation (vibrations vocales, expansion)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_perc"><span>Percussion (sonorité, matité, tympanisme)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_ausc"><span>Auscultation (murmure vésiculaire, râles)</span></label>
+                    </div>
+                     <div class="sub-section">
+                        <h3>Examen Urologique</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_intro"><span>Introduction</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_insp"><span>Inspection générale (urines, signes généraux)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_flombaires"><span>Examen des fosses lombaires (palpation, percussion)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_hypogastre"><span>Examen de l’hypogastre (globe vésical)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_oge"><span>Examen des organes génitaux externes</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_tr"><span>Toucher rectal</span></label>
+                    </div>
                 </div>
             </div>
         </div>
