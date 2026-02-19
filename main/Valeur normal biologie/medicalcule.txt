@@ -1,0 +1,339 @@
+Valeurs biologiques
+usuelles
+
+
+
+L.C.R.
+ 
+Glucose :
+2,50 - 3,50 mmol/l*.
+0,45 - 0,65 g/l*.
+* La glycorachie est égale à la moitié de la glycémie.
+Protéines :
+0,15 - 0,30 g/l.
+
+Sang (biochimie)
+ 
+Albumine :
+38 - 48 g/l.
+Ammonium :
+25 - 40 µmol/l.
+0,45 - 0,70 mg/l.
+Bicarbonates :
+23 - 27 mmol/l.
+Bilirubine conjuguée :
+0 µmol/l ou mg/l.
+Bilirubine libre :
+< 17 µmol/l.
+< 10 mg/l.
+Bilirubine totale :
+< 17 µmol/l.
+< 10 mg/l.
+Calcium (corrigé) :
+2,20 - 2,60 mmol/l.
+88 - 104 mg/l.
+Chlore :
+95 - 105 mmol/l.
+Créatinine :
+Femme : 45 - 105 µmol/l.
+Femme : 5 - 12 mg/l.
+Homme : 60 - 115 µmol/l.
+Homme : 7 - 13 mg/l.
+Créatinine, clairance (adulte) :
+75 - 125 ml/min.
+CRP :
+< 5 mg/l.
+Cuivre :
+11 - 25 µmol/l.
+70 - 155 µg/dl.
+Fer sérique :
+10 - 30 µmol/l.
+0,55 - 1,65 mg/l.
+Ferritine :
+Femme : 15 - 150 µg/l.
+Homme : 20 - 250 µg/l.
+Folates (acide folique) :
+7 - 36 nmol/l.
+3 - 16 ng/ml.
+Glucose (à jeun) :
+3,90 - 5,5 mmol/l.
+0,7 - 1,0 g/l.
+Haptoglobine :
+1 - 3 g/l.
+Hémoglobine glyquée HbA1c :
+Non diabétique : ≤ 6%.
+Non diabétique : ≤ 42,1 mmol/mol.
+Diabétique traité : 6% - 7%.
+Diabétique traité : ≤ 53 mmol/mol.
+Immunoglobulines A (IgA) :
+0,80 - 3,60 g/l.
+Immunoglobulines G (IgG) :
+7 - 15 g/l.
+Immunoglobulines M (IgM) :
+0,5 - 2,3 g/l.
+Lactates (acide lactique) :
+0,5 - 2,0 mmol/l.
+45 - 180 mg/l.
+Magnésium :
+0,75 - 0,95 mmol/l.
+18,2 - 23,1 mg/l.
+Orosomucoïde (α1 glycoprotéine acide) :
+0,4 - 1,3 g/l.
+Osmolarité :
+295 - 310 mmol/kg d'eau.
+295 - 310 mOsm/kg d'eau.
+Phosphate (inorganique) :
+0,80 - 1,40 mmol/l.
+25 - 45 mg/l.
+Potassium :
+3,5 - 4,5 mmol/l.
+Protéines :
+65 - 80 g/l.
+Protéines α1 globulines :
+1 - 3 g/l.
+Protéines α2 globulines :
+4 - 9 g/l.
+Protéines β globulines :
+5 - 10 g/l.
+Protéines γ globulines :
+7 - 15 g/l.
+Pyruvate (acide pyruvique) :
+31 - 102 µmol/l.
+3 - 9 mg/l.
+Sodium :
+135 - 145 mmol/l.
+Transferrine :
+2 - 4 g/l.
+Transferrine (Saturation) :
+0,20 - 0,40.
+20% - 40%.
+Urate (acide urique) :
+Femme : 150 - 360 µmol/l.
+Femme : 25 - 60 mg/l.
+Homme : 180 - 420 µmol/l.
+Homme : 30 - 70 mg/l.
+Urée :
+2,5 - 7,5 mmol/l.
+0,15 - 0,45 g/l.
+Vitamine B12 (cyanocobalamine) :
+74 - 516 pmol/l.
+100 - 700 pg/ml.
+Vitamine D3, cholécalciférol :
+60 - 105 nmol/l.
+24 - 40 ng/ml.
+Vitamine D3, 25-hydroxy-cholécalciférol :
+25 - 137 nmol/l.
+10 - 55 ng/ml.
+Vitamine D3, 1,25-dihydroxy-cholécalciférol :
+58 - 156 pmol/l.
+24 - 65 pg/ml.
+V.S. à 1h :
+Femme : 3 - 7 mm.
+Homme : 2 - 5 mm.
+Zinc :
+9,2 - 19,9 µmol/l.
+60 - 130 µg/dl.
+
+Sang (Enzymes)
+Les valeurs sont variables en fonction des techniques et températures retenues.
+Les valeurs données sont valables pour la méthode IFCC à 37°C.
+ 
+ALAT :
+Femme : < 34 UI/l.
+Homme : < 45 UI/l.
+Amylase :
+< 160 UI/l.
+ASAT :
+Femme : < 35 UI/l.
+Homme : < 35 UI/l.
+CK (ou CPK) :
+Femme : < 145 UI/l.
+Homme : < 171 UI/l.
+Gamma-GT :
+Femme : < 38 UI/l.
+Homme : < 55 UI/l.
+LDH :
+Femme : < 248 UI/l.
+Homme : < 248 UI/l.
+Phosphatases Alcalines :
+35 - 100 UI/l.
+PSA (antigène prostatique spécifique) :
+Homme ≥ 40 ans : 0 - 4 µg/l.
+Troponine T :
+< 0,01 µg/l.
+
+Sang (Equilibre acide-base, Artériel)
+ 
+Bicarbonates :
+23 - 27 mmol/l.
+CO2 total :
+25 - 30 mmol/l.
+pCO2 :
+35 - 45 mmHg.
+pH (à 37°C) :
+7,35 - 7,45.
+pO2 :
+80 - 100 mmHg.
+SaO2 :
+94% - 100%.
+
+Sang (Hématologie)
+ 
+CCMH :
+32% - 35%.
+Erythrocytes :
+Femme : 4,2 - 5,2 x106/mm³.
+Homme : 4,5 - 5,7 x106/mm³.
+Hématocrite :
+Femme : 37% - 47%.
+Homme : 42% - 54%.
+Hémoglobine :
+Femme : 12 - 16 g/dl.
+Homme : 13 - 17 g/dl.
+Leucocytes :
+4 - 10 x10³/mm³.
+Lymphocytes :
+1 - 4 x10³/mm³.
+Lymphocytes T CD4 :
+0,5 - 1,6 x10³/mm³.
+Lymphocytes T CD8 :
+0,4 - 0,8 x10³/mm³.
+Monocytes :
+0,2 - 1 x10³/mm³.
+Plaquettes :
+150 - 450 x10³/mm³.
+Polynucléaires Basophiles :
+< 0,1 x10³/mm³.
+Polynucléaires Eosinophiles :
+0,04 - 0,5 x10³/mm³.
+Polynucléaires Neutrophiles :
+2 - 7,5 x10³/mm³.
+Réticulocytes :
+20 - 80 x10³/mm³.
+TCMH :
+27 - 32 pg.
+VGM (Volume Globulaire Moyen) :
+80 - 100 fl.
+Volume Globulaire par kg de masse corporelle :
+Femme : 26 ml.
+Homme : 30 ml.
+
+Sang (Hémostase)
+ 
+Fibrinogène :
+2 - 4 g/l.
+INR (non anticoagulé) :
+0,9 - 1,2.
+Plasminogène :
+75% - 140%.
+TCA (rapport malade/témoin) :
+0,80 - 1,20.
+Temps de Saignement, Ivy 3 points :
+2 - 4 min.
+Temps de Saignement, Ivy incision :
+4 - 8 min.
+TP (Taux de Prothrombine) :
+70% - 130%.
+
+Sang (Hormones)
+ 
+Aldostérone (adulte, apport normal en sodium) :
+0,52 - 0,94 nmol/l.
+19 - 34 ng/dl.
+Calcitonine :
+Femme : < 6,4 ng/l.
+Homme : < 13,8 ng/l.
+Corticotrophine :
+1,3 - 16,7 pmol/l.
+6,0 - 76,0 pg/ml.
+Cortisol total (à 8h) :
+275 - 555 nmol/l.
+100 - 200 µg/l.
+Cortisol total (à 20h) :
+83 - 469 nmol/l.
+31 - 167 µg/l.
+Estrogènes :
+Femme non ménopausée : 185 - 1625 pmol/l.
+Femme non ménopausée : 50 - 450 pg/ml.
+Homme : < 200 pmol/l.
+Homme : < 55 pg/ml.
+FSH :
+Femme non ménopausée : 2 - 12 UI/l.
+Homme : 1 - 12 UI/l.
+GH (Hormone de croissance) :
+< 8 µg/l.
+Glucagon :
+50 - 200 ng/l.
+Insuline :
+36 - 179 pmol/l.
+5 - 25 µU/l
+LH :
+Femme non ménopausée : 0,0 - 76,0 UI/l.
+Homme : 1,5 - 9,3 UI/l.
+Progestérone :
+Femme (milieu phase lutéale) : 14,3 - 64 nmol/l.
+Femme (milieu phase lutéale) : 4,5 - 25,2 ng/ml.
+Homme : 0,95 - 3,18 nmol/l.
+Homme : 0,3 - 1,0 pg/ml.
+Prolactine :
+< 1,29 nmol/l.
+< 30 ng/ml.
+PTH :
+1,2 - 5,8 pmol/l.
+11 - 54 pg/ml.
+Rénine - Activité (apport normal en sodium) :
+0,5 - 4,0 ng/ml/hr.
+T3 (Triiodothyronine) :
+3,5 - 6,5 pmol/l.
+2270 - 4220 ng/l.
+T4 (Tétra-iodothyronine) libre :
+10 - 23 pmol/l.
+8 - 18 ng/l.
+Testostérone :
+Femme : < 2,1 nmol/l.
+Femme : < 62 ng/dl.
+Homme : 6,7 - 28,9 nmol/l.
+Homme : 300 - 1000 ng/dl.
+TSH (Hormone thyréotrope) :
+1,8 - 36 pmol/l.
+0,3 - 6 mU/l.
+
+Sang (Lipides)
+ 
+Cholestérol HDL :
+> 1,0 mmol/l
+> 0,4 g/l.
+Cholestérol LDL :
+< 4,1 mmol/l
+< 1,6 g/l.
+Cholestérol LDL, Objectifs thérapeuthiques :
+1 facteur de risque : < 4,9 mmol/l (1,9 g/l).
+2 facteurs de risque : < 4,1 mmol/l (1,6 g/l).
+> 2 facteurs de risque : < 3,4 mmol/l (1,3 g/l).
+Antécédent cardiovasculaire: < 2,6 mmol/l (1,0 g/l).
+Cholestérol Total :
+> 4,1 - 5,2 mmol/l.
+> 1,6 - 2,0 g/l.
+
+Urine
+ 
+Calcium (24h) :
+2,50 - 8,0 mmol.
+100 - 320 mg.
+Cortisol libre (24h):
+80 - 270 nmol.
+30 - 100 µg.
+Créatinine (24h) :
+Femme : 9 - 12 mmol.
+Femme : 1000 - 1350 mg.
+Homme : 10 - 18 mmol.
+Homme : 1100 - 2000 mg.
+Protéines (24h):
+< 150 mg/24h.
+
+Interprétation:
+     Les valeurs biologiques usuelles décrites ici proviennent de sources diverses. Il existe des différences substantielles d'une source à une autre, et même d'un laboratoire à un autre quant aux valeurs considérées comme « normales ». Les valeurs indiquées ne sont donc fournies qu'à titre indicatif. Certaines valeurs varient selon le sexe, l'âge, l'heure de la journée et l'état du patient.
+
+Références:
+     Valeurs biologiques usuelles, concours de l'internat en pharmacie 2009 : http://www.cnci.univ-paris5.fr/pharmacie/Constantes_biologiques_adultes_2009.pdf.
+     Tableau des valeurs normales, janvier 2013 : http://www.ccpe-cfpc.com/fr/pdf_files/drug_lists/constantes_bio.pdf.
