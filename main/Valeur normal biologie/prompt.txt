@@ -1,0 +1,61 @@
+Analyse l’ensemble des documents de cette base (PDF, sites, notes).
+
+Objectif :
+Créer une liste exhaustive et consolidée des valeurs biologiques normales chez l’adulte en France.
+
+Instructions obligatoires :
+
+1) Organiser les résultats par grandes sections cliniques dans l’ordre suivant :
+   - Hémogramme / NFS
+   - Hémostase
+   - Ionogramme sanguin
+   - Biochimie (fonction rénale, hépatique, métabolique)
+   - Bilan lipidique
+   - Bilan phosphocalcique
+   - Bilan du fer
+   - Gaz du sang
+   - Endocrinologie
+   - Marqueurs inflammatoires
+   - LCR
+   - Autres paramètres fréquents
+
+2) Classer les paramètres à l’intérieur de chaque section
+   du plus utilisé en pratique clinique au moins fréquent.
+
+3) Pour chaque paramètre, fournir :
+   - Nom complet
+   - Intervalle de référence adulte
+   - Unité SI (mmol/L, µmol/L, g/L, etc.)
+   - Unité française/usuelle (g/L, mg/L, ng/mL, % etc.)
+   - Différenciation Homme/Femme si applicable
+
+4) Harmoniser les valeurs si plusieurs sources diffèrent légèrement :
+   - Indiquer l’intervalle le plus consensuel en France.
+   - Éviter les doublons.
+   - Ne pas répéter les mêmes paramètres sous plusieurs noms.
+
+5) Présenter le résultat sous forme de tableaux clairs et structurés.
+
+6) Ne pas inclure les valeurs pédiatriques.
+   Ne garder que les valeurs adultes.
+
+7) Si une valeur varie selon le laboratoire,
+   indiquer : "Peut varier selon laboratoire".
+
+8) À la fin, ajouter :
+   - Une section “Valeurs à connaître par cœur pour la pratique clinique / internat”
+   - Une section “Paramètres les plus prescrits en médecine générale”
+
+
+Assure-toi que :
+
+- Les unités SI et françaises soient toujours converties correctement.
+- Les unités soient cohérentes dans tout le document.
+- Les tableaux soient prêts à être exportés vers Excel.
+- La structure soit adaptée à un document de révision médicale.
+- Le résultat final soit exploitable pour créer une fiche de référence clinique.
+
+
+
+Privilégier les sources les plus récentes ou les plus utilisées en France
+(CNCI, Collèges, référentiels hospitaliers).

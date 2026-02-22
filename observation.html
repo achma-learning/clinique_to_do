@@ -209,6 +209,23 @@
 
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-thumb { background: #c0d0e8; border-radius: 3px; }
+  .bio-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+  .bio-table th, .bio-table td { border: 1px solid var(--border); padding: 8px; text-align: left; }
+  .bio-table th { background: var(--blue-light); color: var(--blue-dark); font-weight: 600; font-size: 0.78rem; white-space: nowrap; }
+  .bio-table tr:nth-child(even) { background: #fdfefe; }
+  .bio-table .value-input {
+    width: 80px;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .bio-table .value-input:focus { outline: none; border-color: var(--blue); }
+  .bio-table .value-input.normal { background-color: #e6ffe6; border-color: var(--green); } /* Light Green */
+  .bio-table .value-input.low { background-color: #fff3e6; border-color: var(--orange); }   /* Light Orange */
+  .bio-table .value-input.high { background-color: #ffe6e6; border-color: var(--red); }    /* Light Red */
 </style>
 </head>
 <body>
@@ -1345,6 +1362,9 @@
     </div>
   </div>
 
+
+
+
   <!-- ═══ 6. CONCLUSION & HYPOTHÈSES DIAGNOSTIQUES ═══ -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection(this)">
@@ -1411,11 +1431,219 @@
     <div class="section-body">
       <div class="subsection">
         <div class="subsection-title">7.1 — Diagnostique</div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="cat_biologie" onchange="updateProgress()"><span>Bilan biologique (NFS, bilan hépatique, rénal, ionogramme…)</span></label>
-          <label class="check-item"><input type="checkbox" name="cat_imagerie" onchange="updateProgress()"><span>Imagerie (RX, Echo, TDM, IRM…)</span></label>
-          <label class="check-item"><input type="checkbox" name="cat_autres_examens" onchange="updateProgress()"><span>Autres examens (ECG, endoscopie, biopsie, électrophysiologie…)</span></label>
+        
+        <!-- Bilan Biologique -->
+        <div class="subsection">
+          <div class="subsection-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="check-item" style="padding:0; margin:0; background:none; min-height:auto;"><input type="checkbox" name="cat_biologie" onchange="updateProgress()"> <span style="font-size:0.88rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.3px;">Bilan biologique (NFS, bilan hépatique, rénal, ionogramme…)</span></label>
+            <div class="unit-toggle" style="display:flex; align-items:center; gap:10px; font-size:0.8rem; font-weight:normal;">
+              <label><input type="radio" name="unit_system" value="SI" checked onchange="changeUnitSystem('SI');"> SI</label>
+              <label><input type="radio" name="unit_system" value="USUAL" onchange="changeUnitSystem('USUAL');"> Usuelles</label>
+            </div>
+          </div>
+          <div class="note-box">💡 Cochez les examens réalisés et saisissez les valeurs. Les couleurs indiquent si la valeur est dans les normes (Vert), basse (Orange) ou haute (Rouge).</div>
+
+          <!-- Hémogramme / NFS -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Hémogramme / NFS</div>
+            <table class="bio-table" id="bio_hemogramme">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Hémostase -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Hémostase et Coagulation</div>
+            <table class="bio-table" id="bio_hemostase">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Ionogramme -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Ionogramme Sanguin</div>
+            <table class="bio-table" id="bio_ionogramme">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Fonction Rénale -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Fonction Rénale</div>
+            <table class="bio-table" id="bio_renal">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Fonction Hépatique -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Fonction Hépatique</div>
+            <table class="bio-table" id="bio_hepatic">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Bilan Lipidique -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Bilan Lipidique</div>
+            <table class="bio-table" id="bio_lipidique">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Autres Bilans (Phospho, Fer, Inflam) -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Autres Bilans (Phospho, Fer, Inflam)</div>
+            <table class="bio-table" id="bio_autres_bio">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Gaz du Sang -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Gaz du Sang Artériel</div>
+            <table class="bio-table" id="bio_gds">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Endocrino -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Endocrinologie</div>
+            <table class="bio-table" id="bio_endocrino">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- LCR / Urines -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">LCR et Urines</div>
+            <table class="bio-table" id="bio_lcr_urines">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
+        
+        <!-- Imagerie -->
+        <div class="subsection">
+          <div class="subsection-title">
+            <label class="check-item" style="padding:0; margin:0; background:none; min-height:auto;"><input type="checkbox" name="cat_imagerie" onchange="updateProgress()"> <span style="font-size:0.88rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.3px;">Imagerie (RX, Echo, TDM, IRM…)</span></label>
+          </div>
+          <div class="field-group" style="margin-top:10px;">
+            <textarea name="cat_imagerie_details" class="field-input" placeholder="Ex: Échographie abdominale, RX Thorax F+P, TDM cérébrale..." oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+
+        <!-- Autres examens -->
+        <div class="subsection">
+          <div class="subsection-title">
+            <label class="check-item" style="padding:0; margin:0; background:none; min-height:auto;"><input type="checkbox" name="cat_autres_examens" onchange="updateProgress()"> <span style="font-size:0.88rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.3px;">Autres examens (ECG, endoscopie, biopsie, électrophysiologie…)</span></label>
+          </div>
+          <div class="field-group" style="margin-top:10px;">
+            <textarea name="cat_autres_examens_details" class="field-input" placeholder="Ex: ECG, endoscopie digestive, biopsie rénale, EMG..." oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+
         <div class="field-group" style="margin-top:10px;">
           <label class="field-label">Plan d'examens complémentaires hiérarchisés</label>
           <textarea name="cat_examens_details" class="field-input" placeholder="En urgence: 1.&#10;En différé: 2." oninput="updateProgress()"></textarea>
@@ -1581,7 +1809,7 @@ function updateProgress() {
   document.querySelectorAll('input[type="checkbox"]').forEach(el => { total++; if(el.checked) filled++; });
   const pct = total ? Math.min(100, Math.round((filled/total)*100)) : 0;
   document.getElementById('progressBar').style.width = pct+'%';
-  [1,2,3,4,5,6,7].forEach(n => updateBadge(n));
+  [1,2,3,4,5,6,7,'5-10'].forEach(n => updateBadge(n));
 }
 function updateBadge(n) {
   const badge = document.getElementById('badge-'+n);
@@ -1596,6 +1824,178 @@ function updateBadge(n) {
   else{badge.textContent='—';badge.classList.remove('done');}
 }
 
+
+// ─── Biological Values Data ──────────────────────────────────────────────
+let currentUnitSystem = 'SI';
+
+const biologicalValues = {
+  hemogramme: [
+    { param: "Hématies (RBC)", rangesSI: { M: [4.3, 5.8], F: [4.0, 5.3] }, unitSI: "T/L", rangesUsual: { M: [4.3, 5.8], F: [4.0, 5.3] }, unitUsual: "x10⁶/mm³", factor: 1, sex: true },
+    { param: "Hémoglobine (Hb)", rangesSI: { M: [140, 180], F: [120, 160] }, unitSI: "g/L", rangesUsual: { M: [14, 18], F: [12, 16] }, unitUsual: "g/dL", factor: 0.1, sex: true },
+    { param: "Hématocrite (Hct)", rangesSI: { M: [0.40, 0.53], F: [0.37, 0.46] }, unitSI: "L/L", rangesUsual: { M: [40, 53], F: [37, 46] }, unitUsual: "%", factor: 100, sex: true },
+    { param: "VGM", rangesSI: { M: [82, 97], F: [82, 97] }, unitSI: "fL", rangesUsual: { M: [82, 97], F: [82, 97] }, unitUsual: "µm³", factor: 1, sex: false },
+    { param: "TCMH", rangesSI: { M: [28, 32], F: [24, 30] }, unitSI: "pg", rangesUsual: { M: [28, 32], F: [24, 30] }, unitUsual: "pg", factor: 1, sex: true },
+    { param: "CCMH", rangesSI: { M: [300, 350], F: [300, 350] }, unitSI: "g/L", rangesUsual: { M: [30, 35], F: [30, 35] }, unitUsual: "%", factor: 0.1, sex: false },
+    { param: "Leucocytes (WBC)", rangesSI: { M: [4.0, 10.0], F: [4.0, 10.0] }, unitSI: "G/L", rangesUsual: { M: [4000, 10000], F: [4000, 10000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "PNN (Neutrophiles)", rangesSI: { M: [2.0, 8.0], F: [2.0, 8.0] }, unitSI: "G/L", rangesUsual: { M: [2000, 8000], F: [2000, 8000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "PNE (Éosinophiles)", rangesSI: { M: [0, 0.5], F: [0, 0.5] }, unitSI: "G/L", rangesUsual: { M: [0, 500], F: [0, 500] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "PNB (Basophiles)", rangesSI: { M: [0, 0.1], F: [0, 0.1] }, unitSI: "G/L", rangesUsual: { M: [0, 100], F: [0, 100] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Lymphocytes", rangesSI: { M: [0.8, 4.0], F: [0.8, 4.0] }, unitSI: "G/L", rangesUsual: { M: [800, 4000], F: [800, 4000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Monocytes", rangesSI: { M: [0.1, 1.0], F: [0.1, 1.0] }, unitSI: "G/L", rangesUsual: { M: [100, 1000], F: [100, 1000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Plaquettes", rangesSI: { M: [150, 450], F: [150, 450] }, unitSI: "G/L", rangesUsual: { M: [150000, 450000], F: [150000, 450000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Réticulocytes", rangesSI: { M: [20, 80], F: [20, 80] }, unitSI: "G/L", rangesUsual: { M: [20000, 80000], F: [20000, 80000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+  ],
+  hemostase: [
+    { param: "TP", rangesSI: { M: [70, 100], F: [70, 100] }, unitSI: "%", rangesUsual: { M: [70, 100], F: [70, 100] }, unitUsual: "%", factor: 1, sex: false },
+    { param: "TCA", rangesSI: { M: [30, 40], F: [30, 40] }, unitSI: "s", rangesUsual: { M: [30, 40], F: [30, 40] }, unitUsual: "s", factor: 1, sex: false },
+    { param: "INR", rangesSI: { M: [0.9, 1.2], F: [0.9, 1.2] }, unitSI: "-", rangesUsual: { M: [0.9, 1.2], F: [0.9, 1.2] }, unitUsual: "-", factor: 1, sex: false },
+    { param: "Fibrinogène", rangesSI: { M: [2, 4], F: [2, 4] }, unitSI: "g/L", rangesUsual: { M: [2, 4], F: [2, 4] }, unitUsual: "g/L", factor: 1, sex: false },
+    { param: "D-Dimères", rangesSI: { M: [0, 500], F: [0, 500] }, unitSI: "µg/L", rangesUsual: { M: [0, 500], F: [0, 500] }, unitUsual: "µg/L", factor: 1, sex: false },
+  ],
+  ionogramme: [
+    { param: "Sodium (Na+)", rangesSI: { M: [135, 145], F: [135, 145] }, unitSI: "mmol/L", rangesUsual: { M: [135, 145], F: [135, 145] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Potassium (K+)", rangesSI: { M: [3.5, 5.0], F: [3.5, 5.0] }, unitSI: "mmol/L", rangesUsual: { M: [3.5, 5.0], F: [3.5, 5.0] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Chlore (Cl-)", rangesSI: { M: [95, 105], F: [95, 105] }, unitSI: "mmol/L", rangesUsual: { M: [95, 105], F: [95, 105] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Bicarbonates", rangesSI: { M: [22, 30], F: [22, 30] }, unitSI: "mmol/L", rangesUsual: { M: [22, 30], F: [22, 30] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Protéines totales", rangesSI: { M: [65, 80], F: [65, 80] }, unitSI: "g/L", rangesUsual: { M: [65, 80], F: [65, 80] }, unitUsual: "g/L", factor: 1, sex: false },
+  ],
+  renal: [
+    { param: "Urée", rangesSI: { M: [2.5, 7.5], F: [2.5, 7.5] }, unitSI: "mmol/L", rangesUsual: { M: [0.15, 0.45], F: [0.15, 0.45] }, unitUsual: "g/L", factor: 0.06, sex: false },
+    { param: "Créatinine", rangesSI: { M: [60, 115], F: [45, 105] }, unitSI: "µmol/L", rangesUsual: { M: [7, 13], F: [5, 12] }, unitUsual: "mg/L", factor: 0.113, sex: true },
+    { param: "Acide Urique", rangesSI: { M: [180, 420], F: [150, 360] }, unitSI: "µmol/L", rangesUsual: { M: [30, 70], F: [25, 60] }, unitUsual: "mg/L", factor: 0.168, sex: true },
+  ],
+  hepatic: [
+    { param: "ALAT (SGPT)", rangesSI: { M: [0, 37], F: [0, 34] }, unitSI: "UI/L", rangesUsual: { M: [0, 37], F: [0, 34] }, unitUsual: "UI/L", factor: 1, sex: true },
+    { param: "ASAT (SGOT)", rangesSI: { M: [0, 41], F: [0, 35] }, unitSI: "UI/L", rangesUsual: { M: [0, 41], F: [0, 35] }, unitUsual: "UI/L", factor: 1, sex: true },
+    { param: "Gamma-GT", rangesSI: { M: [0, 55], F: [0, 38] }, unitSI: "UI/L", rangesUsual: { M: [0, 55], F: [0, 38] }, unitUsual: "UI/L", factor: 1, sex: true },
+    { param: "PAL", rangesSI: { M: [35, 130], F: [35, 130] }, unitSI: "UI/L", rangesUsual: { M: [35, 130], F: [35, 130] }, unitUsual: "UI/L", factor: 1, sex: false },
+    { param: "Bilirubine totale", rangesSI: { M: [0, 17], F: [0, 17] }, unitSI: "µmol/L", rangesUsual: { M: [0, 10], F: [0, 10] }, unitUsual: "mg/L", factor: 0.585, sex: false },
+    { param: "Glucose (à jeun)", rangesSI: { M: [3.9, 5.5], F: [3.9, 5.5] }, unitSI: "mmol/L", rangesUsual: { M: [0.70, 1.00], F: [0.70, 1.00] }, unitUsual: "g/L", factor: 0.18, sex: false },
+  ],
+  lipidique: [
+    { param: "Cholestérol total", rangesSI: { M: [0, 5.2], F: [0, 5.2] }, unitSI: "mmol/L", rangesUsual: { M: [0, 2.0], F: [0, 2.0] }, unitUsual: "g/L", factor: 0.387, sex: false },
+    { param: "HDL", rangesSI: { M: [1.0, 10], F: [1.3, 10] }, unitSI: "mmol/L", rangesUsual: { M: [0.4, 4], F: [0.5, 4] }, unitUsual: "g/L", factor: 0.387, sex: true },
+    { param: "LDL", rangesSI: { M: [0, 4.1], F: [0, 4.1] }, unitSI: "mmol/L", rangesUsual: { M: [0, 1.6], F: [0, 1.6] }, unitUsual: "g/L", factor: 0.387, sex: false },
+    { param: "Triglycérides", rangesSI: { M: [0.4, 1.7], F: [0.4, 1.7] }, unitSI: "mmol/L", rangesUsual: { M: [0.35, 1.5], F: [0.35, 1.5] }, unitUsual: "g/L", factor: 0.885, sex: false },
+  ],
+  autres_bio: [
+    { param: "Calcium (Ca2+)", rangesSI: { M: [2.2, 2.6], F: [2.2, 2.6] }, unitSI: "mmol/L", rangesUsual: { M: [90, 105], F: [90, 105] }, unitUsual: "mg/L", factor: 40, sex: false },
+    { param: "Phosphore (P)", rangesSI: { M: [0.8, 1.35], F: [0.8, 1.35] }, unitSI: "mmol/L", rangesUsual: { M: [25, 42], F: [25, 42] }, unitUsual: "mg/L", factor: 31, sex: false },
+    { param: "Fer sérique", rangesSI: { M: [10, 30], F: [10, 27] }, unitSI: "µmol/L", rangesUsual: { M: [55, 170], F: [55, 150] }, unitUsual: "µg/dL", factor: 5.66, sex: true },
+    { param: "Ferritine", rangesSI: { M: [50, 350], F: [30, 300] }, unitSI: "µg/L", rangesUsual: { M: [50, 350], F: [30, 300] }, unitUsual: "ng/mL", factor: 1, sex: true },
+    { param: "CRP", rangesSI: { M: [0, 6], F: [0, 6] }, unitSI: "mg/L", rangesUsual: { M: [0, 6], F: [0, 6] }, unitUsual: "mg/L", factor: 1, sex: false },
+    { param: "VS 1h", rangesSI: { M: [0, 7], F: [0, 15] }, unitSI: "mm", rangesUsual: { M: [0, 7], F: [0, 15] }, unitUsual: "mm", factor: 1, sex: true },
+  ],
+  gds: [
+    { param: "pH Artériel", rangesSI: { M: [7.38, 7.42], F: [7.38, 7.42] }, unitSI: "", rangesUsual: { M: [7.38, 7.42], F: [7.38, 7.42] }, unitUsual: "", factor: 1, sex: false },
+    { param: "pCO₂ Artériel", rangesSI: { M: [38, 42], F: [38, 42] }, unitSI: "mmHg", rangesUsual: { M: [5.1, 5.6], F: [5.1, 5.6] }, unitUsual: "kPa", factor: 0.133, sex: false },
+    { param: "pO₂ Artériel", rangesSI: { M: [75, 95], F: [75, 95] }, unitSI: "mmHg", rangesUsual: { M: [10, 12.6], F: [10, 12.6] }, unitUsual: "kPa", factor: 0.133, sex: false },
+  ],
+  endocrino: [
+    { param: "TSH", rangesSI: { M: [0.3, 6], F: [0.3, 6] }, unitSI: "mU/L", rangesUsual: { M: [0.3, 6], F: [0.3, 6] }, unitUsual: "mU/L", factor: 1, sex: false },
+    { param: "T4 libre", rangesSI: { M: [10, 23], F: [10, 23] }, unitSI: "pmol/L", rangesUsual: { M: [8, 18], F: [8, 18] }, unitUsual: "ng/L", factor: 0.777, sex: false },
+  ],
+  lcr_urines: [
+    { param: "Protéines LCR", rangesSI: { M: [0.15, 0.40], F: [0.15, 0.40] }, unitSI: "g/L", rangesUsual: { M: [0.15, 0.40], F: [0.15, 0.40] }, unitUsual: "g/L", factor: 1, sex: false },
+    { param: "Glucose LCR", rangesSI: { M: [2.5, 3.5], F: [2.5, 3.5] }, unitSI: "mmol/L", rangesUsual: { M: [0.45, 0.65], F: [0.45, 0.65] }, unitUsual: "g/L", factor: 0.18, sex: false },
+  ],
+};
+
+function getSex() {
+  const sexSelect = document.querySelector('[name="sexe"]');
+  return sexSelect ? sexSelect.value : '';
+}
+
+function changeUnitSystem(system) {
+  if (currentUnitSystem === system) return;
+  
+  document.querySelectorAll('.bio-table .value-input').forEach(input => {
+    const val = parseFloat(input.value);
+    if (!isNaN(val)) {
+      const cat = input.dataset.categoryKey;
+      const idx = parseInt(input.dataset.index);
+      const data = biologicalValues[cat][idx];
+      if (data && data.factor && data.factor !== 1) {
+        if (system === 'USUAL') {
+          input.value = (val * data.factor).toFixed(3).replace(/\.?0+$/, '');
+        } else {
+          input.value = (val / data.factor).toFixed(3).replace(/\.?0+$/, '');
+        }
+      }
+    }
+  });
+  
+  currentUnitSystem = system;
+  renderBiologicalTables();
+  // Re-check colors
+  document.querySelectorAll('.bio-table .value-input').forEach(input => checkBioValue({ target: input }));
+}
+
+function checkBioValue(event) {
+  const input = event.target;
+  const val = parseFloat(input.value);
+  if (isNaN(val)) { input.classList.remove('normal','low','high'); return; }
+  
+  const cat = input.dataset.categoryKey;
+  const idx = parseInt(input.dataset.index);
+  const data = biologicalValues[cat][idx];
+  const sex = getSex();
+  const ranges = currentUnitSystem === 'SI' ? data.rangesSI : data.rangesUsual;
+  const range = (data.sex && sex === 'Féminin') ? ranges.F : ranges.M;
+  
+  input.classList.remove('normal','low','high');
+  if (val >= range[0] && val <= range[1]) input.classList.add('normal');
+  else if (val < range[0]) input.classList.add('low');
+  else input.classList.add('high');
+  updateProgress();
+}
+
+function renderBiologicalTables() {
+  try {
+    const sex = getSex();
+    for (const cat in biologicalValues) {
+      const tbody = document.querySelector(`#bio_${cat} tbody`);
+      if (!tbody) {
+        console.warn(`Table body not found for category: #bio_${cat}`);
+        continue;
+      }
+      tbody.innerHTML = '';
+      biologicalValues[cat].forEach((data, idx) => {
+        try {
+          const rSI = data.rangesSI ? (data.sex && sex === 'Féminin' ? data.rangesSI.F : data.rangesSI.M) : null;
+          const rUsual = data.rangesUsual ? (data.sex && sex === 'Féminin' ? data.rangesUsual.F : data.rangesUsual.M) : null;
+          const unit = currentUnitSystem === 'SI' ? data.unitSI : data.unitUsual;
+          
+          const paramNameClean = data.param.replace(/\W/g, '_');
+          const inputName = `bio_${cat}_${paramNameClean}`;
+          const chkName = `bio_${cat}_${paramNameClean}_chk`;
+
+          const row = tbody.insertRow();
+          row.innerHTML = `
+            <td><input type="checkbox" name="${chkName}" onchange="updateProgress()"></td>
+            <td style="font-size:0.85rem;">${data.param}</td>
+            <td><input type="number" step="any" name="${inputName}" class="value-input" 
+                       data-param-key="${data.param}" data-category-key="${cat}" data-index="${idx}" oninput="checkBioValue(event)"></td>
+            <td style="color:#666; font-size:0.75rem;">${rSI ? rSI[0] + '–' + rSI[1] + ' ' + data.unitSI : '-'}</td>
+            <td style="color:#666; font-size:0.75rem;">${rUsual ? rUsual[0] + '–' + rUsual[1] + ' ' + data.unitUsual : '-'}</td>
+            <td style="font-weight:600; font-size:0.8rem;">${unit}</td>
+          `;
+        } catch (err) {
+          console.error(`Error rendering row for ${data.param} in category ${cat}:`, err);
+        }
+      });
+    }
+  } catch (err) {
+    console.error("Critical error in renderBiologicalTables:", err);
+  }
+}
+
+// Ensure tables are rendered when sex changes and on initial load
+document.querySelector('[name="sexe"]').addEventListener('change', () => {
+  renderBiologicalTables();
+  document.querySelectorAll('.bio-table .value-input').forEach(input => checkBioValue({ target: input }));
+});
+
 // ─── Toast ────────────────────────────────────────────────────────────────
 function showToast(m) { const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
 
@@ -1605,6 +2005,11 @@ function resetAll() {
   document.querySelectorAll('input[type="text"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],textarea').forEach(el=>el.value='');
   document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
   document.querySelectorAll('input[type="checkbox"]').forEach(el=>el.checked=false);
+  // Clear biological values
+  document.querySelectorAll('.bio-table .value-input').forEach(input => {
+    input.value = '';
+    input.classList.remove('normal', 'low', 'high');
+  });
   document.getElementById('imc_display').value='';
   document.getElementById('ecog_preview').innerHTML='';
   // Reset diag table
@@ -1726,7 +2131,46 @@ function buildObservationText() {
   ['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2'].forEach(n=>chk(n));
   field('Lésions cutanées',v('ep_cut_lesions'));chk('ep_cb_normal');field('Anomalies buccales',v('ep_cb_anomalies'));field('Autres',v('exam_autres'));
 
-  h1('VI. Conclusion Clinique & Hypothèses Diagnostiques');
+  h1('VI. Biologie Médicale');
+  const sex = getSex();
+  for (const categoryKey in biologicalValues) {
+    let categoryTitle = '';
+    switch (categoryKey) {
+      case 'hemogramme': categoryTitle = 'Hémogramme / NFS'; break;
+      case 'hemostase': categoryTitle = 'Hémostase et Coagulation'; break;
+      case 'ionogramme': categoryTitle = 'Ionogramme Sanguin'; break;
+      case 'renal': categoryTitle = 'Fonction Rénale'; break;
+      case 'hepatic': categoryTitle = 'Fonction Hépatique'; break;
+      case 'lipidique': categoryTitle = 'Bilan Lipidique'; break;
+      case 'autres_bio': categoryTitle = 'Autres Bilans (Phospho, Fer, Inflam)'; break;
+      case 'gds': categoryTitle = 'Gaz du Sang Artériel'; break;
+      case 'endocrino': categoryTitle = 'Endocrinologie'; break;
+      case 'lcr_urines': categoryTitle = 'LCR et Urines'; break;
+    }
+    lines.push(`\n--- ${categoryTitle} ---`);
+    biologicalValues[categoryKey].forEach(paramData => {
+      const paramNameClean = paramData.param.replace(/\W/g,'_');
+      const inputName = `bio_${categoryKey}_${paramNameClean}`;
+      const chkName = `bio_${categoryKey}_${paramNameClean}_chk`;
+      
+      const inputValue = document.querySelector(`input[name="${inputName}"]`)?.value || '';
+      const checked = isChecked(chkName);
+      
+      if (inputValue || checked) {
+        let rangeText = '';
+        const ranges = currentUnitSystem === 'SI' ? paramData.rangesSI : paramData.rangesUsual;
+        const unit = currentUnitSystem === 'SI' ? paramData.unitSI : paramData.unitUsual;
+        const currentRange = (paramData.sex && sex === "Féminin") ? ranges.F : ranges.M;
+
+        if (currentRange) {
+          rangeText = `${currentRange[0]} – ${currentRange[1]}`;
+        }
+        lines.push(`  ${checked ? '✔' : ' '} ${paramData.param} : ${inputValue || '—'} ${unit} (Réf: ${rangeText} ${unit})`);
+      }
+    });
+  }
+
+  h1('VII. Conclusion Clinique & Hypothèses Diagnostiques');
   field('Résumé clinique',v('cc_resume_clinique'));
   field('et chez qui l\'examen clinique objective',v('cc_signes_physiques'));
   field('Signes fonctionnels',v('cc_signes_fonctionnels'));
@@ -1739,7 +2183,7 @@ function buildObservationText() {
     if(r.contre) lines.push(`    Arguments contre : ${r.contre}`);
   });
 
-  h1('VII. CAT — Conduite À Tenir');
+  h1('VIII. CAT — Conduite À Tenir');
   h2('Diagnostique');
   ['cat_biologie','cat_imagerie','cat_autres_examens'].forEach(n=>chk(n));field('Examens',v('cat_examens_details'));
   h2('Thérapeutique');
@@ -1867,8 +2311,72 @@ async function generateDocx() {
     if(isChecked('ep_cb_normal'))children.push(checkRow('Cavité buccale sans anomalie'));
     addRow('Anomalies buccales','ep_cb_anomalies');addRow('Autres examens','exam_autres');
 
+    // VI - Biologie Médicale
+    addH1('VI. Biologie Médicale');
+    const sex = getSex();
+    for (const categoryKey in biologicalValues) {
+      let categoryTitle = '';
+      switch (categoryKey) {
+        case 'hemogramme': categoryTitle = 'Hémogramme / NFS'; break;
+        case 'hemostase': categoryTitle = 'Hémostase et Coagulation'; break;
+        case 'ionogramme': categoryTitle = 'Ionogramme Sanguin'; break;
+        case 'renal': categoryTitle = 'Fonction Rénale'; break;
+        case 'hepatic': categoryTitle = 'Fonction Hépatique'; break;
+        case 'lipidique': categoryTitle = 'Bilan Lipidique'; break;
+        case 'autres_bio': categoryTitle = 'Autres Bilans (Phospho, Fer, Inflam)'; break;
+        case 'gds': categoryTitle = 'Gaz du Sang Artériel'; break;
+        case 'endocrino': categoryTitle = 'Endocrinologie'; break;
+        case 'lcr_urines': categoryTitle = 'LCR et Urines'; break;
+      }
+      
+      const categoryRows = [
+        new TableRow({children:[
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'✓',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:400,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Paramètre',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2500,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Valeur',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:1200,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Unité',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:1000,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Référence',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2000,type:WidthType.DXA}})
+        ]})
+      ];
+
+      let hasData = false;
+      biologicalValues[categoryKey].forEach(paramData => {
+        const paramNameClean = paramData.param.replace(/\W/g,'_');
+        const inputName = `bio_${categoryKey}_${paramNameClean}`;
+        const chkName = `bio_${categoryKey}_${paramNameClean}_chk`;
+        
+        const inputValue = document.querySelector(`input[name="${inputName}"]`)?.value || '';
+        const checked = isChecked(chkName);
+        
+        if (inputValue || checked) {
+          hasData = true;
+          let rangeText = '';
+          const ranges = currentUnitSystem === 'SI' ? paramData.rangesSI : paramData.rangesUsual;
+          const unit = currentUnitSystem === 'SI' ? paramData.unitSI : paramData.unitUsual;
+          const currentRange = (paramData.sex && sex === "Féminin") ? ranges.F : ranges.M;
+
+          if (currentRange) {
+            rangeText = `${currentRange[0]} – ${currentRange[1]}`;
+          }
+
+          categoryRows.push(new TableRow({children:[
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:checked?'✔':'',size:18,color:'0a7c3e'})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:paramData.param,size:18})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:inputValue||'—',size:18})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:unit,size:18})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:rangeText,size:18})]})]})
+          ]}));
+        }
+      });
+
+      if (hasData) {
+        children.push(h2(categoryTitle));
+        children.push(new Table({rows:categoryRows,width:{size:8500,type:WidthType.DXA}}));
+      }
+    }
+
     // VI - Conclusion
-    addH1('VI. Conclusion Clinique & Hypothèses Diagnostiques');
+    addH1('VII. Conclusion Clinique & Hypothèses Diagnostiques');
     addRow('Résumé clinique','cc_resume_clinique');
     addRow("et chez qui l'examen clinique objective",'cc_signes_physiques');
     addRow('Signes fonctionnels résumés','cc_signes_fonctionnels');
@@ -1892,7 +2400,7 @@ async function generateDocx() {
     }
 
     // VII
-    addH1('VII. CAT — Conduite À Tenir');
+    addH1('VIII. CAT — Conduite À Tenir');
     addH2('Diagnostique');addChecks(['cat_biologie','cat_imagerie','cat_autres_examens']);addRow('Examens','cat_examens_details');
     addH2('Thérapeutique');addChecks(['cat_ther_etiologique','cat_ther_symptomatique','cat_ther_mesures_hygiene','cat_ther_surveillance','cat_ther_education']);addRow('Traitement','cat_traitement_details');
     // Signature
@@ -1927,7 +2435,10 @@ function generateGoogleDocs() {
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────
-updateProgress();
+window.addEventListener('DOMContentLoaded', () => {
+  renderBiologicalTables();
+  updateProgress();
+});
 </script>
 </body>
 </html>
