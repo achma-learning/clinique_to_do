@@ -1,0 +1,656 @@
+═══════════════════════════════════════════════════════════════════════════════
+                        LIVRET VERT - SÉMIOLOGIE MÉDICALE
+                              CHECKLIST COMPLÈTE
+═══════════════════════════════════════════════════════════════════════════════
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            SIGNES GÉNÉRAUX                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Asthénie
+   ○ Anorexie
+   ○ Amaigrissement
+   ○ Échelle d'activité OMS
+   ○ Sueurs
+   ○ Frissons
+   ○ Prurit
+   ○ Soif
+
+▶ TEMPÉRATURE : FIÈVRE, HYPOTHERMIE
+
+▶ ÉTAT D'HYDRATATION
+   ○ Poids et variations
+   ○ Pli cutané
+   ○ Œdèmes
+   ○ Humidité des muqueuses
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          URGENCES VITALES                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES DE CHOC
+   ○ Marbrures
+   ○ Oligurie
+   ○ Allongement TRC
+   ○ Extrémités : froides, cyanosées
+   ○ Tachycardie
+   ○ Tachypnée
+   ○ Confusion
+   ○ Collapsus
+   ○ Pouls paradoxal
+
+▶ SIGNES DE DÉTRESSE RESPIRATOIRE AIGUË
+   ○ Tachypnée > 30 ou bradypnée < 10
+   ○ Tirage et dépression sus-claviculaires, intercostaux
+   ○ Respiration abdominale paradoxale
+   ○ Confusion, coma
+   ○ Cyanose
+   ○ Tachycardie
+   ○ Astérixis
+   ○ Sueurs
+   ○ Encombrement bronchique
+   ○ HTA
+   ○ Signes d'insuffisance cardiaque droite aiguë
+
+▶ CONFUSION ET COMA
+   ○ Score de Glasgow : E, V, M
+   ○ Glycémie capillaire
+   ○ Température
+   ○ Syndrome méningé
+   ○ Motricité et tonus des membres
+   ○ Face : symétrie, réponse à la douleur
+   ○ Réflexes du tronc cérébral
+   ○ Pupilles et oculomotricité
+   ○ Rythme respiratoire
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         EXAMEN VASCULAIRE                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Douleur thoracique : syndrome coronaire (angor stable et instable, 
+     syndrome coronaire aigu), douleur de péricardite, dissection aortique, 
+     embolie pulmonaire, douleur pariétale
+   ○ Blockpnée
+   ○ Dyspnée : effort, orthopnée, dyspnée paroxystique, asthme cardiaque
+   ○ Lipothymie - Syncope
+   ○ Palpitations
+   ○ Hépatalgie d'effort
+
+▶ INSPECTION
+   ○ Turgescence jugulaire
+   ○ Œdèmes périphériques
+
+▶ PALPATION CARDIAQUE
+   ○ Choc de pointe
+   ○ Signe de Harzer
+   ○ Frémissement
+   ○ Reflux abdomino-jugulaire
+
+▶ AUSCULTATION
+   ○ 5 foyers : aortique, pulmonaire, tricuspide et mitraux
+   ○ B1, B2, galops, COM
+   ○ Rythme : régularité
+   ○ Souffle : siège, temps, irradiation, intensité en sixième, manœuvres 
+     positionnelles et respiratoires (signe de Carvalho), timbre
+   ○ Frottement
+   ○ Signe d'insuffisance cardiaque gauche : auscultation pulmonaire = crépitants
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     EXAMEN VASCULAIRE ARTÉRIEL                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ HTA (HyperTension Artérielle): céphalées, acouphènes, vertiges, épistaxis
+   ○ AIT : troubles transitoires de parole, déficit moteur ou sensitif, cécité transitoire
+   ○ Claudication artérielle d'effort
+   ○ Ischémie aiguë : troubles d'un membre = douleur, froideur, paresthésies, déficit moteur
+
+▶ CONSTANTES
+   ○ PA, FC
+   ○ IPS ou (Index de Pression Systolique)
+   ○ TT (Tour de Taille)
+
+▶ INSPECTION
+   ○ TRC ou temps de recoloration cutanée
+   ○ Troubles trophiques des extrémités
+   ○ Syndrome des orteils bleus
+
+▶ POULS ET SCHÉMA
+   ○ Radial
+   ○ Ulnaire
+   ○ Huméral
+   ○ Carotidien
+   ○ Aortique et recherche d'anévrysme
+   ○ Fémoral
+   ○ Poplité
+   ○ Tibial postérieur
+   ○ Pédieux
+
+▶ AUSCULTATION VASCULAIRE : SOUFFLE
+   ○ Carotide
+   ○ Aorte
+   ○ Artères rénales
+   ○ Fémoral
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     EXAMEN VEINO-LYMPHATIQUE                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Insuffisance veineuse chronique : lourdeur de jambe, fatigue, œdèmes, 
+     phlébalgie
+   ○ Douleur aiguë des membres
+   ○ Membre rouge, chaud, tuméfié
+
+▶ INSPECTION
+   ○ Troubles trophiques
+   ○ Œdèmes et localisation
+   ○ Pincement de peau du 2ᵉ orteil, signe de Stemmer
+
+▶ EXAMEN DES VARICES ET DES VEINES PROFONDES
+   ○ Manœuvre de Schwartz
+   ○ Manœuvre de Trendelenburg
+   ○ Manœuvre de Linton
+
+▶ EXAMEN D'UN MEMBRE ROUGE, TUMÉFIÉ, DOULOUREUX
+   ○ Chaleur locale
+   ○ Cordon veineux superficiel
+   ○ Tour de mollet
+   ○ Score de Wells
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        EXAMEN PULMONAIRE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Douleur thoracique : pleurale, EP
+   ○ Dyspnée - Échelle NYHA
+   ○ Expectorations, bronchorrhée
+   ○ Bronchite chronique
+   ○ Hémoptysie
+   ○ Toux
+   ○ Hoquet
+   ○ Ronflement
+
+▶ CONSTANTES
+   ○ FR
+   ○ Régularité et durée des temps respiratoires
+   ○ Volume minute
+
+▶ INSPECTION
+   ○ Ampliation thoracique
+   ○ Distension thoracique : tonneau, signe de Hoover, respiration à lèvres 
+     pincées, signe de Campbell
+   ○ Syndrome cave supérieure : circulation veineuse collatérale et œdèmes 
+     faciaux et thoraciques, turgescence jugulaire
+   ○ Cyanose
+   ○ Hippocratisme digital
+
+▶ PALPATION (VIBRATIONS VOCALES) ET PERCUSSION
+   ○ Paroi antérieure
+   ○ Paroi postérieure
+   ○ Ligne axillaire
+
+▶ AUSCULTATION
+   ○ Murmure vésiculaire
+   ○ Bruit trachéo-bronchique, souffle tubaire, souffle pleurétique, souffle 
+     tubo-pleural, souffle amphorique
+   ○ Bruits discontinus : crépitants fins, gros crépitants, frottement pleural
+   ○ Bruits continus : sibilants, ronchis, wheezing
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         EXAMEN DIGESTIF                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Douleur abdominale : ulcéreuse, biliaire, pancréatique, intestinale, 
+     dyspepsie proctologique
+   ○ Troubles du transit (haut/bas) : nausées, vomissements, syndrome occlusif, 
+     diarrhée, constipation
+   ○ Hémorragie digestive (haute/basse) : hématémèse, rectorragie de sang rouge 
+     ou noir (méléna)
+   ○ Syndrome œsophagien : dysphagie, pyrosis
+   ○ Syndrome rectal : épreintes, faux-besoins, ténesme
+
+▶ INSPECTION
+   ○ Cicatrices, éventration
+   ○ Hernie
+   ○ Distension abdominale
+   ○ Circulation veineuse collatérale abdominale
+   ○ Ictère
+   ○ Bouche : perlèche, langue, muqueuses
+   ○ Signes d'IHC ou insuffisance hépatocellulaire : angiomes stellaires, 
+     ongles, astérixis, érythrose palmaire, œdèmes périphériques
+
+▶ PALPATION ABDOMINALE
+   ○ Œdèmes des lombes
+   ○ Pli cutané abdominal
+   ○ Sensibilité : 9 cadrans, point de Mc Burney et Murphy
+   ○ Syndrome péritonéal : défense, contracture, manœuvres de décompression
+   ○ Hépatomégalie
+   ○ Splénomégalie
+   ○ Masse
+   ○ Orifices herniaires
+   ○ Fosses lombaires
+
+▶ PERCUSSION
+   ○ Matité
+   ○ Tympanisme
+   ○ Signe du flot
+   ○ Clapotement gastrique à jeun
+   ○ Ébranlement hépatique
+
+▶ AUSCULTATION
+   ○ BHA ou bruits hydro-aériques
+   ○ Souffles hépatiques et abdominaux
+
+▶ TOUCHER RECTAL ET PALPATION HYPOGASTRIQUE
+   ○ Marge et canal anal
+   ○ Tonus sphinctérien, réflexe anal (toux) et sensibilité (toucher, piqûre)
+   ○ Rectum : contenu, parois
+   ○ Douglas
+   ○ Prostate chez l'homme
+   ○ Paramètres chez la femme
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    EXAMEN NEUROLOGIQUE MINIMAL                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Céphalées, algies faciales
+   ○ Douleurs neurophatiques
+   ○ Fonctions supérieures : confusion, coma, langage, mémoire, gestes, 
+     reconnaissance, orientation, raisonnement, confusion
+   ○ 5 sens : audition, vision, sensibilité, goût, odorat
+   ○ Équilibre, vertiges
+   ○ Déficit moteur, sensitif
+   ○ Mouvements anormaux
+   ○ Difficultés à la marche, de l'équilibre
+
+▶ LATÉRALITÉ : DROITIER, GAUCHER
+
+▶ INSPECTION : MOUVEMENTS ANORMAUX
+   ○ Tremblements
+   ○ Dyskinésie
+   ○ Myoclonie
+   ○ Dystonie
+
+▶ FORCE MUSCULAIRE
+   ○ Amyotrophie
+   ○ Motricité globale : manœuvre de Barré et Mingazzini, parésie, plégie
+   ○ Motricité analytique : testing musculaire et cotation de 0 à 5 
+     (court abducteur du pouce, interosseux, extenseurs des doigts, releveur 
+     du pied, fléchisseurs des orteils)
+   ○ Signe du tabouret
+
+▶ RCP OU RÉFLEXE CUTANÉ PLANTAIRE
+   ○ Flexion, indifférent, extension (Babinski)
+
+▶ TONUS MUSCULAIRE
+   ○ ROT ou réflexes ostéo-tendineux : bicipital, stylo radial, tricipital, 
+     ulnaire, rotulien, achilléen et recherche d'une extension de la zone 
+     réflexogène
+   ○ Tonus de base : debout, au repos passivement, hypertonie spastique ou 
+     plastique, roue dentée, hypotonie
+   ○ Trépidation de cheville
+
+▶ SENSIBILITÉ
+   ○ Superficielle : tact et extinction sensitive, thermique avec test au glaçon
+   ○ Arthrokinésie et sens de position du gros orteil, épreuve doigt-nez et 
+     talon-genou
+
+▶ NERFS CRÂNIENS
+   ○ Nerf optique II : acuité visuelle au doigt, champ visuel périphérique par 
+     confrontation, pupilles et RPM ou réflexes photomoteurs direct et consensuel
+   ○ Oculomotricité III, IV, VI : versions, ductions, convergence et recherche 
+     du mystagmus par poursuite oculaire
+   ○ Nerf trijumeau V : mouvements de mâchoire, sensibilité de la face, réflexe 
+     cornéen
+   ○ Nerf facial VII : territoire supérieur avec occlusion palpébrale, signe des 
+     cils de Souque, signe de Charles Bell et réflexe cornéen ; territoire 
+     inférieur avec étude de la grimace, sourire, signe du peaucier
+   ○ Nerf vestibulo-cochléaire VIII : chuchotement, test de Romberg, déviation 
+     des index au test de piétinement aveugle, nystagmus avec et sans fixation 
+     oculaire
+   ○ Nerfs végétatifs IX et X : sensibilité de l'oropharynx, déglutition, 
+     réflexe nauséeux, signe du rideau, dysphonie
+   ○ Nerf accessoire XI : testing musculaire du sterno-cléido-mastoïdien, trapèze
+   ○ Nerf glosso-pharyngien XII : motricité de la langue
+
+▶ SIGNES MÉNINGÉS
+   ○ Raideur de nuque
+   ○ Signe de Brudzinski
+   ○ Signe de Kernig
+
+▶ COORDINATION ET RÉFLEXE CONTROLATÉRAL
+   ○ Statique : position debout
+   ○ Dynamique : épreuve doigt-nez, talon-genou, épreuve des marionnettes
+
+▶ ÉQUILIBRE ET MARCHE
+   ○ Épreuve de Romberg
+   ○ Marche
+   ○ Ordres : arrêt, reprise, demi-tour
+   ○ Obstacles au sol
+
+▶ FONCTIONS SUPÉRIEURES
+   ○ Langage : fluence, répétition de mots, épreuve de dénomination, ordres simples
+   ○ Articulation : répétition de phrases
+   ○ Mémoire : épreuve des 5 mots avec répétition immédiate et tardive, indiçage 
+     si besoin. Test de Folstein (MMSE)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        EXAMEN LOCOMOTEUR                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Douleur : membre ou articulation, mécanique ou inflammatoire, osseuse, 
+     articulaire, musculaire...
+   ○ Raideur articulaire
+   ○ Gonflement articulaire
+   ○ Blocage articulaire
+   ○ Craquement
+   ○ Troubles de la marche : boiterie, claudication, dérobement, lâchage
+   ○ Périmètre de marche diminué, perte d'autonomie
+
+▶ EXAMEN DU RACHIS
+   ○ Courbures : lordose, cyphose
+   ○ Épineuses : palpation et percussion
+   ○ Muscles paravertébraux : palpation, contracture, signe de la sonnette
+   ○ Amplitudes active et passive : distance menton-sternum, tragus-acromion, 
+     menton-acromion, C7-mur, ampliation thoracique, distance doigt-sol, 
+     indice de Schöber
+   ○ Manœuvres d'étirement des racines nerveuses : étirement du bras, 
+     compression axiale cervicale, signe de Lasègue et Léri
+
+▶ EXAMEN DES SACRO-ILIAQUES
+   ○ Palpation interligne
+   ○ Signe du trépied
+   ○ Manœuvre de cisaillement verticale/horizontal
+   ○ Test d'écartement/rapprochement
+
+▶ ARTICULATIONS PÉRIPHÉRIQUES
+   ○ Inspection : signes inflammatoires locaux, statique (valgus, varus, flessum, 
+     recurvatum), amyotrophie, déformation
+   ○ Palpation : interligne, signe du flot, épanchement
+   ○ Mobilités articulaires passives et actives
+   ○ Genou : choc rotulien, palpé rotulien et condylien, kyste poplité
+   ○ Hanche : signe de la clef, salut coxal, clinostatisme
+   ○ Épaule : test de Neer, Hawkins, Jobe, Yocum, Patte, Belly press test, 
+     sulcus test et test de l'armé
+
+▶ EXAMEN MÉNISCAL DU GENOU
+   ○ Cri méniscal à la palpation de l'interligne
+   ○ Flexion forcée
+   ○ Manœuvre de Cabot
+   ○ Test de Mac Murray
+
+▶ EXAMEN CAPSULO-LIGAMENTAIRE DU GENOU
+   ○ LCA : test de Lachman, tiroir antérieur direct à 90°, ressaut rotatoire
+   ○ LCP : tiroir postérieur à 60°
+   ○ Capsule : valgus/varus forcé en extension
+   ○ Ligaments latéraux : valgus/varus forcé à 30° de flexion
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        EXAMEN UROLOGIQUE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Douleur (rénale, vésicale, prostatique, des bourses)
+   ○ Troubles nutritionnels, syndrome irritatif, obstructif, brûlures 
+     mictionnelles
+   ○ Coloration des urines
+   ○ Écoulement urétral
+   ○ Dysfonction érectile
+
+▶ INSPECTION
+   ○ Urines
+   ○ Hypogastre : voussure (globe vésical)
+
+▶ PALPATION
+   ○ Abdomen : flancs et hypochondres
+   ○ Fosses lombaires
+   ○ Contact lombaire
+   ○ Globe vésical
+   ○ Bourses : cordon spermatique, testicules et épididyme, signe de Prehn, 
+     signe de Chevassu, réflexe crémastérien, verge
+
+▶ PERCUSSION
+   ○ Fosse lombaire
+   ○ Angle costo-vertébral : signe de Giordano
+   ○ Hypogastre : globe
+
+▶ TOUCHERS PELVIENS
+   ○ Prostate chez l'homme
+   ○ Prolapsus chez la femme
+   ○ Manœuvre de Bonney dans l'incontinence de la femme
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      EXAMEN GYNÉCOLOGIQUE                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ Douleurs pelviennes : dyspareunie, algie cyclique, non cyclique, aiguë et 
+     chronique
+   ○ Écoulement génital : méno-métrorragie, leucorrhée
+   ○ Aménorrhée
+   ○ Signes sympathiques de grossesse
+   ○ Infertilité
+   ○ Prurit vulvaire
+   ○ Signes fonctionnels urinaires irritatifs
+   ○ Pathologie mammaire : mastodynie, galactorrhée, écoulement mammaire, 
+     tuméfaction
+
+▶ ABDOMEN
+   ○ Inspection : cicatrices, hernie
+   ○ Palpation
+
+▶ SEINS
+   ○ 4 quadrants bilatéraux comparatifs, schéma
+   ○ Inspection de face, à jour frisant : état cutané, taille
+   ○ Palpation debout et en décubitus : tuméfaction, écoulement mamelonnaire 
+     provoqué
+   ○ Aires ganglionnaires axillaires et sus-claviculaires
+
+▶ INSPECTION DU PÉRINÉE
+   ○ Caractères sexuels secondaires
+   ○ Vulve
+   ○ Glandes de Skene et de Bartholin
+   ○ Prolapsus
+
+▶ EXAMEN AU SPÉCULUM
+   ○ Col : forme, coloration, orifice, glaire cervicale
+   ○ Vagin
+   ○ Frottis cervico-vaginal
+
+▶ TOUCHER VAGINAL ET PALPATION HYPOGASTRIQUE
+   ○ Col : longueur, perméabilité, siège, tonicité
+   ○ Vagin : parois et culs-de-sac
+   ○ Utérus : situation, taille, surface, mobilité
+   ○ Masse
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     EXAMEN HÉMATOLOGIQUE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ GLOBULES ROUGES : SYNDROME ANÉMIQUE
+   ○ Signes fonctionnels : asthénie, dyspnée, pâleur, tachycardie, acouphènes, 
+     céphalées, palpitations
+   ○ Gravité : douleur thoracique, confusion
+   ○ Pâleur conjonctivale et cutanéo-muqueuse
+   ○ Souffle cardiaque fonctionnel
+
+▶ SYNDROME TUMORAL
+   ○ Signes « B »
+   ○ Aires ganglionnaires : tête et cou, axillaires, coudes, inguinales, poplitées
+   ○ Bouche : hypertrophie gingivale
+   ○ Splénomégalie : percussion, palpation
+   ○ Hépatomégalie
+
+▶ SYNDROME HÉMORRAGIQUE
+   ○ Épistaxis, gingivorragie
+   ○ Ménométrorragie
+   ○ Hémorragie digestive
+   ○ Hémoptysie
+   ○ Purpura
+   ○ Hématome
+   ○ Hémarthrose
+   ○ Hémorragie intracrânienne
+
+▶ SYNDROME INFECTIEUX
+   ○ Fièvre
+   ○ Infections d'organe
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│              EXAMEN PHYSIQUE MÉTABOLIQUE ET ENDOCRINOLOGIQUE                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ CONSTANTES
+   ○ Poids et taille
+   ○ Calcul de l'IMC
+   ○ Tour de taille
+
+▶ INSPECTION
+   ○ Visage
+   ○ Répartition des graisses
+   ○ Xanthome, xanthélasma
+
+▶ THYROÏDE : LOGE THYROÏDIENNE
+   ○ Inspection de profil et face
+   ○ Tour de cou
+   ○ Palpation
+
+▶ EXAMEN DU DIABÉTIQUE : POINTS ESSENTIELS
+   ○ Signes fonctionnels : angor, AIT, claudication des membres, HTA, troubles 
+     visuels...
+   ○ Facteurs de risque cardio-vasculaires associés : antécédents familiaux, 
+     tabagisme, obésité...
+   ○ Constantes : poids, taille, IMC, tour de taille, PA couché puis debout
+   ○ Examen des pieds : cutané, pouls, TRC, réflexe achilléen, sensibilité 
+     superficielle et test au monofilament, sensibilité profonde
+   ○ Examen neurologique
+   ○ Pouls et souffles vasculaires
+   ○ Cavité buccale, sinus
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     EXAMEN ORL - STOMATOLOGIQUE                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ AUDITION
+   ○ Signes fonctionnels : hypoacousie, cophose, autophonie, acouphène, 
+     otodynie, otalgie, otorrhée
+   ○ Otoscopie : CAE, tympan, épanchement rétrotympanique
+   ○ Acoumétrie : Rinne, Weber
+
+▶ ÉQUILIBRE (EXAMEN NEUROLOGIQUE)
+
+▶ LARYNX
+   ○ Signes fonctionnels : dysphonie, dyspnée laryngée, dysphagie, toux
+   ○ Laryngoscopie indirecte et directe
+
+▶ CAVITÉ BUCCALE ET OROPHARYNX
+   ○ Signes fonctionnels : hernie et colique salivaire, sialodochite, 
+     odynophagie, dysphagie, trismus, xérostomie
+   ○ Inspection
+   ○ Palpation buccale
+
+▶ FOSSES NASALES (RHINOPHARYNX) ET SINUS
+   ○ Signes fonctionnels : rhinorrhée, épistaxis, obstruction nasale, rhinolalie, 
+     anosmie, douleur sinusienne, céphalée
+   ○ Spéculum nasal
+   ○ Cavoscopie
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      EXAMEN OPHTALMOLOGIQUE                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNES FONCTIONNELS
+   ○ BAV
+   ○ Altération du CV, scotome
+   ○ Phosphènes
+   ○ Myodésopsies
+   ○ Diplopie
+   ○ Douleur oculaire, photophobie
+   ○ Rougeur oculaire, prurit
+   ○ Métamorphopsies
+   ○ Micropsie et macropsie
+   ○ Héméralopie
+   ○ Larmoiement
+   ○ Xérophtalmie
+   ○ Ptosis, logophtalmie
+
+▶ INSPECTION
+   ○ Paupières : chémosis, orgelet, chalazion, blépharite, ectropion, entropion, 
+     lagophtalmie, ptôsis
+   ○ Glandes lacrymales : dacryoadénite, dacryocystite
+   ○ Cornée et conjonctive bulbaire : CPK, hémorragie en nappe, rougeur en 
+     secteur, conjonctivite, diminution de transparence cornéenne, ptérygion
+   ○ Conjonctive palpébrale : pâleur, ictère
+   ○ Globe : exophtalmie, énophtalmie, hypertonie, hypotonie
+   ○ Pupille : mydriase, myosis, RPM, leucocorie, synéchie
+
+▶ ACUITÉ VISUELLE
+   ○ De près : échelle de Parinaud, compte les doigts (CLD), voit la main 
+     bouger (VLMB), perception lumineuse
+   ○ De loin : échelle de Monoyer
+
+▶ LAMPE À FENTE ET FOND D'ŒIL
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      EXAMEN DERMATOLOGIQUE                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ SIGNE FONCTIONNEL : PRURIT
+
+▶ INSPECTION DU TÉGUMENT
+   ○ Peau
+   ○ Semi-muqueuses : lèvres, gland, vulve, canal anal
+   ○ Muqueuses : oculaire, buccale, génitale
+   ○ Phanères : cheveux, poils, ongles
+
+▶ PALPATION, VITROPRESSION, CURETAGE, FRICTION
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      EXAMEN PSYCHIATRIQUE                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ ÉVALUATION GÉNÉRALE
+   ○ Mode de vie
+   ○ Antécédents
+   ○ Consommation de substances psychoactives (alcool, tabac, drogues, 
+     médicaments, toxiques)
+
+▶ TROUBLES DE PERSONNALITÉ
+   ○ Hystérique, paranoïaque, schizoïde, schizotypique, obsessionnelle, passive 
+     dépendante, narcissique, dépressive, antisociale, évitante
+
+▶ SYMPTOMATOLOGIE
+   ○ Idées suicidaires
+   ○ Syndrome délirant
+   ○ Trouble névrotique
+   ○ Trouble de l'humeur
+   ○ Trouble psychotique
+   ○ Troubles somatiques : sommeil, appétit, libido
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                                    FIN DU LIVRET
+═══════════════════════════════════════════════════════════════════════════════

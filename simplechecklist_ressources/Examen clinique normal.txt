@@ -1,0 +1,383 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    EXAMEN CLINIQUE - PHYSIQUE NORMAL
+                        TEMPLATE D'EXAMEN COMPLET
+═══════════════════════════════════════════════════════════════════════════════
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          EXAMEN GÉNÉRAL                                      │
+│                       (Éliminer les urgences)                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ ÉTAT DE CONSCIENCE
+   • Patient(e) conscient(e), orienté(e) dans le temps et dans l'espace
+   • GCS = ……/15 (Y… ; V… ; M…)
+
+▶ CONSTANTES VITALES
+   • Stable sur le plan hémodynamique et respiratoire
+   • TA (MS droit) = …… mmHg
+   • TA (MS gauche) = …… mmHg
+   • FC = ……… bpm
+   • FR = ……. cpm
+   • SpO₂ = ……%
+   • Poids = …… kg
+   • Taille = ……. cm
+   • IMC = ……
+   • Température : le/la patient(e) est apyrétique avec une température de --°C
+
+▶ EXAMEN CUTANÉO-MUQUEUX
+   • Conjonctif normocolorée (pas de pâleur cutanéo-muqueuse, ni d'ictère, ni 
+     de lésion cutanée, ni d'œdème)
+   • Pas de signe de déshydratation
+   • TRC < 3s (Temps de Recoloration Cutanée)
+
+▶ SIGNES DE CHOC
+   • Pas de signes de choc (marbrures, froideurs des extrémités, cyanoses…)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        EXAMEN ABDOMINAL                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ INSPECTION
+   • La respiration abdominale est normale
+   • Il n'existe pas de déformation de l'abdomen
+   • Il n'existe pas de cicatrices (Mc Burney, thoracotomie…)
+   • Il n'existe pas de circulation veineuse collatérale
+   • Il n'existe pas de voussures, ni de vergetures, ni de points de feu
+   • L'ombilic est bien plissé
+   • Les téguments sont d'aspect normal
+   • Pas d'astérixis (encéphalopathie hépatique, syndrome urémique)
+   • Pas de leuconychie, ni érythème palmaire
+   • Examen cavité buccale (pas de lésions candidosiques, aspect langue - 
+     pas de glossite…)
+
+▶ PALPATION
+   • L'abdomen est souple, dépressible
+   • Il n'existe pas de défense, de contracture, ni de sensibilité
+   • Il n'existe pas d'organomégalie (SPM, HPM)
+   • Il n'existe pas de contact lombaire
+   • Il n'existe pas de masse palpable
+   • Il n'existe pas d'hernie/éventration (patient tousse : ombilicale, ligne 
+     blanche, fémorale, inguinale, épigastrique)
+   • Œdème de membre inférieur, prend godet ?
+   • Pas de signe du flot (présence d'ascite)
+   • Pas de signe du glaçon pour une masse mobile
+
+▶ PERCUSSION
+   • Il n'existe pas de matité (déclive, en damier…)
+   • Le tympanisme est normal
+   • Pas de météorisme (occlusion intestinale)
+
+▶ AUSCULTATION
+   • Le transit est audible
+   • Il n'existe pas de souffle abdominal (artères rénales, tronc cœliaque, 
+     aorte abdominale)
+
+▶ TOUCHER RECTAL
+   • Non réalisé / Réalisé
+
+   ◆ Inspection externe :
+      - Pas de fissures, hémorroïdes, fistules, excoriations
+
+   ◆ Évaluation interne :
+      - Tonus sphinctérien normal
+      - Pas de masse ou fécalome dans l'ampoule rectale
+      - Palpation de la prostate (chez l'homme) : normale
+      - État du doigtier après examen : normal (pas de sang, pas de pus)
+      - Recherche du cri de Douglas : négatif (pas de péritonite)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         EXAMEN CARDIAQUE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ INSPECTION
+   • Le thorax est symétrique
+   • Il n'existe pas de déformation du thorax (pectus carinatum, pectus excavatum…)
+   • Il n'existe pas de circulation veineuse collatérale
+   • Il n'existe pas d'œdème des membres inférieurs
+   • Il n'existe pas de turgescence spontanée de la veine jugulaire
+   • Il n'existe pas de cyanose des téguments
+   • Il n'existe pas d'angiome stellaire
+   • Il n'existe pas de cicatrice ni de lésion cutanée
+
+▶ PALPATION
+   • Le choc de pointe est bien perçu au cinquième espace intercostal gauche
+   • Le signe de Harzer est négatif
+   • Il n'existe pas de thrill sus-sternal
+   • Il n'existe pas de reflux hépato-jugulaire
+
+▶ AUSCULTATION
+   • Les bruits du cœur, B1 et B2, sont bien perçus aux 4 foyers
+   • La systole et la diastole sont libres à chaque foyer : pulmonaire, aortique, 
+     tricuspide et mitral
+   • Il n'existe pas de frottement péricardique
+   • Il n'existe pas de sons surajoutés (B3 ou B4), pas de souffle
+
+▶ CONCLUSION
+   • Il n'existe pas d'insuffisance cardiaque :
+      - Ni droite (pas de turgescence de la veine jugulaire, pas d'œdème des 
+        membres inférieurs, pas de reflux hépato-jugulaire)
+      - Ni gauche (pas de signes pulmonaires)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        EXAMEN VASCULAIRE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ POULS
+   • Les pouls sont réguliers, présents de façon bilatérale et symétrique
+   • Pas de souffle audible
+   • Pas de pouls abolis ou filant (signe de choc hémorragique)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    EXAMEN PLEURO-PULMONAIRE                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ INSPECTION
+   • Il n'existe pas de cyanose des téguments (en particulier la main…)
+   • Il n'existe pas de déformation du thorax
+   • Il n'existe pas d'hippocratisme digital
+   • Il n'existe pas de cicatrices
+   • Le rythme respiratoire est normal et régulier
+   • Les respirations thoracique et abdominale sont synchronisées
+   • Il n'existe pas d'œdème cervical
+   • Il n'existe pas de signe de lutte respiratoire
+   • Il n'existe pas de battement des ailes du nez
+   • Il n'existe pas d'entonnoir xiphoïdien
+   • Il n'existe pas de tirage sus-sternal
+   • Il n'existe pas de tirage intercostal
+
+▶ PALPATION
+   • Il n'existe pas de points douloureux
+   • Il y a une bonne transmission des vibrations vocales
+   • VV symétriques et bilatérales
+
+▶ PERCUSSION
+   • Il n'y a pas de matité
+   • Il n'y a pas de tympanisme ou d'hypersonorité
+
+▶ AUSCULTATION
+   • Le bruit laryngo-trachéal est normal
+   • Les murmures vésiculaires sont bien perçus
+   • Il n'y a pas de râles perçus aux niveaux des aires de projection des lobes 
+     pulmonaires
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      EXAMEN NEUROLOGIQUE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ ÉTAT DE LA CONSCIENCE ET ORIENTATION
+   • Le/la patient(e) est conscient(e) et bien orienté(e) dans le temps et 
+     dans l'espace
+
+▶ EXAMEN DE LA STATION DEBOUT
+   • Possible / Non / Possible avec aide
+   • Le signe de Romberg est négatif
+
+▶ ÉTUDE DE LA MARCHE
+   • Le/la patient(e) marche normalement
+
+▶ EXAMEN DU TONUS
+   • Le tonus est normal
+   • Il n'existe ni hypotonie ni hypertonie
+
+▶ EXAMEN DE LA MOTRICITÉ
+
+   ◆ Globale :
+      - Le/la patient(e) tient le Barré et le Mingazzini
+      - La motricité est conservée aux niveaux des membres supérieurs et inférieurs
+
+   ◆ Segmentaire :
+      - La motricité est conservée aux niveaux des différents segments
+
+▶ LA COORDINATION
+   • Il n'existe pas de trouble de la coordination
+
+   ◆ L'épreuve des marionnettes se fait en miroir
+
+   ◆ Le mouvement doigt-nez est réalisé :
+      - Sans tremblement d'attitude et/ou d'action
+      - Avec une amplitude normale (pas de dysmétrie)
+      - Les deux index sont portés simultanément (pas de dyschronométrie)
+
+   ◆ Tests :
+      - Talon-genou (face interne de tibia), Talon-pied = membre inférieur
+      - Doigt-nez = membre supérieur
+
+▶ LES RÉFLEXES
+
+   ◆ Les réflexes ostéo-tendineux sont présents de façon bilatérale et symétrique :
+      - Bicipital
+      - Tricipital
+      - Stylo-radial
+      - Cubito-pronateur
+      - Rotulien
+      - Achilléen
+
+   ◆ Les réflexes cutanéo-abdominaux sont présents de façon bilatérale et 
+     symétrique :
+      - Supérieur
+      - Moyen
+      - Inférieur
+
+   ◆ Le réflexe cutanéo-plantaire est indifférent
+
+▶ LA SENSIBILITÉ
+
+   ◆ Superficielle :
+      - Il n'existe pas de trouble sensitif tactile et thermo-algique
+
+   ◆ Profonde :
+      - Il n'existe pas de trouble sensitif proprioceptif ou vibratoire
+
+▶ EXAMEN DES PAIRES CRÂNIENNES
+
+   ◆ I - Olfactif :
+      - Le/la patient(e) reconnaît toutes les odeurs présentées
+
+   ◆ II - Optique :
+      - Il n'existe pas de trouble de l'acuité visuelle
+      - Les champs visuels temporaux (gauche et droit) et nasaux (gauche et 
+        droit) ne sont pas réduits
+
+   ◆ III - Oculomoteur commun :
+      - Il n'existe pas de ptosis
+      - Il n'existe pas de troubles de la mydriase
+      - Il n'existe pas de strabisme divergent
+
+   ◆ IV - Trochléaire (Pathétique) :
+      - Il n'existe pas de diplopie verticale
+      → La poursuite oculaire est sans anomalie
+
+   ◆ V - Trijumeau :
+      - Il n'existe pas de trouble de la sensibilité au niveau du front, des joues 
+        et/ou de la mâchoire → pas d'atteinte des branches V1, V2 et/ou V3
+      - Il n'existe pas de troubles sensitifs aux niveaux des 2/3 antérieurs de 
+        la langue
+      - La motricité des muscles masseter et temporaux est conservée
+
+   ◆ VI - Abducens – Oculomoteur externe :
+      - Il n'existe pas de strabisme divergent
+
+   ◆ VII - Facial :
+      - Le/la patient(e) ne présente pas de trouble de la mimique
+      - Il n'existe pas de troubles gustatifs au niveau des 2/3 antérieurs de 
+        la langue
+      - Les sécrétions salivaires et lacrymales sont normales
+      - La sensibilité de la zone de Ramsay Hunt est normale
+      - Les muscles peauciers du cou (ou platysma) ne sont pas étirés
+      - Il n'existe pas d'hyperacousie
+
+   ◆ VIII - Cochléo-vestibulaire :
+
+      › Cochléaire :
+        - Il y a une bonne perception des petits sons et de la voix chuchotée
+        - Il y a une bonne perception des vibrations : les transmissions aérienne 
+          et osseuse sont conservées
+
+      › Vestibulaire :
+        - Il n'existe pas de latéro-pulsions à la station debout
+        - Le Romberg est négatif et non latéralisé
+        - Il n'existe pas de nystagmus
+
+   ◆ IX - Glosso-pharyngien :
+      - Le palais mou est symétrique
+      - Le signe du rideau est négatif
+      - Le réflexe nauséeux est présent
+
+   ◆ X - Vague :
+      - Il n'existe pas de dysphonie
+
+   ◆ XI - Spinal :
+      - Il n'existe pas d'élévation de l'épaule
+      - La rotation de la tête est normale
+      - La flexion de la tête est normale
+
+   ◆ XII - Grand hypoglosse :
+      - La langue est régulière
+      - La motricité de la langue est conservée
+      - Il n'existe pas de déviation de la langue
+
+▶ EXAMEN DE LA NUQUE
+   • La nuque est souple
+
+▶ SIGNES DE MÉNINGITE
+   • Pas de signe de Kernig
+   • Pas de signe de Brudzinski
+   • Pas de phonophobie
+   • Pas de photophobie
+   • Pas de vomissements en jet
+
+▶ ÉTUDE DES FONCTIONS SUPÉRIEURES
+   • Il n'existe pas de trouble de la mémoire ni sur le court ni sur le long terme
+   • Il n'existe pas de trouble du langage
+   • Il n'existe pas d'apraxie ni idéo-motrice ni idéatoire
+   • Il n'existe pas d'agnosie visuelle, auditive, tactile ou spatiale
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         EXAMEN CERVICAL                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ INSPECTION
+   • Il n'existe pas de tuméfaction
+   • Il n'existe pas de turgescence de la veine jugulaire
+   • Il n'existe pas de circulation collatérale
+   • Il n'existe pas d'œdème
+   • Il n'existe pas de cicatrice
+   • Pas de goitre
+   • Pas d'ADP cervicales
+
+▶ PALPATION
+   • Le corps thyroïdien est de taille normale et est mobile à la déglutition
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      EXAMEN GANGLIONNAIRE                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ AIRES GANGLIONNAIRES
+   • Les aires ganglionnaires sont libres
+   • L'examen est sans anomalie aux niveaux des différentes aires suivantes :
+      - Axillaire
+      - Jugulo-carotidienne
+      - Sous-maxillaire
+      - Sous-mentonnière
+      - Prétragienne
+      - Rétro-auriculaire
+      - Spinale
+      - Sous-claviculaire
+      - Épitrochléenne
+      - Inguinale
+      - Poplitée
+
+   • En particulier : ganglion de Troisier (sus-claviculaire gauche - néo estomac) : 
+     absent
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     EXAMEN DU SEIN (si femme)                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+▶ INSPECTION
+   • Le mamelon est rétracté des 2 côtés (d'autres aspects physiologiques sont 
+     possibles)
+   • Il n'existe pas d'écoulement mamelonnaire
+   • Il n'existe pas d'ulcération, d'abcédation ou de signes inflammatoires
+   • Il n'existe pas d'aspect peau d'orange
+
+▶ PALPATION
+   • La palpation est sans anomalie aux différents quadrants :
+      - Supéro-externe
+      - Inféro-externe
+      - Supéro-interne
+      - Inféro-interne
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            FIN DE L'EXAMEN CLINIQUE
+═══════════════════════════════════════════════════════════════════════════════
