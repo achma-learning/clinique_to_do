@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📋 Examen Clinique Complet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #0891b2;
+        --primary-light: #06b6d4;
+        --primary-dark: #0e7490;
+        --secondary: #8b5cf6;
+        --accent: #f59e0b;
+        --accent-light: #fbbf24;
+        --success: #10b981;
+        --success-light: #34d399;
+        --danger: #ef4444;
+        --warning: #f59e0b;
+        --info: #3b82f6;
+        --neutral-50: #fafafa;
+        --neutral-100: #f5f5f5;
+        --neutral-200: #e5e5e5;
+        --neutral-300: #d4d4d4;
+        --neutral-400: #a3a3a3;
+        --neutral-500: #737373;
+        --neutral-600: #525252;
+        --neutral-700: #404040;
+        --neutral-800: #262626;
+        --neutral-900: #171717;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-tertiary: #94a3b8;
+        --border: #e2e8f0;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 24px;
+      }
+      
+      * { 
+        box-sizing: border-box; 
+        margin: 0; 
+        padding: 0; 
+      }
+      
+      body { 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        color: var(--text-primary);
+        font-size: 15px;
+        line-height: 1.6;
+        padding-bottom: 90px;
+        padding-top: 140px;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        touch-action: pan-y;
+      }
+
+      /* Floating Navigation Header */
+      .floating-island {
+        position: fixed;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        max-width: calc(100% - 16px);
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border-radius: 60px;
+        padding: 4px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        animation: slideDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateX(-50%) translateY(-120px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(-50%) translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .island-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        padding: 2px;
+      }
+
+      .floating-buttons {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        padding: 0 4px;
+      }
+
+      .floating-island a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 40px;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        font-family: 'Outfit', sans-serif;
+      }
+
+      .floating-island a:not(.home-button):hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+        transform: translateY(-1px);
+      }
+
+      .home-button {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        font-size: 1.4em !important;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .home-button:hover {
+        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        box-shadow: 0 6px 20px rgba(8, 145, 178, 0.4);
+        transform: translateY(-2px) scale(1.05) !important;
+      }
+
+      .island-center {
+        text-align: center;
+        color: white;
+        padding: 0 10px;
+      }
+
+      .island-center h1 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+        letter-spacing: -0.02em;
+      }
+
+      .island-center p {
+        font-size: 0.6875rem;
+        opacity: 0.7;
+        margin: 1px 0 0 0;
+        font-weight: 300;
+      }
+
+      /* Search Bar in Header */
+      .search-container {
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50px;
+        margin: 0 4px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 40px;
+        color: white;
+        font-size: 0.8125rem;
+        font-family: 'Inter', sans-serif;
+        outline: none;
+        transition: all 0.2s ease;
+      }
+
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .search-input:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: var(--primary-light);
+      }
+
+      /* Progress Bar */
+      .progress-bar-wrap {
+        position: absolute;
+        bottom: 0;
+        left: 4px;
+        right: 4px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 0 0 60px 60px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+        height: 100%;
+        width: 0%;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+      }
+
+      /* Container */
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 12px;
+      }
+
+      /* Quick Stats Cards */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .stat-card {
+        background: var(--bg-primary);
+        border-radius: var(--radius-md);
+        padding: 14px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
+        text-align: center;
+        animation: fadeInUp 0.5s ease backwards;
+      }
+
+      .stat-card:nth-child(1) { animation-delay: 0.05s; }
+      .stat-card:nth-child(2) { animation-delay: 0.1s; }
+      .stat-card:nth-child(3) { animation-delay: 0.15s; }
+      .stat-card:nth-child(4) { animation-delay: 0.2s; }
+
+      .stat-value {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      /* Section Cards */
+      .section-card {
+        background: var(--bg-primary);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        margin-bottom: 14px;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease backwards;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 18px;
+        cursor: pointer;
+        user-select: none;
+        background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+        transition: all 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(8, 145, 178, 0.1), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .section-header:hover::before {
+        left: 100%;
+      }
+
+      .section-header:hover {
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      }
+
+      .section-title-wrap {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .section-icon {
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .section-title {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        font-size: 1.0625rem;
+        color: var(--primary-dark);
+        letter-spacing: -0.01em;
+      }
+
+      .section-progress {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: var(--text-tertiary);
+        font-weight: 600;
+      }
+
+      .progress-badge {
+        background: var(--success);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 20px;
+        font-size: 0.6875rem;
+        font-weight: 600;
+      }
+
+      .toggle-icon {
+        font-size: 1.75rem;
+        color: var(--primary);
+        font-weight: 300;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        line-height: 1;
+      }
+
+      .toggle-icon.open {
+        transform: rotate(135deg);
+        color: var(--accent);
+      }
+
+      .section-body {
+        display: none;
+        padding: 18px;
+        border-top: 1px solid var(--border);
+        background: var(--bg-primary);
+      }
+
+      .section-body.open {
+        display: block;
+        animation: expandDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes expandDown {
+        from {
+          opacity: 0;
+          max-height: 0;
+        }
+        to {
+          opacity: 1;
+          max-height: 10000px;
+        }
+      }
+
+      /* Check List Items */
+      .check-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        background: var(--bg-secondary);
+        border: 1.5px solid transparent;
+        position: relative;
+      }
+
+      .check-item:hover {
+        background: #e0f2fe;
+        border-color: var(--primary-light);
+        transform: translateX(3px);
+      }
+
+      .check-item input[type="checkbox"] {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        border-radius: 6px;
+        border: 2px solid var(--neutral-300);
+        cursor: pointer;
+        margin-top: 2px;
+        flex-shrink: 0;
+        appearance: none;
+        -webkit-appearance: none;
+        background: white;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .check-item input[type="checkbox"]:hover {
+        border-color: var(--primary);
+        transform: scale(1.1);
+      }
+
+      .check-item input[type="checkbox"]:checked {
+        background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
+        border-color: var(--success);
+        animation: checkBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes checkBounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+      }
+
+      .check-item input[type="checkbox"]:checked::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 13px;
+        font-weight: 700;
+        animation: checkMark 0.3s ease;
+      }
+
+      @keyframes checkMark {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      .check-item span {
+        font-size: 0.9375rem;
+        color: var(--text-primary);
+        line-height: 1.5;
+        padding-top: 1px;
+        font-weight: 400;
+      }
+
+      .check-item input[type="checkbox"]:checked ~ span {
+        color: var(--text-tertiary);
+        text-decoration: line-through;
+      }
+
+      /* Sub Sections */
+      .sub-section {
+        margin-left: 0;
+        margin-top: 18px;
+        margin-bottom: 14px;
+        padding: 16px;
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-md);
+        border-left: 4px solid var(--primary-light);
+        position: relative;
+      }
+
+      .sub-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        padding: 4px 0 12px 0;
+        user-select: none;
+      }
+
+      .sub-section h3 {
+        font-family: 'Outfit', sans-serif;
+        color: var(--primary-dark);
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+
+      .sub-toggle {
+        font-size: 1.25rem;
+        color: var(--primary);
+        transition: transform 0.3s ease;
+      }
+
+      .sub-toggle.open {
+        transform: rotate(180deg);
+      }
+
+      .sub-content {
+        display: none;
+        margin-top: 10px;
+      }
+
+      .sub-content.open {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      h4, h5 {
+        font-family: 'Outfit', sans-serif;
+        color: var(--primary);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        margin-top: 14px;
+      }
+
+      /* Nested Items */
+      .nested-item {
+        margin-left: 20px;
+        margin-top: 8px;
+        padding-left: 16px;
+        border-left: 2px solid var(--neutral-200);
+      }
+
+      /* Sticky Bottom Bar */
+      .sticky-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        padding: 12px;
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+        border-top: 1px solid var(--border);
+        animation: slideUp 0.5s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      .sticky-content {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .progress-stats {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stat-item-label {
+        font-size: 0.6875rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .stat-item-value {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .stat-item-value.completed {
+        color: var(--success);
+      }
+
+      .stat-item-value.percentage {
+        color: var(--accent);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: 'Outfit', sans-serif;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn-reset {
+        background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+      }
+
+      .btn-reset:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+      }
+
+      .btn-expand {
+        background: linear-gradient(135deg, var(--secondary) 0%, #a78bfa 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+      }
+
+      .btn-expand:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        body {
+          font-size: 14px;
+          padding-top: 170px;
+        }
+
+        .floating-island {
+          max-width: calc(100% - 12px);
+        }
+
+        .floating-island a:not(.home-button) {
+          font-size: 0.75rem;
+          padding: 8px 10px;
+        }
+
+        .home-button {
+          width: 40px;
+          height: 40px;
+        }
+
+        .island-center h1 {
+          font-size: 0.9375rem;
+        }
+
+        .section-title {
+          font-size: 1rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 8px;
+        }
+
+        .sticky-content {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .progress-stats {
+          width: 100%;
+          justify-content: space-around;
+          gap: 12px;
+        }
+
+        .action-buttons {
+          width: 100%;
+        }
+
+        .btn {
+          flex: 1;
+          justify-content: center;
+          padding: 10px 16px;
+          font-size: 0.8125rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .floating-buttons {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .search-input {
+          font-size: 0.75rem;
+        }
+
+        .section-icon {
+          font-size: 1.25rem;
+        }
+      }
+
+      /* Hidden class */
+      .hidden {
+        display: none !important;
+      }
+    </style>
+</head>
+<body>
+    <!-- Floating Navigation Island -->
+    <div class="floating-island">
+        <div class="island-main">
+            <a href="index.html" class="home-button">🏠</a>
+            <div class="island-center">
+                <h1>Examen Clinique Complet</h1>
+                <p>Checklist Détaillée</p>
+            </div>
+            <div class="floating-buttons">
+                <a href="obs.html">Obs</a>
+                <a href="atcd.html">ATCD</a>
+                <a href="exam.html">Exam</a>
+            </div>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Rechercher un examen...">
+        </div>
+        <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="sticky-bar">
+        <div class="sticky-content">
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <span class="stat-item-label">Fait</span>
+                    <span class="stat-item-value completed" id="completedCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-item-label">Total</span>
+                    <span class="stat-item-value" id="totalCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-item-label">Progrès</span>
+                    <span class="stat-item-value percentage" id="percentComplete">0%</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-expand" onclick="toggleAllSections()">
+                    <span id="expandText">📂 Tout Ouvrir</span>
+                </button>
+                <button class="btn btn-reset" onclick="resetAll()">🔄 Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="statGeneral">0%</div>
+                <div class="stat-label">Examen Général</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statSpecialise">0%</div>
+                <div class="stat-label">Ex. Spécialisés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statUrgence">0%</div>
+                <div class="stat-label">Urgences</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statVasculaire">0%</div>
+                <div class="stat-label">Vasculaire</div>
+            </div>
+        </div>
+
+        <!-- Section 1: Signes Généraux -->
+        <div class="section-card" data-category="general">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">🔍</span>
+                    <h2 class="section-title">Signes Généraux</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="signes-generaux">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Signes Fonctionnels</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="sg_asthenie" data-section="signes-generaux"><span>Asthénie</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_anorexie" data-section="signes-generaux"><span>Anorexie</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_amaigrissement" data-section="signes-generaux"><span>Amaigrissement</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_echelle_oms" data-section="signes-generaux"><span>Échelle d'activité OMS</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_sueurs" data-section="signes-generaux"><span>Sueurs</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_frissons" data-section="signes-generaux"><span>Frissons</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_prurit" data-section="signes-generaux"><span>Prurit</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_soif" data-section="signes-generaux"><span>Soif</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Température</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="sg_fievre" data-section="signes-generaux"><span>Fièvre</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_hypothermie" data-section="signes-generaux"><span>Hypothermie</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>État d'Hydratation</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="sg_poids" data-section="signes-generaux"><span>Poids et variations</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_pli_cutane" data-section="signes-generaux"><span>Pli cutané</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_oedemes" data-section="signes-generaux"><span>Œdèmes</span></label>
+                            <label class="check-item"><input type="checkbox" name="sg_muqueuses" data-section="signes-generaux"><span>Humidité des muqueuses</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Urgences Vitales -->
+        <div class="section-card" data-category="urgence">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">🚨</span>
+                    <h2 class="section-title">Urgences Vitales</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="urgences">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Signes de Choc</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="urg_marbrures" data-section="urgences"><span>Marbrures</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_oligurie" data-section="urgences"><span>Oligurie</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_trc" data-section="urgences"><span>Allongement TRC</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_extremites" data-section="urgences"><span>Extrémités : froides, cyanosées</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_tachycardie" data-section="urgences"><span>Tachycardie</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_tachypnee" data-section="urgences"><span>Tachypnée</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_confusion" data-section="urgences"><span>Confusion</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_collapsus" data-section="urgences"><span>Collapsus</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_pouls_paradoxal" data-section="urgences"><span>Pouls paradoxal</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Détresse Respiratoire Aiguë</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="urg_fr_anormale" data-section="urgences"><span>Tachypnée >30 ou bradypnée <10</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_tirage" data-section="urgences"><span>Tirage et dépressions</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_resp_paradoxale" data-section="urgences"><span>Respiration abdominale paradoxale</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_cyanose" data-section="urgences"><span>Cyanose</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_asterixis" data-section="urgences"><span>Astérixis</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_sueurs" data-section="urgences"><span>Sueurs</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_encombrement" data-section="urgences"><span>Encombrement bronchique</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Confusion et Coma</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="urg_glasgow" data-section="urgences"><span>Score de Glasgow : E, V, M</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_glycemie" data-section="urgences"><span>Glycémie capillaire</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_temperature" data-section="urgences"><span>Température</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_syndrome_meninge" data-section="urgences"><span>Syndrome méningé</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_motricite" data-section="urgences"><span>Motricité et tonus des membres</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_face" data-section="urgences"><span>Face : symétrie, réponse à la douleur</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_reflexes_tronc" data-section="urgences"><span>Réflexes du tronc cérébral</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_pupilles" data-section="urgences"><span>Pupilles et oculomotricité</span></label>
+                            <label class="check-item"><input type="checkbox" name="urg_rythme_resp" data-section="urgences"><span>Rythme respiratoire</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Examen Vasculaire -->
+        <div class="section-card" data-category="vasculaire">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">❤️</span>
+                    <h2 class="section-title">Examen Vasculaire</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="vasculaire">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Signes Fonctionnels Cardiaques</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="vasc_douleur_thoracique" data-section="vasculaire"><span>Douleur thoracique (angor, péricardite, EP...)</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_blockpnee" data-section="vasculaire"><span>Blockpnée</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_dyspnee" data-section="vasculaire"><span>Dyspnée (effort, orthopnée, paroxystique)</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_lipothymie" data-section="vasculaire"><span>Lipothymie - Syncope</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_palpitations" data-section="vasculaire"><span>Palpitations</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_hepatalgie" data-section="vasculaire"><span>Hépatalgie d'effort</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Inspection Cardiaque</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="vasc_turgescence_jug" data-section="vasculaire"><span>Turgescence jugulaire</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_oedemes_periph" data-section="vasculaire"><span>Œdèmes périphériques</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Palpation Cardiaque</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="vasc_choc_pointe" data-section="vasculaire"><span>Choc de pointe</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_harzer" data-section="vasculaire"><span>Signe de Harzer</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_fremissement" data-section="vasculaire"><span>Frémissement</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_reflux_abdo_jug" data-section="vasculaire"><span>Reflux abdomino-jugulaire</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Auscultation Cardiaque</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="vasc_5_foyers" data-section="vasculaire"><span>5 foyers : aortique, pulmonaire, tricuspide, mitraux</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_b1_b2" data-section="vasculaire"><span>B1, B2, galops, COM</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_rythme" data-section="vasculaire"><span>Rythme : régularité</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_souffle" data-section="vasculaire"><span>Souffle : siège, temps, irradiation, intensité</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_frottement" data-section="vasculaire"><span>Frottement</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_ic_gauche" data-section="vasculaire"><span>Signes IC gauche (crépitants pulmonaires)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen Vasculaire Artériel</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <h4>Signes Fonctionnels</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_hta" data-section="vasculaire"><span>HTA : céphalées, acouphènes, vertiges, épistaxis</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ait" data-section="vasculaire"><span>AIT : troubles transitoires</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_claudication" data-section="vasculaire"><span>Claudication artérielle d'effort</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ischemie" data-section="vasculaire"><span>Ischémie aiguë : douleur, froideur, déficit</span></label>
+
+                            <h4>Constantes</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_pa_fc" data-section="vasculaire"><span>PA, FC</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ips" data-section="vasculaire"><span>IPS (Index de Pression Systolique)</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_tt" data-section="vasculaire"><span>TT (Tour de Taille)</span></label>
+
+                            <h4>Inspection</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_trc" data-section="vasculaire"><span>TRC (Temps de Recoloration Cutanée)</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_trophiques" data-section="vasculaire"><span>Troubles trophiques des extrémités</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_orteils_bleus" data-section="vasculaire"><span>Syndrome des orteils bleus</span></label>
+
+                            <h4>Pouls et Schéma</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_radial" data-section="vasculaire"><span>Radial</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ulnaire" data-section="vasculaire"><span>Ulnaire</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_humeral" data-section="vasculaire"><span>Huméral</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_carotidien" data-section="vasculaire"><span>Carotidien</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_aortique" data-section="vasculaire"><span>Aortique et recherche d'anévrysme</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_femoral" data-section="vasculaire"><span>Fémoral</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_poplite" data-section="vasculaire"><span>Poplité</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_tibial" data-section="vasculaire"><span>Tibial postérieur</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_pedieux" data-section="vasculaire"><span>Pédieux</span></label>
+
+                            <h4>Auscultation Vasculaire</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ausc_carotide" data-section="vasculaire"><span>Carotide</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ausc_aorte" data-section="vasculaire"><span>Aorte</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ausc_renales" data-section="vasculaire"><span>Artères rénales</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_art_ausc_femoral" data-section="vasculaire"><span>Fémoral</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen Veino-Lymphatique</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <h4>Signes Fonctionnels</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_ivc" data-section="vasculaire"><span>IVC : lourdeur, fatigue, œdèmes, phlébalgie</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_douleur" data-section="vasculaire"><span>Douleur aiguë des membres</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_rouge" data-section="vasculaire"><span>Membre rouge, chaud, tuméfié</span></label>
+
+                            <h4>Inspection</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_trophiques" data-section="vasculaire"><span>Troubles trophiques</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_oedemes" data-section="vasculaire"><span>Œdèmes et localisation</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_stemmer" data-section="vasculaire"><span>Signe de Stemmer (2ᵉ orteil)</span></label>
+
+                            <h4>Manœuvres</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_schwartz" data-section="vasculaire"><span>Manœuvre de Schwartz</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_trendelenburg" data-section="vasculaire"><span>Manœuvre de Trendelenburg</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_linton" data-section="vasculaire"><span>Manœuvre de Linton</span></label>
+
+                            <h4>Membre Douloureux</h4>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_chaleur" data-section="vasculaire"><span>Chaleur locale</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_cordon" data-section="vasculaire"><span>Cordon veineux superficiel</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_mollet" data-section="vasculaire"><span>Tour de mollet</span></label>
+                            <label class="check-item"><input type="checkbox" name="vasc_vein_wells" data-section="vasculaire"><span>Score de Wells</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Examen Pulmonaire -->
+        <div class="section-card" data-category="specialise">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">🫁</span>
+                    <h2 class="section-title">Examen Pulmonaire</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="pulmonaire">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Signes Fonctionnels</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="pulm_douleur" data-section="pulmonaire"><span>Douleur thoracique (pleurale, EP)</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_dyspnee" data-section="pulmonaire"><span>Dyspnée - Échelle NYHA</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_expectorations" data-section="pulmonaire"><span>Expectorations, bronchorrhée</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_bronchite" data-section="pulmonaire"><span>Bronchite chronique</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_hemoptysie" data-section="pulmonaire"><span>Hémoptysie</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_toux" data-section="pulmonaire"><span>Toux</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_hoquet" data-section="pulmonaire"><span>Hoquet</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_ronflement" data-section="pulmonaire"><span>Ronflement</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Constantes</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="pulm_fr" data-section="pulmonaire"><span>FR (Fréquence Respiratoire)</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_regularite" data-section="pulmonaire"><span>Régularité et durée des temps respiratoires</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_volume_minute" data-section="pulmonaire"><span>Volume minute</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Inspection</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="pulm_ampliation" data-section="pulmonaire"><span>Ampliation thoracique</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_distension" data-section="pulmonaire"><span>Distension thoracique (tonneau, Hoover, Campbell)</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_cave_sup" data-section="pulmonaire"><span>Syndrome cave supérieure</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_cyanose" data-section="pulmonaire"><span>Cyanose</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_hippocratisme" data-section="pulmonaire"><span>Hippocratisme digital</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Palpation et Percussion</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="pulm_vv_ant" data-section="pulmonaire"><span>Vibrations vocales - Paroi antérieure</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_vv_post" data-section="pulmonaire"><span>Vibrations vocales - Paroi postérieure</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_vv_axillaire" data-section="pulmonaire"><span>Vibrations vocales - Ligne axillaire</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Auscultation</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="pulm_mv" data-section="pulmonaire"><span>Murmure vésiculaire</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_souffle" data-section="pulmonaire"><span>Souffles (tubaire, pleurétique, tubo-pleural, amphorique)</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_crepitants" data-section="pulmonaire"><span>Crépitants fins, gros crépitants</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_frottement" data-section="pulmonaire"><span>Frottement pleural</span></label>
+                            <label class="check-item"><input type="checkbox" name="pulm_sibilants" data-section="pulmonaire"><span>Sibilants, ronchis, wheezing</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Examen Digestif -->
+        <div class="section-card" data-category="specialise">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">🫄</span>
+                    <h2 class="section-title">Examen Digestif</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="digestif">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Signes Fonctionnels</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="dig_douleur" data-section="digestif"><span>Douleur abdominale (ulcéreuse, biliaire, pancréatique, intestinale)</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_transit" data-section="digestif"><span>Troubles du transit (nausées, vomissements, occlusion)</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_hemorragie" data-section="digestif"><span>Hémorragie digestive (hématémèse, rectorragie, méléna)</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_oesophage" data-section="digestif"><span>Syndrome œsophagien (dysphagie, pyrosis)</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_rectal" data-section="digestif"><span>Syndrome rectal (épreintes, faux-besoins, ténesme)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Inspection</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="dig_cicatrices" data-section="digestif"><span>Cicatrices, éventration</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_hernie" data-section="digestif"><span>Hernie</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_distension" data-section="digestif"><span>Distension abdominale</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_circulation" data-section="digestif"><span>Circulation veineuse collatérale abdominale</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_ictere" data-section="digestif"><span>Ictère</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_bouche" data-section="digestif"><span>Bouche : perlèche, langue, muqueuses</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_ihc" data-section="digestif"><span>Signes d'IHC (angiomes stellaires, astérixis, érythrose palmaire)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Palpation Abdominale</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="dig_oedemes_lombes" data-section="digestif"><span>Œdèmes des lombes</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_pli_cutane" data-section="digestif"><span>Pli cutané abdominal</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_sensibilite" data-section="digestif"><span>Sensibilité : 9 cadrans, points de Mc Burney et Murphy</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_peritoneal" data-section="digestif"><span>Syndrome péritonéal (défense, contracture)</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_hepatomegalie" data-section="digestif"><span>Hépatomégalie</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_splenomegalie" data-section="digestif"><span>Splénomégalie</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_masse" data-section="digestif"><span>Masse</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_orifices" data-section="digestif"><span>Orifices herniaires</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_fosses_lombaires" data-section="digestif"><span>Fosses lombaires</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Percussion</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="dig_matite" data-section="digestif"><span>Matité</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_tympanisme" data-section="digestif"><span>Tympanisme</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_flot" data-section="digestif"><span>Signe du flot</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_clapotement" data-section="digestif"><span>Clapotement gastrique à jeun</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_ebranlement" data-section="digestif"><span>Ébranlement hépatique</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Auscultation</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="dig_bha" data-section="digestif"><span>BHA (bruits hydro-aériques)</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_souffles" data-section="digestif"><span>Souffles hépatiques et abdominaux</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Toucher Rectal</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="dig_tr_marge" data-section="digestif"><span>Marge et canal anal</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_tr_tonus" data-section="digestif"><span>Tonus sphinctérien, réflexe anal</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_tr_rectum" data-section="digestif"><span>Rectum : contenu, parois</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_tr_douglas" data-section="digestif"><span>Douglas</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_tr_prostate" data-section="digestif"><span>Prostate (chez l'homme)</span></label>
+                            <label class="check-item"><input type="checkbox" name="dig_tr_parametres" data-section="digestif"><span>Paramètres (chez la femme)</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Examen Neurologique -->
+        <div class="section-card" data-category="specialise">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">🧠</span>
+                    <h2 class="section-title">Examen Neurologique</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="neurologique">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Signes Fonctionnels</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_cephalees" data-section="neurologique"><span>Céphalées, algies faciales</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_douleurs" data-section="neurologique"><span>Douleurs neuropathiques</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_fonctions_sup" data-section="neurologique"><span>Fonctions supérieures (confusion, langage, mémoire...)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_5sens" data-section="neurologique"><span>5 sens : audition, vision, sensibilité, goût, odorat</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_equilibre" data-section="neurologique"><span>Équilibre, vertiges</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_deficit" data-section="neurologique"><span>Déficit moteur, sensitif</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_mvt_anormaux" data-section="neurologique"><span>Mouvements anormaux</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_marche_diff" data-section="neurologique"><span>Difficultés à la marche, de l'équilibre</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Latéralité</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_lateralite" data-section="neurologique"><span>Droitier / Gaucher</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Inspection : Mouvements Anormaux</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_tremblements" data-section="neurologique"><span>Tremblements</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_dyskinesie" data-section="neurologique"><span>Dyskinésie</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_myoclonie" data-section="neurologique"><span>Myoclonie</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_dystonie" data-section="neurologique"><span>Dystonie</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Force Musculaire</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_amyotrophie" data-section="neurologique"><span>Amyotrophie</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_barre_mingazzini" data-section="neurologique"><span>Manœuvre de Barré et Mingazzini</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_testing" data-section="neurologique"><span>Testing musculaire (cotation 0 à 5)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_tabouret" data-section="neurologique"><span>Signe du tabouret</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>RCP et Tonus</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_rcp" data-section="neurologique"><span>RCP (Réflexe Cutané Plantaire) - Babinski</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_rot" data-section="neurologique"><span>ROT : bicipital, stylo-radial, tricipital, rotulien, achilléen</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_tonus" data-section="neurologique"><span>Tonus musculaire (hypertonie, hypotonie)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Sensibilité</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_sens_superficielle" data-section="neurologique"><span>Sensibilité superficielle (tact, température, douleur)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_sens_profonde" data-section="neurologique"><span>Sensibilité profonde (pallesthésie, arthrokinésie)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Coordination et Équilibre</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_doigt_nez" data-section="neurologique"><span>Épreuve doigt-nez</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_talon_genou" data-section="neurologique"><span>Épreuve talon-genou</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_marionnettes" data-section="neurologique"><span>Épreuve des marionnettes</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_dysdiadococinesie" data-section="neurologique"><span>Recherche dysdiadococinésie</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_romberg" data-section="neurologique"><span>Signe de Romberg</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_marche" data-section="neurologique"><span>Étude de la marche</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Nerfs Crâniens</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_nc1" data-section="neurologique"><span>I - Olfactif (odorat)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc2" data-section="neurologique"><span>II - Optique (vision, champ visuel)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc3" data-section="neurologique"><span>III, IV, VI - Oculomoteurs (motricité oculaire, pupilles)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc5" data-section="neurologique"><span>V - Trijumeau (sensibilité faciale, mastication)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc7" data-section="neurologique"><span>VII - Facial (motricité faciale)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc8" data-section="neurologique"><span>VIII - Vestibulo-cochléaire (audition, équilibre)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc9_10" data-section="neurologique"><span>IX, X - Glosso-pharyngien, Vague (déglutition, voix)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc11" data-section="neurologique"><span>XI - Accessoire (SCM, trapèze)</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_nc12" data-section="neurologique"><span>XII - Hypoglosse (langue)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Signes Méningés</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="neuro_raideur_nuque" data-section="neurologique"><span>Raideur de nuque</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_kernig" data-section="neurologique"><span>Signe de Kernig</span></label>
+                            <label class="check-item"><input type="checkbox" name="neuro_brudzinski" data-section="neurologique"><span>Signe de Brudzinski</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Examen Gynécologique -->
+        <div class="section-card" data-category="specialise">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">👩‍⚕️</span>
+                    <h2 class="section-title">Examen Gynécologique</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="gynecologique">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Introduction et Préparation</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="gyn_lavage_mains" data-section="gynecologique"><span>Lavage des mains</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_presentation" data-section="gynecologique"><span>Présentation (nom et rôle)</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_identite" data-section="gynecologique"><span>Confirmation identité patiente</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_explication" data-section="gynecologique"><span>Explication de l'examen</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_consentement" data-section="gynecologique"><span>Obtention du consentement</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen Abdominal</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="gyn_abd_cicatrices" data-section="gynecologique"><span>Recherche de cicatrices chirurgicales</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_abd_hernies" data-section="gynecologique"><span>Vérification hernies ou voussures</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_abd_masse" data-section="gynecologique"><span>Masse abdominale palpable</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_abd_sensibilite" data-section="gynecologique"><span>Zones de sensibilité ou douleur</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen des Seins</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <h4>Inspection</h4>
+                            <label class="check-item"><input type="checkbox" name="gyn_seins_positions" data-section="gynecologique"><span>Positions variées (face, profil, mains hanches, penchée)</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_seins_taille" data-section="gynecologique"><span>Taille, forme</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_seins_anomalies" data-section="gynecologique"><span>Anomalies (peau d'orange, rougeurs, mamelon, déformation)</span></label>
+
+                            <h4>Palpation</h4>
+                            <label class="check-item"><input type="checkbox" name="gyn_seins_4quadrants" data-section="gynecologique"><span>4 quadrants systématiquement examinés</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_seins_nodules" data-section="gynecologique"><span>Recherche nodules, zones douloureuses, mastose</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_seins_ecoulements" data-section="gynecologique"><span>Écoulements mamelonnaires</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_seins_ganglions" data-section="gynecologique"><span>Palpation aires ganglionnaires (axillaires, sus-clav, cervicales)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen Pelvi-Périnéal</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <h4>Inspection</h4>
+                            <label class="check-item"><input type="checkbox" name="gyn_pelvi_oge" data-section="gynecologique"><span>Aspect OGE : trophicité, pilosité, pigmentation</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_pelvi_sequelles" data-section="gynecologique"><span>Séquelles obstétricales (épisiotomies, déchirures, fistules)</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_pelvi_distance" data-section="gynecologique"><span>Distance ano-vulvaire</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_pelvi_prolapsus" data-section="gynecologique"><span>Effort de toux pour prolapsus</span></label>
+
+                            <h4>Palpation</h4>
+                            <label class="check-item"><input type="checkbox" name="gyn_pelvi_masse" data-section="gynecologique"><span>Masse ou nodule vulvaire</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen au Spéculum</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="gyn_spec_preparation" data-section="gynecologique"><span>Préparation et lubrification du spéculum</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_spec_insertion" data-section="gynecologique"><span>Insertion douce (lames fermées, poignée latérale)</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_spec_ouverture" data-section="gynecologique"><span>Ouverture et verrouillage pour visualiser le col</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_spec_col" data-section="gynecologique"><span>Col : forme, taille, écoulement, glaire cervicale</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_spec_vagin" data-section="gynecologique"><span>Vagin : anomalies visibles</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_spec_retrait" data-section="gynecologique"><span>Retrait en inspectant parois vaginales</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Toucher Vaginal</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="gyn_tv_col" data-section="gynecologique"><span>Col utérin : longueur, mobilité, sensibilité</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_tv_uterus" data-section="gynecologique"><span>Utérus : taille, position, consistance, mobilité</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_tv_annexes" data-section="gynecologique"><span>Annexes : palpation pour masses ou douleurs</span></label>
+                            <label class="check-item"><input type="checkbox" name="gyn_tv_culs_sac" data-section="gynecologique"><span>Culs-de-sac vaginaux</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Examen Ostéo-articulaire -->
+        <div class="section-card" data-category="specialise">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">🦴</span>
+                    <h2 class="section-title">Examen Ostéo-articulaire</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="osteoarticulaire">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Introduction et Inspection</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="osteo_intro" data-section="osteoarticulaire"><span>Introduction de l'examen</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_insp_generale" data-section="osteoarticulaire"><span>Inspection générale (alignement, déformations)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_marche" data-section="osteoarticulaire"><span>Observation de la marche</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>GALS Screen</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="osteo_gals_marche" data-section="osteoarticulaire"><span>Gait (marche)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_gals_membres" data-section="osteoarticulaire"><span>Arms & Legs (membres)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_gals_rachis" data-section="osteoarticulaire"><span>Spine (rachis)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen de l'Épaule</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="osteo_epaule_insp" data-section="osteoarticulaire"><span>Inspection (déformations, atrophie)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_epaule_palp" data-section="osteoarticulaire"><span>Palpation (points douloureux)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_epaule_mobilite" data-section="osteoarticulaire"><span>Mobilité active et passive</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_epaule_tests" data-section="osteoarticulaire"><span>Tests spécifiques (Jobe, Neer, Hawkins...)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen de la Hanche</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="osteo_hanche_insp" data-section="osteoarticulaire"><span>Inspection (boiterie, attitude vicieuse)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_hanche_palp" data-section="osteoarticulaire"><span>Palpation</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_hanche_mobilite" data-section="osteoarticulaire"><span>Mobilité (flexion, extension, abduction, adduction, rotation)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_hanche_tests" data-section="osteoarticulaire"><span>Tests (Thomas, Patrick-FABER, Trendelenburg)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen du Genou</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="osteo_genou_insp" data-section="osteoarticulaire"><span>Inspection (gonflement, déformation, alignement)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_genou_palp" data-section="osteoarticulaire"><span>Palpation (épanchement, chaleur, points douloureux)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_genou_mobilite" data-section="osteoarticulaire"><span>Mobilité (flexion, extension)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_genou_ligaments" data-section="osteoarticulaire"><span>Tests ligamentaires (Lachman, tiroir, valgus/varus)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_genou_menisques" data-section="osteoarticulaire"><span>Tests méniscaux (McMurray, Apley)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Examen du Rachis</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="osteo_rachis_insp" data-section="osteoarticulaire"><span>Inspection (courbures, scoliose)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_rachis_palp" data-section="osteoarticulaire"><span>Palpation (épineuses, para-vertébrales)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_rachis_mobilite" data-section="osteoarticulaire"><span>Mobilité (flexion, extension, latéroflexion, rotation)</span></label>
+                            <label class="check-item"><input type="checkbox" name="osteo_rachis_tests" data-section="osteoarticulaire"><span>Tests radiculaires (Lasègue, Léri)</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Examen Urologique -->
+        <div class="section-card" data-category="specialise">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-wrap">
+                    <span class="section-icon">💧</span>
+                    <h2 class="section-title">Examen Urologique</h2>
+                </div>
+                <div class="section-progress">
+                    <span class="progress-badge" data-section="urologique">0/0</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="check-list">
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Introduction et Inspection</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="uro_intro" data-section="urologique"><span>Introduction de l'examen</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_insp_urines" data-section="urologique"><span>Inspection urines (couleur, aspect)</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_insp_generale" data-section="urologique"><span>Inspection générale, signes généraux</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Fosses Lombaires</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="uro_fl_insp" data-section="urologique"><span>Inspection des fosses lombaires</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_fl_palp" data-section="urologique"><span>Palpation des fosses lombaires</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_fl_percussion" data-section="urologique"><span>Percussion (signe de Giordano)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Hypogastre</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="uro_hypo_insp" data-section="urologique"><span>Inspection hypogastre</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_hypo_globe" data-section="urologique"><span>Recherche de globe vésical</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Organes Génitaux Externes</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="uro_oge_insp" data-section="urologique"><span>Inspection OGE</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_oge_verge" data-section="urologique"><span>Examen de la verge</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_oge_bourses" data-section="urologique"><span>Examen des bourses et testicules</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_oge_epididyme" data-section="urologique"><span>Épididyme et cordon spermatique</span></label>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <div class="sub-section-header" onclick="toggleSubSection(this)">
+                            <h3>Toucher Rectal</h3>
+                            <span class="sub-toggle">▼</span>
+                        </div>
+                        <div class="sub-content open">
+                            <label class="check-item"><input type="checkbox" name="uro_tr_prostate" data-section="urologique"><span>Examen de la prostate (taille, consistance, régularité)</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_tr_sensibilite" data-section="urologique"><span>Sensibilité prostatique</span></label>
+                            <label class="check-item"><input type="checkbox" name="uro_tr_rectum" data-section="urologique"><span>État du rectum</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let allExpanded = false;
+
+    // Initialize checklist
+    function setupChecklist() {
+        loadCheckboxStates();
+        updateAllProgress();
+        
+        // Add event listeners to all checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                saveCheckboxState(this);
+                updateAllProgress();
+            });
+        });
+
+        // Setup search functionality
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+    }
+
+    // Search functionality
+    function handleSearch(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const allItems = document.querySelectorAll('.check-item');
+        const sections = document.querySelectorAll('.section-card');
+
+        if (!searchTerm) {
+            // Reset visibility
+            allItems.forEach(item => item.classList.remove('hidden'));
+            sections.forEach(section => section.classList.remove('hidden'));
+            return;
+        }
+
+        // Hide all items first
+        allItems.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+
+        // Hide/show sections based on visible items
+        sections.forEach(section => {
+            const visibleItems = section.querySelectorAll('.check-item:not(.hidden)');
+            if (visibleItems.length === 0) {
+                section.classList.add('hidden');
+            } else {
+                section.classList.remove('hidden');
+                // Auto-expand sections with matches
+                const body = section.querySelector('.section-body');
+                const icon = section.querySelector('.toggle-icon');
+                body.classList.add('open');
+                icon.classList.add('open');
+            }
+        });
+    }
+
+    // Toggle section open/close
+    function toggleSection(header) {
+        const body = header.nextElementSibling;
+        const icon = header.querySelector('.toggle-icon');
+        
+        body.classList.toggle('open');
+        icon.classList.toggle('open');
+    }
+
+    // Toggle sub-section
+    function toggleSubSection(header) {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('.sub-toggle');
+        
+        content.classList.toggle('open');
+        icon.classList.toggle('open');
+    }
+
+    // Toggle all sections
+    function toggleAllSections() {
+        const expandText = document.getElementById('expandText');
+        const allBodies = document.querySelectorAll('.section-body');
+        const allIcons = document.querySelectorAll('.toggle-icon');
+        const allSubContents = document.querySelectorAll('.sub-content');
+        const allSubToggles = document.querySelectorAll('.sub-toggle');
+
+        allExpanded = !allExpanded;
+
+        if (allExpanded) {
+            allBodies.forEach(body => body.classList.add('open'));
+            allIcons.forEach(icon => icon.classList.add('open'));
+            allSubContents.forEach(content => content.classList.add('open'));
+            allSubToggles.forEach(toggle => toggle.classList.add('open'));
+            expandText.textContent = '📁 Tout Fermer';
+        } else {
+            allBodies.forEach(body => body.classList.remove('open'));
+            allIcons.forEach(icon => icon.classList.remove('open'));
+            allSubContents.forEach(content => content.classList.remove('open'));
+            allSubToggles.forEach(toggle => toggle.classList.remove('open'));
+            expandText.textContent = '📂 Tout Ouvrir';
+        }
+    }
+
+    // Save checkbox state to localStorage
+    function saveCheckboxState(checkbox) {
+        const checkboxStates = JSON.parse(localStorage.getItem('checklistStateDetailed') || '{}');
+        checkboxStates[checkbox.name] = checkbox.checked;
+        localStorage.setItem('checklistStateDetailed', JSON.stringify(checkboxStates));
+    }
+
+    // Load checkbox states from localStorage
+    function loadCheckboxStates() {
+        const checkboxStates = JSON.parse(localStorage.getItem('checklistStateDetailed') || '{}');
+        
+        Object.keys(checkboxStates).forEach(name => {
+            const checkbox = document.querySelector(`input[name="${name}"]`);
+            if (checkbox) {
+                checkbox.checked = checkboxStates[name];
+            }
+        });
+    }
+
+    // Update all progress indicators
+    function updateAllProgress() {
+        updateGlobalProgress();
+        updateSectionProgress();
+        updateCategoryStats();
+    }
+
+    // Update global progress bar and stats
+    function updateGlobalProgress() {
+        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        
+        const total = allCheckboxes.length;
+        const completed = checkedCheckboxes.length;
+        const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+        
+        // Update progress bar
+        document.getElementById('progressBar').style.width = percentage + '%';
+        
+        // Update stats
+        document.getElementById('completedCount').textContent = completed;
+        document.getElementById('totalCount').textContent = total;
+        document.getElementById('percentComplete').textContent = percentage + '%';
+    }
+
+    // Update individual section progress badges
+    function updateSectionProgress() {
+        document.querySelectorAll('[data-section]').forEach(badge => {
+            const sectionName = badge.getAttribute('data-section');
+            const sectionCheckboxes = document.querySelectorAll(`input[data-section="${sectionName}"]`);
+            const checkedInSection = document.querySelectorAll(`input[data-section="${sectionName}"]:checked`);
+            
+            badge.textContent = `${checkedInSection.length}/${sectionCheckboxes.length}`;
+        });
+    }
+
+    // Update category stats
+    function updateCategoryStats() {
+        // General
+        const generalCheckboxes = document.querySelectorAll('[data-section="signes-generaux"]');
+        const generalChecked = document.querySelectorAll('[data-section="signes-generaux"]:checked');
+        const generalPercent = generalCheckboxes.length > 0 ? Math.round((generalChecked.length / generalCheckboxes.length) * 100) : 0;
+        document.getElementById('statGeneral').textContent = generalPercent + '%';
+
+        // Specialisé
+        const specialiseCheckboxes = document.querySelectorAll('[data-section="pulmonaire"], [data-section="digestif"], [data-section="neurologique"], [data-section="gynecologique"], [data-section="osteoarticulaire"], [data-section="urologique"]');
+        const specialiseChecked = document.querySelectorAll('[data-section="pulmonaire"]:checked, [data-section="digestif"]:checked, [data-section="neurologique"]:checked, [data-section="gynecologique"]:checked, [data-section="osteoarticulaire"]:checked, [data-section="urologique"]:checked');
+        const specialisePercent = specialiseCheckboxes.length > 0 ? Math.round((specialiseChecked.length / specialiseCheckboxes.length) * 100) : 0;
+        document.getElementById('statSpecialise').textContent = specialisePercent + '%';
+
+        // Urgence
+        const urgenceCheckboxes = document.querySelectorAll('[data-section="urgences"]');
+        const urgenceChecked = document.querySelectorAll('[data-section="urgences"]:checked');
+        const urgencePercent = urgenceCheckboxes.length > 0 ? Math.round((urgenceChecked.length / urgenceCheckboxes.length) * 100) : 0;
+        document.getElementById('statUrgence').textContent = urgencePercent + '%';
+
+        // Vasculaire
+        const vasculaireCheckboxes = document.querySelectorAll('[data-section="vasculaire"]');
+        const vasculaireChecked = document.querySelectorAll('[data-section="vasculaire"]:checked');
+        const vasculairePercent = vasculaireCheckboxes.length > 0 ? Math.round((vasculaireChecked.length / vasculaireCheckboxes.length) * 100) : 0;
+        document.getElementById('statVasculaire').textContent = vasculairePercent + '%';
+    }
+
+    // Reset all checkboxes
+    function resetAll() {
+        if (confirm('Êtes-vous sûr de vouloir réinitialiser toute la checklist ?')) {
+            localStorage.removeItem('checklistStateDetailed');
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateAllProgress();
+        }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', setupChecklist);
+</script>
+</body>
+</html>
