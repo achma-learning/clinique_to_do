@@ -1,0 +1,10 @@
+under atcd medical observation (clinique_to_do) add this, when a ttt is checked like HTA / DT ou ...
+	Diabète (Type 1 / 2 / gestationnel) depuis 
+	traitment : ADO , metformine ...
+	posologie : mg
+	nbr de prise : 1cp/j , 1 suppositoire , 1 cuillere ...
+	
+under , split these into two "Motif / Service" , "Service" et "Motif"
+
+
+the idea is mixed, have a simple checklist and champs to fill manually, ideally have the checklist displayed first and when checked display the champ for more details
