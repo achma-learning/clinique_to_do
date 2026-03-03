@@ -1,33 +1,40 @@
 # Project Overview
 
-This directory (`clinique_to_do`) contains a web-based interactive medical observation checklist. It serves as a guide for medical practitioners to ensure all essential points are covered during a patient consultation and examination. The project is being structured to provide multiple formats of the checklist and to be expandable with specialized templates.
+`clinique_to_do` is a web-based, interactive medical observation checklist designed for medical practitioners and students. It ensures that essential points are covered during patient consultations and examinations, providing both a quick mobile reference and a comprehensive desktop report generator.
 
-# Key Files
+# Key Components
 
-*   `index.html`: The main entry point for the project. It will provide navigation to the different checklist versions and specialized templates.
-*   `simplechecklist.html`: A simplified, mobile-friendly version of the checklist for quick reference.
-*   `observation.html`: A comprehensive desktop version of the checklist.
-*   `services/`: This directory will contain specialized checklist templates for different medical services (e.g., Cardiology, Neurology). Each specialty will have its own folder containing an HTML template and relevant resource files.
-*   `README.md`: Provides a brief overview of the project's purpose.
-*   `idea.txt`: Outlines the future development ideas for the project.
-*   `plan.txt`: Details the development plan and new file structure.
-*   `main/`: Contains source and reference materials for the checklists.
-*   `backup/`: Contains historical versions and backups of files. **Note:** Do not delete or modify files in this directory. It is for archival purposes.
-*   `ressources/`: Contains various reference materials like PDFs and guides.
+*   **`index.html` (The Hub):** The central entry point. It features:
+    *   Direct links to the Simple and Normal checklists.
+    *   A search bar with autocomplete for specialized specialty-specific templates.
+    *   Resource toggles for external clinical guides.
+*   **`documentation.txt`**: A high-level outline and checklist for building the clinical observation sections (Patient Identity, History, Clinical Exam, Paraclinical, etc.).
+*   **`simplechecklist.html` (Mobile Optimized):** A lightweight, responsive version designed for quick use on mobile devices during ward rounds or bedside examinations.
+*   **`observation.html` (Comprehensive Desktop):** A full-featured version for general practitioners, focusing on detailed clinical observation and report generation. Includes features for data export (DOCX/Google Docs integration).
+
+# Project Structure
+
+*   **`services/`**: Contains specialized checklist templates for various medical specialties.
+    *   Each subfolder (e.g., `ccv/`, `hemato/`, `radio/`) contains a specialty-specific `.html` template and a `ressources [spe]/` folder for related clinical materials.
+*   **`observation_ressources/`**: A structured directory containing the assets and data required for each section of the Normal Checklist (e.g., identity, history, physical exam).
+*   **`simplechecklist_ressources/`**: Source materials, including PDFs and text extractions, used to build and update the simple mobile-optimized checklist.
+*   **`clinXpert/`**: A collection of foundational clinical reference materials, including the "Guide de l'examen clinique", models of clinical observations, and specialized examination notes.
+*   **`other/`**: Contains project documentation, development plans, and auxiliary files:
+    *   `plan.txt`: Development roadmap and structural objectives.
+    *   `idea.txt`: Feature brainstorming and future improvements.
+    *   `documentation old.docx`: Earlier versions of the documentation.
+*   **`backup/`**: Historical versions and archival files for reference. **Note:** Do not modify or delete these files.
+
+# Development Status & Goals
+
+The project is currently focusing on:
+1.  **Mobile Optimization:** Ensuring the `simplechecklist.html` is fully responsive and bedside-ready.
+2.  **Export Features:** Enhancing `observation.html` with better export capabilities (improving DOCX output and Google Docs clipboard integration).
+3.  **Specialty Expansion:** Populating the `services/` directory with templates for all major medical specialties (Cardiology, Neurology, etc.) based on standard clinical guidelines.
+4.  **Index Refinement:** Implementing a robust search and autocomplete system in `index.html` for easy access to specialty templates.
 
 # Usage
 
-*   Open `index.html` in a web browser to access the main navigation page.
-*   From the main page, you can choose:
-    *   **Simple Checklist**: A version optimized for mobile use.
-    *   **Normal Checklist**: A full-featured version for desktop use.
-    *   **Specialized Templates**: A dropdown or search bar will allow you to select a checklist tailored to a specific medical specialty.
-
-# Development Plan
-
-The project will be developed according to the following plan:
-
-1.  **Create `simplechecklist.html`**: A lightweight, responsive checklist for mobile devices.
-2.  **Create `observation.html`**: A full-featured desktop version with enhanced capabilities, including better export options.
-3.  **Develop `index.html`**: This will serve as the central hub, providing access to the simple and normal checklists, and a search/dropdown for specialty templates.
-4.  **Populate `services/spe/`**: Create and organize specialty-specific checklists, starting with existing resources and progressively adding more. Each specialty's folder will contain its HTML file and a dedicated `ressources` subfolder.
+*   **Quick Check:** Use `simplechecklist.html` on a mobile device for a fast bedside reference.
+*   **Full Report:** Use `observation.html` on a desktop to generate a complete clinical observation record.
+*   **Specialty Templates:** Access specific templates via the search/dropdown on `index.html` or by navigating to the corresponding folder in `services/`.

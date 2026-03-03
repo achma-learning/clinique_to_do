@@ -1,0 +1,7 @@
+added# service de
+	drop down menu or auto complete (médecine générale , cardiologie , chirurgie cardio-vasculaire , cardiologie ,
+	voire la liste dans une these pour les services , have a auto complete for services
+
+added# etablissement sanitaire : [] 
+
+add logo : msps , les 12 chu {put les image de logo ici dans github}

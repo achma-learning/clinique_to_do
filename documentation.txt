@@ -1,0 +1,14 @@
+Documentation pour mutuel
+
+Start with baby small steps
+	1.	Faire une descriptif general, de qui fait observation
+		a.	Add – service de … etablissement sanitaire …
+		b.	Add different logo : MSPS / les 12 CHU de maroc /
+	2.	Puis faite identie de patient current good
+	3.	Puis fait histoire de la maladie folder
+	4.	Puis examen clinique folder avec sous folder pour le different examen autres
+	5.	Puis conclusion/clinique folder folder
+	6.	Put hypothese diagno folder
+	7.	Put Bilan paraclinique
+		a.	Biologique : nfs / ionogramme / hemostase / 
+		b.	Radiologique : RX de thorax / mamographie / 

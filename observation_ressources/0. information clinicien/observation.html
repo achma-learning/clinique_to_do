@@ -300,16 +300,6 @@
         <input type="time" name="obs_heure" class="field-input" oninput="updateProgress()">
       </div>
     </div>
-    <div class="fields-row">
-      <div class="field-group">
-        <label class="field-label">Établissement sanitaire</label>
-        <input type="text" name="etablissement_sanitaire" class="field-input" placeholder="Nom de l'établissement" oninput="updateProgress()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Service de</label>
-        <input type="text" name="service_de" class="field-input" placeholder="Nom du service" oninput="updateProgress()">
-      </div>
-    </div>
   </div>
 
   <!-- ═══ 1. IDENTITÉ ═══ -->
@@ -2061,8 +2051,6 @@ function buildObservationText() {
   lines.push('OBSERVATION MÉDICALE');
   lines.push(`Générée le : ${date}`);
   if(v('clinicien_nom')) lines.push(`Clinicien : ${v('clinicien_nom')}${v('clinicien_fonction')?' ('+v('clinicien_fonction')+')':''}`);
-  if(v('etablissement_sanitaire')) lines.push(`Établissement sanitaire : ${v('etablissement_sanitaire')}`);
-  if(v('service_de')) lines.push(`Service de : ${v('service_de')}`);
   if(v('obs_date')) lines.push(`Date : ${v('obs_date')}${v('obs_heure')?' à '+v('obs_heure'):''}`);
 
   h1('I. Identité du Patient');
@@ -2239,9 +2227,7 @@ async function generateDocx() {
     // Title
     children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:100},children:[new TextRun({text:'OBSERVATION MÉDICALE',bold:true,size:40,color:'0d3d72',font:'Arial'})]}));
     children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:200},children:[new TextRun({text:`Générée le : ${date}`,italics:true,color:'666666',size:20})]}));
-    if(v('clinicien_nom')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:100},children:[new TextRun({text:`${v('clinicien_nom')} — ${v('clinicien_fonction')||''}`,bold:true,size:20})]}));
-    if(v('etablissement_sanitaire')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:100},children:[new TextRun({text:`Établissement : ${v('etablissement_sanitaire')}`,size:20})]}));
-    if(v('service_de')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:400},children:[new TextRun({text:`Service : ${v('service_de')}`,size:20})]}));
+    if(v('clinicien_nom')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:400},children:[new TextRun({text:`${v('clinicien_nom')} — ${v('clinicien_fonction')||''}`,bold:true,size:20})]}));
 
     // I
     addH1('I. Identité du Patient');
