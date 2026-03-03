@@ -1,0 +1,20 @@
+when check box is checked , display this new drop down menu along with others :
+
+Si le diabète de type 1, le diabète de type 2 et le diabète gestationnel sont les formes les plus courantes de diagnostic du diabète, d'autres types de diabète sont tout aussi importants. Environ 1,5 à 2 % des personnes vivent avec des formes rares de diabète, qui peuvent être regroupées en neuf catégories.
+
+Bien que moins fréquents, ces types de diabète représentent toujours une menace importante pour la santé. En les comprenant, nous pouvons mieux soutenir les personnes touchées par cette maladie.
+
+Autres formes de diabète
+Il est important de noter que ces catégories peuvent ne pas être exhaustives ou universellement reconnues, et qu'il peut y avoir des chevauchements ou des variations dans la façon dont les différents experts classent le diabète.
+
+Le syndrome d'Alström est une condition génétique rare et incurable qui peut provoquer un diabète de type 2.
+Le diabète insipide se produit lorsque les reins ne peuvent pas retenir l'eau. Il se traduit par une soif extrême et des mictions fréquentes, mais n'affecte pas la glycémie.
+LADA (diabète auto-immun latent chez l'adulte) est une forme de diabète de type 1 qui se développe à l'âge adulte et progresse plus lentement que le diabète de type 1. En savoir plus sur le LADA.
+MODY (Maturity-Onset Diabetes of the Young - Diabète de l'âge mûr chez les jeunes) est une forme génétique rare de diabète qui se développe généralement avant l'âge de 25 ans à la suite de mutations génétiques.
+Le diabète néonatal survient au cours des six premiers mois de la vie. Il est similaire au diabète de type 1 chez les enfants de plus de six mois.
+Le diabète secondaire se développe en raison d'autres conditions médicales ou de médicaments, tels que la fibrose kystique, la pancréatite ou l'utilisation de corticostéroïdes.
+Le diabète induit par les stéroïdes peut se développer chez certaines personnes qui prennent des stéroïdes et est plus fréquent chez les personnes présentant un risque élevé de diabète de type 2.
+Le diabète de type 3c décrit un lien possible entre la maladie d'Alzheimer et la résistance à l'insuline, suggérant que la maladie d'Alzheimer pourrait être une forme de diabète. Cependant, cette forme de diabète n'est pas officiellement reconnue.
+Le syndrome de Wolfram Le syndrome de Wolfram est une maladie génétique rare et incurable qui provoque un diabète sucré, un diabète insipide, une atrophie optique et une surdité. Cette maladie est également connue sous le nom de DIDMOAD.
+
+source : https://idf.org/fr/about-diabetes/types-of-diabetes/rare-forms-of-diabetes/
