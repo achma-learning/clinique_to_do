@@ -380,7 +380,7 @@
         <select name="couverture_sociale" class="field-input" onchange="updateProgress()">
           <option value="">—</option>
           <optgroup label="AMO – Couverture de base">
-			<option value="AMO">AMO</option>
+            <option value="AMO">AMO</option>
             <option value="AMO CNSS (secteur privé)">AMO CNSS (secteur privé)</option>
             <option value="AMO CNOPS (secteur public)">AMO CNOPS (secteur public)</option>
             <option value="AMO Achamil (TNS)">AMO Achamil (TNS)</option>
@@ -392,7 +392,7 @@
           </optgroup>
           <optgroup label="Mutuelles">
             <option value="MGPAP">MGPAP - Mutuelle Générale du Personnel des Administrations publiques</option>
-            <option value="MGEN">MGEN - Mutuelle Générale de l'Education Nationale</option>
+            <option value="MGEN">MGEN - Mutuelle Générale de l'Éducation Nationale</option>
             <option value="MGPTT">MGPTT - Mutuelle Générale des Postes et Télécommunications</option>
             <option value="Autres mutuelles sectorielles">Autres mutuelles sectorielles</option>
           </optgroup>
@@ -2004,7 +2004,7 @@ function updateProgress() {
   document.querySelectorAll('input[type="checkbox"]').forEach(el => { total++; if(el.checked) filled++; });
   const pct = total ? Math.min(100, Math.round((filled/total)*100)) : 0;
   document.getElementById('progressBar').style.width = pct+'%';
-  [1,2,3,4,5,6,7,'5-10'].forEach(n => updateBadge(n));
+  [1,2,3,4,5,6,7].forEach(n => updateBadge(n));
 }
 function updateBadge(n) {
   const badge = document.getElementById('badge-'+n);
