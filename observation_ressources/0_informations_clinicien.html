@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>👨‍⚕️ Informations du Clinicien</title>
+<style>
+  :root {
+    --blue: #1a5fa8;
+    --blue-light: #e8f0fc;
+    --blue-dark: #0d3d72;
+    --green: #0a7c3e;
+    --red: #c0392b;
+    --orange: #e67e22;
+    --gray: #6c757d;
+    --border: #dee2e6;
+    --bg: #ffffff;
+    --section-bg: #f8faff;
+    --text: #212529;
+    --subtext: #495057;
+    --radius: 12px;
+    --shadow: 0 2px 8px rgba(26,95,168,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 20px; padding-top: 80px; }
+  
+  .floating-island {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 95%;
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .floating-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 0 5px;
+  }
+  .floating-island a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.85em;
+      font-weight: 500;
+      transition: background-color 0.2s ease-in-out;
+      white-space: nowrap;
+  }
+  .floating-island a:not(.home-button):hover {
+      background-color: rgba(255, 255, 255, 0.15);
+  }
+  .home-button {
+      background-color: #007bff;
+      font-size: 1.4em !important;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50% !important;
+      padding: 0 !important;
+  }
+  .home-button:hover {
+      background-color: #0056b3 !important;
+  }
+  .island-center {
+    text-align: center;
+    color: white;
+  }
+  .island-center h1 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    border: 0;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .island-center p {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin: 0;
+  }
+  
+  .container { max-width: 780px; margin: 0 auto; padding: 14px 12px; }
+  .clinician-card { background: linear-gradient(135deg, #f0f4ff, #e8f0fc); border: 1.5px solid #b0c8e8; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+  .clinician-card .clinician-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--blue); margin-bottom: 12px; }
+  
+  .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field-group { margin-bottom: 14px; }
+  .field-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 5px; }
+  .field-input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text); background: #fff; transition: border-color 0.2s; }
+  .field-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,95,168,0.12); }
+  select.field-input { cursor: pointer; }
+  
+  @media (max-width: 480px) { .fields-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="floating-island">
+    <div class="floating-buttons">
+        <a href="#">ClinXpert PDF</a>
+        <a href="#">ClinXpert Word</a>
+        <a href="#">ClinXpert</a>
+    </div>
+    <div class="island-center">
+        <h1>📋 Observation Médicale</h1>
+        <p>Médecine Générale · Saisie · Checklist · Export Word</p>
+    </div>
+    <a href="#" class="home-button">🏠</a>
+</div>
+
+<div class="container">
+  <div class="clinician-card">
+    <div class="clinician-title">👨‍⚕️ Informations du Clinicien</div>
+    <div class="fields-row">
+      <div class="field-group">
+        <label class="field-label">Nom du clinicien</label>
+        <input type="text" name="clinicien_nom" class="field-input" placeholder="Dr. Nom Prénom">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Fonction</label>
+        <select name="clinicien_fonction" class="field-input">
+          <option value="">—</option>
+          <option value="Externe">Externe</option>
+          <option value="Interne">Interne</option>
+          <option value="Résident">Résident</option>
+          <option value="Médecin généraliste">Médecin généraliste</option>
+          <option value="Médecin spécialiste">Médecin spécialiste</option>
+          <option value="Professeur assistant">Professeur assistant</option>
+          <option value="Professeur agrégé">Professeur agrégé</option>
+          <option value="Professeur de l'enseignement supérieur">Professeur de l'enseignement supérieur</option>
+        </select>
+      </div>
+    </div>
+    <div class="fields-row">
+      <div class="field-group">
+        <label class="field-label">Date de l'observation</label>
+        <input type="date" name="obs_date" class="field-input">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Heure</label>
+        <input type="time" name="obs_heure" class="field-input">
+      </div>
+    </div>
+    <div class="fields-row">
+      <div class="field-group">
+        <label class="field-label">Établissement sanitaire</label>
+        <input type="text" name="etablissement_sanitaire" class="field-input" placeholder="Nom de l'établissement">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Service de</label>
+        <input type="text" name="service_de" class="field-input" placeholder="Nom du service">
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

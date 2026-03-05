@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>📋 Identité du Patient</title>
+<style>
+  :root {
+    --blue: #1a5fa8;
+    --blue-light: #e8f0fc;
+    --blue-dark: #0d3d72;
+    --green: #0a7c3e;
+    --orange: #e67e22;
+    --gray: #6c757d;
+    --border: #dee2e6;
+    --bg: #ffffff;
+    --section-bg: #f8faff;
+    --text: #212529;
+    --subtext: #495057;
+    --radius: 12px;
+    --shadow: 0 2px 8px rgba(26,95,168,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 40px; padding-top: 20px; }
+  
+  .floating-island {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 95%;
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .floating-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 0 5px;
+  }
+  .floating-island a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.85em;
+      font-weight: 500;
+      transition: background-color 0.2s ease-in-out;
+      white-space: nowrap;
+  }
+  .floating-island a:not(.home-button):hover {
+      background-color: rgba(255, 255, 255, 0.15);
+  }
+  .home-button {
+      background-color: #007bff;
+      font-size: 1.4em !important;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50% !important;
+      padding: 0 !important;
+  }
+  .home-button:hover {
+      background-color: #0056b3 !important;
+  }
+  .island-center {
+    text-align: center;
+    color: white;
+  }
+  .island-center h1 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    border: 0;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .island-center p {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 14px 12px; }
+
+  .section-card { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; border: 1px solid var(--border); overflow: hidden; }
+  .section-header { display: flex; align-items: center; padding: 16px 18px; background: var(--section-bg); gap: 12px; }
+  .section-num { background: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  .section-title { flex: 1; font-weight: 600; font-size: 1rem; color: var(--blue-dark); }
+  .section-subtitle { font-size: 0.78rem; color: var(--gray); font-weight: 400; }
+  .section-body { padding: 18px; border-top: 1px solid var(--border); }
+
+  .subsection { margin-top: 16px; padding-left: 14px; border-left: 3px solid var(--blue); }
+  .subsection-title { font-size: 0.88rem; font-weight: 700; color: var(--blue); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+  .field-group { margin-bottom: 14px; }
+  .field-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 5px; }
+  .field-input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text); background: #fff; transition: border-color 0.2s; -webkit-appearance: none; }
+  .field-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,95,168,0.12); }
+  select.field-input { cursor: pointer; }
+
+  .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .fields-row { grid-template-columns: 1fr; } }
+
+  .divider { border: none; border-top: 1px dashed var(--border); margin: 14px 0; }
+
+  .ecog-preview { display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+  .ecog-0 { background: #d4edda; color: #155724; }
+  .ecog-1 { background: #d1ecf1; color: #0c5460; }
+  .ecog-2 { background: #fff3cd; color: #856404; }
+  .ecog-3 { background: #fde8e8; color: #721c24; }
+  .ecog-4 { background: #f5c6cb; color: #491217; }
+  .ecog-5 { background: #343a40; color: #ffffff; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Identité du Patient<div class="section-subtitle">Anamnèse administrative</div></div>
+    </div>
+    <div class="section-body">
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Nom et Prénom</label>
+          <input type="text" name="nom_prenom" class="field-input" placeholder="Nom Prénom">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Date de naissance</label>
+          <input type="date" name="date_naissance" class="field-input" oninput="calcAgeFromDOB()">
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Âge <span style="color:#888;font-weight:400;">(auto-calculé si DDN renseignée)</span></label>
+          <input type="text" name="age" id="age_field" class="field-input" placeholder="ex: 45 ans" oninput="calcDOBFromAge()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Sexe</label>
+          <select name="sexe" class="field-input">
+            <option value="">—</option>
+            <option value="Masculin">Masculin</option>
+            <option value="Féminin">Féminin</option>
+          </select>
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Situation familiale</label>
+          <select name="situation_familiale" class="field-input">
+            <option value="">—</option>
+            <option value="Célibataire">Célibataire</option>
+            <option value="Marié(e)">Marié(e)</option>
+            <option value="Divorcé(e)">Divorcé(e)</option>
+            <option value="Veuf(ve)">Veuf(ve)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Nombre d'enfants</label>
+          <input type="number" name="nb_enfants" class="field-input" placeholder="0" min="0">
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Originaire de</label>
+          <input type="text" name="originaire_de" class="field-input" placeholder="Ville / région d'origine">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Résidant à</label>
+          <input type="text" name="residant_a" class="field-input" placeholder="Ville / adresse actuelle">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Profession</label>
+        <input type="text" name="profession" class="field-input" placeholder="Profession actuelle">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Couverture sociale / Mutuelle</label>
+        <select name="couverture_sociale" class="field-input">
+          <option value="">—</option>
+          <optgroup label="AMO – Couverture de base">
+            <option value="AMO">AMO</option>
+            <option value="AMO CNSS (secteur privé)">AMO CNSS (secteur privé)</option>
+            <option value="AMO CNOPS (secteur public)">AMO CNOPS (secteur public)</option>
+            <option value="AMO Achamil (TNS)">AMO Achamil (TNS)</option>
+            <option value="AMO Tadamon (ex-RAMED)">AMO Tadamon (ex-RAMED)</option>
+            <option value="AMO Étudiants">AMO Étudiants</option>
+          </optgroup>
+          <optgroup label="Régimes spécifiques">
+            <option value="FAR – Régime Militaire">FAR – Régime Militaire</option>
+          </optgroup>
+          <optgroup label="Mutuelles">
+            <option value="MGPAP">MGPAP - Mutuelle Générale du Personnel des Administrations publiques</option>
+            <option value="MGEN">MGEN - Mutuelle Générale de l'Éducation Nationale</option>
+            <option value="MGPTT">MGPTT - Mutuelle Générale des Postes et Télécommunications</option>
+            <option value="Autres mutuelles sectorielles">Autres mutuelles sectorielles</option>
+          </optgroup>
+          <optgroup label="Assurances privées">
+            <option value="SANLAM">SANLAM</option><option value="AXA">AXA</option>
+            <option value="Allianz">Allianz</option><option value="Wafa Assurance">Wafa Assurance</option>
+            <option value="AtlantaSanad">AtlantaSanad</option><option value="RMA">RMA</option>
+          </optgroup>
+          <option value="Aucune">Aucune</option>
+        </select>
+      </div>
+
+      <hr class="divider">
+
+      <div class="subsection">
+        <div class="subsection-title">📞 Contacts</div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">Type de contact</label>
+            <select name="contact_type" class="field-input">
+              <option value="">—</option>
+              <option value="Patient lui-même">Patient lui-même</option>
+              <option value="Famille">Famille</option>
+              <option value="Contact d'urgence">Contact d'urgence</option>
+              <option value="Tuteur légal">Tuteur légal</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Numéro de contact / urgence</label>
+            <input type="tel" name="contact_numero" class="field-input" placeholder="+212 6XX XXX XXX">
+          </div>
+        </div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">Personne de confiance – Nom</label>
+            <input type="text" name="confiance_nom" class="field-input" placeholder="Nom de la personne de confiance">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Personne de confiance – Contact</label>
+            <input type="tel" name="confiance_contact" class="field-input" placeholder="+212 6XX XXX XXX">
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Autonomie</label>
+          <select name="autonomie" class="field-input">
+            <option value="">—</option>
+            <option value="Totalement autonome">Totalement autonome</option>
+            <option value="Partiellement autonome">Partiellement autonome</option>
+            <option value="Dépendant(e)">Dépendant(e)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">PS OMS / Score ECOG</label>
+          <select name="ecog_score" class="field-input" onchange="showEcog()">
+            <option value="">—</option>
+            <option value="0">OMS 0 – Aucune limitation, état fonctionnel identique à celui pré-morbide</option>
+            <option value="1">OMS 1 – Restriction aux activités physiques, mais ambulant et capable d'effectuer des travaux légers</option>
+            <option value="2">OMS 2 – Ambulant, capable de prendre soin de sa personne, incapable de travailler, actif &gt;50% de la journée</option>
+            <option value="3">OMS 3 – Capacité très limitée de prendre soin de sa personne ; confiné au lit ou fauteuil &gt;50% de la journée</option>
+            <option value="4">OMS 4 – Incapacité totale ; ne peut prendre soin de sa personne ; confiné au fauteuil ou au lit</option>
+            <option value="5">OMS 5 – Décédé</option>
+          </select>
+          <div id="ecog_preview" style="margin-top:6px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Age / DOB auto-calc
+let ageUpdating = false;
+function calcAgeFromDOB() {
+  if (ageUpdating) return;
+  const dob = document.querySelector('[name="date_naissance"]').value;
+  if (!dob) return;
+  const today = new Date(), birth = new Date(dob);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  ageUpdating = true;
+  document.getElementById('age_field').value = age + ' ans';
+  ageUpdating = false;
+}
+function calcDOBFromAge() {
+  if (ageUpdating) return;
+  const ageVal = document.getElementById('age_field').value.replace(/\D/g,'').trim();
+  if (!ageVal) return;
+  const yearEst = new Date().getFullYear() - parseInt(ageVal);
+  const dobEl = document.querySelector('[name="date_naissance"]');
+  if (!dobEl.value) {
+    ageUpdating = true;
+    dobEl.value = `${yearEst}-01-01`;
+    ageUpdating = false;
+  }
+}
+
+// ECOG preview
+function showEcog() {
+  const val = document.querySelector('[name="ecog_score"]').value;
+  const el = document.getElementById('ecog_preview');
+  if (!val) { el.innerHTML = ''; return; }
+  const labels = { '0':'OMS 0 — Aucune limitation, état pré-morbide','1':'OMS 1 — Ambulant, travaux légers possibles','2':'OMS 2 — Ambulant, incapable de travailler','3':'OMS 3 — Confiné au lit/fauteuil >50% du temps','4':'OMS 4 — Incapacité totale, confiné au lit/fauteuil','5':'OMS 5 — Décédé' };
+  el.innerHTML = `<span class="ecog-preview ecog-${val}">${labels[val]}</span>`;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>📋 Histoire de la Maladie</title>
+<style>
+  :root {
+    --blue: #1a5fa8;
+    --blue-light: #e8f0fc;
+    --blue-dark: #0d3d72;
+    --red: #c0392b;
+    --gray: #6c757d;
+    --border: #dee2e6;
+    --bg: #ffffff;
+    --section-bg: #f8faff;
+    --text: #212529;
+    --subtext: #495057;
+    --radius: 12px;
+    --shadow: 0 2px 8px rgba(26,95,168,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 40px; padding-top: 20px; }
+  
+  .floating-island {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 95%;
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .floating-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 0 5px;
+  }
+  .floating-island a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.85em;
+      font-weight: 500;
+      transition: background-color 0.2s ease-in-out;
+      white-space: nowrap;
+  }
+  .floating-island a:not(.home-button):hover {
+      background-color: rgba(255, 255, 255, 0.15);
+  }
+  .home-button {
+      background-color: #007bff;
+      font-size: 1.4em !important;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50% !important;
+      padding: 0 !important;
+  }
+  .home-button:hover {
+      background-color: #0056b3 !important;
+  }
+  .island-center {
+    text-align: center;
+    color: white;
+  }
+  .island-center h1 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    border: 0;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .island-center p {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 14px 12px; }
+
+  .section-card { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; border: 1px solid var(--border); overflow: hidden; }
+  .section-header { display: flex; align-items: center; padding: 16px 18px; background: var(--section-bg); gap: 12px; }
+  .section-num { background: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  .section-title { flex: 1; font-weight: 600; font-size: 1rem; color: var(--blue-dark); }
+  .section-subtitle { font-size: 0.78rem; color: var(--gray); font-weight: 400; }
+  .section-body { padding: 18px; border-top: 1px solid var(--border); }
+
+  .subsection { margin-top: 16px; padding-left: 14px; border-left: 3px solid var(--blue); }
+  .subsection-title { font-size: 0.88rem; font-weight: 700; color: var(--blue); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .subsubsection { margin-top: 10px; margin-left: 10px; padding-left: 10px; border-left: 2px solid #b0c8e8; }
+  .subsubsection-title { font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 8px; }
+
+  .field-group { margin-bottom: 14px; }
+  .field-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 5px; }
+  .field-input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text); background: #fff; transition: border-color 0.2s; -webkit-appearance: none; }
+  .field-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,95,168,0.12); }
+  textarea.field-input { resize: vertical; min-height: 70px; font-family: inherit; }
+  select.field-input { cursor: pointer; }
+
+  .check-list { display: flex; flex-direction: column; gap: 4px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent; min-height: 44px; }
+  .check-item:hover { background: var(--blue-light); }
+  .check-item input[type="checkbox"] { width: 24px; height: 24px; min-width: 24px; border-radius: 5px; border: 2px solid #aaa; cursor: pointer; margin-top: 1px; accent-color: var(--blue); flex-shrink: 0; }
+  .check-item span { font-size: 0.93rem; color: var(--text); line-height: 1.45; padding-top: 2px; }
+
+  .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .fields-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Histoire de la Maladie<div class="section-subtitle">HDM — Chronologie & SITI FADMA</div></div>
+    </div>
+    <div class="section-body">
+      <div class="field-group">
+        <label class="field-label">Chronologie / Début</label>
+        <textarea name="hdM_chronologie" class="field-input" placeholder="Ex: depuis 3 semaines, apparu brutalement le…"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Mode d'installation</label>
+        <select name="hdM_mode_installation" class="field-input">
+          <option value="">—</option>
+          <option value="Brutal">Brutal (quelques minutes)</option>
+          <option value="Progressif">Progressif (heures à jours)</option>
+          <option value="Insidieux">Insidieux (semaines à mois)</option>
+        </select>
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">Caractérisation : SITI FADMA</div>
+        <div class="subsubsection"><div class="subsubsection-title">S – Siège</div>
+          <input type="text" name="hdM_siege" class="field-input" placeholder="Localisation anatomique précise"></div>
+        <div class="subsubsection"><div class="subsubsection-title">I – Irradiation</div>
+          <input type="text" name="hdM_irradiation" class="field-input" placeholder="Vers quelle région ?"></div>
+        <div class="subsubsection"><div class="subsubsection-title">T – Type</div>
+          <input type="text" name="hdM_type" class="field-input" placeholder="Brûlure, torsion, pesanteur, crampe…"></div>
+        <div class="subsubsection"><div class="subsubsection-title">I – Impact / Intensité</div>
+          <div class="fields-row">
+            <input type="text" name="hdM_impact" class="field-input" placeholder="Retentissement sur la vie">
+            <input type="number" name="hdM_eva" class="field-input" placeholder="EVA /10" min="0" max="10">
+          </div></div>
+        <div class="subsubsection"><div class="subsubsection-title">F – Facteurs aggravants / calmants</div>
+          <input type="text" name="hdM_facteurs_aggravants" class="field-input" placeholder="Ce qui aggrave / soulage"></div>
+        <div class="subsubsection"><div class="subsubsection-title">A – Accalmie</div>
+          <input type="text" name="hdM_accalmie" class="field-input" placeholder="Périodes de rémission"></div>
+        <div class="subsubsection"><div class="subsubsection-title">D – Durée / Rythme</div>
+          <input type="text" name="hdM_duree_rythme" class="field-input" placeholder="Durée des crises, fréquence…"></div>
+        <div class="subsubsection"><div class="subsubsection-title">M – Mode évolutif</div>
+          <select name="hdM_mode_evolutif" class="field-input">
+            <option value="">—</option>
+            <option value="Stable">Stable</option>
+            <option value="Régressif">Régressif</option>
+            <option value="Progressif (s'aggrave)">Progressif (s'aggrave)</option>
+            <option value="Récidivant">Récidivant</option>
+            <option value="Ondulatoire">Ondulatoire</option>
+          </select></div>
+        <div class="subsubsection"><div class="subsubsection-title">A – Amélioration sous traitement</div>
+          <input type="text" name="hdM_evolution_traitement" class="field-input" placeholder="Réponse aux traitements antérieurs"></div>
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">Signes généraux (3A + Fièvre)</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="hdM_asthenie"><span>Asthénie</span></label>
+          <label class="check-item"><input type="checkbox" name="hdM_anorexie"><span>Anorexie</span></label>
+          <label class="check-item"><input type="checkbox" name="hdM_fievre"><span>Fièvre</span></label>
+          <label class="check-item"><input type="checkbox" name="hdM_frissons"><span>Frissons</span></label>
+          <label class="check-item"><input type="checkbox" name="hdM_sueurs_nocturnes"><span>Sueurs nocturnes</span></label>
+        </div>
+        <div class="field-group" style="margin-top:10px;">
+          <label class="field-label">Amaigrissement</label>
+          <input type="text" name="hdM_amaigrissement" class="field-input" placeholder="Ex: −5 kg en 2 mois">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Signes associés</label>
+        <textarea name="hdM_signes_associes" class="field-input" placeholder="Nausées, vomissements, dyspnée, palpitations…"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Signes négatifs importants</label>
+        <textarea name="hdM_signes_negatifs" class="field-input" placeholder="Signes absents mais pertinents à noter…"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

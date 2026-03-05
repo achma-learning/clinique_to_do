@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>📋 Examen Clinique</title>
+<style>
+  :root {
+    --blue: #1a5fa8;
+    --blue-light: #e8f0fc;
+    --blue-dark: #0d3d72;
+    --green: #0a7c3e;
+    --gray: #6c757d;
+    --border: #dee2e6;
+    --bg: #ffffff;
+    --section-bg: #f8faff;
+    --text: #212529;
+    --subtext: #495057;
+    --radius: 12px;
+    --shadow: 0 2px 8px rgba(26,95,168,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 40px; padding-top: 20px; }
+  
+  .floating-island {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 95%;
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .floating-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 0 5px;
+  }
+  .floating-island a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.85em;
+      font-weight: 500;
+      transition: background-color 0.2s ease-in-out;
+      white-space: nowrap;
+  }
+  .floating-island a:not(.home-button):hover {
+      background-color: rgba(255, 255, 255, 0.15);
+  }
+  .home-button {
+      background-color: #007bff;
+      font-size: 1.4em !important;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50% !important;
+      padding: 0 !important;
+  }
+  .home-button:hover {
+      background-color: #0056b3 !important;
+  }
+  .island-center {
+    text-align: center;
+    color: white;
+  }
+  .island-center h1 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    border: 0;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .island-center p {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 14px 12px; }
+
+  .section-card { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; border: 1px solid var(--border); overflow: hidden; }
+  .section-header { display: flex; align-items: center; padding: 16px 18px; background: var(--section-bg); gap: 12px; }
+  .section-num { background: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  .section-title { flex: 1; font-weight: 600; font-size: 1rem; color: var(--blue-dark); }
+  .section-subtitle { font-size: 0.78rem; color: var(--gray); font-weight: 400; }
+  .section-body { padding: 18px; border-top: 1px solid var(--border); }
+
+  .subsection { margin-top: 16px; padding-left: 14px; border-left: 3px solid var(--blue); }
+  .subsection-title { font-size: 0.88rem; font-weight: 700; color: var(--blue); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .subsubsection { margin-top: 10px; margin-left: 10px; padding-left: 10px; border-left: 2px solid #b0c8e8; }
+  .subsubsection-title { font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 8px; }
+
+  .field-group { margin-bottom: 14px; }
+  .field-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 5px; }
+  .field-input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text); background: #fff; transition: border-color 0.2s; -webkit-appearance: none; }
+  .field-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,95,168,0.12); }
+  textarea.field-input { resize: vertical; min-height: 70px; font-family: inherit; }
+  .field-input[readonly] { background: #f0f4ff; color: var(--gray); }
+
+  .check-list { display: flex; flex-direction: column; gap: 4px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent; min-height: 44px; }
+  .check-item:hover { background: var(--blue-light); }
+  .check-item input[type="checkbox"] { width: 24px; height: 24px; min-width: 24px; border-radius: 5px; border: 2px solid #aaa; cursor: pointer; margin-top: 1px; accent-color: var(--blue); flex-shrink: 0; }
+  .check-item span { font-size: 0.93rem; color: var(--text); line-height: 1.45; padding-top: 2px; }
+  .check-item input[type="checkbox"]:checked ~ span { color: var(--green); font-weight: 500; }
+
+  .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .fields-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .fields-row, .fields-row-3 { grid-template-columns: 1fr 1fr; } }
+
+  .divider { border: none; border-top: 1px dashed var(--border); margin: 14px 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">Examen Clinique<div class="section-subtitle">Examen physique complet</div></div>
+    </div>
+    <div class="section-body">
+
+      <!-- 5.1 Examen Général/Vital -->
+      <div class="subsection">
+        <div class="subsection-title">5.1 — Examen Général/Vital & Constantes</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="eg_conscient_oriente"><span>Conscient et orienté dans le temps et l'espace</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_stable_hemo_respi"><span>Stable sur le plan hémodynamique et respiratoire</span></label>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Conjonctif normocoloré ?</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="eg_pas_paleur"><span>Pas de pâleur cutanéo-muqueuse</span></label>
+            <label class="check-item"><input type="checkbox" name="eg_pas_ictere"><span>Pas d'ictère</span></label>
+            <label class="check-item"><input type="checkbox" name="eg_pas_cyanose_generale"><span>Pas de cyanose</span></label>
+          </div>
+        </div>
+        <div class="check-list" style="margin-top:4px;">
+          <label class="check-item"><input type="checkbox" name="eg_pas_deshydratation"><span>Pas de signe de déshydratation (pli cutané, TRC < 3s)</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_pas_signes_choc"><span>Pas de signes de choc (marbrures, froideur extrémités)</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_pas_denutrition"><span>Pas de signe de dénutrition</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_pas_omi"><span>Pas d'œdème des membres inférieurs (OMI)</span></label>
+        </div>
+        <hr class="divider">
+        <div class="subsubsection-title" style="margin:10px 0 8px;">Constantes vitales</div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">GCS (/15)</label>
+            <input type="number" name="eg_gcs" class="field-input" placeholder="15" min="3" max="15">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Température (°C)</label>
+            <input type="number" name="eg_temp" class="field-input" placeholder="37.0" step="0.1">
+          </div>
+        </div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">TA MS droit (mmHg)</label>
+            <input type="text" name="eg_ta_droit" class="field-input" placeholder="120/80">
+          </div>
+          <div class="field-group">
+            <label class="field-label">TA MS gauche (mmHg)</label>
+            <input type="text" name="eg_ta_gauche" class="field-input" placeholder="120/80">
+          </div>
+        </div>
+        <div class="fields-row-3">
+          <div class="field-group"><label class="field-label">FC (bpm)</label><input type="number" name="eg_fc" class="field-input" placeholder="75"></div>
+          <div class="field-group"><label class="field-label">FR (cpm)</label><input type="number" name="eg_fr" class="field-input" placeholder="16"></div>
+          <div class="field-group"><label class="field-label">SpO₂ (%) à l'Air Ambiant</label><input type="number" name="eg_spo2" class="field-input" placeholder="98"></div>
+        </div>
+        <div class="fields-row-3">
+          <div class="field-group"><label class="field-label">Poids (kg)</label><input type="number" name="eg_poids" class="field-input" placeholder="70" oninput="calcIMC()"></div>
+          <div class="field-group"><label class="field-label">Taille (cm)</label><input type="number" name="eg_taille" class="field-input" placeholder="170" oninput="calcIMC()"></div>
+          <div class="field-group"><label class="field-label">IMC</label><input type="text" name="eg_imc" class="field-input" readonly id="imc_display"></div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Tour de taille (cm)</label>
+          <input type="number" name="eg_tour_taille" class="field-input" placeholder="Normal: <80 ♀, <94 ♂">
+        </div>
+      </div>
+
+      <!-- 5.2 Examen Ganglionnaire -->
+      <div class="subsection">
+        <div class="subsection-title">5.2 — Examen Ganglionnaire</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_gang_aires_libres"><span>Les aires ganglionnaires sont libres</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_gang_sans_anomalie"><span>L'examen est sans anomalie aux niveaux des différentes aires</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_gang_troisier"><span>Ganglion de Troisier absent (sus-claviculaire gauche)</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Adénopathies (si présentes)</label>
+          <textarea name="ep_gang_details" class="field-input" placeholder="Site précis, taille en cm, contours, adhérence aux plans profonds…"></textarea>
+        </div>
+      </div>
+
+      <!-- 5.3 Examen Abdominal -->
+      <div class="subsection">
+        <div class="subsection-title">5.3 — Examen Abdominal</div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">👀 Inspection</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="abd_resp_normale"><span>Respiration abdominale normale</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_deformation"><span>Pas de déformation ni distension abdominale</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_cicatrices"><span>Pas de cicatrices chirurgicales</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">🖐️ Palpation</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="abd_souple_depressible"><span>Abdomen souple et dépressible</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_defense_contracture"><span>Pas de défense, contracture ni sensibilité localisée</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_organomegalie"><span>Pas d'organomégalie (SPM, HPM)</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.4 Cardiaque -->
+      <div class="subsection">
+        <div class="subsection-title">5.4 — Examen Cardiaque</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_card_ausc_bruits_coeur_percus"><span>B1 et B2 bien perçus aux 4 foyers</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_card_ausc_systole_diastole_libres"><span>Systole et diastole libres à chaque foyer</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_sons_surajoutes"><span>Pas de B3, B4 ni de souffle</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Rythme / Souffle (si présent)</label>
+          <textarea name="ep_card_details" class="field-input" placeholder="Rythme, souffle : siège, temps, timbre, irradiation, intensité /6…"></textarea>
+        </div>
+      </div>
+
+      <!-- 5.5 Pulmonaire -->
+      <div class="subsection">
+        <div class="subsection-title">5.5 — Examen Pleuro-Pulmonaire</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="pulm_thorax_symetrique"><span>Thorax symétrique, ampliation thoracique normale</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_mv_bilateral"><span>Murmure vésiculaire présent et symétrique bilatéralement</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_pas_rales"><span>Pas de râles crépitants ni sibilants</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Précisions / anomalies pulmonaires</label>
+          <textarea name="pulm_details" class="field-input" placeholder="Ex: crépitants bases gauches, syndrome de condensation…"></textarea>
+        </div>
+      </div>
+
+      <!-- 5.6 Neurologique -->
+      <div class="subsection">
+        <div class="subsection-title">5.6 — Examen Neurologique</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_neuro_conscient"><span>Conscient, alerte</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_moteur"><span>Pas de déficit moteur aux 4 membres</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_neuro_babinski_negatif"><span>Signe de Babinski négatif</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_neuro_nuque_souple"><span>Nuque souple (pas de raideur méningée)</span></label>
+        </div>
+      </div>
+
+      <!-- Zone libre -->
+      <div class="subsection">
+        <div class="subsection-title">Zone Libre — Autres examens spécialisés</div>
+        <div class="field-group">
+          <textarea name="exam_autres" class="field-input" rows="3" placeholder="Fond d'œil, examen gynécologique, examen du sein, dermatologique, ORL…"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// IMC
+function calcIMC() {
+  const p = parseFloat(document.querySelector('[name="eg_poids"]')?.value);
+  const t = parseFloat(document.querySelector('[name="eg_taille"]')?.value);
+  const el = document.getElementById('imc_display');
+  if (p && t) {
+    const imc = (p/((t/100)**2)).toFixed(1);
+    const cat = imc<18.5?'Maigreur':imc<25?'Normal':imc<30?'Surpoids':'Obésité';
+    el.value = `${imc} (${cat})`;
+    document.querySelector('[name="eg_imc"]').value = el.value;
+  } else el.value = '';
+}
+</script>
+
+</body>
+</html>
