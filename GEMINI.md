@@ -1,40 +1,44 @@
 # Project Overview
 
-`clinique_to_do` is a web-based, interactive medical observation checklist designed for medical practitioners and students. It ensures that essential points are covered during patient consultations and examinations, providing both a quick mobile reference and a comprehensive desktop report generator.
+`clinique_to_do` is a web-based, interactive medical observation ecosystem designed for practitioners and students. It bridges the gap between bedside examination and formal clinical reporting, offering a mobile-optimized checklist and a desktop-based report generator with integrated medical decision support (mnemonics, scores, and biological reference ranges).
 
 # Key Components
 
-*   **`index.html` (The Hub):** The central entry point. It features:
-    *   Direct links to the Simple and Normal checklists.
-    *   A search bar with autocomplete for specialized specialty-specific templates.
-    *   Resource toggles for external clinical guides.
-*   **`documentation.txt`**: A high-level outline and checklist for building the clinical observation sections (Patient Identity, History, Clinical Exam, Paraclinical, etc.).
-*   **`simplechecklist.html` (Mobile Optimized):** A lightweight, responsive version designed for quick use on mobile devices during ward rounds or bedside examinations.
-*   **`observation.html` (Comprehensive Desktop):** A full-featured version for general practitioners, focusing on detailed clinical observation and report generation. Includes features for data export (DOCX/Google Docs integration).
+*   **`index.html` (Navigation Hub):**
+    *   **Search & Autocomplete:** Uses a JavaScript `specialtyMap` to route users to specialty-specific templates (e.g., `ccv`, `hemato`, `radio`).
+    *   **Unified Access:** Provides one-click access to the two primary modes (Mobile Checklist vs. Desktop Generator).
+*   **`simplechecklist.html` (Mobile Bedside Tool):**
+    *   **UX Design:** Features a "Floating Island" header with progress tracking, real-time date/time, and quick links to external reference PDFs.
+    *   **Interactive Flow:** Organized by clinical systems (General, Abdominal, Cardio, Neuro, etc.) with integrated logic for conditional field visibility (e.g., selecting a situation familial automatically updates checkboxes).
+*   **`observation.html` (Comprehensive Report Generator):**
+    *   **Technology:** Leverages `docx.js` for client-side generation of professional clinical reports.
+    *   **Medical Logic:**
+        *   **Mnemonics:** Integrated "SITI FADMA" (Siège, Irradiation, Type, Impact, Facteurs, Accalmie, Durée, Mode, Amélioration) for pain characterization and "3A + F" (Asthénie, Anorexie, Amaigrissement + Fièvre) for general signs.
+        *   **Scoring Systems:** Automated Age calculation from DOB, IMC/BMI calculator, and ECOG/OMS Performance Status picker.
+        *   **Biological Validator:** A structured paraclinical section with real-time validation against reference ranges (Normal/Low/High color-coding) for Hematology, Ionograms, Renal/Hepatic function, etc.
+    *   **Export Options:** Supports "Word (.docx)" export and "Google Docs" clipboard integration for seamless transition to hospital EMRs.
 
 # Project Structure
 
-*   **`services/`**: Contains specialized checklist templates for various medical specialties.
-    *   Each subfolder (e.g., `ccv/`, `hemato/`, `radio/`) contains a specialty-specific `.html` template and a `ressources [spe]/` folder for related clinical materials.
-*   **`observation_ressources/`**: A structured directory containing the assets and data required for each section of the Normal Checklist (e.g., identity, history, physical exam).
-*   **`simplechecklist_ressources/`**: Source materials, including PDFs and text extractions, used to build and update the simple mobile-optimized checklist.
-*   **`clinXpert/`**: A collection of foundational clinical reference materials, including the "Guide de l'examen clinique", models of clinical observations, and specialized examination notes.
-*   **`other/`**: Contains project documentation, development plans, and auxiliary files:
-    *   `plan.txt`: Development roadmap and structural objectives.
-    *   `idea.txt`: Feature brainstorming and future improvements.
-    *   `documentation old.docx`: Earlier versions of the documentation.
-*   **`backup/`**: Historical versions and archival files for reference. **Note:** Do not modify or delete these files.
+*   **`services/`**: Specialized templates.
+    *   `ccv/`, `hemato/`, `radio/`: Each contains a specialty-specific `.html` file and a `ressources/` folder for niche clinical data.
+*   **`observation_ressources/`**: Asset library for the main generator, organized by section (0. Clinician Info to 8. Prescription).
+*   **`simplechecklist_ressources/`**: Source text and PDFs used for the mobile version's logic and content.
+*   **`clinXpert/`**: Foundational reference library. Contains the core "Guide de l'examen clinique" (PDF/DOCX) and specific clinical notes for every major system.
+*   **`other/`**: Development metadata.
+    *   `plan.txt` & `idea.txt`: Roadmap for features like multi-service expansion and export refinement.
+    *   `documentation.txt`: The structural blueprint for the observation logic (Identity -> History -> Exam -> Conclusion).
 
-# Development Status & Goals
+# Clinical Methodologies Integrated
 
-The project is currently focusing on:
-1.  **Mobile Optimization:** Ensuring the `simplechecklist.html` is fully responsive and bedside-ready.
-2.  **Export Features:** Enhancing `observation.html` with better export capabilities (improving DOCX output and Google Docs clipboard integration).
-3.  **Specialty Expansion:** Populating the `services/` directory with templates for all major medical specialties (Cardiology, Neurology, etc.) based on standard clinical guidelines.
-4.  **Index Refinement:** Implementing a robust search and autocomplete system in `index.html` for easy access to specialty templates.
+The project enforces standard semiological practices:
+1.  **Administrative Anamnesis:** Detailed patient profiling including social coverage (AMO/CNSS/CNOPS/etc.).
+2.  **Symptom Characterization:** Systematic breakdown of the "Histoire de la Maladie" using standardized descriptors.
+3.  **Physical Examination:** Systematic "Inspection, Palpation, Percussion, Auscultation" (IPPA) workflow.
+4.  **Differential Diagnosis:** A dedicated hypothesis table for weighing arguments "Pro" and "Contra" each diagnostic possibility.
 
-# Usage
+# Development Goals
 
-*   **Quick Check:** Use `simplechecklist.html` on a mobile device for a fast bedside reference.
-*   **Full Report:** Use `observation.html` on a desktop to generate a complete clinical observation record.
-*   **Specialty Templates:** Access specific templates via the search/dropdown on `index.html` or by navigating to the corresponding folder in `services/`.
+1.  **Specialty Completion:** Expanding the `services/` directory to cover all modules in the "Livret Vert" and "Guide de l'externe".
+2.  **Enhanced Export:** Improving the styling of the generated `.docx` files to match official hospital observation headers.
+3.  **Cross-Reference Integration:** Mapping the `clinXpert` library directly into the checklists as context-sensitive help icons.
