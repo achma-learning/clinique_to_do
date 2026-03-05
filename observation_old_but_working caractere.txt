@@ -1,0 +1,2444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>📋 Observation Médicale</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.js"></script>
+<style>
+  :root {
+    --blue: #1a5fa8;
+    --blue-light: #e8f0fc;
+    --blue-dark: #0d3d72;
+    --green: #0a7c3e;
+    --red: #c0392b;
+    --orange: #e67e22;
+    --gray: #6c757d;
+    --border: #dee2e6;
+    --bg: #ffffff;
+    --section-bg: #f8faff;
+    --text: #212529;
+    --subtext: #495057;
+    --radius: 12px;
+    --shadow: 0 2px 8px rgba(26,95,168,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 90px; padding-top: 80px; }
+  
+  .floating-island {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 95%;
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .floating-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 0 5px;
+  }
+  .floating-island a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.85em;
+      font-weight: 500;
+      transition: background-color 0.2s ease-in-out;
+      white-space: nowrap;
+  }
+  .floating-island a:not(.home-button):hover {
+      background-color: rgba(255, 255, 255, 0.15);
+  }
+  .home-button {
+      background-color: #007bff;
+      font-size: 1.4em !important;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50% !important;
+      padding: 0 !important;
+  }
+  .home-button:hover {
+      background-color: #0056b3 !important;
+  }
+  .island-center {
+    text-align: center;
+    color: white;
+  }
+  .island-center h1 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    border: 0;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .island-center p {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin: 0;
+  }
+  .app-header { display:none; }
+  
+  .progress-bar-wrap {
+    position: absolute;
+    bottom: -2px;
+    left: 10px;
+    right: 10px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .progress-bar { background: #7ecfff; height: 100%; width: 0%; transition: width 0.4s; border-radius: 2px; }
+
+  /* Container */
+  .container { max-width: 780px; margin: 0 auto; padding: 14px 12px; }
+
+  /* Clinician card */
+  .clinician-card { background: linear-gradient(135deg, #f0f4ff, #e8f0fc); border: 1.5px solid #b0c8e8; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+  .clinician-card .clinician-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--blue); margin-bottom: 12px; }
+
+  /* Section card */
+  .section-card { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; border: 1px solid var(--border); overflow: hidden; }
+  .section-header { display: flex; align-items: center; padding: 16px 18px; cursor: pointer; user-select: none; background: var(--section-bg); gap: 12px; transition: background 0.2s; -webkit-tap-highlight-color: transparent; }
+  .section-header:hover, .section-header:active { background: var(--blue-light); }
+  .section-num { background: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  .section-title { flex: 1; font-weight: 600; font-size: 1rem; color: var(--blue-dark); }
+  .section-subtitle { font-size: 0.78rem; color: var(--gray); font-weight: 400; }
+  .section-badge { background: var(--blue); color: white; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+  .section-badge.done { background: var(--green); }
+  .toggle-icon { font-size: 1.4rem; color: var(--blue); font-weight: 300; transition: transform 0.25s; width: 24px; text-align: center; flex-shrink: 0; }
+  .toggle-icon.open { transform: rotate(45deg); }
+  .section-body { display: none; padding: 18px; border-top: 1px solid var(--border); }
+  .section-body.open { display: block; }
+
+  /* Sub-sections */
+  .subsection { margin-top: 16px; padding-left: 14px; border-left: 3px solid var(--blue); }
+  .subsection-title { font-size: 0.88rem; font-weight: 700; color: var(--blue); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .subsubsection { margin-top: 10px; margin-left: 10px; padding-left: 10px; border-left: 2px solid #b0c8e8; }
+  .subsubsection-title { font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 8px; }
+
+  /* Form fields */
+  .field-group { margin-bottom: 14px; }
+  .field-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--subtext); margin-bottom: 5px; }
+  .field-input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text); background: #fff; transition: border-color 0.2s; -webkit-appearance: none; }
+  .field-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,95,168,0.12); }
+  textarea.field-input { resize: vertical; min-height: 70px; font-family: inherit; }
+  select.field-input { cursor: pointer; }
+  .field-input[readonly] { background: #f0f4ff; color: var(--gray); }
+
+  /* Checkboxes */
+  .check-list { display: flex; flex-direction: column; gap: 4px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent; min-height: 44px; }
+  .check-item:hover { background: var(--blue-light); }
+  .check-item:active { background: #d0e3ff; }
+  .check-item input[type="checkbox"] { width: 24px; height: 24px; min-width: 24px; border-radius: 5px; border: 2px solid #aaa; cursor: pointer; margin-top: 1px; accent-color: var(--blue); flex-shrink: 0; }
+  .check-item span { font-size: 0.93rem; color: var(--text); line-height: 1.45; padding-top: 2px; }
+  .check-item input[type="checkbox"]:checked ~ span { color: var(--green); font-weight: 500; }
+
+  /* Row layouts */
+  .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .fields-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .fields-row, .fields-row-3 { grid-template-columns: 1fr 1fr; } }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px dashed var(--border); margin: 14px 0; }
+
+  /* Note box */
+  .note-box { background: var(--blue-light); border-left: 4px solid var(--blue); border-radius: 6px; padding: 10px 12px; font-size: 0.82rem; color: var(--blue-dark); margin-bottom: 14px; }
+
+  /* ECOG badge */
+  .ecog-preview { display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+  .ecog-0 { background: #d4edda; color: #155724; }
+  .ecog-1 { background: #d1ecf1; color: #0c5460; }
+  .ecog-2 { background: #fff3cd; color: #856404; }
+  .ecog-3 { background: #fde8e8; color: #721c24; }
+  .ecog-4 { background: #f5c6cb; color: #491217; }
+  .ecog-5 { background: #343a40; color: #ffffff; }
+
+  /* Hypothesis / Diagnostic table */
+  .diag-table-wrap { overflow-x: auto; margin-top: 10px; }
+  .diag-table { width: 100%; border-collapse: collapse; background: white; font-size: 0.88rem; }
+  .diag-table th { background: var(--blue); color: white; padding: 10px 12px; text-align: left; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+  .diag-table td { border: 1px solid #d0dff0; padding: 0; vertical-align: top; min-width: 130px; }
+  .diag-table td textarea { width: 100%; min-height: 80px; border: none; padding: 9px 10px; resize: vertical; font-family: inherit; font-size: 0.87rem; background: transparent; outline: none; color: var(--text); }
+  .diag-table td textarea:focus { background: #f0f8ff; }
+  .diag-table .row-num { width: 32px; text-align: center; font-weight: 700; color: var(--blue-dark); font-size: 0.82rem; padding: 8px 4px; background: #f0f4ff; border: 1px solid #d0dff0; }
+  .diag-table .del-cell { width: 34px; text-align: center; padding: 6px 4px; background: #fff8f8; border: 1px solid #d0dff0; }
+  .del-btn { background: none; border: none; color: #cc3333; font-size: 1.1rem; cursor: pointer; padding: 4px; border-radius: 4px; line-height: 1; }
+  .del-btn:hover { background: #fee; }
+  .add-row-btn { margin-top: 8px; padding: 8px 16px; background: white; border: 1.5px solid var(--blue); color: var(--blue); border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.15s; }
+  .add-row-btn:hover { background: var(--blue-light); }
+
+  /* Sticky bar */
+  .sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: white; padding: 10px 14px; box-shadow: 0 -3px 16px rgba(0,0,0,0.13); display: flex; gap: 10px; }
+  .btn { flex: 1; padding: 13px 10px; border: none; border-radius: 10px; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 6px; -webkit-tap-highlight-color: transparent; }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--blue); color: white; }
+  .btn-primary:hover { background: var(--blue-dark); }
+  .btn-success { background: var(--green); color: white; }
+  .btn-success:hover { background: #085c2e; }
+  .btn-danger { background: var(--red); color: white; }
+  .btn-danger:hover { background: #a93226; }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* Toast */
+  #toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #222; color: white; padding: 10px 22px; border-radius: 20px; font-size: 0.87rem; z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
+  #toast.show { opacity: 1; }
+
+  /* Top actions */
+  .top-actions { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .top-btn { padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--blue); background: white; color: var(--blue); font-size: 0.83rem; font-weight: 600; cursor: pointer; flex: 1; text-align: center; transition: background 0.15s; }
+  .top-btn:hover { background: var(--blue-light); }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #c0d0e8; border-radius: 3px; }
+  .bio-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+  .bio-table th, .bio-table td { border: 1px solid var(--border); padding: 8px; text-align: left; }
+  .bio-table th { background: var(--blue-light); color: var(--blue-dark); font-weight: 600; font-size: 0.78rem; white-space: nowrap; }
+  .bio-table tr:nth-child(even) { background: #fdfefe; }
+  .bio-table .value-input {
+    width: 80px;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .bio-table .value-input:focus { outline: none; border-color: var(--blue); }
+  .bio-table .value-input.normal { background-color: #e6ffe6; border-color: var(--green); } /* Light Green */
+  .bio-table .value-input.low { background-color: #fff3e6; border-color: var(--orange); }   /* Light Orange */
+  .bio-table .value-input.high { background-color: #ffe6e6; border-color: var(--red); }    /* Light Red */
+</style>
+</head>
+<body>
+
+<div class="floating-island">
+    <div class="floating-buttons">
+        <a href="+++generate docx version/these interne - observation médicale.pdf" target="_blank">ClinXpert PDF</a>
+        <a href="clinXpert/+++ these interne - observation médicale.docx" target="_blank">ClinXpert Word</a>
+        <a href="https://clinxpert.glide.page/dl/ClinXpert" target="_blank">ClinXpert</a>
+    </div>
+    <div class="island-center">
+        <h1>📋 Observation Médicale</h1>
+        <p>Médecine Générale · Saisie · Checklist · Export Word</p>
+    </div>
+    <a href="index.html" class="home-button">🏠</a>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+
+<div class="app-header" style="display:none;">
+  
+</div>
+
+<div id="toast"></div>
+
+<div class="container">
+  <div class="top-actions">
+    <button class="top-btn" onclick="expandAll()">⬇ Tout ouvrir</button>
+    <button class="top-btn" onclick="collapseAll()">⬆ Tout fermer</button>
+  </div>
+
+  <!-- ═══ CLINICIEN ═══ -->
+  <div class="clinician-card">
+    <div class="clinician-title">👨‍⚕️ Informations du Clinicien</div>
+    <div class="fields-row">
+      <div class="field-group">
+        <label class="field-label">Nom du clinicien</label>
+        <input type="text" name="clinicien_nom" class="field-input" placeholder="Dr. Nom Prénom" oninput="updateProgress()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Fonction</label>
+        <select name="clinicien_fonction" class="field-input" onchange="updateProgress()">
+          <option value="">—</option>
+          <option value="Externe">Externe</option>
+          <option value="Interne">Interne</option>
+          <option value="Résident">Résident</option>
+          <option value="Médecin généraliste">Médecin généraliste</option>
+          <option value="Médecin spécialiste">Médecin spécialiste</option>
+          <option value="Professeur assistant">Professeur assistant</option>
+          <option value="Professeur agrégé">Professeur agrégé</option>
+          <option value="Professeur de l'enseignement supérieur">Professeur de l'enseignement supérieur</option>
+          <option value="Infirmier">Infirmier</option>
+          <option value="Sage-femme">Sage-femme</option>
+          <option value="Pharmacien">Pharmacien</option>
+          <option value="Chirurgien-dentiste">Chirurgien-dentiste</option>
+          <option value="Kinésithérapeute">Kinésithérapeute</option>
+          <option value="Orthophoniste">Orthophoniste</option>
+          <option value="Psychologue">Psychologue</option>
+          <option value="Technicien de laboratoire">Technicien de laboratoire</option>
+          <option value="Technicien en radiologie">Technicien en radiologie</option>
+          <option value="Aide-soignant">Aide-soignant</option>
+          <option value="Autre professionnel de santé">Autre professionnel de santé</option>
+        </select>
+      </div>
+    </div>
+    <div class="fields-row">
+      <div class="field-group">
+        <label class="field-label">Date de l'observation</label>
+        <input type="date" name="obs_date" class="field-input" oninput="updateProgress()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Heure</label>
+        <input type="time" name="obs_heure" class="field-input" oninput="updateProgress()">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 1. IDENTITÉ ═══ -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-num">1</div>
+      <div class="section-title">Identité du Patient<div class="section-subtitle">Anamnèse administrative</div></div>
+      <span class="section-badge" id="badge-1">—</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="section-body">
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Nom et Prénom</label>
+          <input type="text" name="nom_prenom" class="field-input" placeholder="Nom Prénom" oninput="updateProgress()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Date de naissance</label>
+          <input type="date" name="date_naissance" class="field-input" oninput="calcAgeFromDOB(); updateProgress()">
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Âge <span style="color:#888;font-weight:400;">(auto-calculé si DDN renseignée)</span></label>
+          <input type="text" name="age" id="age_field" class="field-input" placeholder="ex: 45 ans" oninput="calcDOBFromAge(); updateProgress()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Sexe</label>
+          <select name="sexe" class="field-input" onchange="updateProgress()">
+            <option value="">—</option>
+            <option value="Masculin">Masculin</option>
+            <option value="Féminin">Féminin</option>
+          </select>
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Situation familiale</label>
+          <select name="situation_familiale" class="field-input" onchange="updateProgress()">
+            <option value="">—</option>
+            <option value="Célibataire">Célibataire</option>
+            <option value="Marié(e)">Marié(e)</option>
+            <option value="Divorcé(e)">Divorcé(e)</option>
+            <option value="Veuf(ve)">Veuf(ve)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Nombre d'enfants</label>
+          <input type="number" name="nb_enfants" class="field-input" placeholder="0" min="0" oninput="updateProgress()">
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Originaire de</label>
+          <input type="text" name="originaire_de" class="field-input" placeholder="Ville / région d'origine" oninput="updateProgress()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Résidant à</label>
+          <input type="text" name="residant_a" class="field-input" placeholder="Ville / adresse actuelle" oninput="updateProgress()">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Profession</label>
+        <input type="text" name="profession" class="field-input" placeholder="Profession actuelle" oninput="updateProgress()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Couverture sociale / Mutuelle</label>
+        <select name="couverture_sociale" class="field-input" onchange="updateProgress()">
+          <option value="">—</option>
+          <optgroup label="AMO – Couverture de base">
+            <option value="AMO CNSS (secteur privé)">AMO CNSS (secteur privé)</option>
+            <option value="AMO CNOPS (secteur public)">AMO CNOPS (secteur public)</option>
+            <option value="AMO Achamil (TNS)">AMO Achamil (TNS)</option>
+            <option value="AMO Tadamon (ex-RAMED)">AMO Tadamon (ex-RAMED)</option>
+            <option value="AMO Étudiants">AMO Étudiants</option>
+          </optgroup>
+          <optgroup label="Régimes spécifiques">
+            <option value="FAR – Régime Militaire">FAR – Régime Militaire</option>
+          </optgroup>
+          <optgroup label="Mutuelles">
+            <option value="MGPAP">MGPAP</option>
+            <option value="MGEN">MGEN</option>
+            <option value="MGPTT">MGPTT</option>
+            <option value="Autres mutuelles sectorielles">Autres mutuelles sectorielles</option>
+          </optgroup>
+          <optgroup label="Assurances privées">
+            <option value="SANLAM">SANLAM</option><option value="AXA">AXA</option>
+            <option value="Allianz">Allianz</option><option value="Wafa Assurance">Wafa Assurance</option>
+            <option value="AtlantaSanad">AtlantaSanad</option><option value="RMA">RMA</option>
+          </optgroup>
+          <option value="Aucune">Aucune</option>
+        </select>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Contact + Personne de confiance -->
+      <div class="subsection">
+        <div class="subsection-title">📞 Contacts</div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">Type de contact</label>
+            <select name="contact_type" class="field-input" onchange="updateProgress()">
+              <option value="">—</option>
+              <option value="Patient lui-même">Patient lui-même</option>
+              <option value="Famille">Famille</option>
+              <option value="Contact d'urgence">Contact d'urgence</option>
+              <option value="Tuteur légal">Tuteur légal</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Numéro de contact / urgence</label>
+            <input type="tel" name="contact_numero" class="field-input" placeholder="+212 6XX XXX XXX" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">Personne de confiance – Nom</label>
+            <input type="text" name="confiance_nom" class="field-input" placeholder="Nom de la personne de confiance" oninput="updateProgress()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Personne de confiance – Contact</label>
+            <input type="tel" name="confiance_contact" class="field-input" placeholder="+212 6XX XXX XXX" oninput="updateProgress()">
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Autonomie + ECOG -->
+      <div class="fields-row">
+        <div class="field-group">
+          <label class="field-label">Autonomie</label>
+          <select name="autonomie" class="field-input" onchange="updateProgress()">
+            <option value="">—</option>
+            <option value="Totalement autonome">Totalement autonome</option>
+            <option value="Partiellement autonome">Partiellement autonome</option>
+            <option value="Dépendant(e)">Dépendant(e)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">PS OMS / Score ECOG</label>
+          <select name="ecog_score" class="field-input" onchange="showEcog(); updateProgress()">
+            <option value="">—</option>
+            <option value="0">OMS 0 – Aucune limitation, état fonctionnel identique à celui pré-morbide</option>
+            <option value="1">OMS 1 – Restriction aux activités physiques, mais ambulant et capable d'effectuer des travaux légers</option>
+            <option value="2">OMS 2 – Ambulant, capable de prendre soin de sa personne, incapable de travailler, actif &gt;50% de la journée</option>
+            <option value="3">OMS 3 – Capacité très limitée de prendre soin de sa personne ; confiné au lit ou fauteuil &gt;50% de la journée</option>
+            <option value="4">OMS 4 – Incapacité totale ; ne peut prendre soin de sa personne ; confiné au fauteuil ou au lit</option>
+            <option value="5">OMS 5 – Décédé</option>
+          </select>
+          <div id="ecog_preview" style="margin-top:6px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 2. MOTIF DE CONSULTATION ═══ -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-num">2</div>
+      <div class="section-title">Motif de Consultation<div class="section-subtitle">MDC — en mots propres du patient</div></div>
+      <span class="section-badge" id="badge-2">—</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="section-body">
+      <div class="note-box">💡 C'est un signe fonctionnel, jamais un diagnostic à ce stade.</div>
+      <div class="field-group">
+        <label class="field-label">Plainte principale (mots du patient)</label>
+        <textarea name="plainte_principale" class="field-input" placeholder="Ex : « J'ai mal au ventre depuis 3 jours... »" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date de début des symptômes</label>
+        <input type="date" name="date_debut_symptomes" class="field-input" oninput="updateProgress()">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 3. ANTÉCÉDENTS ═══ -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-num">3</div>
+      <div class="section-title">Antécédents (ATCD)<div class="section-subtitle">Personnels et familiaux</div></div>
+      <span class="section-badge" id="badge-3">—</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="section-body">
+
+      <!-- Antécédents Personnels -->
+      <div class="subsection">
+        <div class="subsection-title">A. Antécédents Personnels</div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">1. Médicaux</div>
+          <div class="check-list">
+            <!-- Diabète -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_diabete" onchange="toggleAtcdDetails('diabete'); updateProgress()" style="margin-top:4px;">
+              <span>Diabète (Type 1 / 2 / gestationnel)</span>
+            </label>
+            <div id="atcd_details_diabete" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div class="fields-row" style="margin-top:6px;">
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Traitement</label>
+                  <input type="text" name="atcd_diabete_traitement" class="field-input" placeholder="ADO, Metformine, Insuline…" oninput="updateProgress()">
+                </div>
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Depuis</label>
+                  <input type="date" name="atcd_diabete_depuis" class="field-input" oninput="updateProgress()">
+                </div>
+              </div>
+            </div>
+
+            <!-- HTA -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_hta" onchange="toggleAtcdDetails('hta'); updateProgress()" style="margin-top:4px;">
+              <span>Hypertension Artérielle (HTA)</span>
+            </label>
+            <div id="atcd_details_hta" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div class="fields-row" style="margin-top:6px;">
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Traitement</label>
+                  <input type="text" name="atcd_hta_traitement" class="field-input" placeholder="IEC, ARA II, Amlodipine…" oninput="updateProgress()">
+                </div>
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Depuis</label>
+                  <input type="date" name="atcd_hta_depuis" class="field-input" oninput="updateProgress()">
+                </div>
+              </div>
+            </div>
+
+            <!-- Asthme -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_asthme" onchange="toggleAtcdDetails('asthme'); updateProgress()" style="margin-top:4px;">
+              <span>Asthme</span>
+            </label>
+            <div id="atcd_details_asthme" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div class="fields-row" style="margin-top:6px;">
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Traitement</label>
+                  <input type="text" name="atcd_asthme_traitement" class="field-input" placeholder="Salbutamol, Corticoïdes inhalés…" oninput="updateProgress()">
+                </div>
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Depuis</label>
+                  <input type="date" name="atcd_asthme_depuis" class="field-input" oninput="updateProgress()">
+                </div>
+              </div>
+            </div>
+
+            <!-- Ulcère -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_ulcere" onchange="toggleAtcdDetails('ulcere'); updateProgress()" style="margin-top:4px;">
+              <span>Ulcère gastro-duodénal</span>
+            </label>
+            <div id="atcd_details_ulcere" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div class="fields-row" style="margin-top:6px;">
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Traitement</label>
+                  <input type="text" name="atcd_ulcere_traitement" class="field-input" placeholder="IPP, Trithérapie H.pylori…" oninput="updateProgress()">
+                </div>
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Depuis</label>
+                  <input type="date" name="atcd_ulcere_depuis" class="field-input" oninput="updateProgress()">
+                </div>
+              </div>
+            </div>
+
+            <!-- Tuberculose -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_tuberculose" onchange="toggleAtcdDetails('tuberculose'); updateProgress()" style="margin-top:4px;">
+              <span>Tuberculose</span>
+            </label>
+            <div id="atcd_details_tuberculose" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div class="fields-row" style="margin-top:6px;">
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Traitement</label>
+                  <input type="text" name="atcd_tuberculose_traitement" class="field-input" placeholder="RHZE, durée du traitement…" oninput="updateProgress()">
+                </div>
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Depuis</label>
+                  <input type="date" name="atcd_tuberculose_depuis" class="field-input" oninput="updateProgress()">
+                </div>
+              </div>
+            </div>
+
+            <!-- MST -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_mst" onchange="toggleAtcdDetails('mst'); updateProgress()" style="margin-top:4px;">
+              <span>MST / IST (Nature, type, durée du traitement)</span>
+            </label>
+            <div id="atcd_details_mst" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div class="field-group" style="margin-top:6px; margin-bottom:6px;">
+                <label class="field-label">Type de MST / IST</label>
+                <input type="text" name="atcd_mst_type" class="field-input" placeholder="VIH, Syphilis, Gonorrhée, Hépatite B, Chlamydia…" oninput="updateProgress()">
+              </div>
+              <div class="fields-row" style="margin-top:4px;">
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Traitement</label>
+                  <input type="text" name="atcd_mst_traitement" class="field-input" placeholder="ARV, Antibiotiques…" oninput="updateProgress()">
+                </div>
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Depuis</label>
+                  <input type="date" name="atcd_mst_depuis" class="field-input" oninput="updateProgress()">
+                </div>
+              </div>
+            </div>
+
+            <!-- Hospitalisations -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_hospitalisations" onchange="toggleAtcdDetails('hospitalisations'); updateProgress()" style="margin-top:4px;">
+              <span>Hospitalisations antérieures</span>
+            </label>
+            <div id="atcd_details_hospitalisations" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div class="fields-row" style="margin-top:6px;">
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Motif / Service</label>
+                  <input type="text" name="atcd_hospitalisations_traitement" class="field-input" placeholder="Motif, établissement…" oninput="updateProgress()">
+                </div>
+                <div class="field-group" style="margin-bottom:6px;">
+                  <label class="field-label">Date</label>
+                  <input type="date" name="atcd_hospitalisations_depuis" class="field-input" oninput="updateProgress()">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-top:10px;">
+            <label class="field-label">Précisions maladies chroniques / hospitalisations</label>
+            <textarea name="atcd_medicaux_details" class="field-input" placeholder="Motif, date, durée, lieu…" oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">2. Chirurgicaux</div>
+          <div class="fields-row">
+            <div class="field-group">
+              <label class="field-label">Type d'intervention</label>
+              <input type="text" name="atcd_chir_type" class="field-input" placeholder="Ex: appendicectomie" oninput="updateProgress()">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Date</label>
+              <input type="date" name="atcd_chir_date" class="field-input" oninput="updateProgress()">
+            </div>
+          </div>
+          <div class="fields-row">
+            <div class="field-group">
+              <label class="field-label">Lieu</label>
+              <input type="text" name="atcd_chir_lieu" class="field-input" placeholder="Établissement" oninput="updateProgress()">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Complications</label>
+              <input type="text" name="atcd_chir_complications" class="field-input" placeholder="Infections, phlébite…" oninput="updateProgress()">
+            </div>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">3. Toxico-Allergiques</div>
+          <div class="fields-row">
+            <div class="field-group">
+              <label class="field-label">Tabagisme</label>
+              <select name="atcd_tabagisme_statut" class="field-input" onchange="updateProgress()">
+                <option value="">—</option>
+                <option value="Non fumeur">Non fumeur</option>
+                <option value="Fumeur actif">Fumeur actif</option>
+                <option value="Tabagisme passif">Tabagisme passif</option>
+                <option value="Sevré >3 ans">Sevré &gt; 3 ans</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Paquets-années (PA)</label>
+              <input type="text" name="atcd_tabagisme_pa" class="field-input" placeholder="Ex: 20 PA" oninput="updateProgress()">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Alcool / Drogues</label>
+            <input type="text" name="atcd_alcool_drogues" class="field-input" placeholder="Type, quantité, fréquence" oninput="updateProgress()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Allergies</label>
+            <textarea name="atcd_allergies" class="field-input" placeholder="Médicamenteuses, alimentaires, environnementales – réaction décrite" oninput="updateProgress()"></textarea>
+          </div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="atcd_contact_animaux" onchange="updateProgress()"><span>Contact avec animaux (chiens, oiseaux, bovins…)</span></label>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">4. Traitements en cours</div>
+          <div class="field-group">
+            <label class="field-label">Liste de tous les médicaments pris pendant ces trois derniers mois</label>
+            <textarea name="atcd_traitements" class="field-input" placeholder="Nom, posologie, horaire…" oninput="updateProgress()"></textarea>
+          </div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="atcd_verif_ordonnances" onchange="updateProgress()"><span>Ordonnances vérifiées</span></label>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">5. Vaccination</div>
+          <div class="field-group">
+            <label class="field-label">Statut vaccinal</label>
+            <textarea name="atcd_vaccination" class="field-input" placeholder="Carnet de vaccination, vaccins à jour…" oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">6. Gynéco-Obstétriques <span style="font-weight:400;color:#888;">(femme)</span></div>
+          <div class="fields-row">
+            <div class="field-group">
+              <label class="field-label">DDR</label>
+              <input type="date" name="atcd_ddr" class="field-input" oninput="updateProgress()">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Gestité / Parité</label>
+              <input type="text" name="atcd_gestite_parite" class="field-input" placeholder="G3 P2" oninput="updateProgress()">
+            </div>
+          </div>
+          <div class="fields-row">
+            <div class="field-group">
+              <label class="field-label">Régularité des cycles</label>
+              <select name="atcd_cycles" class="field-input" onchange="updateProgress()">
+                <option value="">—</option>
+                <option value="Réguliers">Réguliers</option>
+                <option value="Irréguliers">Irréguliers</option>
+                <option value="Ménopausée">Ménopausée</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Contraception</label>
+              <select name="atcd_contraception" class="field-input" onchange="updateProgress()">
+                <option value="">— Sélectionnez une méthode —</option>
+                <optgroup label="💊 Contraceptifs hormonaux oraux">
+                  <option value="Contraceptifs oraux combinés (œstroprogestatifs)">1 – Contraceptifs oraux combinés (œstroprogestatifs)</option>
+                  <option value="Pilules micro-progestatives">2 – Pilules micro-progestatives</option>
+                </optgroup>
+                <optgroup label="💉 Contraceptifs injectables et implants">
+                  <option value="Progestatifs injectables">3 – Progestatifs injectables</option>
+                  <option value="Implants contraceptifs">4 – Implants contraceptifs</option>
+                </optgroup>
+                <optgroup label="🔩 Dispositifs intra-utérins (DIU)">
+                  <option value="DIU au cuivre (non hormonal)">5 – DIU au cuivre (non hormonal)</option>
+                  <option value="DIU hormonal (stérilet hormonal)">5 – DIU hormonal (stérilet hormonal)</option>
+                </optgroup>
+                <optgroup label="🆘 Contraception d'urgence">
+                  <option value="Pilule du lendemain (contraception d'urgence)">6 – Pilule du lendemain</option>
+                </optgroup>
+                <optgroup label="✂️ Méthodes chirurgicales définitives">
+                  <option value="Ligature des trompes">7 – Ligature des trompes</option>
+                </optgroup>
+                <optgroup label="🔵 Autres méthodes">
+                  <option value="Préservatif masculin">8 – Préservatif masculin</option>
+                  <option value="Anneau intra-vaginal et patch contraceptif">8 – Anneau intra-vaginal et patch contraceptif</option>
+                  <option value="Spermicides">8 – Spermicides</option>
+                  <option value="Diaphragme">8 – Diaphragme</option>
+                  <option value="Méthodes naturelles">8 – Méthodes naturelles</option>
+                  <option value="Méthode de l'allaitement maternel et de l'aménorrhée (MAMA)">8 – Méthode de l'Allaitement Maternel et de l'Aménorrhée (MAMA)</option>
+                  <option value="Coït interrompu">8 – Coït interrompu</option>
+                </optgroup>
+                <option value="Aucune">Aucune</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Complications obstétricales</label>
+            <textarea name="atcd_gyn_complications" class="field-input" placeholder="Fausses couches, césarienne, HTA gravidique…" oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Antécédents Familiaux -->
+      <div class="subsection" style="margin-top:16px;">
+        <div class="subsection-title">B. Antécédents Familiaux (premier degré)</div>
+        <div class="note-box" style="margin-bottom:10px;">💡 Pour chaque pathologie cochée, précisez : <strong>chez qui</strong> (père, mère, frère…) et les informations cliniques associées.</div>
+        <div class="check-list">
+
+          <label class="check-item" style="align-items:flex-start;">
+            <input type="checkbox" name="atcd_fam_diabete" onchange="toggleFamDetail('fam_diabete'); updateProgress()" style="margin-top:4px;">
+            <span>Diabète familial</span>
+          </label>
+          <div id="detail_fam_diabete" style="display:none; padding-left:36px; margin-bottom:8px;">
+            <label class="field-label">Chez qui &amp; informations associées</label>
+            <textarea name="atcd_fam_diabete_info" class="field-input" placeholder="Ex : père — DT2 depuis 20 ans sous metformine…" rows="2" oninput="updateProgress()"></textarea>
+          </div>
+
+          <label class="check-item" style="align-items:flex-start;">
+            <input type="checkbox" name="atcd_fam_hta" onchange="toggleFamDetail('fam_hta'); updateProgress()" style="margin-top:4px;">
+            <span>HTA familiale</span>
+          </label>
+          <div id="detail_fam_hta" style="display:none; padding-left:36px; margin-bottom:8px;">
+            <label class="field-label">Chez qui &amp; informations associées</label>
+            <textarea name="atcd_fam_hta_info" class="field-input" placeholder="Ex : mère — HTA traitée, AVC à 60 ans…" rows="2" oninput="updateProgress()"></textarea>
+          </div>
+
+          <label class="check-item" style="align-items:flex-start;">
+            <input type="checkbox" name="atcd_fam_cancer" onchange="toggleFamDetail('fam_cancer'); updateProgress()" style="margin-top:4px;">
+            <span>Cancer familial</span>
+          </label>
+          <div id="detail_fam_cancer" style="display:none; padding-left:36px; margin-bottom:8px;">
+            <label class="field-label">Chez qui &amp; informations associées</label>
+            <textarea name="atcd_fam_cancer_info" class="field-input" placeholder="Ex : oncle maternel — cancer du côlon à 55 ans…" rows="2" oninput="updateProgress()"></textarea>
+          </div>
+
+          <label class="check-item" style="align-items:flex-start;">
+            <input type="checkbox" name="atcd_fam_cardio" onchange="toggleFamDetail('fam_cardio'); updateProgress()" style="margin-top:4px;">
+            <span>Maladies cardiaques familiales</span>
+          </label>
+          <div id="detail_fam_cardio" style="display:none; padding-left:36px; margin-bottom:8px;">
+            <label class="field-label">Chez qui &amp; informations associées</label>
+            <textarea name="atcd_fam_cardio_info" class="field-input" placeholder="Ex : grand-père — insuffisance cardiaque, stent…" rows="2" oninput="updateProgress()"></textarea>
+          </div>
+
+          <label class="check-item" style="align-items:flex-start;">
+            <input type="checkbox" name="atcd_fam_contage_tb" onchange="toggleFamDetail('fam_tb'); updateProgress()" style="margin-top:4px;">
+            <span>Notion de contage tuberculeux</span>
+          </label>
+          <div id="detail_fam_tb" style="display:none; padding-left:36px; margin-bottom:8px;">
+            <label class="field-label">Chez qui &amp; informations associées</label>
+            <textarea name="atcd_fam_tb_info" class="field-input" placeholder="Ex : frère — tuberculose pulmonaire traitée en 2020…" rows="2" oninput="updateProgress()"></textarea>
+          </div>
+
+          <label class="check-item" style="align-items:flex-start; border-left:3px solid var(--orange); padding-left:10px; margin-left:-10px;">
+            <input type="checkbox" name="atcd_fam_mort_subit" onchange="toggleFamDetail('fam_mort_subit'); updateProgress()" style="margin-top:4px; accent-color:var(--orange);">
+            <span style="color:var(--orange); font-weight:600;">⚠️ Mort subite (&lt;45 ans)</span>
+          </label>
+          <div id="detail_fam_mort_subit" style="display:none; padding-left:36px; margin-bottom:8px;">
+            <label class="field-label">Chez qui &amp; informations associées</label>
+            <textarea name="atcd_fam_mort_subit_info" class="field-input" placeholder="Ex : père — mort subite à 42 ans, étiologie inconnue…" rows="2" oninput="updateProgress()"></textarea>
+          </div>
+
+          <label class="check-item" style="align-items:flex-start; border-left:3px solid var(--orange); padding-left:10px; margin-left:-10px;">
+            <input type="checkbox" name="atcd_fam_avc_idm" onchange="toggleFamDetail('fam_avc_idm'); updateProgress()" style="margin-top:4px; accent-color:var(--orange);">
+            <span style="color:var(--orange); font-weight:600;">⚠️ AVC / Infarctus du Myocarde (IdM)</span>
+          </label>
+          <div id="detail_fam_avc_idm" style="display:none; padding-left:36px; margin-bottom:8px;">
+            <label class="field-label">Chez qui &amp; informations associées</label>
+            <textarea name="atcd_fam_avc_idm_info" class="field-input" placeholder="Ex : mère — AVC ischémique à 58 ans ; père — IdM à 50 ans…" rows="2" oninput="updateProgress()"></textarea>
+          </div>
+
+        </div>
+        <div class="field-group" style="margin-top:10px;">
+          <label class="field-label">Autres maladies héréditaires / décès familiaux</label>
+          <textarea name="atcd_fam_autres" class="field-input" placeholder="Préciser…" oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ 4. HISTOIRE DE LA MALADIE ═══ -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-num">4</div>
+      <div class="section-title">Histoire de la Maladie<div class="section-subtitle">HDM — Chronologie & SITI FADMA</div></div>
+      <span class="section-badge" id="badge-4">—</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="section-body">
+      <div class="field-group">
+        <label class="field-label">Chronologie / Début</label>
+        <textarea name="hdM_chronologie" class="field-input" placeholder="Ex: depuis 3 semaines, apparu brutalement le…" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Mode d'installation</label>
+        <select name="hdM_mode_installation" class="field-input" onchange="updateProgress()">
+          <option value="">—</option>
+          <option value="Brutal">Brutal (quelques minutes)</option>
+          <option value="Progressif">Progressif (heures à jours)</option>
+          <option value="Insidieux">Insidieux (semaines à mois)</option>
+        </select>
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">Caractérisation : SITI FADMA</div>
+        <div class="subsubsection"><div class="subsubsection-title">S – Siège</div>
+          <input type="text" name="hdM_siege" class="field-input" placeholder="Localisation anatomique précise" oninput="updateProgress()"></div>
+        <div class="subsubsection"><div class="subsubsection-title">I – Irradiation</div>
+          <input type="text" name="hdM_irradiation" class="field-input" placeholder="Vers quelle région ?" oninput="updateProgress()"></div>
+        <div class="subsubsection"><div class="subsubsection-title">T – Type</div>
+          <input type="text" name="hdM_type" class="field-input" placeholder="Brûlure, torsion, pesanteur, crampe…" oninput="updateProgress()"></div>
+        <div class="subsubsection"><div class="subsubsection-title">I – Impact / Intensité</div>
+          <div class="fields-row">
+            <input type="text" name="hdM_impact" class="field-input" placeholder="Retentissement sur la vie" oninput="updateProgress()">
+            <input type="number" name="hdM_eva" class="field-input" placeholder="EVA /10" min="0" max="10" oninput="updateProgress()">
+          </div></div>
+        <div class="subsubsection"><div class="subsubsection-title">F – Facteurs aggravants / calmants</div>
+          <input type="text" name="hdM_facteurs_aggravants" class="field-input" placeholder="Ce qui aggrave / soulage" oninput="updateProgress()"></div>
+        <div class="subsubsection"><div class="subsubsection-title">A – Accalmie</div>
+          <input type="text" name="hdM_accalmie" class="field-input" placeholder="Périodes de rémission" oninput="updateProgress()"></div>
+        <div class="subsubsection"><div class="subsubsection-title">D – Durée / Rythme</div>
+          <input type="text" name="hdM_duree_rythme" class="field-input" placeholder="Durée des crises, fréquence…" oninput="updateProgress()"></div>
+        <div class="subsubsection"><div class="subsubsection-title">M – Mode évolutif</div>
+          <select name="hdM_mode_evolutif" class="field-input" onchange="updateProgress()">
+            <option value="">—</option>
+            <option value="Stable">Stable</option>
+            <option value="Régressif">Régressif</option>
+            <option value="Progressif (s'aggrave)">Progressif (s'aggrave)</option>
+            <option value="Récidivant">Récidivant</option>
+            <option value="Ondulatoire">Ondulatoire</option>
+          </select></div>
+        <div class="subsubsection"><div class="subsubsection-title">A – Amélioration sous traitement</div>
+          <input type="text" name="hdM_evolution_traitement" class="field-input" placeholder="Réponse aux traitements antérieurs" oninput="updateProgress()"></div>
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">Signes généraux (3A + Fièvre)</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="hdM_asthenie" onchange="updateProgress()"><span>Asthénie</span></label>
+          <label class="check-item"><input type="checkbox" name="hdM_anorexie" onchange="updateProgress()"><span>Anorexie</span></label>
+
+          <label class="check-item" style="align-items:flex-start;">
+            <input type="checkbox" name="hdM_fievre" onchange="document.getElementById('detail_fievre_detail').style.display=this.checked?'block':'none'; updateProgress()" style="margin-top:4px;">
+            <span>Fièvre</span>
+          </label>
+          <div id="detail_fievre_detail" style="display:none; padding-left:36px; margin-bottom:6px;">
+            <div class="field-group" style="margin-top:4px; max-width:260px;">
+              <label class="field-label">Chiffrée à</label>
+              <input type="text" name="hdM_fievre_chiffre" class="field-input" placeholder="Ex : 39,5 °C" oninput="updateProgress()">
+            </div>
+          </div>
+
+          <label class="check-item"><input type="checkbox" name="hdM_frissons" onchange="updateProgress()"><span>Frissons</span></label>
+          <label class="check-item"><input type="checkbox" name="hdM_sueurs_nocturnes" onchange="updateProgress()"><span>Sueurs nocturnes</span></label>
+
+          <label class="check-item" style="align-items:flex-start; border-left:3px solid var(--red); padding-left:10px; margin-left:-10px;">
+            <input type="checkbox" name="hdM_contexte_traumatique" onchange="document.getElementById('detail_trauma_detail').style.display=this.checked?'block':'none'; updateProgress()" style="margin-top:4px;">
+            <span style="font-weight:600; color:var(--red);">🚨 Contexte traumatique</span>
+          </label>
+          <div id="detail_trauma_detail" style="display:none; padding-left:36px; margin-bottom:8px; padding:12px 12px 12px 36px; background:#fff5f5; border-radius:8px; border-left:3px solid var(--red);">
+            <div class="field-group">
+              <label class="field-label">Points d'impact</label>
+              <input type="text" name="hdM_points_impact" class="field-input" placeholder="Ex : crâne pariétal droit, genou gauche, thorax…" oninput="updateProgress()">
+            </div>
+            <label class="field-label" style="margin-bottom:8px; color:var(--red);">Signes associés :</label>
+            <div class="check-list">
+              <label class="check-item"><input type="checkbox" name="trauma_vomissement" onchange="updateProgress()"><span>Vomissements</span></label>
+              <label class="check-item"><input type="checkbox" name="trauma_pdc" onchange="updateProgress()"><span>Perte de connaissance (PDC)</span></label>
+              <label class="check-item"><input type="checkbox" name="trauma_amnesia" onchange="updateProgress()"><span>Amnésie de l'épisode</span></label>
+              <label class="check-item"><input type="checkbox" name="trauma_cephalees" onchange="updateProgress()"><span>Céphalées post-traumatiques</span></label>
+              <label class="check-item"><input type="checkbox" name="trauma_trouble_vision" onchange="updateProgress()"><span>Troubles visuels</span></label>
+              <label class="check-item"><input type="checkbox" name="trauma_deficit_moteur" onchange="updateProgress()"><span>Déficit moteur / sensitif</span></label>
+              <label class="check-item"><input type="checkbox" name="trauma_epistaxis" onchange="updateProgress()"><span>Épistaxis / Otorragie</span></label>
+            </div>
+            <div class="field-group" style="margin-top:8px;">
+              <label class="field-label">Autres signes associés</label>
+              <input type="text" name="trauma_autres" class="field-input" placeholder="Préciser…" oninput="updateProgress()">
+            </div>
+          </div>
+
+        </div>
+        <div class="field-group" style="margin-top:10px;">
+          <label class="field-label">Amaigrissement</label>
+          <input type="text" name="hdM_amaigrissement" class="field-input" placeholder="Ex: −5 kg en 2 mois" oninput="updateProgress()">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Signes associés</label>
+        <textarea name="hdM_signes_associes" class="field-input" placeholder="Nausées, vomissements, dyspnée, palpitations…" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Signes négatifs importants</label>
+        <textarea name="hdM_signes_negatifs" class="field-input" placeholder="Signes absents mais pertinents à noter…" oninput="updateProgress()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 5. EXAMEN CLINIQUE ═══ -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-num">5</div>
+      <div class="section-title">Examen Clinique<div class="section-subtitle">Examen physique complet</div></div>
+      <span class="section-badge" id="badge-5">—</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="section-body">
+
+      <!-- 5.1 Examen Général/Vital -->
+      <div class="subsection">
+        <div class="subsection-title">5.1 — Examen Général/Vital &amp; Constantes</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="eg_conscient_oriente" onchange="updateProgress()"><span>Conscient et orienté dans le temps et l'espace</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_stable_hemo_respi" onchange="updateProgress()"><span>Stable sur le plan hémodynamique et respiratoire</span></label>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Conjonctif normocoloré ?</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="eg_pas_paleur" onchange="updateProgress()"><span>Pas de pâleur cutanéo-muqueuse</span></label>
+            <label class="check-item"><input type="checkbox" name="eg_pas_ictere" onchange="updateProgress()"><span>Pas d'ictère</span></label>
+            <label class="check-item"><input type="checkbox" name="eg_pas_cyanose_generale" onchange="updateProgress()"><span>Pas de cyanose</span></label>
+          </div>
+        </div>
+        <div class="check-list" style="margin-top:4px;">
+          <label class="check-item"><input type="checkbox" name="eg_pas_deshydratation" onchange="updateProgress()"><span>Pas de signe de déshydratation (pli cutané, TRC &lt; 3s)</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_pas_signes_choc" onchange="updateProgress()"><span>Pas de signes de choc (marbrures, froideur extrémités)</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_pas_denutrition" onchange="updateProgress()"><span>Pas de signe de dénutrition</span></label>
+          <label class="check-item"><input type="checkbox" name="eg_pas_omi" onchange="updateProgress()"><span>Pas d'œdème des membres inférieurs (OMI)</span></label>
+        </div>
+        <hr class="divider">
+        <div class="subsubsection-title" style="margin:10px 0 8px;">Constantes vitales</div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">GCS (/15)</label>
+            <input type="number" name="eg_gcs" class="field-input" placeholder="15" min="3" max="15" oninput="updateProgress()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Température (°C)</label>
+            <input type="number" name="eg_temp" class="field-input" placeholder="37.0" step="0.1" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">TA MS droit (mmHg)</label>
+            <input type="text" name="eg_ta_droit" class="field-input" placeholder="120/80" oninput="updateProgress()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">TA MS gauche (mmHg)</label>
+            <input type="text" name="eg_ta_gauche" class="field-input" placeholder="120/80" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="fields-row-3">
+          <div class="field-group"><label class="field-label">FC (bpm)</label><input type="number" name="eg_fc" class="field-input" placeholder="75" oninput="updateProgress()"></div>
+          <div class="field-group"><label class="field-label">FR (cpm)</label><input type="number" name="eg_fr" class="field-input" placeholder="16" oninput="updateProgress()"></div>
+          <div class="field-group"><label class="field-label">SpO₂ (%) à l'Air Ambiant</label><input type="number" name="eg_spo2" class="field-input" placeholder="98" oninput="updateProgress()"></div>
+        </div>
+        <div class="fields-row-3">
+          <div class="field-group"><label class="field-label">Poids (kg)</label><input type="number" name="eg_poids" class="field-input" placeholder="70" oninput="updateProgress()"></div>
+          <div class="field-group"><label class="field-label">Taille (cm)</label><input type="number" name="eg_taille" class="field-input" placeholder="170" oninput="updateProgress()"></div>
+          <div class="field-group"><label class="field-label">IMC</label><input type="text" name="eg_imc" class="field-input" readonly id="imc_display"></div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Tour de taille (cm)</label>
+          <input type="number" name="eg_tour_taille" class="field-input" placeholder="Normal: <80 ♀, <94 ♂" oninput="updateProgress()">
+        </div>
+      </div>
+
+      <!-- 5.2 Examen Ganglionnaire (full from v1) -->
+      <div class="subsection">
+        <div class="subsection-title">5.2 — Examen Ganglionnaire</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_gang_aires_libres" onchange="updateProgress()"><span>Les aires ganglionnaires sont libres</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_gang_sans_anomalie" onchange="toggleGangDetail(this); updateProgress()"><span>L'examen est sans anomalie aux niveaux des différentes aires</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_gang_troisier" onchange="updateProgress()"><span>Ganglion de Troisier absent (sus-claviculaire gauche)</span></label>
+        </div>
+
+        <!-- Bouton pour documenter une anomalie si "sans anomalie" N'EST PAS coché -->
+        <div id="gang_anomalie_btn" style="margin-top:8px;">
+          <button type="button" onclick="document.getElementById('gang_anomalie_panel').style.display = document.getElementById('gang_anomalie_panel').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--red); color:white; border:none; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer;">⚠️ Documenter une adénopathie / anomalie</button>
+        </div>
+
+        <!-- Panneau détail adénopathies -->
+        <div id="gang_anomalie_panel" style="display:none; margin-top:12px; padding:14px; background:#fff5f5; border-left:3px solid var(--red); border-radius:8px;">
+          <div class="subsubsection-title" style="color:var(--red); margin-bottom:10px;">⚠️ Aires ganglionnaires palpées</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:12px;">
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_sous_mentales" onchange="updateProgress()"><span>Sous-mentales</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_jugulo_carotidiennes" onchange="updateProgress()"><span>Jugulo-carotidiennes</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_sus_claviculaires" onchange="updateProgress()"><span>Sus-claviculaires</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_occipitales" onchange="updateProgress()"><span>Occipitales</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_spinales" onchange="updateProgress()"><span>Spinales</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_sous_maxillaires" onchange="updateProgress()"><span>Sous-maxillaires</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_mastoidiennes" onchange="updateProgress()"><span>Mastoïdiennes</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_pre_auriculaires" onchange="updateProgress()"><span>Pré-auriculaires</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_parotidienne" onchange="updateProgress()"><span>Parotidienne</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_axillaires" onchange="updateProgress()"><span>Axillaires</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_sus_epi_trochleennes" onchange="updateProgress()"><span>Sus-épi-trochléennes</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_inguinales" onchange="updateProgress()"><span>Inguinales</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="gang_retro_crurales" onchange="updateProgress()"><span>Rétro-crurales</span></label>
+          </div>
+
+          <div class="subsubsection-title" style="margin-bottom:8px;">Caractéristiques des adénopathies</div>
+          <div class="fields-row" style="margin-bottom:10px;">
+            <div class="field-group">
+              <label class="field-label">Nombre</label>
+              <select name="adp_nombre" class="field-input" onchange="updateProgress()">
+                <option value="">—</option>
+                <option value="Unique">Unique</option>
+                <option value="Polyadénopathie">Polyadénopathie</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Taille</label>
+              <select name="adp_taille" class="field-input" onchange="updateProgress()">
+                <option value="">—</option>
+                <option value="<1 cm (non pathologique)">&lt;1 cm (non pathologique)</option>
+                <option value=">1 cm (pathologique)">&gt;1 cm (pathologique)</option>
+              </select>
+            </div>
+          </div>
+          <div class="fields-row-3" style="margin-bottom:10px;">
+            <div class="field-group">
+              <label class="field-label">Consistance</label>
+              <select name="adp_consistance" class="field-input" onchange="updateProgress()">
+                <option value="">—</option>
+                <option value="Dure">Dure</option>
+                <option value="Ferme">Ferme</option>
+                <option value="Souple">Souple</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Sensibilité</label>
+              <select name="adp_sensibilite" class="field-input" onchange="updateProgress()">
+                <option value="">—</option>
+                <option value="Douloureuse">Douloureuse</option>
+                <option value="Indolore">Indolore</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Mobilité</label>
+              <select name="adp_mobilite" class="field-input" onchange="updateProgress()">
+                <option value="">—</option>
+                <option value="Fixe (adhérente)">Fixe (adhérente)</option>
+                <option value="Mobile">Mobile</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Description complémentaire</label>
+            <textarea name="ep_gang_details" class="field-input" placeholder="Site précis, taille en cm, contours, adhérence aux plans profonds…" oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.3 Examen Abdominal -->
+      <div class="subsection">
+        <div class="subsection-title">5.3 — Examen Abdominal</div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">👀 Inspection</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="abd_resp_normale" onchange="updateProgress()"><span>Respiration abdominale normale</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_deformation" onchange="updateProgress()"><span>Pas de déformation ni distension abdominale</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_cicatrices" onchange="updateProgress()"><span>Pas de cicatrices chirurgicales</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_circulation_collaterale" onchange="updateProgress()"><span>Pas de circulation veineuse collatérale</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_voussures_vergetures" onchange="updateProgress()"><span>Pas de voussures, vergetures ni points de feu</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_ombilic_plisse" onchange="updateProgress()"><span>Ombilic bien plissé</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_teguments_normaux" onchange="updateProgress()"><span>Téguments d'aspect normal</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_asterixis" onchange="updateProgress()"><span>Pas d'astérixis</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_leuconychie_erytheme" onchange="updateProgress()"><span>Pas de leuconychie ni érythème palmaire</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">🖐️ Palpation</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="abd_souple_depressible" onchange="updateProgress()"><span>Abdomen souple et dépressible</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_defense_contracture" onchange="updateProgress()"><span>Pas de défense, contracture ni sensibilité localisée</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_organomegalie" onchange="updateProgress()"><span>Pas d'organomégalie (SPM, HPM)</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_hepatomegalie" onchange="updateProgress()"><span>Hépatomégalie présente</span></label>
+          </div>
+          <div class="field-group" style="margin-top:6px; margin-left:36px;">
+            <label class="field-label">Flèche hépatique (cm)</label>
+            <input type="number" name="abd_fleche_hepatique" class="field-input" placeholder="Ex: 12" step="0.5" oninput="updateProgress()">
+          </div>
+          <div class="check-list" style="margin-top:4px;">
+            <label class="check-item"><input type="checkbox" name="abd_splenomegalie" onchange="updateProgress()"><span>Splénomégalie présente</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_contact_lombaire" onchange="updateProgress()"><span>Pas de contact lombaire</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_masse_palpable" onchange="updateProgress()"><span>Pas de masse palpable</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_hernie" onchange="updateProgress()"><span>Orifices herniaires libres</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_signe_flot" onchange="updateProgress()"><span>Pas de signe du flot (ascite)</span></label>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">Zone douloureuse</label>
+            <input type="text" name="abd_zone_douloureuse" class="field-input" placeholder="Ex: Fosse iliaque droite, hypochondre gauche…" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">🔊 Percussion</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="abd_pas_matite" onchange="updateProgress()"><span>Pas de matité déclive (pas d'ascite)</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_tympanisme_normal" onchange="updateProgress()"><span>Tympanisme normal sur les 9 régions</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_meteorisme" onchange="updateProgress()"><span>Pas de météorisme</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">🩺 Auscultation</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="abd_transit_audible" onchange="updateProgress()"><span>Bruits hydro-aériques présents (transit audible)</span></label>
+            <label class="check-item"><input type="checkbox" name="abd_pas_souffle_abdominal" onchange="updateProgress()"><span>Pas de souffle aortique ni rénal</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Toucher Rectal (TR)</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="tr_non_realise" onchange="updateProgress()"><span>Non réalisé</span></label>
+            <label class="check-item"><input type="checkbox" name="tr_fissures" onchange="updateProgress()"><span>Fissures à l'inspection externe</span></label>
+            <label class="check-item"><input type="checkbox" name="tr_hemorroides" onchange="updateProgress()"><span>Hémorroïdes</span></label>
+            <label class="check-item"><input type="checkbox" name="tr_cri_douglas" onchange="updateProgress()"><span>Cri de Douglas (péritonite)</span></label>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">TR – Tonus / Prostate / Contenu / Doigtier</label>
+            <textarea name="tr_details" class="field-input" placeholder="Précisions…" oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.4 Cardiaque -->
+      <div class="subsection">
+        <div class="subsection-title">5.4 — Examen Cardiaque</div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Signes périphériques</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="card_pas_hippocratisme" onchange="updateProgress()"><span>Pas d'hippocratisme digital</span></label>
+            <label class="check-item"><input type="checkbox" name="card_pas_xanthomes" onchange="updateProgress()"><span>Pas de xanthomes</span></label>
+            <label class="check-item"><input type="checkbox" name="card_trc_normal" onchange="updateProgress()"><span>TRC normal &lt; 2 secondes</span></label>
+            <label class="check-item"><input type="checkbox" name="card_pas_jvp" onchange="updateProgress()"><span>Pas d'élévation de la pression veineuse jugulaire (JVP)</span></label>
+            <label class="check-item"><input type="checkbox" name="card_pas_cyanose_centrale" onchange="updateProgress()"><span>Pas de cyanose centrale</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">👀 Inspection & 🖐️ Palpation</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_card_insp_thorax_symetrique" onchange="updateProgress()"><span>Thorax symétrique, pas de déformation</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_insp_pas_circulation" onchange="updateProgress()"><span>Pas de circulation veineuse collatérale thoracique</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_insp_pas_oedeme_mi" onchange="updateProgress()"><span>Pas d'œdème des membres inférieurs</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_palp_choc_pointe" onchange="updateProgress()"><span>Choc de pointe bien perçu, punctiforme, non déplacé</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_palp_harzer_negatif" onchange="updateProgress()"><span>Signe de Harzer négatif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_palp_pas_thrill" onchange="updateProgress()"><span>Pas de thrill (frémissement) sus-sternal</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_palp_pas_reflux" onchange="updateProgress()"><span>Pas de reflux hépato-jugulaire</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">🩺 Auscultation cardiaque</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_bruits_coeur_percus" onchange="updateProgress()"><span>B1 et B2 bien perçus aux 4 foyers</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_systole_diastole_libres" onchange="updateProgress()"><span>Systole et diastole libres à chaque foyer</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_frottement" onchange="updateProgress()"><span>Pas de frottement péricardique</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_sons_surajoutes" onchange="updateProgress()"><span>Pas de B3, B4 ni de souffle</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_pas_insuffisance" onchange="updateProgress()"><span>Pas d'insuffisance cardiaque droite ni gauche</span></label>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">Rythme / Souffle (si présent)</label>
+            <textarea name="ep_card_details" class="field-input" placeholder="Rythme, souffle : siège, temps, timbre, irradiation, intensité /6…" oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.5 Pulmonaire -->
+      <div class="subsection">
+        <div class="subsection-title">5.5 — Examen Pleuro-Pulmonaire</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="pulm_thorax_symetrique" onchange="updateProgress()"><span>Thorax symétrique, ampliation thoracique normale</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_pas_tirage" onchange="updateProgress()"><span>Pas de tirage ni signes de lutte respiratoire</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_pas_cyanose" onchange="updateProgress()"><span>Pas de cyanose</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_vv_normaux" onchange="updateProgress()"><span>Vibrations vocales symétriques et normales</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_mv_bilateral" onchange="updateProgress()"><span>Murmure vésiculaire présent et symétrique bilatéralement</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_pas_rales" onchange="updateProgress()"><span>Pas de râles crépitants ni sibilants</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_pas_matite" onchange="updateProgress()"><span>Pas de matité à la percussion (pas d'épanchement)</span></label>
+          <label class="check-item"><input type="checkbox" name="pulm_pas_frottement_pleural" onchange="updateProgress()"><span>Pas de frottement pleural</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Précisions / anomalies pulmonaires</label>
+          <textarea name="pulm_details" class="field-input" placeholder="Ex: crépitants bases gauches, syndrome de condensation…" oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+
+      <!-- 5.6 Neurologique -->
+      <div class="subsection">
+        <div class="subsection-title">5.6 — Examen Neurologique</div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Conscience & Orientation</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_conscient" onchange="updateProgress()"><span>Conscient, alerte</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_oriente_tps_espace" onchange="updateProgress()"><span>Orienté dans le temps et l'espace</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_confusion" onchange="updateProgress()"><span>Pas de confusion ni de troubles cognitifs</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Motricité & Coordination</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_moteur" onchange="updateProgress()"><span>Pas de déficit moteur aux 4 membres</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_sensitif" onchange="updateProgress()"><span>Pas de déficit sensitif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_ataxie" onchange="updateProgress()"><span>Pas d'ataxie cérébelleuse (marche, doigt-nez normaux)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_babinski_negatif" onchange="updateProgress()"><span>Signe de Babinski négatif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_rot_present" onchange="updateProgress()"><span>ROT présents et symétriques aux 4 membres</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_clonus" onchange="updateProgress()"><span>Pas de clonus</span></label>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">Précisions ROT / motricité</label>
+            <input type="text" name="ep_neuro_rot_details" class="field-input" placeholder="Ex: ROT vifs MS, abolis MI" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Signes méningés</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_nuque_souple" onchange="updateProgress()"><span>Nuque souple (pas de raideur méningée)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_kernig" onchange="updateProgress()"><span>Signe de Kernig négatif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_brudzinski" onchange="updateProgress()"><span>Signe de Brudzinski négatif</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Examen cervical</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_cerv_insp_normal" onchange="updateProgress()"><span>Pas de tuméfaction, turgescence jugulaire, goitre</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_cerv_thyroide_normale" onchange="updateProgress()"><span>Corps thyroïdien de taille normale, mobile à la déglutition</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_cerv_pas_adp" onchange="updateProgress()"><span>Pas d'adénopathies cervicales</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.7 Ostéo-articulaire -->
+      <div class="subsection">
+        <div class="subsection-title">5.7 — Examen Ostéo-Articulaire</div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label class="field-label">Localisation douleur</label>
+            <input type="text" name="ep_oa_douleur_localisation" class="field-input" placeholder="Ex: genou droit" oninput="updateProgress()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">EVA /10</label>
+            <input type="number" name="ep_oa_intensite_eva" class="field-input" placeholder="5" min="0" max="10" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_oa_raideur_matinale" onchange="updateProgress()"><span>Raideur matinale présente</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Précisions (GALS, rachis, articulations…)</label>
+          <textarea name="ep_oa_details" class="field-input" placeholder="Mécanique / inflammatoire, amplitude, tests…" oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+
+      <!-- 5.8 Uro-génital -->
+      <div class="subsection">
+        <div class="subsection-title">5.8 — Examen Uro-Génital</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_ug_pas_globe_vesical" onchange="updateProgress()"><span>Pas de globe vésical</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_ug_pas_douleur_fosaillon" onchange="updateProgress()"><span>Pas de douleur à la palpation des fosses lombaires</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_ug_giordano_negatif" onchange="updateProgress()"><span>Signe de Giordano négatif</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Précisions (prostate, OGE, TV…)</label>
+          <textarea name="ep_ug_details" class="field-input" placeholder="Prostate, organes génitaux externes, toucher vaginal…" oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+
+      <!-- 5.9 Cutané & Buccal -->
+      <div class="subsection">
+        <div class="subsection-title">5.9 — Examen Cutané &amp; Cavité Buccale</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_cut_normal" onchange="updateProgress()"><span>Téguments sans lésion cutanée particulière</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_cut_pas_paleur" onchange="updateProgress()"><span>Pas de pâleur cutanée</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_cut_pas_ictere" onchange="updateProgress()"><span>Pas d'ictère</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_cut_pas_cyanose2" onchange="updateProgress()"><span>Pas de cyanose</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Lésions cutanées décrites (si présentes)</label>
+          <textarea name="ep_cut_lesions" class="field-input" placeholder="Macule, papule, vésicule, bulle, pustule, plaque…" oninput="updateProgress()"></textarea>
+        </div>
+        <div class="check-list" style="margin-top:6px;">
+          <label class="check-item"><input type="checkbox" name="ep_cb_normal" onchange="updateProgress()"><span>Cavité buccale sans anomalie (langue, lèvres, gencives normaux)</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Anomalies buccales</label>
+          <input type="text" name="ep_cb_anomalies" class="field-input" placeholder="Haleine cétonique, aphtes, angine, macroglossie…" oninput="updateProgress()">
+        </div>
+      </div>
+
+      <!-- Zone libre -->
+      <div class="subsection">
+        <div class="subsection-title">Zone Libre — Autres examens spécialisés</div>
+        <div class="field-group">
+          <textarea name="exam_autres" class="field-input" rows="3" placeholder="Fond d'œil, examen gynécologique, examen du sein, dermatologique, ORL…" oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <!-- ═══ 6. CONCLUSION & HYPOTHÈSES DIAGNOSTIQUES ═══ -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-num">6</div>
+      <div class="section-title">Conclusion Clinique &amp; Hypothèses Diagnostiques<div class="section-subtitle">Résumé · Table diagnostique</div></div>
+      <span class="section-badge" id="badge-6">—</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="section-body">
+
+      <!-- Résumé clinique -->
+      <div class="field-group">
+        <label class="field-label">Résumé clinique</label>
+        <textarea name="cc_resume_clinique" class="field-input" placeholder="Au total, il s'agit de M./Mme …, âgé(e) de …, qui consulte pour…" oninput="updateProgress()" rows="4"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">et chez qui l'examen clinique objective</label>
+        <textarea name="cc_signes_physiques" class="field-input" placeholder="Signes positifs trouvés à l'examen physique…" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Signes fonctionnels résumés</label>
+        <textarea name="cc_signes_fonctionnels" class="field-input" placeholder="Symptômes rapportés par le patient… ; sans autres signes associés." oninput="updateProgress()"></textarea>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Hypothèses diagnostiques table -->
+      <div style="margin-bottom:8px;">
+        <div class="subsection-title" style="margin-top:0;">Hypothèses Diagnostiques</div>
+      </div>
+      <div class="note-box" style="background:#fff8e1; border-color:var(--orange); color:#7d4e00; margin-bottom:14px;">
+        <strong>💡 Guide de raisonnement clinique :</strong><br>
+        Penser aux <strong>diagnostics les plus probables</strong> (correspondent au tableau clinique + terrain) · aux <strong>diagnostics les plus graves / urgents</strong> (à ne jamais manquer, même si moins probables) · aux <strong>diagnostics les plus adaptés au contexte</strong> (âge, sexe, ATCD, épidémiologie, immunodépression…)
+      </div>
+      <div class="diag-table-wrap">
+        <table class="diag-table" id="diagTable">
+          <thead>
+            <tr>
+              <th style="width:28px;">#</th>
+              <th>Hypothèse Diagnostique</th>
+              <th>Arguments Pour</th>
+              <th>Arguments Contre</th>
+              <th style="width:34px;"></th>
+            </tr>
+          </thead>
+          <tbody id="diagTableBody">
+            <!-- rows added by JS -->
+          </tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addDiagRow()">+ Ajouter une hypothèse</button>
+
+    </div>
+  </div>
+
+  <!-- ═══ 7. CAT ═══ -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-num">7</div>
+      <div class="section-title">CAT — Conduite À Tenir<div class="section-subtitle">Diagnostique et thérapeutique</div></div>
+      <span class="section-badge" id="badge-7">—</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="section-body">
+      <div class="subsection">
+        <div class="subsection-title">7.1 — Diagnostique</div>
+        
+        <!-- Bilan Biologique -->
+        <div class="subsection">
+          <div class="subsection-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="check-item" style="padding:0; margin:0; background:none; min-height:auto;"><input type="checkbox" name="cat_biologie" onchange="updateProgress()"> <span style="font-size:0.88rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.3px;">Bilan biologique (NFS, bilan hépatique, rénal, ionogramme…)</span></label>
+            <div class="unit-toggle" style="display:flex; align-items:center; gap:10px; font-size:0.8rem; font-weight:normal;">
+              <label><input type="radio" name="unit_system" value="SI" checked onchange="changeUnitSystem('SI');"> SI</label>
+              <label><input type="radio" name="unit_system" value="USUAL" onchange="changeUnitSystem('USUAL');"> Usuelles</label>
+            </div>
+          </div>
+          <div class="note-box">💡 Cochez les examens réalisés et saisissez les valeurs. Les couleurs indiquent si la valeur est dans les normes (Vert), basse (Orange) ou haute (Rouge).</div>
+
+          <!-- Hémogramme / NFS -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Hémogramme / NFS</div>
+            <table class="bio-table" id="bio_hemogramme">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Hémostase -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Hémostase et Coagulation</div>
+            <table class="bio-table" id="bio_hemostase">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Ionogramme -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Ionogramme Sanguin</div>
+            <table class="bio-table" id="bio_ionogramme">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Fonction Rénale -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Fonction Rénale</div>
+            <table class="bio-table" id="bio_renal">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Fonction Hépatique -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Fonction Hépatique</div>
+            <table class="bio-table" id="bio_hepatic">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Bilan Lipidique -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Bilan Lipidique</div>
+            <table class="bio-table" id="bio_lipidique">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Autres Bilans (Phospho, Fer, Inflam) -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Autres Bilans (Phospho, Fer, Inflam)</div>
+            <table class="bio-table" id="bio_autres_bio">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Gaz du Sang -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Gaz du Sang Artériel</div>
+            <table class="bio-table" id="bio_gds">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Endocrino -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">Endocrinologie</div>
+            <table class="bio-table" id="bio_endocrino">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- LCR / Urines -->
+          <div class="subsubsection">
+            <div class="subsubsection-title">LCR et Urines</div>
+            <table class="bio-table" id="bio_lcr_urines">
+              <thead>
+                <tr>
+                  <th style="width:30px;">✓</th>
+                  <th>Paramètre</th>
+                  <th>Valeur Patient</th>
+                  <th>Réf. (SI)</th>
+                  <th>Réf. (Usual)</th>
+                  <th>Unité</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Imagerie -->
+        <div class="subsection">
+          <div class="subsection-title">
+            <label class="check-item" style="padding:0; margin:0; background:none; min-height:auto;"><input type="checkbox" name="cat_imagerie" onchange="updateProgress()"> <span style="font-size:0.88rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.3px;">Imagerie (RX, Echo, TDM, IRM…)</span></label>
+          </div>
+          <div class="field-group" style="margin-top:10px;">
+            <textarea name="cat_imagerie_details" class="field-input" placeholder="Ex: Échographie abdominale, RX Thorax F+P, TDM cérébrale..." oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+
+        <!-- Autres examens -->
+        <div class="subsection">
+          <div class="subsection-title">
+            <label class="check-item" style="padding:0; margin:0; background:none; min-height:auto;"><input type="checkbox" name="cat_autres_examens" onchange="updateProgress()"> <span style="font-size:0.88rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.3px;">Autres examens (ECG, endoscopie, biopsie, électrophysiologie…)</span></label>
+          </div>
+          <div class="field-group" style="margin-top:10px;">
+            <textarea name="cat_autres_examens_details" class="field-input" placeholder="Ex: ECG, endoscopie digestive, biopsie rénale, EMG..." oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+
+        <div class="field-group" style="margin-top:10px;">
+          <label class="field-label">Plan d'examens complémentaires hiérarchisés</label>
+          <textarea name="cat_examens_details" class="field-input" placeholder="En urgence: 1.&#10;En différé: 2." oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">7.2 — Thérapeutique</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="cat_ther_etiologique" onchange="updateProgress()"><span>Traitement étiologique (traiter la cause)</span></label>
+          <label class="check-item"><input type="checkbox" name="cat_ther_symptomatique" onchange="updateProgress()"><span>Traitement symptomatique (soulager les symptômes)</span></label>
+          <label class="check-item"><input type="checkbox" name="cat_ther_mesures_hygiene" onchange="updateProgress()"><span>Mesures hygiéno-diététiques</span></label>
+          <label class="check-item"><input type="checkbox" name="cat_ther_surveillance" onchange="updateProgress()"><span>Plan de surveillance et de suivi défini</span></label>
+          <label class="check-item"><input type="checkbox" name="cat_ther_education" onchange="updateProgress()"><span>Éducation thérapeutique du patient planifiée</span></label>
+        </div>
+        <div class="field-group" style="margin-top:10px;">
+          <label class="field-label">Détails du traitement</label>
+          <textarea name="cat_traitement_details" class="field-input" placeholder="Médicaments, doses, durée, ordonnance…" oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="sticky-bar">
+  <button class="btn btn-danger" onclick="resetAll()">🗑 Réinit.</button>
+  <button class="btn btn-primary" onclick="generateDocx()" id="docxBtn">📄 Word</button>
+  <button class="btn btn-success" onclick="generateGoogleDocs()">📑 Google Docs</button>
+</div>
+
+<script>
+// ─── Toggle sections ───────────────────────────────────────────────────────
+function toggleSection(h) {
+  const b = h.nextElementSibling, icon = h.querySelector('.toggle-icon');
+  const open = b.classList.contains('open');
+  b.classList.toggle('open', !open);
+  icon.textContent = open ? '+' : '−';
+  icon.classList.toggle('open', !open);
+}
+function expandAll()  { document.querySelectorAll('.section-body').forEach(b => { b.classList.add('open'); const i = b.previousElementSibling.querySelector('.toggle-icon'); if(i){i.textContent='−';i.classList.add('open');} }); }
+function collapseAll(){ document.querySelectorAll('.section-body').forEach(b => { b.classList.remove('open'); const i = b.previousElementSibling.querySelector('.toggle-icon'); if(i){i.textContent='+';i.classList.remove('open');} }); }
+
+// ─── Age / DOB auto-calc ──────────────────────────────────────────────────
+let ageUpdating = false;
+function calcAgeFromDOB() {
+  if (ageUpdating) return;
+  const dob = document.querySelector('[name="date_naissance"]').value;
+  if (!dob) return;
+  const today = new Date(), birth = new Date(dob);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  ageUpdating = true;
+  document.getElementById('age_field').value = age + ' ans';
+  ageUpdating = false;
+}
+function calcDOBFromAge() {
+  if (ageUpdating) return;
+  const ageVal = document.getElementById('age_field').value.replace(/\D/g,'').trim();
+  if (!ageVal) return;
+  const yearEst = new Date().getFullYear() - parseInt(ageVal);
+  const dobEl = document.querySelector('[name="date_naissance"]');
+  if (!dobEl.value) {
+    ageUpdating = true;
+    dobEl.value = `${yearEst}-01-01`;
+    ageUpdating = false;
+  }
+}
+
+// ─── Toggle ATCD details ───────────────────────────────────────────────────
+function toggleAtcdDetails(key) {
+  const cb = document.querySelector(`[name="atcd_${key}"]`);
+  const details = document.getElementById(`atcd_details_${key}`);
+  if (details) details.style.display = cb.checked ? 'block' : 'none';
+}
+
+// ─── Toggle Familiaux / contextual details ────────────────────────────────
+function toggleFamDetail(key) {
+  const panel = document.getElementById(`detail_${key}`);
+  if (!panel) return;
+  // The checkbox that called this has name = atcd_{key} or hdM_{key}
+  const trigger = document.querySelector(`[name="atcd_${key}"]`) ||
+                  document.querySelector(`[name="hdM_${key.replace('_detail','')}"]`) ||
+                  document.querySelector(`[name="${key}"]`);
+  if (trigger) panel.style.display = trigger.checked ? 'block' : 'none';
+}
+
+// ─── Toggle Ganglionnaire anomalie panel ──────────────────────────────────
+function toggleGangDetail(cb) {
+  const btn = document.getElementById('gang_anomalie_btn');
+  const panel = document.getElementById('gang_anomalie_panel');
+  if (cb.checked) {
+    // "sans anomalie" checked → hide anomalie tools
+    if (btn) btn.style.display = 'none';
+    if (panel) panel.style.display = 'none';
+  } else {
+    // unchecked → show the documenter button
+    if (btn) btn.style.display = 'block';
+  }
+}
+
+// ─── ECOG preview ─────────────────────────────────────────────────────────
+function showEcog() {
+  const val = document.querySelector('[name="ecog_score"]').value;
+  const el = document.getElementById('ecog_preview');
+  if (!val) { el.innerHTML = ''; return; }
+  const labels = { '0':'OMS 0 — Aucune limitation, état pré-morbide','1':'OMS 1 — Ambulant, travaux légers possibles','2':'OMS 2 — Ambulant, incapable de travailler','3':'OMS 3 — Confiné au lit/fauteuil >50% du temps','4':'OMS 4 — Incapacité totale, confiné au lit/fauteuil','5':'OMS 5 — Décédé' };
+  el.innerHTML = `<span class="ecog-preview ecog-${val}">${labels[val]}</span>`;
+}
+
+// ─── Diagnostic table ─────────────────────────────────────────────────────
+let diagRowCount = 0;
+function addDiagRow() {
+  diagRowCount++;
+  const tbody = document.getElementById('diagTableBody');
+  const tr = document.createElement('tr');
+  tr.id = 'diagRow_' + diagRowCount;
+  tr.innerHTML = `
+    <td class="row-num">${diagRowCount}</td>
+    <td><textarea name="diag_hyp_${diagRowCount}" placeholder="Hypothèse ${diagRowCount}…" oninput="updateProgress()"></textarea></td>
+    <td><textarea name="diag_pour_${diagRowCount}" placeholder="- Terrain&#10;- Antécédents&#10;- Signes fonctionnels&#10;- Signes physiques" oninput="updateProgress()"></textarea></td>
+    <td><textarea name="diag_contre_${diagRowCount}" placeholder="- Terrain&#10;- Antécédents&#10;- Signes fonctionnels&#10;- Signes physiques" oninput="updateProgress()"></textarea></td>
+    <td class="del-cell"><button class="del-btn" onclick="removeDiagRow('diagRow_${diagRowCount}')" title="Supprimer">✕</button></td>`;
+  tbody.appendChild(tr);
+  updateProgress();
+}
+function removeDiagRow(id) {
+  const row = document.getElementById(id);
+  if (row) { row.remove(); renumberDiagRows(); updateProgress(); }
+}
+function renumberDiagRows() {
+  document.querySelectorAll('#diagTableBody tr').forEach((tr, i) => {
+    const num = tr.querySelector('.row-num');
+    if (num) num.textContent = i + 1;
+  });
+}
+// Init 3 rows
+addDiagRow(); addDiagRow(); addDiagRow();
+
+// ─── IMC ──────────────────────────────────────────────────────────────────
+function calcIMC() {
+  const p = parseFloat(document.querySelector('[name="eg_poids"]')?.value);
+  const t = parseFloat(document.querySelector('[name="eg_taille"]')?.value);
+  const el = document.getElementById('imc_display');
+  if (p && t) {
+    const imc = (p/((t/100)**2)).toFixed(1);
+    const cat = imc<18.5?'Maigreur':imc<25?'Normal':imc<30?'Surpoids':'Obésité';
+    el.value = `${imc} (${cat})`;
+    document.querySelector('[name="eg_imc"]').value = el.value;
+  } else el.value = '';
+}
+document.querySelector('[name="eg_poids"]')?.addEventListener('input', calcIMC);
+document.querySelector('[name="eg_taille"]')?.addEventListener('input', calcIMC);
+
+// ─── Progress ─────────────────────────────────────────────────────────────
+function updateProgress() {
+  let filled = 0, total = 0;
+  document.querySelectorAll('input[type="text"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],textarea,select').forEach(el => {
+    if (el.readOnly) return;
+    total++;
+    if (el.value && el.value.trim()) filled++;
+  });
+  document.querySelectorAll('input[type="checkbox"]').forEach(el => { total++; if(el.checked) filled++; });
+  const pct = total ? Math.min(100, Math.round((filled/total)*100)) : 0;
+  document.getElementById('progressBar').style.width = pct+'%';
+  [1,2,3,4,5,6,7,'5-10'].forEach(n => updateBadge(n));
+}
+function updateBadge(n) {
+  const badge = document.getElementById('badge-'+n);
+  if (!badge) return;
+  const card = badge.closest('.section-card');
+  if (!card) return;
+  const body = card.querySelector('.section-body');
+  const checked = body.querySelectorAll('input[type="checkbox"]:checked').length;
+  const totalCb = body.querySelectorAll('input[type="checkbox"]').length;
+  const filled = Array.from(body.querySelectorAll('input[type="text"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],textarea,select')).filter(el=>el.value&&el.value.trim()&&!el.readOnly).length;
+  if(filled>0||checked>0){badge.textContent=`✓ ${checked}/${totalCb} · ${filled} champs`;badge.classList.add('done');}
+  else{badge.textContent='—';badge.classList.remove('done');}
+}
+
+
+// ─── Biological Values Data ──────────────────────────────────────────────
+let currentUnitSystem = 'SI';
+
+const biologicalValues = {
+  hemogramme: [
+    { param: "Hématies (RBC)", rangesSI: { M: [4.3, 5.8], F: [4.0, 5.3] }, unitSI: "T/L", rangesUsual: { M: [4.3, 5.8], F: [4.0, 5.3] }, unitUsual: "x10⁶/mm³", factor: 1, sex: true },
+    { param: "Hémoglobine (Hb)", rangesSI: { M: [140, 180], F: [120, 160] }, unitSI: "g/L", rangesUsual: { M: [14, 18], F: [12, 16] }, unitUsual: "g/dL", factor: 0.1, sex: true },
+    { param: "Hématocrite (Hct)", rangesSI: { M: [0.40, 0.53], F: [0.37, 0.46] }, unitSI: "L/L", rangesUsual: { M: [40, 53], F: [37, 46] }, unitUsual: "%", factor: 100, sex: true },
+    { param: "VGM", rangesSI: { M: [82, 97], F: [82, 97] }, unitSI: "fL", rangesUsual: { M: [82, 97], F: [82, 97] }, unitUsual: "µm³", factor: 1, sex: false },
+    { param: "TCMH", rangesSI: { M: [28, 32], F: [24, 30] }, unitSI: "pg", rangesUsual: { M: [28, 32], F: [24, 30] }, unitUsual: "pg", factor: 1, sex: true },
+    { param: "CCMH", rangesSI: { M: [300, 350], F: [300, 350] }, unitSI: "g/L", rangesUsual: { M: [30, 35], F: [30, 35] }, unitUsual: "%", factor: 0.1, sex: false },
+    { param: "Leucocytes (WBC)", rangesSI: { M: [4.0, 10.0], F: [4.0, 10.0] }, unitSI: "G/L", rangesUsual: { M: [4000, 10000], F: [4000, 10000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "PNN (Neutrophiles)", rangesSI: { M: [2.0, 8.0], F: [2.0, 8.0] }, unitSI: "G/L", rangesUsual: { M: [2000, 8000], F: [2000, 8000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "PNE (Éosinophiles)", rangesSI: { M: [0, 0.5], F: [0, 0.5] }, unitSI: "G/L", rangesUsual: { M: [0, 500], F: [0, 500] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "PNB (Basophiles)", rangesSI: { M: [0, 0.1], F: [0, 0.1] }, unitSI: "G/L", rangesUsual: { M: [0, 100], F: [0, 100] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Lymphocytes", rangesSI: { M: [0.8, 4.0], F: [0.8, 4.0] }, unitSI: "G/L", rangesUsual: { M: [800, 4000], F: [800, 4000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Monocytes", rangesSI: { M: [0.1, 1.0], F: [0.1, 1.0] }, unitSI: "G/L", rangesUsual: { M: [100, 1000], F: [100, 1000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Plaquettes", rangesSI: { M: [150, 450], F: [150, 450] }, unitSI: "G/L", rangesUsual: { M: [150000, 450000], F: [150000, 450000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+    { param: "Réticulocytes", rangesSI: { M: [20, 80], F: [20, 80] }, unitSI: "G/L", rangesUsual: { M: [20000, 80000], F: [20000, 80000] }, unitUsual: "/mm³", factor: 1000, sex: false },
+  ],
+  hemostase: [
+    { param: "TP", rangesSI: { M: [70, 100], F: [70, 100] }, unitSI: "%", rangesUsual: { M: [70, 100], F: [70, 100] }, unitUsual: "%", factor: 1, sex: false },
+    { param: "TCA", rangesSI: { M: [30, 40], F: [30, 40] }, unitSI: "s", rangesUsual: { M: [30, 40], F: [30, 40] }, unitUsual: "s", factor: 1, sex: false },
+    { param: "INR", rangesSI: { M: [0.9, 1.2], F: [0.9, 1.2] }, unitSI: "-", rangesUsual: { M: [0.9, 1.2], F: [0.9, 1.2] }, unitUsual: "-", factor: 1, sex: false },
+    { param: "Fibrinogène", rangesSI: { M: [2, 4], F: [2, 4] }, unitSI: "g/L", rangesUsual: { M: [2, 4], F: [2, 4] }, unitUsual: "g/L", factor: 1, sex: false },
+    { param: "D-Dimères", rangesSI: { M: [0, 500], F: [0, 500] }, unitSI: "µg/L", rangesUsual: { M: [0, 500], F: [0, 500] }, unitUsual: "µg/L", factor: 1, sex: false },
+  ],
+  ionogramme: [
+    { param: "Sodium (Na+)", rangesSI: { M: [135, 145], F: [135, 145] }, unitSI: "mmol/L", rangesUsual: { M: [135, 145], F: [135, 145] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Potassium (K+)", rangesSI: { M: [3.5, 5.0], F: [3.5, 5.0] }, unitSI: "mmol/L", rangesUsual: { M: [3.5, 5.0], F: [3.5, 5.0] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Chlore (Cl-)", rangesSI: { M: [95, 105], F: [95, 105] }, unitSI: "mmol/L", rangesUsual: { M: [95, 105], F: [95, 105] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Bicarbonates", rangesSI: { M: [22, 30], F: [22, 30] }, unitSI: "mmol/L", rangesUsual: { M: [22, 30], F: [22, 30] }, unitUsual: "mEq/L", factor: 1, sex: false },
+    { param: "Protéines totales", rangesSI: { M: [65, 80], F: [65, 80] }, unitSI: "g/L", rangesUsual: { M: [65, 80], F: [65, 80] }, unitUsual: "g/L", factor: 1, sex: false },
+  ],
+  renal: [
+    { param: "Urée", rangesSI: { M: [2.5, 7.5], F: [2.5, 7.5] }, unitSI: "mmol/L", rangesUsual: { M: [0.15, 0.45], F: [0.15, 0.45] }, unitUsual: "g/L", factor: 0.06, sex: false },
+    { param: "Créatinine", rangesSI: { M: [60, 115], F: [45, 105] }, unitSI: "µmol/L", rangesUsual: { M: [7, 13], F: [5, 12] }, unitUsual: "mg/L", factor: 0.113, sex: true },
+    { param: "Acide Urique", rangesSI: { M: [180, 420], F: [150, 360] }, unitSI: "µmol/L", rangesUsual: { M: [30, 70], F: [25, 60] }, unitUsual: "mg/L", factor: 0.168, sex: true },
+  ],
+  hepatic: [
+    { param: "ALAT (SGPT)", rangesSI: { M: [0, 37], F: [0, 34] }, unitSI: "UI/L", rangesUsual: { M: [0, 37], F: [0, 34] }, unitUsual: "UI/L", factor: 1, sex: true },
+    { param: "ASAT (SGOT)", rangesSI: { M: [0, 41], F: [0, 35] }, unitSI: "UI/L", rangesUsual: { M: [0, 41], F: [0, 35] }, unitUsual: "UI/L", factor: 1, sex: true },
+    { param: "Gamma-GT", rangesSI: { M: [0, 55], F: [0, 38] }, unitSI: "UI/L", rangesUsual: { M: [0, 55], F: [0, 38] }, unitUsual: "UI/L", factor: 1, sex: true },
+    { param: "PAL", rangesSI: { M: [35, 130], F: [35, 130] }, unitSI: "UI/L", rangesUsual: { M: [35, 130], F: [35, 130] }, unitUsual: "UI/L", factor: 1, sex: false },
+    { param: "Bilirubine totale", rangesSI: { M: [0, 17], F: [0, 17] }, unitSI: "µmol/L", rangesUsual: { M: [0, 10], F: [0, 10] }, unitUsual: "mg/L", factor: 0.585, sex: false },
+    { param: "Glucose (à jeun)", rangesSI: { M: [3.9, 5.5], F: [3.9, 5.5] }, unitSI: "mmol/L", rangesUsual: { M: [0.70, 1.00], F: [0.70, 1.00] }, unitUsual: "g/L", factor: 0.18, sex: false },
+  ],
+  lipidique: [
+    { param: "Cholestérol total", rangesSI: { M: [0, 5.2], F: [0, 5.2] }, unitSI: "mmol/L", rangesUsual: { M: [0, 2.0], F: [0, 2.0] }, unitUsual: "g/L", factor: 0.387, sex: false },
+    { param: "HDL", rangesSI: { M: [1.0, 10], F: [1.3, 10] }, unitSI: "mmol/L", rangesUsual: { M: [0.4, 4], F: [0.5, 4] }, unitUsual: "g/L", factor: 0.387, sex: true },
+    { param: "LDL", rangesSI: { M: [0, 4.1], F: [0, 4.1] }, unitSI: "mmol/L", rangesUsual: { M: [0, 1.6], F: [0, 1.6] }, unitUsual: "g/L", factor: 0.387, sex: false },
+    { param: "Triglycérides", rangesSI: { M: [0.4, 1.7], F: [0.4, 1.7] }, unitSI: "mmol/L", rangesUsual: { M: [0.35, 1.5], F: [0.35, 1.5] }, unitUsual: "g/L", factor: 0.885, sex: false },
+  ],
+  autres_bio: [
+    { param: "Calcium (Ca2+)", rangesSI: { M: [2.2, 2.6], F: [2.2, 2.6] }, unitSI: "mmol/L", rangesUsual: { M: [90, 105], F: [90, 105] }, unitUsual: "mg/L", factor: 40, sex: false },
+    { param: "Phosphore (P)", rangesSI: { M: [0.8, 1.35], F: [0.8, 1.35] }, unitSI: "mmol/L", rangesUsual: { M: [25, 42], F: [25, 42] }, unitUsual: "mg/L", factor: 31, sex: false },
+    { param: "Fer sérique", rangesSI: { M: [10, 30], F: [10, 27] }, unitSI: "µmol/L", rangesUsual: { M: [55, 170], F: [55, 150] }, unitUsual: "µg/dL", factor: 5.66, sex: true },
+    { param: "Ferritine", rangesSI: { M: [50, 350], F: [30, 300] }, unitSI: "µg/L", rangesUsual: { M: [50, 350], F: [30, 300] }, unitUsual: "ng/mL", factor: 1, sex: true },
+    { param: "CRP", rangesSI: { M: [0, 6], F: [0, 6] }, unitSI: "mg/L", rangesUsual: { M: [0, 6], F: [0, 6] }, unitUsual: "mg/L", factor: 1, sex: false },
+    { param: "VS 1h", rangesSI: { M: [0, 7], F: [0, 15] }, unitSI: "mm", rangesUsual: { M: [0, 7], F: [0, 15] }, unitUsual: "mm", factor: 1, sex: true },
+  ],
+  gds: [
+    { param: "pH Artériel", rangesSI: { M: [7.38, 7.42], F: [7.38, 7.42] }, unitSI: "", rangesUsual: { M: [7.38, 7.42], F: [7.38, 7.42] }, unitUsual: "", factor: 1, sex: false },
+    { param: "pCO₂ Artériel", rangesSI: { M: [38, 42], F: [38, 42] }, unitSI: "mmHg", rangesUsual: { M: [5.1, 5.6], F: [5.1, 5.6] }, unitUsual: "kPa", factor: 0.133, sex: false },
+    { param: "pO₂ Artériel", rangesSI: { M: [75, 95], F: [75, 95] }, unitSI: "mmHg", rangesUsual: { M: [10, 12.6], F: [10, 12.6] }, unitUsual: "kPa", factor: 0.133, sex: false },
+  ],
+  endocrino: [
+    { param: "TSH", rangesSI: { M: [0.3, 6], F: [0.3, 6] }, unitSI: "mU/L", rangesUsual: { M: [0.3, 6], F: [0.3, 6] }, unitUsual: "mU/L", factor: 1, sex: false },
+    { param: "T4 libre", rangesSI: { M: [10, 23], F: [10, 23] }, unitSI: "pmol/L", rangesUsual: { M: [8, 18], F: [8, 18] }, unitUsual: "ng/L", factor: 0.777, sex: false },
+  ],
+  lcr_urines: [
+    { param: "Protéines LCR", rangesSI: { M: [0.15, 0.40], F: [0.15, 0.40] }, unitSI: "g/L", rangesUsual: { M: [0.15, 0.40], F: [0.15, 0.40] }, unitUsual: "g/L", factor: 1, sex: false },
+    { param: "Glucose LCR", rangesSI: { M: [2.5, 3.5], F: [2.5, 3.5] }, unitSI: "mmol/L", rangesUsual: { M: [0.45, 0.65], F: [0.45, 0.65] }, unitUsual: "g/L", factor: 0.18, sex: false },
+  ],
+};
+
+function getSex() {
+  const sexSelect = document.querySelector('[name="sexe"]');
+  return sexSelect ? sexSelect.value : '';
+}
+
+function changeUnitSystem(system) {
+  if (currentUnitSystem === system) return;
+  
+  document.querySelectorAll('.bio-table .value-input').forEach(input => {
+    const val = parseFloat(input.value);
+    if (!isNaN(val)) {
+      const cat = input.dataset.categoryKey;
+      const idx = parseInt(input.dataset.index);
+      const data = biologicalValues[cat][idx];
+      if (data && data.factor && data.factor !== 1) {
+        if (system === 'USUAL') {
+          input.value = (val * data.factor).toFixed(3).replace(/\.?0+$/, '');
+        } else {
+          input.value = (val / data.factor).toFixed(3).replace(/\.?0+$/, '');
+        }
+      }
+    }
+  });
+  
+  currentUnitSystem = system;
+  renderBiologicalTables();
+  // Re-check colors
+  document.querySelectorAll('.bio-table .value-input').forEach(input => checkBioValue({ target: input }));
+}
+
+function checkBioValue(event) {
+  const input = event.target;
+  const val = parseFloat(input.value);
+  if (isNaN(val)) { input.classList.remove('normal','low','high'); return; }
+  
+  const cat = input.dataset.categoryKey;
+  const idx = parseInt(input.dataset.index);
+  const data = biologicalValues[cat][idx];
+  const sex = getSex();
+  const ranges = currentUnitSystem === 'SI' ? data.rangesSI : data.rangesUsual;
+  const range = (data.sex && sex === 'Féminin') ? ranges.F : ranges.M;
+  
+  input.classList.remove('normal','low','high');
+  if (val >= range[0] && val <= range[1]) input.classList.add('normal');
+  else if (val < range[0]) input.classList.add('low');
+  else input.classList.add('high');
+  updateProgress();
+}
+
+function renderBiologicalTables() {
+  try {
+    const sex = getSex();
+    for (const cat in biologicalValues) {
+      const tbody = document.querySelector(`#bio_${cat} tbody`);
+      if (!tbody) {
+        console.warn(`Table body not found for category: #bio_${cat}`);
+        continue;
+      }
+      tbody.innerHTML = '';
+      biologicalValues[cat].forEach((data, idx) => {
+        try {
+          const rSI = data.rangesSI ? (data.sex && sex === 'Féminin' ? data.rangesSI.F : data.rangesSI.M) : null;
+          const rUsual = data.rangesUsual ? (data.sex && sex === 'Féminin' ? data.rangesUsual.F : data.rangesUsual.M) : null;
+          const unit = currentUnitSystem === 'SI' ? data.unitSI : data.unitUsual;
+          
+          const paramNameClean = data.param.replace(/\W/g, '_');
+          const inputName = `bio_${cat}_${paramNameClean}`;
+          const chkName = `bio_${cat}_${paramNameClean}_chk`;
+
+          const row = tbody.insertRow();
+          row.innerHTML = `
+            <td><input type="checkbox" name="${chkName}" onchange="updateProgress()"></td>
+            <td style="font-size:0.85rem;">${data.param}</td>
+            <td><input type="number" step="any" name="${inputName}" class="value-input" 
+                       data-param-key="${data.param}" data-category-key="${cat}" data-index="${idx}" oninput="checkBioValue(event)"></td>
+            <td style="color:#666; font-size:0.75rem;">${rSI ? rSI[0] + '–' + rSI[1] + ' ' + data.unitSI : '-'}</td>
+            <td style="color:#666; font-size:0.75rem;">${rUsual ? rUsual[0] + '–' + rUsual[1] + ' ' + data.unitUsual : '-'}</td>
+            <td style="font-weight:600; font-size:0.8rem;">${unit}</td>
+          `;
+        } catch (err) {
+          console.error(`Error rendering row for ${data.param} in category ${cat}:`, err);
+        }
+      });
+    }
+  } catch (err) {
+    console.error("Critical error in renderBiologicalTables:", err);
+  }
+}
+
+// Ensure tables are rendered when sex changes and on initial load
+document.querySelector('[name="sexe"]').addEventListener('change', () => {
+  renderBiologicalTables();
+  document.querySelectorAll('.bio-table .value-input').forEach(input => checkBioValue({ target: input }));
+});
+
+// ─── Toast ────────────────────────────────────────────────────────────────
+function showToast(m) { const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+
+// ─── Reset ────────────────────────────────────────────────────────────────
+function resetAll() {
+  if(!confirm('Voulez-vous vraiment effacer toute l\'observation ?')) return;
+  document.querySelectorAll('input[type="text"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],textarea').forEach(el=>el.value='');
+  document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
+  document.querySelectorAll('input[type="checkbox"]').forEach(el=>el.checked=false);
+  // Clear biological values
+  document.querySelectorAll('.bio-table .value-input').forEach(input => {
+    input.value = '';
+    input.classList.remove('normal', 'low', 'high');
+  });
+  document.getElementById('imc_display').value='';
+  document.getElementById('ecog_preview').innerHTML='';
+  // Reset diag table
+  document.getElementById('diagTableBody').innerHTML='';
+  diagRowCount=0;
+  addDiagRow(); addDiagRow(); addDiagRow();
+  updateProgress();
+  showToast('✅ Observation réinitialisée');
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────
+function v(name) { const el=document.querySelector(`[name="${name}"]`); return el?el.value.trim():''; }
+function isChecked(name) { const el=document.querySelector(`input[name="${name}"]`); return el?el.checked:false; }
+function checkedLabel(name) { const el=document.querySelector(`input[name="${name}"]`); if(!el||!el.checked) return ''; const lbl=el.closest('label'); return lbl?lbl.querySelector('span').textContent.trim():name; }
+
+// ─── Get diagnostic table rows ────────────────────────────────────────────
+function getDiagRows() {
+  const rows = [];
+  document.querySelectorAll('#diagTableBody tr').forEach(tr => {
+    const tas = tr.querySelectorAll('textarea');
+    if(tas.length>=3) {
+      const hyp=tas[0].value.trim(), pour=tas[1].value.trim(), contre=tas[2].value.trim();
+      if(hyp||pour||contre) rows.push({hyp,pour,contre});
+    }
+  });
+  return rows;
+}
+
+// ─── Build text ───────────────────────────────────────────────────────────
+function buildObservationText() {
+  const lines = [];
+  const date = new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  function h1(t){lines.push('','═══════════════════════════════════════════════',t.toUpperCase(),'═══════════════════════════════════════════════');}
+  function h2(t){lines.push('','--- '+t+' ---');}
+  function field(lbl,val){if(val)lines.push(`  ${lbl} : ${val}`);}
+  function chk(name,fb){if(isChecked(name))lines.push(`  ✔ ${fb||checkedLabel(name)}`);}
+
+  lines.push('OBSERVATION MÉDICALE');
+  lines.push(`Générée le : ${date}`);
+  if(v('clinicien_nom')) lines.push(`Clinicien : ${v('clinicien_nom')}${v('clinicien_fonction')?' ('+v('clinicien_fonction')+')':''}`);
+  if(v('obs_date')) lines.push(`Date : ${v('obs_date')}${v('obs_heure')?' à '+v('obs_heure'):''}`);
+
+  h1('I. Identité du Patient');
+  field('Nom et Prénom',v('nom_prenom')); field('Date de naissance',v('date_naissance')); field('Âge',v('age'));
+  field('Sexe',v('sexe')); field('Situation familiale',v('situation_familiale'));field('Nb enfants',v('nb_enfants'));
+  field('Originaire de',v('originaire_de')); field('Résidant à',v('residant_a')); field('Profession',v('profession'));
+  field('Couverture sociale',v('couverture_sociale'));
+  if(v('contact_type')) field('Contact ('+v('contact_type')+')',v('contact_numero'));
+  if(v('confiance_nom')) lines.push(`  Personne de confiance : ${v('confiance_nom')} — ${v('confiance_contact')}`);
+  field('Autonomie',v('autonomie'));
+  if(v('ecog_score')) field('PS OMS / ECOG','PS '+v('ecog_score'));
+
+  h1('II. Motif de Consultation');
+  field('Plainte principale',v('plainte_principale')); field('Début',v('date_debut_symptomes'));
+
+  h1('III. Antécédents (ATCD)');
+  h2('A. Personnels — 1. Médicaux');
+  ['atcd_diabete','atcd_hta','atcd_asthme','atcd_ulcere','atcd_tuberculose','atcd_mst','atcd_hospitalisations'].forEach(n=>chk(n));
+  field('Précisions',v('atcd_medicaux_details'));
+  h2('A. Personnels — 2. Chirurgicaux');
+  field('Type',v('atcd_chir_type'));field('Date',v('atcd_chir_date'));field('Lieu',v('atcd_chir_lieu'));field('Complications',v('atcd_chir_complications'));
+  h2('A. Personnels — 3. Toxico-Allergiques');
+  field('Tabagisme',v('atcd_tabagisme_statut')+(v('atcd_tabagisme_pa')?' — '+v('atcd_tabagisme_pa'):''));
+  field('Alcool / Drogues',v('atcd_alcool_drogues'));field('Allergies',v('atcd_allergies'));chk('atcd_contact_animaux');
+  h2('A. Personnels — 4. Traitements en cours');
+  field('Médicaments',v('atcd_traitements'));chk('atcd_verif_ordonnances','Ordonnances vérifiées');
+  h2('A. Personnels — 5. Vaccination');
+  field('Statut vaccinal',v('atcd_vaccination'));
+  h2('A. Personnels — 6. Gynéco-Obstétriques');
+  field('DDR',v('atcd_ddr'));field('G/P',v('atcd_gestite_parite'));field('Cycles',v('atcd_cycles'));field('Contraception',v('atcd_contraception'));field('Complications',v('atcd_gyn_complications'));
+  h2('B. Familiaux (premier degré)');
+  ['atcd_fam_diabete','atcd_fam_hta','atcd_fam_cancer','atcd_fam_cardio','atcd_fam_contage_tb'].forEach(n=>chk(n));
+  field('Autres',v('atcd_fam_autres'));
+
+  h1('IV. Histoire de la Maladie');
+  field('Chronologie',v('hdM_chronologie'));field("Mode d'installation",v('hdM_mode_installation'));
+  h2('SITI FADMA');
+  field('Siège',v('hdM_siege'));field('Irradiation',v('hdM_irradiation'));field('Type',v('hdM_type'));
+  field('Impact/EVA',(v('hdM_impact')||'')+(v('hdM_eva')?' — EVA '+v('hdM_eva')+'/10':''));
+  field('Facteurs',v('hdM_facteurs_aggravants'));field('Accalmie',v('hdM_accalmie'));
+  field('Durée/Rythme',v('hdM_duree_rythme'));field('Mode évolutif',v('hdM_mode_evolutif'));field('Évolution',v('hdM_evolution_traitement'));
+  h2('Signes généraux');
+  ['hdM_asthenie','hdM_anorexie','hdM_fievre','hdM_frissons','hdM_sueurs_nocturnes'].forEach(n=>chk(n));
+  field('Amaigrissement',v('hdM_amaigrissement'));field('Signes associés',v('hdM_signes_associes'));field('Signes négatifs',v('hdM_signes_negatifs'));
+
+  h1('V. Examen Clinique');
+  h2('5.1 — Examen Général/Vital & Constantes');
+  ['eg_conscient_oriente','eg_stable_hemo_respi'].forEach(n=>chk(n));
+  ['eg_pas_paleur','eg_pas_ictere','eg_pas_cyanose_generale'].forEach(n=>chk(n));
+  ['eg_pas_deshydratation','eg_pas_signes_choc','eg_pas_denutrition','eg_pas_omi'].forEach(n=>chk(n));
+  field('GCS',v('eg_gcs')?v('eg_gcs')+'/15':'');field('Température',v('eg_temp')?v('eg_temp')+' °C':'');
+  field('TA MS droit',v('eg_ta_droit')?v('eg_ta_droit')+' mmHg':'');field('TA MS gauche',v('eg_ta_gauche')?v('eg_ta_gauche')+' mmHg':'');
+  field('FC',v('eg_fc')?v('eg_fc')+' bpm':'');field('FR',v('eg_fr')?v('eg_fr')+' cpm':'');field('SpO₂',v('eg_spo2')?v('eg_spo2')+' %':'');
+  field('Poids',v('eg_poids')?v('eg_poids')+' kg':'');field('Taille',v('eg_taille')?v('eg_taille')+' cm':'');field('IMC',v('eg_imc'));
+  field('Tour de taille',v('eg_tour_taille')?v('eg_tour_taille')+' cm':'');
+  h2('5.2 — Examen Ganglionnaire');
+  ['ep_gang_aires_libres','ep_gang_sans_anomalie','ep_gang_troisier'].forEach(n=>chk(n));field('Adénopathies',v('ep_gang_details'));
+  h2('5.3 — Examen Abdominal');
+  ['abd_resp_normale','abd_pas_deformation','abd_pas_cicatrices','abd_pas_circulation_collaterale','abd_pas_voussures_vergetures','abd_ombilic_plisse','abd_teguments_normaux','abd_pas_asterixis','abd_pas_leuconychie_erytheme'].forEach(n=>chk(n));
+  ['abd_souple_depressible','abd_pas_defense_contracture','abd_pas_organomegalie','abd_hepatomegalie','abd_splenomegalie','abd_pas_contact_lombaire','abd_pas_masse_palpable','abd_pas_hernie','abd_pas_signe_flot'].forEach(n=>chk(n));
+  field('Zone douloureuse',v('abd_zone_douloureuse'));field('Flèche hépatique',v('abd_fleche_hepatique')?v('abd_fleche_hepatique')+' cm':'');
+  ['abd_pas_matite','abd_tympanisme_normal','abd_pas_meteorisme','abd_transit_audible','abd_pas_souffle_abdominal'].forEach(n=>chk(n));
+  ['tr_non_realise','tr_fissures','tr_hemorroides','tr_cri_douglas'].forEach(n=>chk(n));field('TR',v('tr_details'));
+  h2('5.4 — Examen Cardiaque');
+  ['card_pas_hippocratisme','card_pas_xanthomes','card_trc_normal','card_pas_jvp','card_pas_cyanose_centrale','ep_card_insp_thorax_symetrique','ep_card_insp_pas_circulation','ep_card_insp_pas_oedeme_mi','ep_card_palp_choc_pointe','ep_card_palp_harzer_negatif','ep_card_palp_pas_thrill','ep_card_palp_pas_reflux','ep_card_ausc_bruits_coeur_percus','ep_card_ausc_systole_diastole_libres','ep_card_ausc_pas_frottement','ep_card_ausc_pas_sons_surajoutes','ep_card_pas_insuffisance'].forEach(n=>chk(n));
+  field('Rythme / Souffle',v('ep_card_details'));
+  h2('5.5 — Examen Pulmonaire');
+  ['pulm_thorax_symetrique','pulm_pas_tirage','pulm_pas_cyanose','pulm_vv_normaux','pulm_mv_bilateral','pulm_pas_rales','pulm_pas_matite','pulm_pas_frottement_pleural'].forEach(n=>chk(n));
+  field('Précisions',v('pulm_details'));
+  h2('5.6 — Examen Neurologique');
+  ['ep_neuro_conscient','ep_neuro_oriente_tps_espace','ep_neuro_pas_confusion','ep_neuro_pas_deficit_moteur','ep_neuro_pas_deficit_sensitif','ep_neuro_pas_ataxie','ep_neuro_babinski_negatif','ep_neuro_rot_present','ep_neuro_pas_clonus'].forEach(n=>chk(n));
+  field('ROT',v('ep_neuro_rot_details'));
+  ['ep_neuro_nuque_souple','ep_neuro_kernig','ep_neuro_brudzinski','ep_cerv_insp_normal','ep_cerv_thyroide_normale','ep_cerv_pas_adp'].forEach(n=>chk(n));
+  h2('5.7 — Examen Ostéo-Articulaire');
+  field('Localisation',v('ep_oa_douleur_localisation'));field('EVA',v('ep_oa_intensite_eva')?v('ep_oa_intensite_eva')+'/10':'');chk('ep_oa_raideur_matinale');field('Précisions',v('ep_oa_details'));
+  h2('5.8 — Examen Uro-Génital');
+  ['ep_ug_pas_globe_vesical','ep_ug_pas_douleur_fosaillon','ep_ug_giordano_negatif'].forEach(n=>chk(n));field('Précisions',v('ep_ug_details'));
+  h2('5.9 — Cutané & Buccal');
+  ['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2'].forEach(n=>chk(n));
+  field('Lésions cutanées',v('ep_cut_lesions'));chk('ep_cb_normal');field('Anomalies buccales',v('ep_cb_anomalies'));field('Autres',v('exam_autres'));
+
+  h1('VI. Biologie Médicale');
+  const sex = getSex();
+  for (const categoryKey in biologicalValues) {
+    let categoryTitle = '';
+    switch (categoryKey) {
+      case 'hemogramme': categoryTitle = 'Hémogramme / NFS'; break;
+      case 'hemostase': categoryTitle = 'Hémostase et Coagulation'; break;
+      case 'ionogramme': categoryTitle = 'Ionogramme Sanguin'; break;
+      case 'renal': categoryTitle = 'Fonction Rénale'; break;
+      case 'hepatic': categoryTitle = 'Fonction Hépatique'; break;
+      case 'lipidique': categoryTitle = 'Bilan Lipidique'; break;
+      case 'autres_bio': categoryTitle = 'Autres Bilans (Phospho, Fer, Inflam)'; break;
+      case 'gds': categoryTitle = 'Gaz du Sang Artériel'; break;
+      case 'endocrino': categoryTitle = 'Endocrinologie'; break;
+      case 'lcr_urines': categoryTitle = 'LCR et Urines'; break;
+    }
+    lines.push(`\n--- ${categoryTitle} ---`);
+    biologicalValues[categoryKey].forEach(paramData => {
+      const paramNameClean = paramData.param.replace(/\W/g,'_');
+      const inputName = `bio_${categoryKey}_${paramNameClean}`;
+      const chkName = `bio_${categoryKey}_${paramNameClean}_chk`;
+      
+      const inputValue = document.querySelector(`input[name="${inputName}"]`)?.value || '';
+      const checked = isChecked(chkName);
+      
+      if (inputValue || checked) {
+        let rangeText = '';
+        const ranges = currentUnitSystem === 'SI' ? paramData.rangesSI : paramData.rangesUsual;
+        const unit = currentUnitSystem === 'SI' ? paramData.unitSI : paramData.unitUsual;
+        const currentRange = (paramData.sex && sex === "Féminin") ? ranges.F : ranges.M;
+
+        if (currentRange) {
+          rangeText = `${currentRange[0]} – ${currentRange[1]}`;
+        }
+        lines.push(`  ${checked ? '✔' : ' '} ${paramData.param} : ${inputValue || '—'} ${unit} (Réf: ${rangeText} ${unit})`);
+      }
+    });
+  }
+
+  h1('VII. Conclusion Clinique & Hypothèses Diagnostiques');
+  field('Résumé clinique',v('cc_resume_clinique'));
+  field('et chez qui l\'examen clinique objective',v('cc_signes_physiques'));
+  field('Signes fonctionnels',v('cc_signes_fonctionnels'));
+  lines.push('','Hypothèses diagnostiques :');
+  const diagRows = getDiagRows();
+  if(diagRows.length===0) lines.push('  (aucune hypothèse saisie)');
+  diagRows.forEach((r,i)=>{
+    lines.push(`  Hypothèse ${i+1} : ${r.hyp}`);
+    if(r.pour) lines.push(`    Arguments pour : ${r.pour}`);
+    if(r.contre) lines.push(`    Arguments contre : ${r.contre}`);
+  });
+
+  h1('VIII. CAT — Conduite À Tenir');
+  h2('Diagnostique');
+  ['cat_biologie','cat_imagerie','cat_autres_examens'].forEach(n=>chk(n));field('Examens',v('cat_examens_details'));
+  h2('Thérapeutique');
+  ['cat_ther_etiologique','cat_ther_symptomatique','cat_ther_mesures_hygiene','cat_ther_surveillance','cat_ther_education'].forEach(n=>chk(n));
+  field('Traitement',v('cat_traitement_details'));
+  lines.push('','─────────────────────────────────────────────────');
+  lines.push(`Signé : ${v('clinicien_nom')||'…………………………………'} — ${v('clinicien_fonction')||'…………………………'}`);
+
+  return lines.join('\n');
+}
+
+// ─── Generate DOCX ────────────────────────────────────────────────────────
+async function generateDocx() {
+  const btn = document.getElementById('docxBtn');
+  btn.disabled = true; btn.textContent = '⏳ ...';
+  try {
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, Table, TableRow, TableCell, WidthType } = docx;
+    const children = [];
+    const date = new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+    function h1(text) {
+      return new Paragraph({ children:[new TextRun({text,bold:true,size:28,color:'FFFFFF',font:'Arial'})], heading:HeadingLevel.HEADING_1, spacing:{before:400,after:120}, shading:{fill:'1a5fa8'}, indent:{left:200} });
+    }
+    function h2(text) {
+      return new Paragraph({ children:[new TextRun({text,bold:true,size:22,color:'0d3d72'})], spacing:{before:240,after:80}, border:{bottom:{style:BorderStyle.SINGLE,size:4,color:'b0c8e8'}} });
+    }
+    function row(label,val) {
+      if(!val||!val.trim()) return null;
+      return new Paragraph({ children:[new TextRun({text:label+' : ',bold:true,size:20}),new TextRun({text:val,size:20})], spacing:{after:60}, indent:{left:360} });
+    }
+    function checkRow(label) {
+      return new Paragraph({ children:[new TextRun({text:'✔  ',color:'0a7c3e',bold:true,size:20}),new TextRun({text:label,size:20})], spacing:{after:40}, indent:{left:360} });
+    }
+    function addRow(lbl,name){const p=row(lbl,v(name));if(p)children.push(p);}
+    function addCheck(name){if(isChecked(name))children.push(checkRow(checkedLabel(name)));}
+    function addChecks(names){names.forEach(addCheck);}
+    function addH1(t){children.push(h1(t));}
+    function addH2(t){children.push(h2(t));}
+
+    // Title
+    children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:100},children:[new TextRun({text:'OBSERVATION MÉDICALE',bold:true,size:40,color:'0d3d72',font:'Arial'})]}));
+    children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:200},children:[new TextRun({text:`Générée le : ${date}`,italics:true,color:'666666',size:20})]}));
+    if(v('clinicien_nom')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:400},children:[new TextRun({text:`${v('clinicien_nom')} — ${v('clinicien_fonction')||''}`,bold:true,size:20})]}));
+
+    // I
+    addH1('I. Identité du Patient');
+    addRow('Nom et Prénom','nom_prenom'); addRow('Date de naissance','date_naissance'); addRow('Âge','age');
+    addRow('Sexe','sexe'); addRow('Situation familiale','situation_familiale'); addRow("Nombre d'enfants",'nb_enfants');
+    addRow('Originaire de','originaire_de'); addRow('Résidant à','residant_a'); addRow('Profession','profession');
+    addRow('Couverture sociale','couverture_sociale');
+    if(v('contact_numero'))children.push(row('Contact ('+v('contact_type')+')',v('contact_numero')));
+    if(v('confiance_nom'))children.push(row('Personne de confiance',v('confiance_nom')+' — '+v('confiance_contact')));
+    addRow('Autonomie','autonomie');
+    if(v('ecog_score'))children.push(row('PS OMS / ECOG','PS '+v('ecog_score')));
+
+    // II
+    addH1('II. Motif de Consultation');
+    addRow('Plainte principale','plainte_principale'); addRow('Début','date_debut_symptomes');
+
+    // III
+    addH1('III. Antécédents (ATCD)');
+    addH2('A. Personnels — 1. Médicaux');
+    addChecks(['atcd_diabete','atcd_hta','atcd_asthme','atcd_ulcere','atcd_tuberculose','atcd_mst','atcd_hospitalisations']);
+    addRow('Précisions','atcd_medicaux_details');
+    addH2('A. Personnels — 2. Chirurgicaux');
+    addRow('Type','atcd_chir_type');addRow('Date','atcd_chir_date');addRow('Lieu','atcd_chir_lieu');addRow('Complications','atcd_chir_complications');
+    addH2('A. Personnels — 3. Toxico-Allergiques');
+    const tabac=(v('atcd_tabagisme_statut')+(v('atcd_tabagisme_pa')?' — '+v('atcd_tabagisme_pa'):'')).trim();
+    if(tabac)children.push(row('Tabagisme',tabac));
+    addRow('Alcool / Drogues','atcd_alcool_drogues');addRow('Allergies','atcd_allergies');
+    if(isChecked('atcd_contact_animaux'))children.push(checkRow('Contact avec animaux'));
+    addH2('A. Personnels — 4. Traitements en cours');
+    addRow('Médicaments','atcd_traitements');if(isChecked('atcd_verif_ordonnances'))children.push(checkRow('Ordonnances vérifiées'));
+    addH2('A. Personnels — 5. Vaccination');addRow('Statut vaccinal','atcd_vaccination');
+    addH2('A. Personnels — 6. Gynéco-Obstétriques');
+    addRow('DDR','atcd_ddr');addRow('G/P','atcd_gestite_parite');addRow('Cycles','atcd_cycles');addRow('Contraception','atcd_contraception');addRow('Complications','atcd_gyn_complications');
+    addH2('B. Familiaux (premier degré)');
+    addChecks(['atcd_fam_diabete','atcd_fam_hta','atcd_fam_cancer','atcd_fam_cardio','atcd_fam_contage_tb']);
+    addRow('Autres','atcd_fam_autres');
+
+    // IV
+    addH1('IV. Histoire de la Maladie');
+    addRow('Chronologie','hdM_chronologie');addRow("Mode d'installation",'hdM_mode_installation');
+    addH2('Caractérisation SITI FADMA');
+    addRow('Siège','hdM_siege');addRow('Irradiation','hdM_irradiation');addRow('Type','hdM_type');
+    const imp=(v('hdM_impact')+(v('hdM_eva')?' — EVA '+v('hdM_eva')+'/10':'')).trim();if(imp)children.push(row('Impact/Intensité',imp));
+    addRow('Facteurs','hdM_facteurs_aggravants');addRow('Accalmie','hdM_accalmie');addRow('Durée/Rythme','hdM_duree_rythme');addRow('Mode évolutif','hdM_mode_evolutif');addRow('Évolution','hdM_evolution_traitement');
+    addH2('Signes généraux');
+    addChecks(['hdM_asthenie','hdM_anorexie','hdM_fievre','hdM_frissons','hdM_sueurs_nocturnes']);
+    addRow('Amaigrissement','hdM_amaigrissement');addRow('Signes associés','hdM_signes_associes');addRow('Signes négatifs','hdM_signes_negatifs');
+
+    // V
+    addH1('V. Examen Clinique');
+    addH2('5.1 — Examen Général/Vital & Constantes');
+    addChecks(['eg_conscient_oriente','eg_stable_hemo_respi','eg_pas_paleur','eg_pas_ictere','eg_pas_cyanose_generale','eg_pas_deshydratation','eg_pas_signes_choc','eg_pas_denutrition','eg_pas_omi']);
+    ['eg_gcs','eg_temp','eg_ta_droit','eg_ta_gauche','eg_fc','eg_fr','eg_spo2','eg_poids','eg_taille','eg_imc','eg_tour_taille'].forEach(name=>{
+      const labels={'eg_gcs':'GCS','eg_temp':'Température','eg_ta_droit':'TA MS droit','eg_ta_gauche':'TA MS gauche','eg_fc':'FC','eg_fr':'FR','eg_spo2':'SpO₂','eg_poids':'Poids','eg_taille':'Taille','eg_imc':'IMC','eg_tour_taille':'Tour de taille'};
+      const units={'eg_gcs':'/15','eg_temp':' °C','eg_ta_droit':' mmHg','eg_ta_gauche':' mmHg','eg_fc':' bpm','eg_fr':' cpm','eg_spo2':' %','eg_poids':' kg','eg_taille':' cm','eg_imc':'','eg_tour_taille':' cm'};
+      const val=v(name);if(val)children.push(row(labels[name],val+(units[name]||'')));
+    });
+    addH2('5.2 — Examen Ganglionnaire');
+    addChecks(['ep_gang_aires_libres','ep_gang_sans_anomalie','ep_gang_troisier']);addRow('Adénopathies','ep_gang_details');
+    addH2('5.3 — Examen Abdominal');
+    addChecks(['abd_resp_normale','abd_pas_deformation','abd_pas_cicatrices','abd_pas_circulation_collaterale','abd_pas_voussures_vergetures','abd_ombilic_plisse','abd_teguments_normaux','abd_pas_asterixis','abd_pas_leuconychie_erytheme','abd_souple_depressible','abd_pas_defense_contracture','abd_pas_organomegalie','abd_hepatomegalie','abd_splenomegalie','abd_pas_contact_lombaire','abd_pas_masse_palpable','abd_pas_hernie','abd_pas_signe_flot','abd_pas_matite','abd_tympanisme_normal','abd_pas_meteorisme','abd_transit_audible','abd_pas_souffle_abdominal']);
+    addRow('Zone douloureuse','abd_zone_douloureuse');
+    const fleche=v('abd_fleche_hepatique');if(fleche)children.push(row('Flèche hépatique',fleche+' cm'));
+    addChecks(['tr_non_realise','tr_fissures','tr_hemorroides','tr_cri_douglas']);addRow('TR','tr_details');
+    addH2('5.4 — Examen Cardiaque');
+    addChecks(['card_pas_hippocratisme','card_pas_xanthomes','card_trc_normal','card_pas_jvp','card_pas_cyanose_centrale','ep_card_insp_thorax_symetrique','ep_card_insp_pas_circulation','ep_card_insp_pas_oedeme_mi','ep_card_palp_choc_pointe','ep_card_palp_harzer_negatif','ep_card_palp_pas_thrill','ep_card_palp_pas_reflux','ep_card_ausc_bruits_coeur_percus','ep_card_ausc_systole_diastole_libres','ep_card_ausc_pas_frottement','ep_card_ausc_pas_sons_surajoutes','ep_card_pas_insuffisance']);
+    addRow('Rythme / Souffle','ep_card_details');
+    addH2('5.5 — Examen Pulmonaire');
+    addChecks(['pulm_thorax_symetrique','pulm_pas_tirage','pulm_pas_cyanose','pulm_vv_normaux','pulm_mv_bilateral','pulm_pas_rales','pulm_pas_matite','pulm_pas_frottement_pleural']);addRow('Précisions','pulm_details');
+    addH2('5.6 — Examen Neurologique');
+    addChecks(['ep_neuro_conscient','ep_neuro_oriente_tps_espace','ep_neuro_pas_confusion','ep_neuro_pas_deficit_moteur','ep_neuro_pas_deficit_sensitif','ep_neuro_pas_ataxie','ep_neuro_babinski_negatif','ep_neuro_rot_present','ep_neuro_pas_clonus']);
+    addRow('ROT','ep_neuro_rot_details');
+    addChecks(['ep_neuro_nuque_souple','ep_neuro_kernig','ep_neuro_brudzinski','ep_cerv_insp_normal','ep_cerv_thyroide_normale','ep_cerv_pas_adp']);
+    addH2('5.7 — Examen Ostéo-Articulaire');
+    const dloc=v('ep_oa_douleur_localisation');if(dloc)children.push(row('Localisation',dloc));
+    const evaoa=v('ep_oa_intensite_eva');if(evaoa)children.push(row('EVA',evaoa+'/10'));
+    if(isChecked('ep_oa_raideur_matinale'))children.push(checkRow('Raideur matinale présente'));addRow('Précisions','ep_oa_details');
+    addH2('5.8 — Examen Uro-Génital');
+    addChecks(['ep_ug_pas_globe_vesical','ep_ug_pas_douleur_fosaillon','ep_ug_giordano_negatif']);addRow('Précisions','ep_ug_details');
+    addH2('5.9 — Examen Cutané & Buccal');
+    addChecks(['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2']);addRow('Lésions cutanées','ep_cut_lesions');
+    if(isChecked('ep_cb_normal'))children.push(checkRow('Cavité buccale sans anomalie'));
+    addRow('Anomalies buccales','ep_cb_anomalies');addRow('Autres examens','exam_autres');
+
+    // VI - Biologie Médicale
+    addH1('VI. Biologie Médicale');
+    const sex = getSex();
+    for (const categoryKey in biologicalValues) {
+      let categoryTitle = '';
+      switch (categoryKey) {
+        case 'hemogramme': categoryTitle = 'Hémogramme / NFS'; break;
+        case 'hemostase': categoryTitle = 'Hémostase et Coagulation'; break;
+        case 'ionogramme': categoryTitle = 'Ionogramme Sanguin'; break;
+        case 'renal': categoryTitle = 'Fonction Rénale'; break;
+        case 'hepatic': categoryTitle = 'Fonction Hépatique'; break;
+        case 'lipidique': categoryTitle = 'Bilan Lipidique'; break;
+        case 'autres_bio': categoryTitle = 'Autres Bilans (Phospho, Fer, Inflam)'; break;
+        case 'gds': categoryTitle = 'Gaz du Sang Artériel'; break;
+        case 'endocrino': categoryTitle = 'Endocrinologie'; break;
+        case 'lcr_urines': categoryTitle = 'LCR et Urines'; break;
+      }
+      
+      const categoryRows = [
+        new TableRow({children:[
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'✓',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:400,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Paramètre',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2500,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Valeur',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:1200,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Unité',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:1000,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Référence',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2000,type:WidthType.DXA}})
+        ]})
+      ];
+
+      let hasData = false;
+      biologicalValues[categoryKey].forEach(paramData => {
+        const paramNameClean = paramData.param.replace(/\W/g,'_');
+        const inputName = `bio_${categoryKey}_${paramNameClean}`;
+        const chkName = `bio_${categoryKey}_${paramNameClean}_chk`;
+        
+        const inputValue = document.querySelector(`input[name="${inputName}"]`)?.value || '';
+        const checked = isChecked(chkName);
+        
+        if (inputValue || checked) {
+          hasData = true;
+          let rangeText = '';
+          const ranges = currentUnitSystem === 'SI' ? paramData.rangesSI : paramData.rangesUsual;
+          const unit = currentUnitSystem === 'SI' ? paramData.unitSI : paramData.unitUsual;
+          const currentRange = (paramData.sex && sex === "Féminin") ? ranges.F : ranges.M;
+
+          if (currentRange) {
+            rangeText = `${currentRange[0]} – ${currentRange[1]}`;
+          }
+
+          categoryRows.push(new TableRow({children:[
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:checked?'✔':'',size:18,color:'0a7c3e'})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:paramData.param,size:18})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:inputValue||'—',size:18})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:unit,size:18})]})]}),
+            new TableCell({children:[new Paragraph({children:[new TextRun({text:rangeText,size:18})]})]})
+          ]}));
+        }
+      });
+
+      if (hasData) {
+        children.push(h2(categoryTitle));
+        children.push(new Table({rows:categoryRows,width:{size:8500,type:WidthType.DXA}}));
+      }
+    }
+
+    // VI - Conclusion
+    addH1('VII. Conclusion Clinique & Hypothèses Diagnostiques');
+    addRow('Résumé clinique','cc_resume_clinique');
+    addRow("et chez qui l'examen clinique objective",'cc_signes_physiques');
+    addRow('Signes fonctionnels résumés','cc_signes_fonctionnels');
+    // Diagnosis table
+    children.push(new Paragraph({children:[new TextRun({text:'Hypothèses diagnostiques :',bold:true,size:22,color:'0d3d72'})],spacing:{before:240,after:80}}));
+    const diagRows = getDiagRows();
+    if(diagRows.length>0){
+      const tableRows=[new TableRow({children:[
+        new TableCell({children:[new Paragraph({children:[new TextRun({text:'Hypothèse Diagnostique',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2500,type:WidthType.DXA}}),
+        new TableCell({children:[new Paragraph({children:[new TextRun({text:'Arguments Pour',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:3000,type:WidthType.DXA}}),
+        new TableCell({children:[new Paragraph({children:[new TextRun({text:'Arguments Contre',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:3000,type:WidthType.DXA}})
+      ]})];
+      diagRows.forEach((r,i)=>{
+        tableRows.push(new TableRow({children:[
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:`Hypothèse ${i+1} : ${r.hyp}`,bold:true,size:18})]})],width:{size:2500,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:r.pour||'—',size:18})]})],width:{size:3000,type:WidthType.DXA}}),
+          new TableCell({children:[new Paragraph({children:[new TextRun({text:r.contre||'—',size:18})]})],width:{size:3000,type:WidthType.DXA}})
+        ]}));
+      });
+      children.push(new Table({rows:tableRows,width:{size:8500,type:WidthType.DXA}}));
+    }
+
+    // VII
+    addH1('VIII. CAT — Conduite À Tenir');
+    addH2('Diagnostique');addChecks(['cat_biologie','cat_imagerie','cat_autres_examens']);addRow('Examens','cat_examens_details');
+    addH2('Thérapeutique');addChecks(['cat_ther_etiologique','cat_ther_symptomatique','cat_ther_mesures_hygiene','cat_ther_surveillance','cat_ther_education']);addRow('Traitement','cat_traitement_details');
+    // Signature
+    children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{before:600},children:[new TextRun({text:(v('clinicien_nom')||'Nom Prénom')+' — '+(v('clinicien_fonction')||'Fonction'),bold:true,size:20})]}));
+
+    const doc = new Document({creator:'Observation Médicale',title:'Observation Médicale',sections:[{properties:{},children}]});
+    const blob = await Packer.toBlob(doc);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const patient = v('nom_prenom').replace(/\s+/g,'_')||'Patient';
+    a.href=url; a.download=`Observation_${patient}_${new Date().toISOString().split('T')[0]}.docx`;
+    a.click(); URL.revokeObjectURL(url);
+    showToast('✅ Fichier Word téléchargé !');
+  } catch(err) { console.error(err); showToast('❌ Erreur : '+err.message); }
+  btn.disabled=false; btn.textContent='📄 Word';
+}
+
+// ─── Google Docs ──────────────────────────────────────────────────────────
+function generateGoogleDocs() {
+  const text = buildObservationText();
+  navigator.clipboard.writeText(text).then(()=>{
+    showToast('📋 Texte copié ! Collez dans Google Docs.');
+    setTimeout(()=>window.open('https://docs.new','_blank'),800);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.cssText='position:fixed;top:0;left:0;width:100%;height:60%;z-index:9999;font-size:12px;padding:10px;';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    showToast('📋 Texte copié ! Ouvrez Google Docs et collez.');
+    setTimeout(()=>document.body.removeChild(ta),200);
+    setTimeout(()=>window.open('https://docs.new','_blank'),900);
+  });
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  renderBiologicalTables();
+  updateProgress();
+});
+</script>
+</body>
+</html>
