@@ -1,0 +1,1047 @@
+================================================================================
+       CATALOGUE DES EXAMENS DE LABORATOIRE
+       ERP ESCULAPE - Patients Hospitalises
+================================================================================
+
+
+================================================================================
+1. BIOCHIMIE
+================================================================================
+
+------------------------------------------------------------------------
+Temps de Quick / Taux de prothrombine / INR
+------------------------------------------------------------------------
+  [ ] Temps de cephaline avec activateur
+  [ ] Taux de prothrombine/INR
+
+------------------------------------------------------------------------
+BILAN HEMATOLOGIE
+------------------------------------------------------------------------
+  [ ] Numeration formule sanguine
+  [ ] Reticulocytes
+  [ ] Frottis sanguin
+  [ ] Vitesse de sedimentation
+  [ ] Temps de saignement
+  [ ] D-Dimeres
+  [ ] NFS sur tube citrate
+  [ ] Test de la resistance globulaire
+
+------------------------------------------------------------------------
+Ionogramme
+------------------------------------------------------------------------
+  [ ] Sodium
+  [ ] Potassium
+  [ ] Chlorures
+  [ ] Bicarbonate
+  [ ] Protides
+
+------------------------------------------------------------------------
+Glycemies
+------------------------------------------------------------------------
+  [ ] Glycemie a jeun
+  [ ] Glycemie pp
+  [ ] HbA1c
+  [ ] Glycemie moyenne
+
+------------------------------------------------------------------------
+Bilan Renal
+------------------------------------------------------------------------
+  [ ] Acide urique
+  [ ] Clairance de creatinine/MDRD
+
+------------------------------------------------------------------------
+Uree
+------------------------------------------------------------------------
+  [ ] Uree
+
+------------------------------------------------------------------------
+Creatinine
+------------------------------------------------------------------------
+  [ ] Creatinine
+
+------------------------------------------------------------------------
+Proteines Plasmatiques
+------------------------------------------------------------------------
+  [ ] Albumine
+  [ ] CRProteine
+
+------------------------------------------------------------------------
+Enzymes
+------------------------------------------------------------------------
+  [ ] Lipase
+  [ ] CK
+  [ ] CKMB activite enztmatique
+  [ ] LDH
+
+------------------------------------------------------------------------
+Bilan Hepatique
+------------------------------------------------------------------------
+  [ ] TRANSAMINASES O (TGO=ASAT)
+  [ ] TRANSAMINASES P (TGP=ALAT)
+  [ ] PAL
+  [ ] Bilirubine totale
+  [ ] Bilirubine conjuguee
+  [ ] GGT
+
+------------------------------------------------------------------------
+Bilan Lipidique
+------------------------------------------------------------------------
+  [ ] Cholesterol total
+  [ ] Triglycerides
+  [ ] Cholesterol HDL
+  [ ] Cholesterol LDLc
+
+------------------------------------------------------------------------
+Bilan Ph - Ca - Mg
+------------------------------------------------------------------------
+  [ ] Calcium
+  [ ] Phosphore
+  [ ] Magnesium
+
+------------------------------------------------------------------------
+Bilan Martial
+------------------------------------------------------------------------
+  [ ] Fer serique
+  [ ] Transferrine
+  [ ] CTF
+  [ ] CS
+
+------------------------------------------------------------------------
+Donnees Gazometrie
+------------------------------------------------------------------------
+  [ ] Heure de prelevement
+  [ ] Temperature
+  [ ] Hemoglobine
+
+------------------------------------------------------------------------
+Gazometrie
+------------------------------------------------------------------------
+  [ ] pH
+  [ ] PCO2
+  [ ] PO2
+  [ ] HCO3
+  [ ] SaO2
+
+------------------------------------------------------------------------
+Proteines Urinaires
+------------------------------------------------------------------------
+  [ ] Proteinurie Urinaire
+  [ ] Microalbuminurie
+  [ ] Creatininurie Urinaire
+  [ ] Proteinurie/Creatininurie Urinaire
+  [ ] Microalbuminurie/Creatininurie (ACR)
+
+------------------------------------------------------------------------
+Bilan Phospho-Calcique Urinaire
+------------------------------------------------------------------------
+  [ ] Calcium Urinaire
+  [ ] Phosphate Urinaire
+
+------------------------------------------------------------------------
+Urines: Autres
+------------------------------------------------------------------------
+  [ ] Acide Urique Urinaire
+
+------------------------------------------------------------------------
+Ionogramme Urine
+------------------------------------------------------------------------
+  [ ] Diurese Urinaire
+  [ ] Sodium Urinaire
+  [ ] Potassium Urinaire
+  [ ] Chlore Urinaire
+  [ ] Uree Urinaire
+  [ ] Creatinine Urinaire
+  [ ] Osmolarite urinaire
+
+------------------------------------------------------------------------
+Bandelettes
+------------------------------------------------------------------------
+  [ ] Densite
+  [ ] pH
+  [ ] Glycosurie
+  [ ] Sang
+
+
+================================================================================
+2. HORMONOLOGIE & MARQUEURS
+================================================================================
+
+------------------------------------------------------------------------
+Thyroide
+------------------------------------------------------------------------
+  [ ] TSH us
+  [ ] T4 libre
+  [ ] T3 libre
+  [ ] Ac AntiTPO
+  [ ] Ac Antithyroglobuline
+  [ ] Thyroglobuline us
+
+------------------------------------------------------------------------
+Corticosurrenale
+------------------------------------------------------------------------
+  [ ] Cortisol
+  [ ] Cortisol 7-10h
+  [ ] Cortisol 13h
+  [ ] Cortisol 16h
+  [ ] Cortisol 20h
+  [ ] Cortisol 23-00h
+  [ ] Cortisol Libre Urinaire
+  [ ] Cortisol sous freinage min
+  [ ] ACTH 7-10H
+
+------------------------------------------------------------------------
+Fertilite
+------------------------------------------------------------------------
+  [ ] FSH
+  [ ] LH
+  [ ] Prolactine
+  [ ] Prolactine T2
+  [ ] 17 B Oestradiol
+  [ ] Progesterone
+  [ ] Testosterone
+  [ ] DHES
+
+------------------------------------------------------------------------
+Marqueurs Tumoraux 1
+------------------------------------------------------------------------
+  [ ] ACE
+  [ ] AFP
+  [ ] PSA total
+  [ ] PSA Libre
+  [ ] Rapport PSAL/PSAT
+  [ ] B HCG quantitatif
+
+------------------------------------------------------------------------
+Marqueurs Tumoraux 2
+------------------------------------------------------------------------
+  [ ] Ca 19-9
+  [ ] Ca 15-3
+  [ ] Ca 125
+  [ ] CYFRA 21-1
+
+------------------------------------------------------------------------
+Anemie
+------------------------------------------------------------------------
+  [ ] Ferritine
+  [ ] Folates
+  [ ] Vitamine B 12
+
+------------------------------------------------------------------------
+Coeur
+------------------------------------------------------------------------
+  [ ] BNP
+  [ ] Troponine T Hypersensible
+  [ ] Pro BNP
+
+------------------------------------------------------------------------
+Autres
+------------------------------------------------------------------------
+  [ ] Procalcitonine
+  [ ] 25 OH-Vitamine D
+  [ ] Parathormone intacte
+  [ ] GH
+  [ ] Enzyme de conversion de l'angiotensine
+  [ ] Interleukine 6
+
+
+================================================================================
+3. PROTEINES
+================================================================================
+
+------------------------------------------------------------------------
+Allergie
+------------------------------------------------------------------------
+  [ ] IgE totales
+
+------------------------------------------------------------------------
+Proteines Specifiques 1
+------------------------------------------------------------------------
+  [ ] Beta 2 Microglobuline
+  [ ] Haptoglobine
+  [ ] Complement C3c
+  [ ] Complement C4c
+  [ ] Apo A-1
+  [ ] Apo B
+  [ ] Prealbumine
+  [ ] Lipoproteine (a)
+
+------------------------------------------------------------------------
+Proteines Specifiques 2
+------------------------------------------------------------------------
+  [ ] CRProteine us
+  [ ] Orosomucoide
+  [ ] RBP
+  [ ] Cereuloplasmine
+  [ ] Alpha 1 Antitrypsine
+  [ ] Alpha 2 macroglobuline
+  [ ] TfRs
+  [ ] Albumine T
+  [ ] Homocysteine
+
+------------------------------------------------------------------------
+Immunoglobulines
+------------------------------------------------------------------------
+  [ ] IgG totales
+  [ ] IgA totales
+  [ ] IgM totales
+  [ ] Kappa
+  [ ] Lambda
+  [ ] Free kappa
+  [ ] Free lamda
+  [ ] FK/FL ratio
+
+------------------------------------------------------------------------
+Proteines Seriques
+------------------------------------------------------------------------
+  [ ] Protides seriques
+  [ ] Electrophorese des Proteines seriques
+  [ ] Immunofixation des Prot seriques (ImmunoEP)
+
+------------------------------------------------------------------------
+Proteines Urinaires (Electrophorese)
+------------------------------------------------------------------------
+  [ ] Electrophorese des Prot urinaires (urine profile)
+  [ ] Immunofixation des proteines urinaires (PBJ)
+
+------------------------------------------------------------------------
+Proteines du LCR
+------------------------------------------------------------------------
+  [ ] Electrophorese des proteines du LCR
+  [ ] Immunofixation du LCR
+
+------------------------------------------------------------------------
+Hemoglobine
+------------------------------------------------------------------------
+  [ ] Hb A
+  [ ] Hb A2
+  [ ] Hb F
+  [ ] Variant
+
+------------------------------------------------------------------------
+Cryoglobulines
+------------------------------------------------------------------------
+  [ ] Recherche cryoglobulines
+  [ ] Typage cryoglobulines
+
+------------------------------------------------------------------------
+LCR
+------------------------------------------------------------------------
+  [ ] Aspect LCR
+  [ ] Glycorachie
+  [ ] Chlorurorachie
+  [ ] Proteinorachie
+
+------------------------------------------------------------------------
+Liquide Pleural
+------------------------------------------------------------------------
+  [ ] Protides L. pleural
+
+------------------------------------------------------------------------
+Liquide Articulaire
+------------------------------------------------------------------------
+  [ ] Protides L. articulaire
+
+------------------------------------------------------------------------
+Liquides d'ascite
+------------------------------------------------------------------------
+  [ ] Protides L. ascite
+
+------------------------------------------------------------------------
+Autre Liquide
+------------------------------------------------------------------------
+  [ ] Protides L. ponction
+
+
+================================================================================
+4. TESTS DYNAMIQUES & GLYCEMIQUES
+================================================================================
+
+------------------------------------------------------------------------
+Cycle Glycemique
+------------------------------------------------------------------------
+  [ ] Glycemie 8h00
+  [ ] Glycemie 11h00
+  [ ] Glycemie 14h00
+  [ ] Glycemie 17h00
+  [ ] Glycemie 20h00
+  [ ] Glycemie 23h00
+
+------------------------------------------------------------------------
+Cycle Glycosurique
+------------------------------------------------------------------------
+  [ ] Glycosurie 8h00
+  [ ] Glycosurie 11h00
+  [ ] Glycosurie 14h00
+  [ ] Glycosurie 17h00
+
+------------------------------------------------------------------------
+Test O'Sullivan
+------------------------------------------------------------------------
+  [ ] Glycemie T0
+  [ ] Glycemie T30
+  [ ] Glycemie T60
+  [ ] Glycemie T90
+
+------------------------------------------------------------------------
+HGPO
+------------------------------------------------------------------------
+  [ ] Glycemie T0
+  [ ] Glycemie T30
+  [ ] Glycemie T60
+  [ ] Glycemie T90
+  [ ] Glycemie T120
+
+------------------------------------------------------------------------
+Stimulation GH/Insuline GH
+------------------------------------------------------------------------
+  [ ] GH T-15
+  [ ] GH T0
+  [ ] GH T15
+  [ ] GH T30
+  [ ] GH T45
+  [ ] GH T60
+  [ ] GH T90
+
+------------------------------------------------------------------------
+Stimulation GH/Glucagon GH
+------------------------------------------------------------------------
+  [ ] GH T-30
+  [ ] GH T0
+  [ ] GH T120
+  [ ] GH T150
+  [ ] GH T180
+
+------------------------------------------------------------------------
+Stimulation GH/Insuline G-C
+------------------------------------------------------------------------
+  [ ] Glycemie T -15
+  [ ] Glycemie T 0
+  [ ] Glycemie T 15
+  [ ] Glycemie T 30
+  [ ] Glycemie T 45
+  [ ] Glycemie T 60
+  [ ] Glycemie T90
+  [ ] Glycemie T120
+  [ ] Glycemie T150
+  [ ] Glycemie T180
+
+------------------------------------------------------------------------
+Test au Synacthene
+------------------------------------------------------------------------
+  [ ] Cortisol 8h
+  [ ] Cortisol T60
+  [ ] Cortisol T120
+
+------------------------------------------------------------------------
+Test de Restriction Hydrique
+------------------------------------------------------------------------
+  [ ] Osmolarite urine 1
+  [ ] Osmolarite urine 2
+  [ ] Osmolarite urine 3
+  [ ] Osmolarite urine 4
+  [ ] Osmolarite urine 5
+  [ ] Osmolarite urine 6
+
+------------------------------------------------------------------------
+Analyse Quantitative
+------------------------------------------------------------------------
+  [ ] Ethanolemie
+
+------------------------------------------------------------------------
+Analyse Qualitative
+------------------------------------------------------------------------
+  [ ] Barbituriques
+  [ ] Benzodiazepines
+  [ ] Cannabinoides
+  [ ] Cocaine
+  [ ] Opiaces (d-morphine)
+  [ ] Amphetamines
+
+------------------------------------------------------------------------
+Etude Cristalographique de Calculs
+------------------------------------------------------------------------
+  [ ] Etude des calculs par spectrophotometrie IR/TF
+
+
+================================================================================
+5. HEMATOLOGIE SPECIALISEE
+================================================================================
+
+------------------------------------------------------------------------
+HEMATOLOGIE
+------------------------------------------------------------------------
+  [ ] Myelogramme
+  [ ] Coloration Myeloperoxydase
+  [ ] Coloration de PERLS
+  [ ] Fibrinogene
+  [ ] Facteur II
+  [ ] Facteur V
+  [ ] Facteur VII
+  [ ] Facteur VIII
+  [ ] Facteur IX
+  [ ] Facteur X
+  [ ] Facteur XI
+  [ ] Facteur XII
+  [ ] Facteur XIII
+  [ ] Proteine C
+  [ ] Proteine S
+  [ ] Antithrombine
+  [ ] Resistance a la proteine C
+  [ ] Facteur de Von-Willebrand antigene
+  [ ] Von-Willebrand activite cofacteur a la Ristocetin
+  [ ] Anticoagulant circulant
+  [ ] Etude de l'agregation plaquettaire
+  [ ] Plasminogene
+  [ ] Temps de thrombine
+  [ ] Temps de reptelase
+  [ ] BCR-abl
+  [ ] Mutation facteur V+II
+
+------------------------------------------------------------------------
+Serologie de la Rubeole
+------------------------------------------------------------------------
+  [ ] Ac anti Hbe
+
+
+================================================================================
+6. TRANSFUSION
+================================================================================
+
+------------------------------------------------------------------------
+TRANSFUSION
+------------------------------------------------------------------------
+  [ ] GROUPAGE ABO RH1
+  [ ] Phenotypage RH-kell 1 (elargi)
+  [ ] Phenotypage RH-kell-DUFFY-KIDD-LEWIS-MNS (etendu)
+  [ ] EPREUVE DIRECT DE COMPATIBILITE AU LABORATOIRE (EDCL)
+  [ ] IDENTIFICATION D'ANTICORPS ANTI-ERYTHROCYTAIRES SUR DEMANDE
+  [ ] TEST DIRECT A L'ANTIGLOBULINE (TDA, COOMBS DIRECT)
+  [ ] TEST INDIRECT A L'ANTIGLOBULINE (TIA, COOMBS INDIRECT IgG)
+  [ ] Saignee a 400 cc
+  [ ] APHERESE PLAQUETTAIRE
+  [ ] FILTRATION PLAQUITTAIRE
+  [ ] Phenotypage Sanguin
+  [ ] Carte de Cross Match Ultime
+
+------------------------------------------------------------------------
+RAE
+------------------------------------------------------------------------
+  [ ] TESTE DE COMBS DIRECT
+  [ ] TESTE DE COMBS INDIRECT / RECHERCHE D'ANTICORPS ANTI-ERYTHROCYTAIRES (DEPISTAGE) RAE/RAI
+  [ ] RAE Identification
+  [ ] TESTE DE COMBS INDIRECT
+  [ ] Depistage
+  [ ] TEST DE COOMBS INDIRECT IgG, IgM, IgA
+
+
+================================================================================
+7. SEROLOGIES DIVERSES
+================================================================================
+
+------------------------------------------------------------------------
+Test de grossesse urinaire qualitatif
+------------------------------------------------------------------------
+  [ ] Test de Grossesse Urinaire
+
+------------------------------------------------------------------------
+Anti Streptolysine O (ASLO) qualitatif
+------------------------------------------------------------------------
+  [ ] Anti Streptolysine O (ASLO)
+
+------------------------------------------------------------------------
+Serologie Syphilitique (sang)
+------------------------------------------------------------------------
+  [ ] VDRL qualitatif
+  [ ] VDRL quantitative
+  [ ] TPHA qualitatif
+  [ ] TPHA quantitatif
+
+------------------------------------------------------------------------
+Serologie Syphilitique (LCR)
+------------------------------------------------------------------------
+  [ ] VDRL qualitatif
+  [ ] VDRL quantitative
+  [ ] TPHA qualitative
+  [ ] TPHA quantitatif
+
+------------------------------------------------------------------------
+Serologie de l'Hepatite B
+------------------------------------------------------------------------
+  [ ] Ag HBs
+  [ ] Ac anti HBs
+  [ ] Ac anti HBc
+  [ ] Anticorps anti HBc IgM
+  [ ] Ag HBe
+  [ ] Anti HBe
+  [ ] Dosage quantitatif de l'Ag HBs
+
+------------------------------------------------------------------------
+Charge virale de l'Hepatite B par PCR
+------------------------------------------------------------------------
+  [ ] Recherche et quantification de l'ADN du VHB
+
+------------------------------------------------------------------------
+Serologie de l'Hepatite C
+------------------------------------------------------------------------
+  [ ] Ac anti HCV
+
+------------------------------------------------------------------------
+Charge virale de l'Hepatite C par PCR
+------------------------------------------------------------------------
+  [ ] Recherche et quantification de l'ARN du VHC
+
+------------------------------------------------------------------------
+Serologie du VIH 1+2
+------------------------------------------------------------------------
+  [ ] Serologie VIH (1/2)
+  [ ] Test de confirmation VIH Western Blot
+
+------------------------------------------------------------------------
+Charge virale du VIH par PCR
+------------------------------------------------------------------------
+  [ ] Recherche et quantification de l'ARN du VIH
+
+------------------------------------------------------------------------
+Serologie Cytomegalovirus (CMV)
+------------------------------------------------------------------------
+  [ ] Ac anti CMV IgG
+  [ ] Ac anti CMV IgM
+
+------------------------------------------------------------------------
+Serologie de l'Hepatite A
+------------------------------------------------------------------------
+  [ ] Ac anti HAV IgG
+  [ ] Ac anti HAV IgM
+
+------------------------------------------------------------------------
+Serologie de l'HTLV I et II
+------------------------------------------------------------------------
+  [ ] Anticorps anti HTLV I et II
+
+------------------------------------------------------------------------
+Serologie de la Rubeole
+------------------------------------------------------------------------
+  [ ] Ac anti virus de la Rubeole IgG
+  [ ] Ac anti virus de la Rubeole IgM
+
+------------------------------------------------------------------------
+Serologie de l'Epstein-Barr Virus (EBV)
+------------------------------------------------------------------------
+  [ ] Ac anti VCA IgG
+  [ ] Ac anti VCA IgM
+  [ ] Anticorps anti EBNA IgG
+
+------------------------------------------------------------------------
+Papillomavirus HPV par PCR
+------------------------------------------------------------------------
+  [ ] Recherche et genotypage du papillomavirus HPV
+
+------------------------------------------------------------------------
+Serologie Leptospirose
+------------------------------------------------------------------------
+  [ ] Leptospirose IgM
+
+------------------------------------------------------------------------
+Serologie Toxoplasmose
+------------------------------------------------------------------------
+  [ ] TOXOPLASMOSE (IgG)
+  [ ] TOXOPLASMOSE (IgM)
+  [ ] TOXOPLASMOSE (IgA)
+  [ ] AVIDITY TOXOPLASMOSE
+
+------------------------------------------------------------------------
+Autres Serologie bacterienne et Virale
+------------------------------------------------------------------------
+  [ ] Serologie Helicobacter Pylori IgA
+  [ ] Serologie Helicobacter Pylorii IgG
+  [ ] Serologie Chlamydia Trachomatis IgM
+  [ ] Serologie Chlamydia Trachomatis IgG
+  [ ] Serologie Brucella IgM
+  [ ] Serologie Brucella IgG
+  [ ] Herpes simplex virus 1+2 IgM
+  [ ] Herpes simplex virus 1+2 IgG
+  [ ] Serologie Varicelle Zona VZV IgM
+  [ ] Serologie Varicelle Zona VZV IgG
+  [ ] Parvovirus IgM
+  [ ] Parvovirus IgG
+  [ ] Coxiella burnetii IgM
+  [ ] Coxiella burnetii IgG
+  [ ] Rickettsia Conorii IgM
+  [ ] Serologie Rickettsia Conorii IgG
+  [ ] Serologie Chlamydia pneumoniae IgG
+  [ ] Serologie Chlamydia pneumoniae IgM
+  [ ] Serologie Legionella Pneumophila SG 1-6 IgG+IgM
+  [ ] Serologie Legionella Pneumophila SG 1-6 IgM
+  [ ] Serologie Rougeole IgG
+  [ ] Serologie Rougeole IgM
+  [ ] Serologie Oreillons IgG
+  [ ] Serologie Oreillons IgM
+  [ ] Zika virus IgM
+  [ ] Zika virus IgG
+  [ ] Serologie Dengue IgM
+  [ ] Serologie Dengue IgG
+  [ ] Tularemie IgM+IgG
+  [ ] Adenovirus IgG
+  [ ] Serologie Adenovirus IgM
+  [ ] Serologie HHV-6 IgG
+  [ ] Chagas IgM+IgG
+  [ ] Tetanos IgG
+  [ ] Serologie Tetanus IgG
+  [ ] Serologie Syphilis Treponema Screen IgG+IgM
+  [ ] Serologie Leptospira IgM
+  [ ] Serologie Chikungunya IgM
+  [ ] Serologie Chikungunya IgG
+  [ ] Serologie West Nile IgM
+  [ ] Serologie West Nile IgG
+  [ ] Serologie Borreliose de Lyme IgM
+  [ ] Serologie Borreliose de Lyme IgG
+  [ ] Serologie Bordelella Pertussis IgM
+  [ ] Serologie Bordelella Pertussis IgG
+  [ ] Mycoplasma Pneumoniae IgG
+  [ ] Mycoplasma Pneumoniae IgM
+
+------------------------------------------------------------------------
+Serologie Ag Aspergillus
+------------------------------------------------------------------------
+  [ ] Serologie Ag Aspergillus
+  [ ] Ag ASPERGILLUS: GALACTOMANNANE
+
+------------------------------------------------------------------------
+Serologie Aspergillus IgG
+------------------------------------------------------------------------
+  [ ] Serologie ASPERGILLUS IgG
+
+------------------------------------------------------------------------
+Serologie Candida
+------------------------------------------------------------------------
+  [ ] Serologie Candida
+
+------------------------------------------------------------------------
+Serologie Leishmanies
+------------------------------------------------------------------------
+  [ ] Serologie Leishmanies
+
+------------------------------------------------------------------------
+Serologie Amibiase
+------------------------------------------------------------------------
+  [ ] AMIBIASE
+
+------------------------------------------------------------------------
+Serologie Kyste Hydatique
+------------------------------------------------------------------------
+  [ ] Recherche KYSTE HYDATIQUE
+
+------------------------------------------------------------------------
+Serologie Chlamydophila Pneumoniae
+------------------------------------------------------------------------
+  [ ] Chlamydophila Pneumoniae IgG
+
+------------------------------------------------------------------------
+Serologie Diphterie
+------------------------------------------------------------------------
+  [ ] Diphterie IgG
+
+------------------------------------------------------------------------
+Serologie Bordetella Pertussis
+------------------------------------------------------------------------
+  [ ] Bordetella IgM
+  [ ] Bordetella IgG
+
+------------------------------------------------------------------------
+quantification de l'Ag HBs
+------------------------------------------------------------------------
+  [ ] Dosage quantitatif de l'Ag HBs
+
+------------------------------------------------------------------------
+Serologie Oreillons
+------------------------------------------------------------------------
+  [ ] Serologie Oreillons IgM
+
+
+================================================================================
+8. BACTERIOLOGIE
+================================================================================
+
+------------------------------------------------------------------------
+BACTERIOLOGIE
+------------------------------------------------------------------------
+  [ ] Aspiration Bronchique: examen cytobacteriologique + culture
+  [ ] Biopsie: examen cytobacteriologique + culture
+  [ ] Examen cytobacteriologique de catheter
+  [ ] Examen cytobacteriologique de Chambre implantable
+  [ ] Coprocultures (Bacteriologie des selles)
+  [ ] Recherche de BK sur crachats 3 jours de suite
+  [ ] Liquide de drainage: Examen Cytobacteriologique
+  [ ] Examen Cytobacteriologique des Urines
+  [ ] PCR multiplex: Filmarray Panel Respiratoire RP2.1 plus
+  [ ] PCR multiplex: Filmarray Panel Pneumonia
+  [ ] PCR hmultiplex: Filmarray Panel d'Hemoculture (BCID)
+  [ ] PCR hmultiplex: Filmarray Panel Gastro-Intestinal
+  [ ] PCR multiplex: Filmarray Panel Meningite Encephalite
+  [ ] Hemoculture
+  [ ] Examen cyto-bacteriologique de LCR
+  [ ] Liquide Articulaire: Examen cyto-bacteriologique, recherche micro-cristaux
+  [ ] Liquide d'Ascite: Examen cyto-bacteriologique
+  [ ] Examen Cytobacteriologique Liquide de lavage Broncho-alveolaire (LBA)
+  [ ] Examen Cytobacteriologique Liquide pericardique
+  [ ] Examen cyto-bacteriologique liquide pleural
+  [ ] Examen cyto-bacteriologique de materiel d'osteosynthese
+  [ ] Recherche de Mycoplasmes genito-urinaires
+  [ ] Prelevement de gorge: Examen cyto-bacteriologique
+  [ ] Prelevement distal protege: PDP
+  [ ] Ecouvillonnage
+  [ ] Examen cyto-bacteriologique de prelevement uretral
+  [ ] Examen cyto-bacteriologique prelevement vaginal
+  [ ] Examen cyto-bacteriologique prelevement vulvaire
+  [ ] Examen cyto-bacteriologique de pus
+  [ ] Quantiferon: dosage de l'interferon Gamma
+  [ ] Recherche d'Adenovirus sur selles
+  [ ] Recherche de Chlamydia trachomatis et gonocoque par PCR (GeneXpert) sur 1er jet urinaire
+  [ ] Recherche de Legionella pneumophila par PCR sur prelevement respiratoire (Filmarray pneumonia)
+  [ ] Recherche de Rotavirus dans les selles
+  [ ] Recherche de Chlamydia et Neisseria gonorrhoeae par PCR (GeneXpert)
+  [ ] Recherche d'Helicobacter pylori dans les selles
+  [ ] Spermoculture
+  [ ] Recherche d'Helicobacter pylori par test respiratoire a l'uree
+  [ ] Recherche de BK sur crachats: 2eme jour
+  [ ] Recherche de BK sur crachats: 3eme jour
+  [ ] Recherche de Chlamydia Immuno-Chromatographie
+  [ ] Examen cyto-bacteriologique des crachats
+  [ ] Prelevement rectal
+  [ ] Examen cyto-bacteriologique de site operatoire
+  [ ] Recherche de Legionella pneumophila sur urine par test immuno-chromatographique
+  [ ] Examen cytobacteriologique d'une plaie de pied diabetique
+  [ ] Genexpert sur liquide de ponction
+  [ ] GeneXpert sur biopsie
+  [ ] Genxpert MTB/RIF: autres
+  [ ] Recherche de BK: examen direct + culture
+  [ ] Genexpert sur crachats
+  [ ] GeneXpert MTB/RIF sur urines
+  [ ] COMPTE D'ADDIS (HLM)
+  [ ] GeneXpert Cov-2 / Flu / RSV
+  [ ] Test rapide Flu A / Flu B / CoV-2
+
+
+================================================================================
+9. PARASITOLOGIE & MYCOLOGIE
+================================================================================
+
+------------------------------------------------------------------------
+Etude Parasitologie
+------------------------------------------------------------------------
+  [ ] AMIBES LIBRES (RECHERCHE)
+  [ ] ANGUILLULE (Methode BAERMAN)
+  [ ] ANKYLOSTOMES (RECHERCHE)
+  [ ] ASCARIS (RECHERCHE)
+  [ ] BILHARZIES (RECHERCHE)
+  [ ] CILIES COLI BALANTIDIUM
+  [ ] Fasciala hepatica (DOUVES)
+  [ ] Recherche (FLAGELLES INTESTINAUX)
+  [ ] TRICHOCEPHALE
+  [ ] OXYURES (RECHERCHE)
+  [ ] SCHISTOSOMA SP
+  [ ] TRICHOMONAS VAGINALIS (RECHERCHE)
+  [ ] Pus (RECHERCHE PARASITOLOGIE)
+  [ ] COCCIDIOSES INTISTINSLES
+  [ ] CRYPTOSPORIDIES sp (RECHERCHE)
+
+------------------------------------------------------------------------
+WESTERN BLOT (Parasito - Mycologie)
+------------------------------------------------------------------------
+  [ ] KYSTE HYDATIQUE (WESTERN BLOT IgG)
+  [ ] LEISHMANIES (WESTERN BLOT)
+  [ ] TOXOPLASMOSE (Western Blot)
+  [ ] ASPERGILLUS WESTERN BLOT
+
+------------------------------------------------------------------------
+Examen des selles
+------------------------------------------------------------------------
+  [ ] Examen des selles KOP 1
+  [ ] Examen des selles KOP*3
+  [ ] SARCOCYSTIS HOMINIS
+  [ ] ISOSPORA belli
+  [ ] CYCLOSPORA caytanensis
+  [ ] MICROSPORIDIES
+  [ ] Scotch test anale
+  [ ] Recherche de sang dans les selles
+
+------------------------------------------------------------------------
+Mycologie
+------------------------------------------------------------------------
+  [ ] Ongles Main (Etude Mycologie)
+  [ ] Ongles Pied (Etude Mycologie)
+  [ ] Squams Main (Etude Mycologie)
+  [ ] Squams Pied (Etude Mycologie)
+  [ ] Cheveux (Etude Mycologie)
+  [ ] Peau (Etude Mycologie)
+  [ ] Examen Parasitologie des urines
+
+------------------------------------------------------------------------
+Recherche Parasitologie - Myco (Ecouvillonage)
+------------------------------------------------------------------------
+  [ ] Ecouvillonage Oculaire
+  [ ] Ecouvillonage Uretral
+  [ ] Ecouvillonage Vaginal
+  [ ] Ecouvillonage Buccal
+  [ ] Ecouvillonage Anal
+  [ ] Ecouvillonage Nasal
+  [ ] Ecouvillonage Auriculaire
+  [ ] Ecouvillonage Rectal
+  [ ] Ecouvillonage Cutane
+
+------------------------------------------------------------------------
+Etude Parasitologie/Mycologie
+------------------------------------------------------------------------
+  [ ] Biopsies (Etude Parasitologie/Mycologie)
+  [ ] LBA (Etude Parasitologie/Mycologie)
+  [ ] Expectoration (Etude Parasitologie/Mycologie)
+  [ ] Aspiration branchique (Etude Parasitologie/Mycologie)
+  [ ] PDP (Etude Parasitologie/Mycologie)
+  [ ] Prelevement Vaginal (Etude Parasitologie/Mycologie)
+  [ ] Prelevement Uretral (Etude Parasitologie/Mycologie)
+  [ ] Liquide Peritoneal (Etude Parasitologie/Mycologie+Culture)
+  [ ] Liquide pleurale articulaire (Etude Parasitologie/Mycologie+Culture)
+
+------------------------------------------------------------------------
+LCR (Etude Parasitologie / Mycologie)
+------------------------------------------------------------------------
+  [ ] Recherche Cryptocoque
+  [ ] Parasitologie LCR
+
+------------------------------------------------------------------------
+Coprologie Fonctionnelle
+------------------------------------------------------------------------
+  [ ] Coprologie Fonctionnelle
+
+------------------------------------------------------------------------
+Corps de Leishmanie
+------------------------------------------------------------------------
+  [ ] Leishmaniose viscerale
+  [ ] Leishmaniose - Cutanee
+
+------------------------------------------------------------------------
+Recherche les insectes
+------------------------------------------------------------------------
+  [ ] Anopheles
+  [ ] Phlebotome
+  [ ] Simulie
+  [ ] Poux
+  [ ] Punaises
+  [ ] Chrysops (taon)
+  [ ] Glossine
+  [ ] Myiase
+  [ ] Ixodes / Argasides
+
+------------------------------------------------------------------------
+ANTIFONGIGRAMME
+------------------------------------------------------------------------
+  [ ] ANTIFONGIGRAMME
+
+------------------------------------------------------------------------
+SPERMOGRAMME
+------------------------------------------------------------------------
+  [ ] SPERMOGRAMME
+
+------------------------------------------------------------------------
+SPERMOCYTOGRAMME
+------------------------------------------------------------------------
+  [ ] Spermocytogramme
+
+------------------------------------------------------------------------
+Recherche de Filaire dans le sang
+------------------------------------------------------------------------
+  [ ] Recherche de Filaire dans le sang
+
+------------------------------------------------------------------------
+Hemoculture (Etude parasitologie-mycologie)
+------------------------------------------------------------------------
+  [ ] Hemoculture (Etude parasitologie-mycologie)
+
+------------------------------------------------------------------------
+Recherche Paludisme
+------------------------------------------------------------------------
+  [ ] Frottis sanguin + Goutte epaisse + TDR
+
+
+================================================================================
+10. IMMUNOLOGIE & RHUMATOLOGIE
+================================================================================
+
+------------------------------------------------------------------------
+Facteurs Rhumatoides
+------------------------------------------------------------------------
+  [ ] Facteurs Rhumatoides (ELISA)
+  [ ] LATEX
+  [ ] WAALER-ROSE
+
+------------------------------------------------------------------------
+Annalyses Immunologiques par technique ImmunoFluorescence IF
+------------------------------------------------------------------------
+  [ ] Anticorps anti Endomysium IgA
+  [ ] Anticorps anti Nucleaires AAN (IF)
+
+------------------------------------------------------------------------
+Annalyses Immunologiques par technique ELISA
+------------------------------------------------------------------------
+  [ ] Anticorps anti-transglutaminase IgA
+  [ ] Anticorps anti-transglutaminase IgG
+  [ ] Anticorps anti DNA (ELISA)
+  [ ] Anticorps anti peptides citrullins cyclises CCP
+  [ ] Anticorps anti b2 glycoproteine IgG
+  [ ] Anticorps anti b2 glycoproteine IgM
+  [ ] Anticorps anti Cardiolipine IgM
+  [ ] Anticorps anti Cardiolipine IgG (ELISA)
+  [ ] Anticorps anti ECT-typage
+  [ ] Anticorps anti-Gliadine IgA
+  [ ] Anticorps anti-Gliadine IgG
+  [ ] Anticorps anti Proteinase 3 PR3 (ELISA)
+  [ ] Anticorps anti Myeloperoxydase MPO (ELISA)
+
+------------------------------------------------------------------------
+Annalyses Immunologiques par technique IMMUNODOT
+------------------------------------------------------------------------
+  [ ] Chromatine
+
+------------------------------------------------------------------------
+Connectivites
+------------------------------------------------------------------------
+  [ ] CONNECTIVITES 10 IgG
+  [ ] Immunodot Sclerodermie
+  [ ] Immunodot Polymyosite
+  [ ] Immunodot ANA 12
+  [ ] Immunodot ANA 25
+
+------------------------------------------------------------------------
+Les hepatites auto-immunes
+------------------------------------------------------------------------
+  [ ] Immunodot Liver10
+
+------------------------------------------------------------------------
+Les vascularites, APS
+------------------------------------------------------------------------
+  [ ] Immunodot APS IgG
+  [ ] Immunodot ANCA+GBM
+
+------------------------------------------------------------------------
+M.A.I du tube digestif et diabete
+------------------------------------------------------------------------
+  [ ] Immunodot Celiac IgA
+  [ ] Immunodot Celiac IgG
+  [ ] Immunodot Gastrite IgG
+  [ ] Immunodot ASCA
+  [ ] Immunodot GAD
+
+------------------------------------------------------------------------
+M.A.I du systeme nerveux (PNS)
+------------------------------------------------------------------------
+  [ ] Immunodot PNS9 IgG
+  [ ] Immunodot MAG-blot
+
+------------------------------------------------------------------------
+Immunologie
+------------------------------------------------------------------------
+  [ ] AC ANTI CCP
+
+================================================================================
+                         FIN DU CATALOGUE
+================================================================================

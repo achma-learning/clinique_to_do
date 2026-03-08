@@ -1,6 +1,6 @@
 # Observation Ressources: Modular Development Context
 
-This folder serves as the modular staging area for the **ClinXpert** report generator (`observation.html`). The architectural strategy is to develop, refine, and test individual clinical sections as standalone HTML fragments before fusing them into the primary application.
+This folder serves as the modular staging area for the **Medical observation** report generator (`observation.html`). The architectural strategy is to develop, refine, and test individual clinical sections as standalone HTML fragments before fusing them into the primary application.
 
 ## Core Role & Workflow
 
