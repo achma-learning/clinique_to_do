@@ -225,6 +225,24 @@
   .tri-detail { width: 100%; padding-left: 10px; margin-top: 2px; }
   .tri-detail input, .tri-detail textarea { font-size: 0.82rem; margin: 0; border-left: 3px solid #dc3545; }
   .tri-group-title { font-size: 0.8rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.3px; padding: 8px 10px 4px; margin-top: 6px; }
+  .tri-reset { display: none; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; border: none; background: #e9ecef; color: #666; font-size: 0.8rem; font-weight: 700; cursor: pointer; flex-shrink: 0; transition: all 0.15s; line-height: 1; padding: 0; }
+  .tri-reset:hover { background: #dc3545; color: #fff; }
+  .tri-item.has-selection .tri-reset { display: flex; }
+  /* Tri-state confirmation overlay */
+  .tri-confirm-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 9998; }
+  .tri-confirm-overlay.active { display: block; }
+  .tri-confirm-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #fff; border-radius: 14px; padding: 24px 28px; box-shadow: 0 12px 40px rgba(0,0,0,0.25); z-index: 9999; max-width: 420px; width: 90%; text-align: center; }
+  .tri-confirm-box .tri-confirm-msg { font-size: 0.92rem; color: var(--text); margin-bottom: 18px; line-height: 1.5; }
+  .tri-confirm-box .tri-confirm-msg strong { color: var(--blue); }
+  .tri-confirm-box .tri-confirm-msg .tri-confirm-val { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.82rem; margin-left: 4px; }
+  .tri-confirm-box .tri-confirm-val.val-normal { background: #d4edda; color: #0a7c3e; }
+  .tri-confirm-box .tri-confirm-val.val-anormal { background: #f8d7da; color: #dc3545; }
+  .tri-confirm-btns { display: flex; gap: 10px; justify-content: center; }
+  .tri-confirm-btns button { padding: 9px 20px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .tri-confirm-btns .tri-btn-yes { background: #dc3545; color: #fff; }
+  .tri-confirm-btns .tri-btn-yes:hover { background: #c82333; }
+  .tri-confirm-btns .tri-btn-no { background: #e9ecef; color: var(--text); }
+  .tri-confirm-btns .tri-btn-no:hover { background: #dee2e6; }
 
   /* Row layouts */
   .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -2477,18 +2495,116 @@ function updatePathologyName(pathId) {
 
 // ─── Toggle Familiaux / contextual details ────────────────────────────────
 // ─── Tri-state exam handler ───────────────────────────────────────────────
-function triState(radio) {
+// ─── Tri-state confirmation system ────────────────────────────────────────
+let _triConfirmResolve = null;
+function triConfirm(msg, yesText, noText) {
+  return new Promise(resolve => {
+    _triConfirmResolve = resolve;
+    document.getElementById('triConfirmMsg').innerHTML = msg;
+    const yesBtn = document.getElementById('triConfirmYes');
+    const noBtn = document.getElementById('triConfirmNo');
+    yesBtn.textContent = yesText || 'Oui, désélectionner';
+    noBtn.textContent = noText || 'Non, garder ce choix';
+    document.getElementById('triConfirmOverlay').classList.add('active');
+    document.getElementById('triConfirmBox').style.display = 'block';
+  });
+}
+function triConfirmClose(result) {
+  document.getElementById('triConfirmOverlay').classList.remove('active');
+  document.getElementById('triConfirmBox').style.display = 'none';
+  if (_triConfirmResolve) { _triConfirmResolve(result); _triConfirmResolve = null; }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('triConfirmYes').addEventListener('click', () => triConfirmClose(true));
+  document.getElementById('triConfirmNo').addEventListener('click', () => triConfirmClose(false));
+  document.getElementById('triConfirmOverlay').addEventListener('click', () => triConfirmClose(false));
+});
+
+function _triUpdateItem(item, value) {
+  if (!item) return;
+  if (value) { item.classList.add('has-selection'); } else { item.classList.remove('has-selection'); }
+  const detail = item.querySelector('.tri-detail');
+  if (detail) detail.style.display = value === 'anormal' ? 'block' : 'none';
+}
+
+// Ensure each tri-item has a reset button (injected once)
+function _triEnsureResetBtn(item) {
+  if (item.querySelector('.tri-reset')) return;
+  const radios = item.querySelector('.tri-radios');
+  if (!radios) return;
+  const name = item.querySelector('input[type="radio"]')?.name;
+  if (!name) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'tri-reset';
+  btn.title = 'Réinitialiser';
+  btn.textContent = '×';
+  btn.onclick = () => triResetConfirm(name);
+  radios.after(btn);
+}
+
+let _triSwitching = false;
+async function triState(radio) {
+  if (_triSwitching) return;
   const item = radio.closest('.tri-item');
   if (!item) return;
-  const detail = item.querySelector('.tri-detail');
-  if (detail) detail.style.display = radio.value === 'anormal' ? 'block' : 'none';
+  const name = radio.name;
+  const newVal = radio.value;
+  const newLabel = newVal === 'normal' ? 'Normal' : 'Anormal';
+
+  // Check if there was a previous selection (switching N↔A)
+  // We detect this by checking if the item already had has-selection class
+  const hadSelection = item.classList.contains('has-selection');
+  // Determine old value: if switching, the other radio was previously checked
+  const otherVal = newVal === 'normal' ? 'anormal' : 'normal';
+  const otherRadio = item.querySelector(`input[value="${otherVal}"]`);
+
+  if (hadSelection && otherRadio && !otherRadio.checked) {
+    // Item already had a selection and we're clicking the same value again — no-op
+  } else if (hadSelection) {
+    // Switching from one state to the other — ask for confirmation
+    _triSwitching = true;
+    const labelText = getTriLabel(name);
+    const oldLabel = otherVal === 'normal' ? 'Normal' : 'Anormal';
+    const oldClass = otherVal === 'normal' ? 'val-normal' : 'val-anormal';
+    const newClass = newVal === 'normal' ? 'val-normal' : 'val-anormal';
+    const msg = `Voulez-vous changer le choix pour :<br><strong>${labelText}</strong><br><span class="tri-confirm-val ${oldClass}">${oldLabel}</span> → <span class="tri-confirm-val ${newClass}">${newLabel}</span>`;
+    const confirmed = await triConfirm(msg, 'Oui, changer', 'Non, garder');
+    _triSwitching = false;
+    if (!confirmed) {
+      // Revert: re-check the old radio
+      radio.checked = false;
+      otherRadio.checked = true;
+      return;
+    }
+  }
+
+  _triEnsureResetBtn(item);
+  _triUpdateItem(item, newVal);
   updateProgress();
 }
+
+async function triResetConfirm(name) {
+  const currentVal = getTriValue(name);
+  if (!currentVal) return;
+  const labelText = getTriLabel(name);
+  const valLabel = currentVal === 'normal' ? 'Normal' : 'Anormal';
+  const valClass = currentVal === 'normal' ? 'val-normal' : 'val-anormal';
+  const msg = `Voulez-vous désélectionner :<br><strong>${labelText}</strong> : <span class="tri-confirm-val ${valClass}">${valLabel}</span>`;
+  const confirmed = await triConfirm(msg, 'Oui, désélectionner', 'Non, garder ce choix');
+  if (!confirmed) return;
+  triReset(name);
+}
+
 function triReset(name) {
-  // Uncheck all radios for this name (reset to "non examiné")
   document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
   const item = document.querySelector(`input[name="${name}"]`)?.closest('.tri-item');
-  if (item) { const d = item.querySelector('.tri-detail'); if(d) d.style.display = 'none'; }
+  if (item) {
+    item.classList.remove('has-selection');
+    const d = item.querySelector('.tri-detail'); if(d) d.style.display = 'none';
+    const detailInput = item.querySelector(`[name="${name}_detail"]`);
+    if (detailInput) detailInput.value = '';
+  }
   updateProgress();
 }
 function getTriValue(name) {
@@ -2798,6 +2914,8 @@ function resetAll() {
   document.querySelectorAll('input[type="text"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],textarea').forEach(el=>el.value='');
   document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
   document.querySelectorAll('input[type="checkbox"],input[type="radio"]').forEach(el=>el.checked=false);
+  document.querySelectorAll('.tri-item.has-selection').forEach(el=>el.classList.remove('has-selection'));
+  document.querySelectorAll('.tri-detail').forEach(el=>el.style.display='none');
   // Clear biological values
   document.querySelectorAll('.bio-table .value-input').forEach(input => {
     input.value = '';
@@ -3507,5 +3625,14 @@ document.addEventListener('click', function(e) {
   if(menu && !e.target.closest('.logo-dropdown')) menu.classList.remove('show');
 });
 </script>
+<!-- Tri-state confirmation overlay -->
+<div class="tri-confirm-overlay" id="triConfirmOverlay"></div>
+<div class="tri-confirm-box" id="triConfirmBox" style="display:none;">
+  <div class="tri-confirm-msg" id="triConfirmMsg"></div>
+  <div class="tri-confirm-btns">
+    <button class="tri-btn-yes" id="triConfirmYes">Oui, désélectionner</button>
+    <button class="tri-btn-no" id="triConfirmNo">Non, garder ce choix</button>
+  </div>
+</div>
 </body>
 </html>
