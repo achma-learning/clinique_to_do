@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>📋 Observation Médicale</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.js"></script>
 <style>
   :root {
     --blue: #1a5fa8;
@@ -330,7 +329,7 @@
     </div>
     <div class="island-center">
         <h1>📋 Observation Médicale</h1>
-        <p>Médecine Générale · Saisie · Checklist · Export Word</p>
+        <p>Médecine Générale · Saisie · Checklist · Export</p>
     </div>
     <a href="index.html" class="home-button">🏠</a>
     <div class="logo-dropdown">
@@ -2356,7 +2355,7 @@
 <div class="sticky-bar">
   <button class="btn btn-danger" onclick="resetAll()">🗑 Réinit.</button>
   <button class="btn" onclick="generateTxt()" style="background:#6c757d; color:#fff;">📝 .txt</button>
-  <button class="btn btn-primary" onclick="generateDocx()" id="docxBtn">📄 Word</button>
+  <button class="btn btn-primary" onclick="generatePage()">📄 Générer page</button>
   <button class="btn btn-success" onclick="generateGoogleDocs()">📑 Google Docs</button>
 </div>
 
@@ -3240,311 +3239,108 @@ function buildObservationText() {
   return lines.join('\n');
 }
 
-// ─── Generate DOCX ────────────────────────────────────────────────────────
-async function generateDocx() {
-  const btn = document.getElementById('docxBtn');
-  btn.disabled = true; btn.textContent = '⏳ ...';
-  try {
-    const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, Table, TableRow, TableCell, WidthType } = docx;
-    const children = [];
-    const date = new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+// ─── Generate printable HTML page in new tab ─────────────────────────────
+function generatePage() {
+  const text = buildObservationText();
+  const patient = v('nom_prenom') || 'Patient';
+  const date = new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-    function h1(text) {
-      return new Paragraph({ children:[new TextRun({text,bold:true,size:28,color:'FFFFFF',font:'Arial'})], heading:HeadingLevel.HEADING_1, spacing:{before:400,after:120}, shading:{fill:'1a5fa8'}, indent:{left:200} });
+  // Convert plain text to styled HTML
+  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  let body = '';
+  const lines = text.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    // Skip ═══ separator lines
+    if (line.startsWith('═══')) continue;
+    // Detect H1: line between two ═══ bars (pattern: ═══, TITLE, ═══)
+    if (i > 0 && i+1 < lines.length && lines[i-1]?.startsWith('═══') && lines[i+1]?.startsWith('═══')) {
+      body += `<h1>${esc(line)}</h1>`;
+      continue;
     }
-    function h2(text) {
-      return new Paragraph({ children:[new TextRun({text,bold:true,size:22,color:'0d3d72'})], spacing:{before:240,after:80}, border:{bottom:{style:BorderStyle.SINGLE,size:4,color:'b0c8e8'}} });
+    if (line === 'OBSERVATION MÉDICALE') continue; // already in header
+    if (line.startsWith('Générée le')) continue; // already in header
+    if (line.startsWith('Clinicien')) continue;
+    if (line.startsWith('Établissement sanitaire')) continue;
+    if (line.startsWith('Service de')) continue;
+    if (line.startsWith('Date : ')) continue;
+    if (line.startsWith('--- ') && line.endsWith(' ---')) {
+      body += `<h2>${esc(line.slice(4, -4))}</h2>`;
+    } else if (line.startsWith('──────')) {
+      body += '<hr>';
+    } else if (line.startsWith('Signé : ')) {
+      body += `<p class="signature">${esc(line)}</p>`;
+    } else if (line.startsWith('  ✔ ')) {
+      body += `<p class="chk ok">${esc(line.slice(4))}</p>`;
+    } else if (line.startsWith('  ✘ ')) {
+      body += `<p class="chk bad">${esc(line.slice(4))}</p>`;
+    } else if (line.startsWith('    ')) {
+      body += `<p class="sub">${esc(line.trim())}</p>`;
+    } else if (line.startsWith('  ') && line.includes(' : ')) {
+      const idx = line.indexOf(' : ');
+      body += `<p class="field"><strong>${esc(line.slice(2, idx))}</strong> : ${esc(line.slice(idx+3))}</p>`;
+    } else if (line.trim()) {
+      body += `<p>${esc(line.trim())}</p>`;
     }
-    function row(label,val) {
-      if(!val||!val.trim()) return null;
-      return new Paragraph({ children:[new TextRun({text:label+' : ',bold:true,size:20}),new TextRun({text:val,size:20})], spacing:{after:60}, indent:{left:360} });
-    }
-    function checkRow(label) {
-      return new Paragraph({ children:[new TextRun({text:'✔  ',color:'0a7c3e',bold:true,size:20}),new TextRun({text:label,size:20})], spacing:{after:40}, indent:{left:360} });
-    }
-    function addRow(lbl,name){const p=row(lbl,v(name));if(p)children.push(p);}
-    function addCheck(name){if(isChecked(name))children.push(checkRow(checkedLabel(name)));}
-    function addChecks(names){names.forEach(addCheck);}
-    function addH1(t){children.push(h1(t));}
-    function addH2(t){children.push(h2(t));}
+  }
 
-    // Title
-    children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:100},children:[new TextRun({text:'OBSERVATION MÉDICALE',bold:true,size:40,color:'0d3d72',font:'Arial'})]}));
-    children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:200},children:[new TextRun({text:`Générée le : ${date}`,italics:true,color:'666666',size:20})]}));
-    if(v('clinicien_nom')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:100},children:[new TextRun({text:`${v('clinicien_nom')} — ${v('clinicien_fonction')||''}`,bold:true,size:20})]}));
-    if(v('etablissement_sanitaire')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:100},children:[new TextRun({text:`Établissement : ${v('etablissement_sanitaire')}`,size:20})]}));
-    if(v('service_de')) children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after:400},children:[new TextRun({text:`Service : ${v('service_de')}`,size:20})]}));
+  const html = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Observation — ${esc(patient)}</title>
+<style>
+  @media print { @page { margin: 1.5cm 2cm; } body { font-size: 11pt; } .no-print { display:none; } }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px 40px; color: #1a1a1a; line-height: 1.6; }
+  .header { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #1a5fa8; }
+  .header h1 { font-size: 1.6rem; color: #1a5fa8; margin-bottom: 4px; letter-spacing: 1px; }
+  .header .meta { font-size: 0.85rem; color: #666; }
+  .header .clinicien { text-align: right; font-weight: 600; margin-top: 8px; font-size: 0.9rem; }
+  h1 { background: #1a5fa8; color: #fff; padding: 8px 14px; font-size: 1rem; margin: 22px 0 8px; border-radius: 4px; letter-spacing: 0.5px; }
+  h2 { color: #0d3d72; font-size: 0.92rem; padding: 4px 0; margin: 14px 0 6px; border-bottom: 2px solid #d0dff0; }
+  p { margin: 2px 0; font-size: 0.88rem; }
+  .field { padding-left: 16px; }
+  .field strong { color: #333; }
+  .chk { padding-left: 16px; }
+  .chk.ok::before { content: '✔ '; color: #0a7c3e; font-weight: 700; }
+  .chk.bad::before { content: '✘ '; color: #dc3545; font-weight: 700; }
+  .chk.bad { color: #dc3545; }
+  .sub { padding-left: 32px; font-size: 0.84rem; color: #555; }
+  hr { border: none; border-top: 1px solid #ccc; margin: 20px 0; }
+  .signature { text-align: right; margin-top: 40px; font-weight: 600; font-size: 0.9rem; }
+  .toolbar { position:fixed; top:10px; right:10px; display:flex; gap:8px; z-index:100; }
+  .toolbar button { padding:8px 16px; border:none; border-radius:6px; font-size:0.85rem; font-weight:600; cursor:pointer; }
+  .btn-print { background:#1a5fa8; color:#fff; }
+  .btn-print:hover { background:#154d8a; }
+  .btn-copy { background:#28a745; color:#fff; }
+  .btn-copy:hover { background:#218838; }
+</style>
+</head>
+<body>
+<div class="toolbar no-print">
+  <button class="btn-copy" onclick="document.querySelectorAll('.toolbar').forEach(e=>e.style.display='none'); document.execCommand('selectAll'); document.execCommand('copy'); window.getSelection().removeAllRanges(); document.querySelectorAll('.toolbar').forEach(e=>e.style.display='flex'); alert('Contenu copié ! Collez dans Word ou un éditeur de texte.')">Copier tout</button>
+  <button class="btn-print" onclick="window.print()">Imprimer / PDF</button>
+</div>
+<div class="header">
+  <h1 style="background:none;color:#1a5fa8;padding:0;margin:0;font-size:1.6rem;">OBSERVATION MÉDICALE</h1>
+  <div class="meta">Générée le : ${esc(date)}</div>
+  ${v('clinicien_nom') ? `<div class="clinicien">${esc(v('clinicien_nom'))}${v('clinicien_fonction')?' — '+esc(v('clinicien_fonction')):''}</div>` : ''}
+  ${v('etablissement_sanitaire') ? `<div class="meta">Établissement : ${esc(v('etablissement_sanitaire'))}</div>` : ''}
+  ${v('service_de') ? `<div class="meta">Service : ${esc(v('service_de'))}</div>` : ''}
+</div>
+${body}
+</body>
+</html>`;
 
-    // I
-    addH1('I. Identité du Patient');
-    addRow('Nom et Prénom','nom_prenom'); addRow('Date de naissance','date_naissance'); addRow('Âge','age');
-    addRow('Sexe','sexe'); addRow('Situation familiale','situation_familiale'); addRow("Nombre d'enfants",'nb_enfants');
-    addRow('Originaire de','originaire_de'); addRow('Résidant à','residant_a'); addRow('Profession','profession');
-    addRow('Couverture sociale','couverture_sociale');
-    if(v('contact_numero'))children.push(row('Contact ('+v('contact_type')+')',v('contact_numero')));
-    if(v('confiance_nom'))children.push(row('Personne de confiance',v('confiance_nom')+' — '+v('confiance_contact')));
-    addRow('Autonomie','autonomie');
-    if(v('ecog_score'))children.push(row('PS OMS / ECOG','PS '+v('ecog_score')));
-
-    // II
-    addH1('II. Motif de Consultation');
-    addRow('Plainte principale','plainte_principale'); addRow('Début','date_debut_symptomes');
-
-    // III
-    addH1('III. Antécédents (ATCD)');
-    addH2('A. Personnels — 1. Médicaux');
-    addChecks(['atcd_diabete','atcd_hta','atcd_asthme','atcd_ulcere','atcd_tuberculose','atcd_mst','atcd_hospitalisations']);
-    
-    // Helper function to export treatments for any pathology
-    function exportPathologyTreatments(pathology) {
-      if(!isChecked(`atcd_${pathology}`)) return;
-      
-      // Special case for diabetes - show type (radio buttons)
-      if(pathology === 'diabete') {
-        const diabRadio = document.querySelector('input[name="atcd_diabete_type"]:checked');
-        const diabType = diabRadio ? diabRadio.value : '';
-        if(diabType) children.push(row('Type de diabète', diabType));
-      }
-      
-      // Special case for MST - show type
-      if(pathology === 'mst') {
-        const mstType = v('atcd_mst_type');
-        if(mstType) children.push(row('Type de MST/IST', mstType));
-      }
-      
-      // Multiple treatments
-      for(let i = 0; i < 10; i++) {
-        const trait = v(`atcd_${pathology}_traitement_${i}`);
-        if(trait) {
-          const posol = v(`atcd_${pathology}_posologie_${i}`);
-          const prises = v(`atcd_${pathology}_prises_${i}`);
-          const depuis = v(`atcd_${pathology}_depuis_${i}`);
-          const treatmentText = `${trait}${posol?' ('+posol+')':''}${prises?' — '+prises:''}${depuis?' depuis '+depuis:''}`;
-          children.push(row(`Traitement ${i > 0 ? i+1 : ''}`, treatmentText));
-        }
-      }
-    }
-    
-    // Export all standard pathologies
-    exportPathologyTreatments('diabete');
-    exportPathologyTreatments('hta');
-    exportPathologyTreatments('asthme');
-    exportPathologyTreatments('ulcere');
-    exportPathologyTreatments('tuberculose');
-    exportPathologyTreatments('mst');
-    
-    // Export custom pathologies
-    document.querySelectorAll('.custom-pathology-item').forEach(item => {
-      const pathId = item.id;
-      const nameInput = document.querySelector(`[name="atcd_${pathId}_name"]`);
-      if(isChecked(`atcd_${pathId}`) && nameInput && nameInput.value) {
-        children.push(checkRow(nameInput.value));
-        for(let i = 0; i < 10; i++) {
-          const trait = v(`atcd_${pathId}_traitement_${i}`);
-          if(trait) {
-            const posol = v(`atcd_${pathId}_posologie_${i}`);
-            const prises = v(`atcd_${pathId}_prises_${i}`);
-            const depuis = v(`atcd_${pathId}_depuis_${i}`);
-            const treatmentText = `${trait}${posol?' ('+posol+')':''}${prises?' — '+prises:''}${depuis?' depuis '+depuis:''}`;
-            children.push(row(`Traitement ${i > 0 ? i+1 : ''}`, treatmentText));
-          }
-        }
-      }
-    });
-    
-    // Hospitalisations details
-    if(isChecked('atcd_hospitalisations')) {
-      const beneficie = v('atcd_hospitalisations_beneficie');
-      if(beneficie) children.push(row('Le patient a bénéficié de', beneficie));
-    }
-    
-    addRow('Précisions','atcd_medicaux_details');
-    addH2('A. Personnels — 2. Chirurgicaux');
-    addRow('Type','atcd_chir_type');addRow('Date','atcd_chir_date');addRow('Lieu','atcd_chir_lieu');addRow('Complications','atcd_chir_complications');
-    addH2('A. Personnels — 3. Toxico-Allergiques');
-    const tabac=(v('atcd_tabagisme_statut')+(v('atcd_tabagisme_pa')?' — '+v('atcd_tabagisme_pa'):'')).trim();
-    if(tabac)children.push(row('Tabagisme',tabac));
-    addRow('Alcool / Drogues','atcd_alcool_drogues');addRow('Allergies','atcd_allergies');
-    if(isChecked('atcd_contact_animaux'))children.push(checkRow('Contact avec animaux'));
-    addH2('A. Personnels — 4. Traitements en cours');
-    addRow('Médicaments','atcd_traitements');if(isChecked('atcd_verif_ordonnances'))children.push(checkRow('Ordonnances vérifiées'));
-    addH2('A. Personnels — 5. Vaccination');addRow('Statut vaccinal','atcd_vaccination');
-    addH2('A. Personnels — 6. Gynéco-Obstétriques');
-    addRow('DDR','atcd_ddr');addRow('G/P','atcd_gestite_parite');addRow('Cycles','atcd_cycles');addRow('Contraception','atcd_contraception');addRow('Complications','atcd_gyn_complications');
-    addH2('B. Familiaux (premier degré)');
-    addChecks(['atcd_fam_diabete','atcd_fam_hta','atcd_fam_cancer','atcd_fam_cardio','atcd_fam_contage_tb']);
-    addRow('Autres','atcd_fam_autres');
-
-    // IV
-    addH1('IV. Histoire de la Maladie');
-    addRow('Chronologie','hdM_chronologie');addRow("Mode d'installation",'hdM_mode_installation');
-    addH2('Caractérisation SITI FADMA');
-    addRow('Siège','hdM_siege');addRow('Irradiation','hdM_irradiation');addRow('Type','hdM_type');
-    const imp=(v('hdM_impact')+(v('hdM_eva')?' — EVA '+v('hdM_eva')+'/10':'')).trim();if(imp)children.push(row('Impact/Intensité',imp));
-    addRow('Facteurs','hdM_facteurs_aggravants');addRow('Accalmie','hdM_accalmie');addRow('Durée/Rythme','hdM_duree_rythme');addRow('Mode évolutif','hdM_mode_evolutif');addRow('Évolution','hdM_evolution_traitement');
-    addH2('Signes généraux');
-    addChecks(['hdM_asthenie','hdM_anorexie','hdM_fievre','hdM_frissons','hdM_sueurs_nocturnes']);
-    addRow('Amaigrissement','hdM_amaigrissement');addRow('Signes associés','hdM_signes_associes');addRow('Signes négatifs','hdM_signes_negatifs');
-
-    // V
-    addH1('V. Examen Clinique');
-    // Tri-state helper for docx
-    function triDocx(name) {
-      const val = getTriValue(name);
-      if (!val) return; // not examined → skip
-      const label = getTriLabel(name);
-      if (val === 'normal') { children.push(checkRow(label)); }
-      else { const d = getTriDetail(name); children.push(new Paragraph({children:[new TextRun({text:'✘  ',color:'dc3545',bold:true,size:20}),new TextRun({text:label+(d?' → '+d:''),size:20})],spacing:{after:40},indent:{left:360}})); }
-    }
-    function triDocxAll(names) { names.forEach(triDocx); }
-
-    addH2('5.1 — Examen Général/Vital & Constantes');
-    triDocxAll(['eg_conscient_oriente','eg_stable_hemo_respi','eg_pas_paleur','eg_pas_ictere','eg_pas_cyanose_generale','eg_pas_deshydratation','eg_pas_signes_choc','eg_pas_denutrition','eg_pas_omi']);
-    ['eg_gcs','eg_temp','eg_ta_droit','eg_ta_gauche','eg_fc','eg_fr','eg_spo2','eg_poids','eg_taille','eg_imc','eg_tour_taille'].forEach(name=>{
-      const labels={'eg_gcs':'GCS','eg_temp':'Température','eg_ta_droit':'TA MS droit','eg_ta_gauche':'TA MS gauche','eg_fc':'FC','eg_fr':'FR','eg_spo2':'SpO₂','eg_poids':'Poids','eg_taille':'Taille','eg_imc':'IMC','eg_tour_taille':'Tour de taille'};
-      const units={'eg_gcs':'/15','eg_temp':' °C','eg_ta_droit':' mmHg','eg_ta_gauche':' mmHg','eg_fc':' bpm','eg_fr':' cpm','eg_spo2':' %','eg_poids':' kg','eg_taille':' cm','eg_imc':'','eg_tour_taille':' cm'};
-      const val=v(name);if(val)children.push(row(labels[name],val+(units[name]||'')));
-    });
-    addH2('5.2 — Examen Ganglionnaire');
-    triDocxAll(['ep_gang_aires_libres','ep_gang_sans_anomalie','ep_gang_troisier']);addRow('Adénopathies','ep_gang_details');
-    addH2('5.3 — Examen Abdominal');
-    triDocxAll(['abd_resp_normale','abd_pas_deformation','abd_pas_cicatrices','abd_pas_circulation_collaterale','abd_pas_voussures_vergetures','abd_ombilic_plisse','abd_teguments_normaux','abd_pas_asterixis','abd_pas_leuconychie_erytheme','abd_souple_depressible','abd_pas_defense_contracture','abd_pas_organomegalie','abd_pas_contact_lombaire','abd_pas_masse_palpable','abd_pas_hernie','abd_pas_signe_flot']);
-    addRow('Zone douloureuse','abd_zone_douloureuse');
-    const fleche=v('abd_fleche_hepatique');if(fleche)children.push(row('Flèche hépatique',fleche+' cm'));
-    triDocxAll(['abd_pas_matite','abd_tympanisme_normal','abd_pas_meteorisme','abd_transit_audible','abd_pas_souffle_abdominal']);
-    triDocxAll(['tr_non_realise','tr_fissures','tr_hemorroides','tr_cri_douglas']);addRow('TR','tr_details');
-    addH2('5.4 — Examen Cardiaque');
-    triDocxAll(['card_pas_hippocratisme','card_pas_xanthomes','card_trc_normal','card_pas_jvp','card_pas_cyanose_centrale','ep_card_insp_thorax_symetrique','ep_card_insp_pas_circulation','ep_card_insp_pas_oedeme_mi','ep_card_palp_choc_pointe','ep_card_palp_harzer_negatif','ep_card_palp_pas_thrill','ep_card_palp_pas_reflux','ep_card_ausc_bruits_coeur_percus','ep_card_ausc_systole_diastole_libres','ep_card_ausc_pas_frottement','ep_card_ausc_pas_sons_surajoutes','ep_card_pas_insuffisance']);
-    addRow('Rythme / Souffle','ep_card_details');
-    addH2('5.5 — Examen Pulmonaire');
-    triDocxAll(['pulm_thorax_symetrique','pulm_pas_tirage','pulm_pas_cyanose','pulm_vv_normaux','pulm_mv_bilateral','pulm_pas_rales','pulm_pas_matite','pulm_pas_frottement_pleural']);addRow('Précisions','pulm_details');
-    addH2('5.6 — Examen Neurologique');
-    triDocxAll(['ep_neuro_conscient','ep_neuro_oriente_tps_espace','ep_neuro_pas_confusion','ep_neuro_pas_deficit_moteur','ep_neuro_pas_deficit_sensitif','ep_neuro_pas_ataxie','ep_neuro_babinski_negatif','ep_neuro_rot_present','ep_neuro_pas_clonus']);
-    addRow('ROT','ep_neuro_rot_details');
-    triDocxAll(['ep_neuro_nuque_souple','ep_neuro_kernig','ep_neuro_brudzinski']);
-    addH2('5.7 — Examen Cervical & Thyroïdien');
-    triDocxAll(['ep_cerv_insp_normal','ep_cerv_thyroide_normale','ep_cerv_pas_adp','ep_cerv_pas_compression']);
-    addRow('Thyroïde détails','ep_cerv_thyroide_details');
-    addH2('5.8 — Examen Ostéo-Articulaire');
-    const dloc=v('ep_oa_douleur_localisation');if(dloc)children.push(row('Localisation',dloc));
-    const evaoa=v('ep_oa_intensite_eva');if(evaoa)children.push(row('EVA',evaoa+'/10'));
-    triDocxAll(['ep_oa_pas_douleur','ep_oa_pas_raideur','ep_oa_pas_deformation','ep_oa_pas_epanchement','ep_oa_mobilite_conservee','ep_oa_rachis_normal','ep_oa_cervical_mobile','ep_oa_lombaire_mobile','ep_oa_lasegue_negatif','ep_oa_leri_negatif']);
-    addRow('Schober','ep_oa_schober');addRow('Précisions','ep_oa_details');
-    addH2('5.9 — Examen Uro-Génital');
-    triDocxAll(['ep_ug_pas_voussure_lombaire','ep_ug_pas_douleur_fosaillon','ep_ug_pas_contact_lombaire','ep_ug_giordano_negatif','ep_ug_pas_globe_vesical','ep_ug_oge_normal','ep_ug_tr_non_realise']);addRow('Précisions','ep_ug_details');
-    addH2('5.10 — Cutané & Buccal');
-    triDocxAll(['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2','ep_cut_pas_purpura','ep_cut_pas_erytheme']);addRow('Lésions cutanées','ep_cut_lesions');
-    triDocx('ep_cb_normal');addRow('Anomalies buccales','ep_cb_anomalies');
-    addH2('5.11 — Examen des Seins');
-    triDocxAll(['ep_sein_non_realise','ep_sein_symetrique','ep_sein_pas_retraction','ep_sein_pas_nodule','ep_sein_pas_ecoulement','ep_sein_adp_axillaires_libres']);
-    addRow('Précisions seins','ep_sein_details');
-    addRow('Autres examens','exam_autres');
-
-    // VI - Biologie Médicale
-    addH1('VI. Biologie Médicale');
-    const sex = getSex();
-    for (const categoryKey in biologicalValues) {
-      let categoryTitle = '';
-      switch (categoryKey) {
-        case 'hemogramme': categoryTitle = 'Hémogramme / NFS'; break;
-        case 'hemostase': categoryTitle = 'Hémostase et Coagulation'; break;
-        case 'ionogramme': categoryTitle = 'Ionogramme Sanguin'; break;
-        case 'renal': categoryTitle = 'Fonction Rénale'; break;
-        case 'hepatic': categoryTitle = 'Fonction Hépatique'; break;
-        case 'lipidique': categoryTitle = 'Bilan Lipidique'; break;
-        case 'autres_bio': categoryTitle = 'Autres Bilans (Phospho, Fer, Inflam)'; break;
-        case 'gds': categoryTitle = 'Gaz du Sang Artériel'; break;
-        case 'endocrino': categoryTitle = 'Endocrinologie'; break;
-        case 'lcr_urines': categoryTitle = 'LCR et Urines'; break;
-      }
-      
-      const categoryRows = [
-        new TableRow({children:[
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:'✓',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:400,type:WidthType.DXA}}),
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Paramètre',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2500,type:WidthType.DXA}}),
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Valeur',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:1200,type:WidthType.DXA}}),
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Unité',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:1000,type:WidthType.DXA}}),
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:'Référence',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2000,type:WidthType.DXA}})
-        ]})
-      ];
-
-      let hasData = false;
-      biologicalValues[categoryKey].forEach(paramData => {
-        const paramNameClean = paramData.param.replace(/\W/g,'_');
-        const inputName = `bio_${categoryKey}_${paramNameClean}`;
-        const chkName = `bio_${categoryKey}_${paramNameClean}_chk`;
-        
-        const inputValue = document.querySelector(`input[name="${inputName}"]`)?.value || '';
-        const checked = isChecked(chkName);
-        
-        if (inputValue || checked) {
-          hasData = true;
-          let rangeText = '';
-          const ranges = currentUnitSystem === 'SI' ? paramData.rangesSI : paramData.rangesUsual;
-          const unit = currentUnitSystem === 'SI' ? paramData.unitSI : paramData.unitUsual;
-          const currentRange = (paramData.sex && sex === "Féminin") ? ranges.F : ranges.M;
-
-          if (currentRange) {
-            rangeText = `${currentRange[0]} – ${currentRange[1]}`;
-          }
-
-          categoryRows.push(new TableRow({children:[
-            new TableCell({children:[new Paragraph({children:[new TextRun({text:checked?'✔':'',size:18,color:'0a7c3e'})]})]}),
-            new TableCell({children:[new Paragraph({children:[new TextRun({text:paramData.param,size:18})]})]}),
-            new TableCell({children:[new Paragraph({children:[new TextRun({text:inputValue||'—',size:18})]})]}),
-            new TableCell({children:[new Paragraph({children:[new TextRun({text:unit,size:18})]})]}),
-            new TableCell({children:[new Paragraph({children:[new TextRun({text:rangeText,size:18})]})]})
-          ]}));
-        }
-      });
-
-      if (hasData) {
-        children.push(h2(categoryTitle));
-        children.push(new Table({rows:categoryRows,width:{size:8500,type:WidthType.DXA}}));
-      }
-    }
-
-    // VI - Conclusion
-    addH1('VII. Conclusion Clinique & Hypothèses Diagnostiques');
-    addRow('Résumé clinique','cc_resume_clinique');
-    addRow("et chez qui l'examen clinique objective",'cc_signes_physiques');
-    addRow('Signes fonctionnels résumés','cc_signes_fonctionnels');
-    // Diagnosis table
-    children.push(new Paragraph({children:[new TextRun({text:'Hypothèses diagnostiques :',bold:true,size:22,color:'0d3d72'})],spacing:{before:240,after:80}}));
-    const diagRows = getDiagRows();
-    if(diagRows.length>0){
-      const tableRows=[new TableRow({children:[
-        new TableCell({children:[new Paragraph({children:[new TextRun({text:'Hypothèse Diagnostique',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:2500,type:WidthType.DXA}}),
-        new TableCell({children:[new Paragraph({children:[new TextRun({text:'Arguments Pour',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:3000,type:WidthType.DXA}}),
-        new TableCell({children:[new Paragraph({children:[new TextRun({text:'Arguments Contre',bold:true,color:'FFFFFF',size:18})]})],shading:{fill:'1a5fa8'},width:{size:3000,type:WidthType.DXA}})
-      ]})];
-      diagRows.forEach((r,i)=>{
-        tableRows.push(new TableRow({children:[
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:`Hypothèse ${i+1} : ${r.hyp}`,bold:true,size:18})]})],width:{size:2500,type:WidthType.DXA}}),
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:r.pour||'—',size:18})]})],width:{size:3000,type:WidthType.DXA}}),
-          new TableCell({children:[new Paragraph({children:[new TextRun({text:r.contre||'—',size:18})]})],width:{size:3000,type:WidthType.DXA}})
-        ]}));
-      });
-      children.push(new Table({rows:tableRows,width:{size:8500,type:WidthType.DXA}}));
-    }
-
-    // VII
-    addH1('VIII. CAT — Conduite À Tenir');
-    addH2('Diagnostique');addChecks(['cat_biologie','cat_imagerie','cat_autres_examens']);addRow('Examens','cat_examens_details');
-    addH2('Thérapeutique');addChecks(['cat_ther_etiologique','cat_ther_symptomatique','cat_ther_mesures_hygiene','cat_ther_surveillance','cat_ther_education']);addRow('Traitement','cat_traitement_details');
-    // Signature
-    children.push(new Paragraph({alignment:AlignmentType.RIGHT,spacing:{before:600},children:[new TextRun({text:(v('clinicien_nom')||'Nom Prénom')+' — '+(v('clinicien_fonction')||'Fonction'),bold:true,size:20})]}));
-
-    const doc = new Document({creator:'Observation Médicale',title:'Observation Médicale',sections:[{properties:{},children}]});
-    const blob = await Packer.toBlob(doc);
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    const patient = v('nom_prenom').replace(/\s+/g,'_')||'Patient';
-    a.href=url; a.download=`Observation_${patient}_${new Date().toISOString().split('T')[0]}.docx`;
-    a.click(); URL.revokeObjectURL(url);
-    showToast('✅ Fichier Word téléchargé !');
-  } catch(err) { console.error(err); showToast('❌ Erreur : '+err.message); }
-  btn.disabled=false; btn.textContent='📄 Word';
+  const w = window.open('', '_blank');
+  if (w) {
+    w.document.write(html);
+    w.document.close();
+    showToast('✅ Page générée dans un nouvel onglet');
+  } else {
+    showToast('❌ Popup bloquée — autorisez les popups pour ce site');
+  }
 }
 
 // ─── Generate TXT ─────────────────────────────────────────────────────────
