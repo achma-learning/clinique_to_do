@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>📋 Checklist Mobile</title>
+    <title>Checklist Mobile</title>
     <style>
       :root {
         --blue: #1a5fa8;
@@ -24,7 +24,7 @@
       body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); font-size: 16px; padding-bottom: 90px; padding-top: 80px; }
 
       .floating-island {
-        position: fixed; /* Changed to fixed to stay on screen */
+        position: fixed;
         top: 10px;
         left: 50%;
         transform: translateX(-50%);
@@ -36,7 +36,7 @@
         border-radius: 50px;
         padding: 8px;
         box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        z-index: 1001; /* Higher than app-header */
+        z-index: 1001;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -91,6 +91,12 @@
         opacity: 0.8;
         margin: 0;
       }
+      .progress-text {
+        font-size: 0.75em;
+        color: #7ecfff;
+        font-weight: 600;
+        margin-top: 2px;
+      }
 
       .app-header { display:none; }
 
@@ -110,20 +116,23 @@
       .section-header { display: flex; align-items: center; padding: 16px; cursor: pointer; user-select: none; background: var(--section-bg); gap: 12px; transition: background 0.2s; -webkit-tap-highlight-color: transparent; }
       .section-header:hover { background: var(--blue-light); }
       .section-title { flex: 1; font-weight: 600; font-size: 1.1rem; color: var(--blue-dark); }
+      .section-badge { background: var(--blue); color: white; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+      .section-badge.done { background: var(--green); }
       .toggle-icon { font-size: 1.6rem; color: var(--blue); font-weight: 300; transition: transform 0.25s; }
       .toggle-icon.open { transform: rotate(45deg); }
       .section-body { display: none; padding: 16px; border-top: 1px solid var(--border); }
       .section-body.open { display: block; }
-      
-      .check-list { display: flex; flex-direction: column; gap: 10px; }
+
+      .check-list { display: flex; flex-direction: column; gap: 8px; }
       .check-item { display: flex; align-items: flex-start; gap: 15px; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent; }
       .check-item:hover { background: var(--blue-light); }
       .check-item input[type="checkbox"] { width: 28px; height: 28px; min-width: 28px; border-radius: 7px; border: 2px solid #aaa; cursor: pointer; margin-top: 1px; accent-color: var(--blue); flex-shrink: 0; }
       .check-item span { font-size: 1rem; color: var(--text); line-height: 1.5; padding-top: 3px; }
       .check-item input[type="checkbox"]:checked ~ span { color: var(--green); text-decoration: line-through; }
-      .sub-section { margin-left: 20px; margin-top: 15px; padding-left: 15px; border-left: 3px solid var(--blue-light); }
-      h3, h4, h5 { color: var(--blue); border-bottom: none; font-size: 1rem; margin-bottom: 10px; }
+      .sub-section { margin-left: 10px; margin-top: 15px; padding-left: 15px; border-left: 3px solid var(--blue-light); }
+      h3 { color: var(--blue); border-bottom: none; font-size: 0.95rem; margin-bottom: 10px; font-weight: 700; }
       select { width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1rem; background: #fff; margin-top: 5px; }
+      .note-hint { background: var(--blue-light); border-left: 3px solid var(--blue); border-radius: 6px; padding: 8px 10px; font-size: 0.82rem; color: var(--blue-dark); margin-bottom: 10px; }
 
       .sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: white; padding: 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
       .reset-button { display: block; width: 100%; padding: 15px; background-color: var(--red); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1em; font-weight: 600; }
@@ -133,30 +142,23 @@
 
 <div class="floating-island">
     <div class="floating-buttons">
-        <a href="+++generate docx version/these interne - observation médicale.pdf" target="_blank">ClinXpert PDF</a>
-        <a href="clinXpert/+++ these interne - observation médicale.docx" target="_blank">ClinXpert Word</a>
         <a href="https://clinxpert.glide.page/dl/ClinXpert" target="_blank">ClinXpert</a>
     </div>
     <div class="island-center">
         <h1>Checklist Mobile</h1>
         <p id="current-datetime"></p>
+        <div class="progress-text" id="progressText">0/0</div>
     </div>
-    <a href="index.html" class="home-button">🏠</a>
+    <a href="index.html" class="home-button">&#127968;</a>
     <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 </div>
 
-<div class="app-header" style="display:none;">
-    
-</div>
+<div class="app-header" style="display:none;"></div>
 
-<div class="container">
-
-    <!-- Sections will be inserted here from the old file -->
-    
-</div>
+<div class="container" id="mainContainer"></div>
 
 <div class="sticky-bar">
-    <button class="reset-button" onclick="resetChecklist()">Réinitialiser la Checklist</button>
+    <button class="reset-button" onclick="resetChecklist()">Reinitialiser la Checklist</button>
 </div>
 
 <script>
@@ -166,15 +168,14 @@
         const dayName = days[now.getDay()];
         const date = now.toLocaleDateString('fr-FR');
         const time = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h');
-        
-        document.getElementById('current-datetime').textContent = `${dayName}, le ${date} | vers ${time}`;
+        document.getElementById('current-datetime').textContent = `${dayName}, le ${date} | ${time}`;
     }
 
     function toggleSection(header) {
         const body = header.nextElementSibling;
         const icon = header.querySelector('.toggle-icon');
         const isOpen = body.classList.toggle('open');
-        icon.textContent = isOpen ? '−' : '+';
+        icon.textContent = isOpen ? '\u2212' : '+';
         icon.classList.toggle('open', isOpen);
     }
 
@@ -185,55 +186,106 @@
         if (total === 0) return;
         const percentage = (checked.length / total) * 100;
         document.getElementById('progressBar').style.width = percentage + '%';
+        document.getElementById('progressText').textContent = checked.length + '/' + total;
+        updateSectionBadges();
+        saveState();
+    }
+
+    function updateSectionBadges() {
+        document.querySelectorAll('.section-card').forEach(card => {
+            const badge = card.querySelector('.section-badge');
+            if (!badge) return;
+            const body = card.querySelector('.section-body');
+            if (!body) return;
+            const total = body.querySelectorAll('input[type="checkbox"]').length;
+            const checked = body.querySelectorAll('input[type="checkbox"]:checked').length;
+            if (checked > 0) {
+                badge.textContent = checked + '/' + total;
+                badge.classList.toggle('done', checked === total);
+            } else {
+                badge.textContent = '\u2014';
+                badge.classList.remove('done');
+            }
+        });
     }
 
     function resetChecklist() {
-        if (confirm('Voulez-vous vraiment réinitialiser toute la checklist ?')) {
+        if (confirm('Voulez-vous vraiment reinitialiser toute la checklist ?')) {
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('select').forEach(sel => sel.value = sel.options[0].value);
             updateProgress();
+            localStorage.removeItem('checklist_state');
         }
     }
-    
+
+    function saveState() {
+        const state = {};
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            if (cb.name) state[cb.name] = cb.checked;
+        });
+        document.querySelectorAll('select').forEach(sel => {
+            if (sel.name) state['sel_' + sel.name] = sel.value;
+        });
+        try { localStorage.setItem('checklist_state', JSON.stringify(state)); } catch(e) {}
+    }
+
+    function loadState() {
+        try {
+            const raw = localStorage.getItem('checklist_state');
+            if (!raw) return;
+            const state = JSON.parse(raw);
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                if (cb.name && state[cb.name] !== undefined) cb.checked = state[cb.name];
+            });
+            document.querySelectorAll('select').forEach(sel => {
+                if (sel.name && state['sel_' + sel.name] !== undefined) sel.value = state['sel_' + sel.name];
+            });
+        } catch(e) {}
+    }
+
     function setupChecklist() {
-        // Add onchange listeners to all inputs
         document.querySelectorAll('input[type="checkbox"], select').forEach(input => {
             input.addEventListener('change', updateProgress);
         });
-
-        // Initialize progress bar
+        loadState();
         updateProgress();
-
-        // Initialize date and time, and update it every minute
         updateDateTime();
         setInterval(updateDateTime, 60000);
     }
-    
-    // This function will be called after we inject the old content
+
+    function updateCheckbox(checkboxId, selectValue) {
+        const checkbox = document.getElementById(checkboxId);
+        if (checkbox) { checkbox.checked = (selectValue !== ""); updateProgress(); }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      // The body of the old file needs to be injected here first.
-      const oldBody = `
+      document.getElementById('mainContainer').innerHTML = `
+
         <div class="section-card">
             <div class="section-header" onclick="toggleSection(this)">
-                <h2 class="section-title">1. Identité du Patient</h2>
+                <h2 class="section-title">1. Identite du Patient</h2>
+                <span class="section-badge">\u2014</span>
                 <span class="toggle-icon">+</span>
             </div>
             <div class="section-body">
                 <div class="check-list">
-                    <label class="check-item"><input type="checkbox" name="id_nom_prenom"><span> Nom et Prénom vérifiés.</span></label>
-                    <label class="check-item"><input type="checkbox" name="id_age_sexe"><span> Âge et Sexe notés.</span></label>
-                    <label class="check-item"><input type="checkbox" id="checkbox_id_situation_familiale" name="id_situation_familiale_checked"><span> Situation familiale vérifiée.</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_nom_prenom"><span>Nom et Prenom verifies</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_age_sexe"><span>Age et Sexe notes</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_ddn"><span>Date de naissance notee</span></label>
+                    <label class="check-item"><input type="checkbox" id="checkbox_id_situation_familiale" name="id_situation_familiale_checked"><span>Situation familiale verifiee</span></label>
                     <select name="id_situation_familiale_select" onchange="updateCheckbox('checkbox_id_situation_familiale', this.value)">
-                        <option value="">-- Sélectionnez --</option>
-                        <option value="Celibataire">Célibataire</option>
-                        <option value="Marie">Marié(e)</option>
-                        <option value="Divorce">Divorcé(e)</option>
+                        <option value="">-- Selectionnez --</option>
+                        <option value="Celibataire">Celibataire</option>
+                        <option value="Marie">Marie(e)</option>
+                        <option value="Divorce">Divorce(e)</option>
                         <option value="Veuf">Veuf(ve)</option>
                     </select>
-                    <label class="check-item"><input type="checkbox" name="id_origine_residence"><span> Origine et Résidence actuelle notées.</span></label>
-                    <label class="check-item"><input type="checkbox" name="id_profession"><span> Profession notée.</span></label>
-                    <label class="check-item"><input type="checkbox" id="checkbox_id_couverture_sociale" name="id_couverture_sociale_checked"><span> Couverture sociale vérifiée.</span></label>
-                    <label class="check-item"><input type="checkbox" name="id_autonomie"><span> Autonomie évaluée.</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_enfants"><span>Nombre d'enfants note</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_origine_residence"><span>Origine et Residence actuelle notees</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_profession"><span>Profession notee</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_couverture_sociale_checked"><span>Couverture sociale verifiee (AMO/CNSS/CNOPS/mutuelle)</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_contact_urgence"><span>Contact d'urgence / personne de confiance note</span></label>
+                    <label class="check-item"><input type="checkbox" name="id_autonomie"><span>Autonomie evaluee (ECOG/OMS)</span></label>
                 </div>
             </div>
         </div>
@@ -241,42 +293,76 @@
         <div class="section-card">
             <div class="section-header" onclick="toggleSection(this)">
                 <h2 class="section-title">2. Motif de Consultation</h2>
+                <span class="section-badge">\u2014</span>
                 <span class="toggle-icon">+</span>
             </div>
             <div class="section-body">
+                <div class="note-hint">C'est un signe fonctionnel, jamais un diagnostic. Noter les mots exacts du patient.</div>
                 <div class="check-list">
-                    <label class="check-item"><input type="checkbox" name="mdc_plainte_principale"><span> Plainte principale notée (mots du patient).</span></label>
-                    <label class="check-item"><input type="checkbox" name="mdc_rappel"><span> Rappel : C'est un signe fonctionnel.</span></label>
+                    <label class="check-item"><input type="checkbox" name="mdc_plainte_principale"><span>Plainte principale notee (mots du patient)</span></label>
+                    <label class="check-item"><input type="checkbox" name="mdc_date_debut"><span>Date de debut des symptomes notee</span></label>
                 </div>
             </div>
         </div>
-        
+
         <div class="section-card">
             <div class="section-header" onclick="toggleSection(this)">
-                <h2 class="section-title">3. Antécédents (ATCD)</h2>
+                <h2 class="section-title">3. Antecedents (ATCD)</h2>
+                <span class="section-badge">\u2014</span>
                 <span class="toggle-icon">+</span>
             </div>
             <div class="section-body">
                 <div class="check-list">
                     <div class="sub-section">
-                        <h3>Antécédents Personnels</h3>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_diabete"><span>Diabète</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_hta"><span>HTA</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_asthme"><span>Asthme</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_ulcere"><span>Ulcère</span></label>
+                        <h3>A. Personnels Medicaux</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_diabete"><span>Diabete (type, traitement, posologie, depuis)</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_hta"><span>HTA (traitement, posologie)</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_cardiopathie"><span>Cardiopathie (IC, valvulopathie, IDM, trouble rythme)</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_dyslipidemie"><span>Dyslipidemie</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_asthme"><span>Asthme / BPCO</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_ulcere"><span>Ulcere gastro-duodenal</span></label>
                         <label class="check-item"><input type="checkbox" name="atcd_pers_med_tuberculose"><span>Tuberculose</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_hospitalisations"><span>Hospitalisations antérieures</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_mst"><span>MST</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_trait_cours_3mois"><span>Traitements en cours</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_chir_type_intervention"><span>Antécédents chirurgicaux</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_tox_tabagisme"><span>Toxiques (Tabac, Alcool, Drogues)</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_pers_allerg_types"><span>Allergies</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_epilepsie"><span>Epilepsie</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_irc"><span>Insuffisance renale chronique</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_mst"><span>MST / IST</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_med_hospitalisations"><span>Hospitalisations anterieures</span></label>
                     </div>
                     <div class="sub-section">
-                        <h3>Antécédents Familiaux</h3>
-                        <label class="check-item"><input type="checkbox" name="atcd_fam_maladies_hereditaires"><span>Maladies héréditaires</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_fam_contage_tuberculeux"><span>Contage tuberculeux</span></label>
-                        <label class="check-item"><input type="checkbox" name="atcd_fam_deces"><span>Décès dans la famille (cause, âge)</span></label>
+                        <h3>B. Chirurgicaux</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_chir"><span>Antecedents chirurgicaux (type, date, lieu, complications)</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>C. Toxico-Allergiques</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_tox_tabagisme"><span>Tabagisme (statut, paquets-annees)</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_tox_alcool"><span>Alcool / Drogues</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_allerg_types"><span>Allergies (medicamenteuses, alimentaires, reaction)</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>D. Traitements en cours</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_trait_cours"><span>Liste medicaments des 3 derniers mois</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_ordonnances"><span>Ordonnances verifiees</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>E. Vaccination</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_vaccination"><span>Statut vaccinal verifie</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>F. Gyneco-Obstetrique (femme)</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_gyn_ddr"><span>DDR (date dernieres regles)</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_gyn_gestite"><span>Gestite / Parite</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_gyn_cycles"><span>Regularite des cycles / Menopause</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_gyn_contraception"><span>Contraception</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_pers_gyn_complications"><span>Complications obstetricales</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>G. Antecedents Familiaux</h3>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_diabete"><span>Diabete familial</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_hta"><span>HTA familiale</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_cancer"><span>Cancer familial</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_cardio"><span>Maladies cardiaques</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_tb"><span>Contage tuberculeux</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_mort_subite"><span>Mort subite (&lt;45 ans) / AVC / IDM</span></label>
+                        <label class="check-item"><input type="checkbox" name="atcd_fam_consanguinite"><span>Consanguinite</span></label>
                     </div>
                 </div>
             </div>
@@ -285,109 +371,164 @@
         <div class="section-card">
             <div class="section-header" onclick="toggleSection(this)">
                 <h2 class="section-title">4. Histoire de la Maladie</h2>
+                <span class="section-badge">\u2014</span>
                 <span class="toggle-icon">+</span>
             </div>
             <div class="section-body">
+                <div class="note-hint">SITI FADMA : Siege, Irradiation, Type, Impact, Facteurs, Accalmie, Duree, Mode evolutif, Amelioration.</div>
                 <div class="check-list">
-                    <label class="check-item"><input type="checkbox" name="hdm_siege"><span>Siège</span></label>
-                    <label class="check-item"><input type="checkbox" name="hdm_irradiation"><span>Irradiation</span></label>
-                    <label class="check-item"><input type="checkbox" name="hdm_type"><span>Type</span></label>
-                    <label class="check-item"><input type="checkbox" name="hdm_impact"><span>Impact / Intensité</span></label>
-                    <label class="check-item"><input type="checkbox" name="hdm_facteurs_aggravants"><span>Facteurs aggravants / calmants</span></label>
-                    <label class="check-item"><input type="checkbox" name="hdm_duree_rythme"><span>Durée / Rythme</span></label>
-                    <label class="check-item"><input type="checkbox" name="hdm_mode_evolutif"><span>Mode évolutif</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_chronologie"><span>Chronologie / Mode d'installation (brutal, progressif, insidieux)</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_siege"><span>S - Siege (localisation anatomique)</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_irradiation"><span>I - Irradiation</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_type"><span>T - Type (brulure, torsion, pesanteur, crampe...)</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_impact"><span>I - Impact / Intensite (EVA /10)</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_facteurs"><span>F - Facteurs aggravants / calmants</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_accalmie"><span>A - Accalmie (periodes de remission)</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_duree_rythme"><span>D - Duree / Rythme</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_mode_evolutif"><span>M - Mode evolutif (stable, progressif, recidivant)</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_amelioration"><span>A - Amelioration sous traitement</span></label>
                     <div class="sub-section">
-                        <h3>Signes Généraux (3A+F)</h3>
-                        <label class="check-item"><input type="checkbox" name="hdm_asthenie"><span>Asthénie</span></label>
+                        <h3>Signes Generaux (3A + Fievre)</h3>
+                        <label class="check-item"><input type="checkbox" name="hdm_asthenie"><span>Asthenie</span></label>
                         <label class="check-item"><input type="checkbox" name="hdm_anorexie"><span>Anorexie</span></label>
-                        <label class="check-item"><input type="checkbox" name="hdm_amaigrissement"><span>Amaigrissement</span></label>
-                        <label class="check-item"><input type="checkbox" name="hdm_fievre"><span>Fièvre</span></label>
+                        <label class="check-item"><input type="checkbox" name="hdm_amaigrissement"><span>Amaigrissement (chiffre en kg)</span></label>
+                        <label class="check-item"><input type="checkbox" name="hdm_fievre"><span>Fievre (chiffree) / Frissons / Sueurs nocturnes</span></label>
                     </div>
+                    <div class="sub-section">
+                        <h3>Signes fonctionnels par appareil</h3>
+                        <label class="check-item"><input type="checkbox" name="sf_cardio"><span>Cardio : douleur thoracique, dyspnee, palpitations, syncope</span></label>
+                        <label class="check-item"><input type="checkbox" name="sf_respi"><span>Respi : toux, expectoration, hemoptysie</span></label>
+                        <label class="check-item"><input type="checkbox" name="sf_digestif"><span>Digestif : nausees, vomissements, trouble transit, hemorragie</span></label>
+                        <label class="check-item"><input type="checkbox" name="sf_neuro"><span>Neuro : cephalees, vertiges, deficit, convulsions</span></label>
+                        <label class="check-item"><input type="checkbox" name="sf_urinaire"><span>Urinaire : dysurie, pollakiurie, hematurie</span></label>
+                    </div>
+                    <label class="check-item"><input type="checkbox" name="hdm_signes_associes"><span>Signes associes documentes</span></label>
+                    <label class="check-item"><input type="checkbox" name="hdm_signes_negatifs"><span>Signes negatifs importants documentes</span></label>
                 </div>
             </div>
         </div>
-        
+
         <div class="section-card">
             <div class="section-header" onclick="toggleSection(this)">
                 <h2 class="section-title">5. Examen Clinique</h2>
+                <span class="section-badge">\u2014</span>
                 <span class="toggle-icon">+</span>
             </div>
             <div class="section-body">
                 <div class="check-list">
                     <div class="sub-section">
-                        <h3>Examen Général</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_gen_conscience"><span>Niveau de conscience (Glasgow)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gen_apparence"><span>Apparence générale et coloration</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gen_constantes"><span>Constantes vitales (TA, FC, FR, Temp, SpO2)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gen_morpho"><span>Morphologie (Poids, Taille, IMC)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gen_hydratation"><span>État d'hydratation et de nutrition</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gen_choc"><span>Recherche de signes de choc</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gen_omi"><span>Œdèmes des membres inférieurs (OMI)</span></label>
+                        <h3>Examen General & Constantes</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_conscience"><span>Conscience : Glasgow /15, oriente temps-espace</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_coloration"><span>Coloration : paleur, ictere, cyanose</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_ta"><span>TA (deux bras)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_fc"><span>FC (pouls radial)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_fr"><span>FR (frequence respiratoire)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_temp"><span>Temperature</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_spo2"><span>SpO2 (a l'air ambiant)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_morpho"><span>Poids, Taille, IMC, Tour de taille</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_hydratation"><span>Hydratation (pli cutane, TRC &lt;3s)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_denutrition"><span>Etat nutritionnel</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_choc"><span>Signes de choc (marbrures, froideur extremites)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gen_omi"><span>Oedemes des membres inferieurs (OMI)</span></label>
                     </div>
+
                     <div class="sub-section">
-                        <h3>Examen Abdominal</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_abd_intro"><span>Introduction & Positionnement</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_abd_insp"><span>Inspection (distension, cicatrices, circulation)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_abd_palp"><span>Palpation (souplesse, défense, organomégalie)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_abd_perc"><span>Percussion (matité, tympanisme)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_abd_ausc"><span>Auscultation (bruits hydro-aériques)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_abd_tr"><span>Toucher rectal (si indiqué)</span></label>
+                        <h3>Examen Ganglionnaire</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_gang_aires"><span>Aires ganglionnaires palpees (cervicales, axillaires, inguinales, sus-claviculaires)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gang_troisier"><span>Ganglion de Troisier (sus-claviculaire gauche)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gang_caract"><span>Si ADP : nombre, taille, consistance, sensibilite, mobilite</span></label>
                     </div>
+
+                    <div class="sub-section">
+                        <h3>Examen Abdominal (IPPA)</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_insp"><span>Inspection (distension, cicatrices, hernie, circulation collaterale)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_palp"><span>Palpation (souplesse, defense/contracture, organomegalie, masse)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_hpm"><span>Hepatomegalie (fleche hepatique)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_spm"><span>Splenomegalie</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_hernie"><span>Orifices herniaires</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_perc"><span>Percussion (matite, tympanisme, ascite)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_ausc"><span>Auscultation (bruits hydro-aeriques, souffles)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_abd_tr"><span>Toucher rectal (si indique)</span></label>
+                    </div>
+
                     <div class="sub-section">
                         <h3>Examen Cardio-vasculaire</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_card_intro"><span>Introduction & Positionnement</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_card_insp"><span>Inspection (déformations, turgescence jugulaire)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_card_palp"><span>Palpation (choc de pointe, frémissements)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_card_ausc"><span>Auscultation (B1/B2, souffles)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_card_vasc"><span>Examen vasculaire (pouls, auscultation des axes)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_card_periph"><span>Signes périphériques (mains, visage)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_insp"><span>Inspection (thorax, TVJ, cicatrices, OMI)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_palp"><span>Palpation (choc de pointe, thrill, Harzer, reflux HJ)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_ausc"><span>Auscultation 4 foyers (B1/B2, souffles, B3/B4, frottement)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_souffle"><span>Si souffle : siege, temps, timbre, irradiation, intensite /6</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_pouls"><span>Pouls peripheriques (radial, femoral, poplite, tibial post, pedieux)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_ausc_axes"><span>Auscultation axes vasculaires (carotides, femoraux)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_periph"><span>Signes peripheriques (TRC, xanthomes, hippocratisme, cyanose)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_card_tvp"><span>TVP (ballottement mollet, Homans)</span></label>
                     </div>
+
                     <div class="sub-section">
-                        <h3>Examen Gynécologique</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_gyn_intro"><span>Introduction & Consentement</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gyn_abd"><span>Examen abdominal</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gyn_seins"><span>Examen des seins</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gyn_pelvi"><span>Examen pelvi-périnéal</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gyn_speculum"><span>Examen au spéculum</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_gyn_tv"><span>Toucher vaginal</span></label>
+                        <h3>Examen Pleuro-pulmonaire (IPPA)</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_insp"><span>Inspection (symetrie, tirage, cyanose, hippocratisme digital)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_palp"><span>Palpation (ampliation, vibrations vocales)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_perc"><span>Percussion (sonorite, matite, tympanisme)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_ausc"><span>Auscultation (MV, crepitants, sibilants, ronflants)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_pleuro_frottement"><span>Frottement pleural</span></label>
                     </div>
+
                     <div class="sub-section">
                         <h3>Examen Neurologique</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_intro"><span>Introduction</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_marche"><span>Marche et équilibre (Romberg)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_fonctions"><span>Fonctions supérieures</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_nc"><span>Nerfs crâniens</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_moteur"><span>Examen moteur (force, tonus)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_sensitif"><span>Examen sensitif</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_coordination"><span>Coordination (doigt-nez, talon-genou)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_reflexes"><span>Réflexes ostéo-tendineux et cutanés</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_neuro_meninges"><span>Signes méningés</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_conscience"><span>Conscience et orientation</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_fonctions_sup"><span>Fonctions superieures (langage, memoire, praxies)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_marche"><span>Marche et equilibre (tandem, Romberg)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_nc"><span>Nerfs craniens I-XII</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_moteur"><span>Motricite (Barre, Mingazzini, force MRC 0-5, tonus)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_sensitif"><span>Sensibilite (tactile, douloureuse, vibratoire, proprioceptive)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_coordination"><span>Coordination (doigt-nez, talon-genou, diadococinesie)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_rot"><span>ROT (bicipital, tricipital, stylo-radial, rotulien, achilleen)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_babinski"><span>Signe de Babinski (reflexe cutane plantaire)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_neuro_meninges"><span>Signes meninges (nuque, Kernig, Brudzinski)</span></label>
                     </div>
+
                     <div class="sub-section">
-                        <h3>Examen Ostéo-articulaire</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_osteo_intro"><span>Introduction</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_osteo_insp"><span>Inspection générale (alignement, déformations)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_osteo_gals"><span>GALS Screen (marche, membres, rachis)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_osteo_epaule"><span>Examen de l’épaule</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_osteo_hanche"><span>Examen de la hanche</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_osteo_genou"><span>Examen du genou</span></label>
+                        <h3>Examen Osteo-articulaire</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_insp"><span>Inspection (alignement, deformations, amyotrophie)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_gals"><span>GALS Screen (marche, MS, MI, rachis)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_rachis"><span>Rachis (courbures, mobilite, Schober, Lasegue, Leri)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_epaule"><span>Epaule (Neer, Hawkins, Jobe, Patte)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_hanche"><span>Hanche (Thomas, Trendelenburg)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_osteo_genou"><span>Genou (choc rotulien, tiroir, McMurray)</span></label>
                     </div>
+
                     <div class="sub-section">
-                        <h3>Examen Pleuro-pulmonaire</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_pleuro_intro"><span>Introduction</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_pleuro_insp"><span>Inspection (cyanose, détresse respi, symétrie)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_pleuro_palp"><span>Palpation (vibrations vocales, expansion)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_pleuro_perc"><span>Percussion (sonorité, matité, tympanisme)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_pleuro_ausc"><span>Auscultation (murmure vésiculaire, râles)</span></label>
+                        <h3>Examen Uro-Genital</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_flombaires"><span>Fosses lombaires (palpation, contact lombaire, Giordano)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_hypogastre"><span>Hypogastre (globe vesical)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_oge"><span>Organes genitaux externes</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_uro_tr"><span>Toucher rectal (prostate chez l'homme)</span></label>
                     </div>
-                     <div class="sub-section">
-                        <h3>Examen Urologique</h3>
-                        <label class="check-item"><input type="checkbox" name="ex_uro_intro"><span>Introduction</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_uro_insp"><span>Inspection générale (urines, signes généraux)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_uro_flombaires"><span>Examen des fosses lombaires (palpation, percussion)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_uro_hypogastre"><span>Examen de l’hypogastre (globe vésical)</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_uro_oge"><span>Examen des organes génitaux externes</span></label>
-                        <label class="check-item"><input type="checkbox" name="ex_uro_tr"><span>Toucher rectal</span></label>
+
+                    <div class="sub-section">
+                        <h3>Examen Cervical & Thyroide</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_cerv_thyroide"><span>Thyroide (inspection, palpation, mobilite, nodule)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_cerv_compression"><span>Signes de compression (dyspnee, dysphagie, dysphonie)</span></label>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3>Examen des Seins (femme)</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_sein_insp"><span>Inspection (symetrie, retraction, peau d'orange)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_sein_palp"><span>Palpation 4 quadrants (nodule, ecoulement)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_sein_adp"><span>ADP axillaires et sus-claviculaires</span></label>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3>Examen Cutane & Buccal</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_cut_peau"><span>Peau (paleur, ictere, cyanose, purpura, lesions)</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_cut_bouche"><span>Cavite buccale (langue, levres, gencives, haleine)</span></label>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3>Examen Gynecologique (si indique)</h3>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_abd"><span>Examen abdominal</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_pelvi"><span>Examen pelvi-perineal</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_speculum"><span>Examen au speculum</span></label>
+                        <label class="check-item"><input type="checkbox" name="ex_gyn_tv"><span>Toucher vaginal</span></label>
                     </div>
                 </div>
             </div>
@@ -395,41 +536,51 @@
 
         <div class="section-card">
             <div class="section-header" onclick="toggleSection(this)">
-                <h2 class="section-title">6. Conclusion</h2>
+                <h2 class="section-title">6. Conclusion Clinique</h2>
+                <span class="section-badge">\u2014</span>
                 <span class="toggle-icon">+</span>
             </div>
             <div class="section-body">
+                <div class="note-hint">Rappeler : identite + motif + ATCD pertinents + HDM + signes physiques, regroupes en syndrome(s). Diagnostics du plus probable au moins probable.</div>
                 <div class="check-list">
-                    <label class="check-item"><input type="checkbox" name="cc_resume"><span>Résumé clinique</span></label>
-                    <label class="check-item"><input type="checkbox" name="hd_hypotheses"><span>Hypothèses diagnostiques</span></label>
+                    <label class="check-item"><input type="checkbox" name="cc_resume"><span>Resume clinique redige</span></label>
+                    <label class="check-item"><input type="checkbox" name="cc_signes_physiques"><span>Signes physiques positifs resumes</span></label>
+                    <label class="check-item"><input type="checkbox" name="cc_signes_negatifs"><span>Signes negatifs pertinents notes</span></label>
+                    <label class="check-item"><input type="checkbox" name="hd_hypotheses"><span>Hypotheses diagnostiques (arguments pour/contre)</span></label>
+                    <label class="check-item"><input type="checkbox" name="hd_urgences"><span>Diagnostics urgents/graves envisages</span></label>
                 </div>
             </div>
         </div>
 
         <div class="section-card">
             <div class="section-header" onclick="toggleSection(this)">
-                <h2 class="section-title">7. Conduite à Tenir (CAT)</h2>
+                <h2 class="section-title">7. Conduite a Tenir (CAT)</h2>
+                <span class="section-badge">\u2014</span>
                 <span class="toggle-icon">+</span>
             </div>
             <div class="section-body">
                 <div class="check-list">
-                    <label class="check-item"><input type="checkbox" name="cat_diag"><span>CAT Diagnostique (examens)</span></label>
-                    <label class="check-item"><input type="checkbox" name="cat_ther"><span>CAT Thérapeutique (traitement)</span></label>
+                    <div class="sub-section">
+                        <h3>Diagnostique</h3>
+                        <label class="check-item"><input type="checkbox" name="cat_bio"><span>Bilan biologique demande</span></label>
+                        <label class="check-item"><input type="checkbox" name="cat_imagerie"><span>Imagerie demandee (RX, Echo, TDM, IRM)</span></label>
+                        <label class="check-item"><input type="checkbox" name="cat_autres_examens"><span>Autres examens (ECG, endoscopie, biopsie...)</span></label>
+                        <label class="check-item"><input type="checkbox" name="cat_plan_hierarchise"><span>Plan d'examens hierarchise (urgence / differe)</span></label>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Therapeutique</h3>
+                        <label class="check-item"><input type="checkbox" name="cat_ther_etiologique"><span>Traitement etiologique</span></label>
+                        <label class="check-item"><input type="checkbox" name="cat_ther_symptomatique"><span>Traitement symptomatique</span></label>
+                        <label class="check-item"><input type="checkbox" name="cat_ther_hygiene"><span>Mesures hygieno-dietetiques</span></label>
+                        <label class="check-item"><input type="checkbox" name="cat_ther_surveillance"><span>Plan de surveillance</span></label>
+                        <label class="check-item"><input type="checkbox" name="cat_ther_education"><span>Education therapeutique du patient</span></label>
+                    </div>
                 </div>
             </div>
         </div>
       `;
-      document.querySelector('.container').innerHTML = oldBody;
       setupChecklist();
     });
-
-    // Kept for the select dropdowns
-    function updateCheckbox(checkboxId, selectValue) {
-        const checkbox = document.getElementById(checkboxId);
-        if (checkbox) {
-            checkbox.checked = (selectValue !== "");
-        }
-    }
 </script>
 </body>
 </html>

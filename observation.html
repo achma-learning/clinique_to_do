@@ -478,7 +478,7 @@
       <span class="toggle-icon">+</span>
     </div>
     <div class="section-body">
-      <div class="note-box">💡 C'est un signe fonctionnel, jamais un diagnostic à ce stade.</div>
+      <div class="note-box">C'est un signe fonctionnel, jamais un diagnostic a ce stade. Noter les mots exacts du patient. Ex: "j'ai mal au ventre" et non "douleur abdominale".</div>
       <div class="field-group">
         <label class="field-label">Plainte principale (mots du patient)</label>
         <textarea name="plainte_principale" class="field-input" placeholder="Ex : « J'ai mal au ventre depuis 3 jours... »" oninput="updateProgress()"></textarea>
@@ -671,10 +671,134 @@
               <button type="button" onclick="addTreatment('tuberculose')" style="margin-top:8px; padding:6px 12px; background:#e8f0fc; border:1px solid var(--blue); color:var(--blue); border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:600;">+ Ajouter un traitement</button>
             </div>
 
+            <!-- Cardiopathie -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_cardiopathie" onchange="toggleAtcdDetails('cardiopathie'); updateProgress()" style="margin-top:4px;">
+              <span>Cardiopathie (insuffisance cardiaque, valvulopathie, IDM, trouble du rythme...)</span>
+            </label>
+            <div id="atcd_details_cardiopathie" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div id="cardiopathie_treatments_container">
+                <div class="treatment-item" data-index="0">
+                  <div style="display:flex; gap:8px; margin-bottom:8px; align-items:flex-start; margin-top:6px;">
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Traitement</label>
+                      <input type="text" name="atcd_cardiopathie_traitement_0" class="field-input" placeholder="IEC, BB, Diuretiques, Anticoagulants..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Posologie</label>
+                      <input type="text" name="atcd_cardiopathie_posologie_0" class="field-input" placeholder="Dosage..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Prises/jour</label>
+                      <input type="text" name="atcd_cardiopathie_prises_0" class="field-input" placeholder="1cp/j..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Depuis</label>
+                      <input type="date" name="atcd_cardiopathie_depuis_0" class="field-input" oninput="updateProgress()">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" onclick="addTreatment('cardiopathie')" style="margin-top:8px; padding:6px 12px; background:#e8f0fc; border:1px solid var(--blue); color:var(--blue); border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:600;">+ Ajouter un traitement</button>
+            </div>
+
+            <!-- Dyslipidemie -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_dyslipidemie" onchange="toggleAtcdDetails('dyslipidemie'); updateProgress()" style="margin-top:4px;">
+              <span>Dyslipidemie</span>
+            </label>
+            <div id="atcd_details_dyslipidemie" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div id="dyslipidemie_treatments_container">
+                <div class="treatment-item" data-index="0">
+                  <div style="display:flex; gap:8px; margin-bottom:8px; align-items:flex-start; margin-top:6px;">
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Traitement</label>
+                      <input type="text" name="atcd_dyslipidemie_traitement_0" class="field-input" placeholder="Statines, Fibrates..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Posologie</label>
+                      <input type="text" name="atcd_dyslipidemie_posologie_0" class="field-input" placeholder="Dosage..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Prises/jour</label>
+                      <input type="text" name="atcd_dyslipidemie_prises_0" class="field-input" placeholder="1cp/j..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Depuis</label>
+                      <input type="date" name="atcd_dyslipidemie_depuis_0" class="field-input" oninput="updateProgress()">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" onclick="addTreatment('dyslipidemie')" style="margin-top:8px; padding:6px 12px; background:#e8f0fc; border:1px solid var(--blue); color:var(--blue); border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:600;">+ Ajouter un traitement</button>
+            </div>
+
+            <!-- Epilepsie -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_epilepsie" onchange="toggleAtcdDetails('epilepsie'); updateProgress()" style="margin-top:4px;">
+              <span>Epilepsie</span>
+            </label>
+            <div id="atcd_details_epilepsie" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div id="epilepsie_treatments_container">
+                <div class="treatment-item" data-index="0">
+                  <div style="display:flex; gap:8px; margin-bottom:8px; align-items:flex-start; margin-top:6px;">
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Traitement</label>
+                      <input type="text" name="atcd_epilepsie_traitement_0" class="field-input" placeholder="Valproate, Carbamazepine, Levetiracetam..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Posologie</label>
+                      <input type="text" name="atcd_epilepsie_posologie_0" class="field-input" placeholder="Dosage..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Prises/jour</label>
+                      <input type="text" name="atcd_epilepsie_prises_0" class="field-input" placeholder="1cp/j..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Depuis</label>
+                      <input type="date" name="atcd_epilepsie_depuis_0" class="field-input" oninput="updateProgress()">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" onclick="addTreatment('epilepsie')" style="margin-top:8px; padding:6px 12px; background:#e8f0fc; border:1px solid var(--blue); color:var(--blue); border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:600;">+ Ajouter un traitement</button>
+            </div>
+
+            <!-- IRC -->
+            <label class="check-item" style="align-items:flex-start;">
+              <input type="checkbox" name="atcd_irc" onchange="toggleAtcdDetails('irc'); updateProgress()" style="margin-top:4px;">
+              <span>Insuffisance renale chronique (IRC)</span>
+            </label>
+            <div id="atcd_details_irc" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
+              <div id="irc_treatments_container">
+                <div class="treatment-item" data-index="0">
+                  <div style="display:flex; gap:8px; margin-bottom:8px; align-items:flex-start; margin-top:6px;">
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Traitement</label>
+                      <input type="text" name="atcd_irc_traitement_0" class="field-input" placeholder="Dialyse, nephroprotection..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:2; margin-bottom:0;">
+                      <label class="field-label">Posologie</label>
+                      <input type="text" name="atcd_irc_posologie_0" class="field-input" placeholder="Dosage..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Prises/jour</label>
+                      <input type="text" name="atcd_irc_prises_0" class="field-input" placeholder="1cp/j..." oninput="updateProgress()">
+                    </div>
+                    <div class="field-group" style="flex:1.5; margin-bottom:0;">
+                      <label class="field-label">Depuis</label>
+                      <input type="date" name="atcd_irc_depuis_0" class="field-input" oninput="updateProgress()">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" onclick="addTreatment('irc')" style="margin-top:8px; padding:6px 12px; background:#e8f0fc; border:1px solid var(--blue); color:var(--blue); border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:600;">+ Ajouter un traitement</button>
+            </div>
+
             <!-- MST -->
             <label class="check-item" style="align-items:flex-start;">
               <input type="checkbox" name="atcd_mst" onchange="toggleAtcdDetails('mst'); updateProgress()" style="margin-top:4px;">
-              <span>MST / IST (Nature, type, durée du traitement)</span>
+              <span>MST / IST (Nature, type, duree du traitement)</span>
             </label>
             <div id="atcd_details_mst" class="atcd-details" style="display:none; padding-left:36px; margin-bottom:8px;">
               <div class="field-group" style="margin-top:6px; margin-bottom:8px;">
@@ -1061,13 +1185,66 @@
           <input type="text" name="hdM_amaigrissement" class="field-input" placeholder="Ex: −5 kg en 2 mois" oninput="updateProgress()">
         </div>
       </div>
+      <div class="subsection">
+        <div class="subsection-title">Signes fonctionnels par appareil</div>
+        <div class="note-box" style="font-size:0.78rem;">Cocher les signes fonctionnels presents. Cela aide a orienter l'examen physique et le diagnostic.</div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Cardio-vasculaire</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="sf_douleur_thoracique" onchange="updateProgress()"><span>Douleur thoracique</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_dyspnee" onchange="updateProgress()"><span>Dyspnee (effort / repos / orthopnee / DPN)</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_palpitations" onchange="updateProgress()"><span>Palpitations</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_syncope_lipothymie" onchange="updateProgress()"><span>Syncope / lipothymie</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_claudication" onchange="updateProgress()"><span>Claudication intermittente</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Respiratoire</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="sf_toux" onchange="updateProgress()"><span>Toux (seche / productive)</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_expectoration" onchange="updateProgress()"><span>Expectoration (muqueuse / purulente)</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_hemoptysie" onchange="updateProgress()"><span>Hemoptysie</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_douleur_thoracique_respi" onchange="updateProgress()"><span>Douleur thoracique pleurale (augmentee par inspiration)</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Digestif</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="sf_nausees_vomissements" onchange="updateProgress()"><span>Nausees / Vomissements</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_douleur_abdominale" onchange="updateProgress()"><span>Douleur abdominale</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_trouble_transit" onchange="updateProgress()"><span>Troubles du transit (diarrhee / constipation)</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_hemorragie_digestive" onchange="updateProgress()"><span>Hemorragie digestive (hematemese / melena / rectorragie)</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_dysphagie" onchange="updateProgress()"><span>Dysphagie</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Neurologique</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="sf_cephalees" onchange="updateProgress()"><span>Cephalees</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_vertiges" onchange="updateProgress()"><span>Vertiges</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_deficit_moteur_sf" onchange="updateProgress()"><span>Deficit moteur / paresthesies</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_trouble_vision" onchange="updateProgress()"><span>Troubles visuels (BAV, diplopie, scotome)</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_convulsions" onchange="updateProgress()"><span>Convulsions</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Urinaire</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="sf_dysurie" onchange="updateProgress()"><span>Dysurie / brulures mictionnelles</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_pollakiurie" onchange="updateProgress()"><span>Pollakiurie</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_hematurie" onchange="updateProgress()"><span>Hematurie</span></label>
+            <label class="check-item"><input type="checkbox" name="sf_oligurie" onchange="updateProgress()"><span>Oligurie / anurie</span></label>
+          </div>
+        </div>
+      </div>
+
       <div class="field-group">
-        <label class="field-label">Signes associés</label>
-        <textarea name="hdM_signes_associes" class="field-input" placeholder="Nausées, vomissements, dyspnée, palpitations…" oninput="updateProgress()"></textarea>
+        <label class="field-label">Signes associes (texte libre)</label>
+        <textarea name="hdM_signes_associes" class="field-input" placeholder="Autres signes associes non coches ci-dessus..." oninput="updateProgress()"></textarea>
       </div>
       <div class="field-group">
-        <label class="field-label">Signes négatifs importants</label>
-        <textarea name="hdM_signes_negatifs" class="field-input" placeholder="Signes absents mais pertinents à noter…" oninput="updateProgress()"></textarea>
+        <label class="field-label">Signes negatifs importants</label>
+        <textarea name="hdM_signes_negatifs" class="field-input" placeholder="Signes absents mais pertinents a noter (ex: pas de deficit moteur, pas d'hemoptysie...)..." oninput="updateProgress()"></textarea>
       </div>
     </div>
   </div>
@@ -1325,16 +1502,46 @@
         </div>
         <div class="subsubsection">
           <div class="subsubsection-title">🩺 Auscultation cardiaque</div>
+          <div class="note-box" style="font-size:0.78rem;">4 foyers : Aortique (2e EIC droit), Pulmonaire (2e EIC gauche), Tricuspide (bord sternal gauche bas), Mitral (apex).</div>
           <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_bruits_coeur_percus" onchange="updateProgress()"><span>B1 et B2 bien perçus aux 4 foyers</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_systole_diastole_libres" onchange="updateProgress()"><span>Systole et diastole libres à chaque foyer</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_frottement" onchange="updateProgress()"><span>Pas de frottement péricardique</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_bruits_coeur_percus" onchange="updateProgress()"><span>B1 et B2 bien percus aux 4 foyers</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_systole_diastole_libres" onchange="updateProgress()"><span>Systole et diastole libres a chaque foyer</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_frottement" onchange="updateProgress()"><span>Pas de frottement pericardique</span></label>
             <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_sons_surajoutes" onchange="updateProgress()"><span>Pas de B3, B4 ni de souffle</span></label>
             <label class="check-item"><input type="checkbox" name="ep_card_pas_insuffisance" onchange="updateProgress()"><span>Pas d'insuffisance cardiaque droite ni gauche</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_crepitants_bases" onchange="updateProgress()"><span>Pas de crepitants aux bases pulmonaires (IVG)</span></label>
           </div>
           <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Rythme / Souffle (si présent)</label>
-            <textarea name="ep_card_details" class="field-input" placeholder="Rythme, souffle : siège, temps, timbre, irradiation, intensité /6…" oninput="updateProgress()"></textarea>
+            <label class="field-label">Souffle (si present) : siege, temps (proto-meso-tele-holo / systolique/diastolique), timbre, irradiation, intensite /6</label>
+            <textarea name="ep_card_details" class="field-input" placeholder="Ex: souffle systolique 3/6 au foyer mitral irradiant vers l'aisselle..." oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Examen vasculaire peripherique</div>
+          <div class="note-box" style="font-size:0.78rem;">Palper les pouls de facon symetrique. Ausculter les gros axes a la recherche de souffles.</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_vasc_pouls_tous_percus" onchange="updateProgress()"><span>Tous les pouls peripheriques percus et symetriques</span></label>
+          </div>
+          <div id="pouls_detail_panel" style="margin-top:8px;">
+            <button type="button" onclick="document.getElementById('pouls_detail_expand').style.display = document.getElementById('pouls_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Detailler les pouls</button>
+          </div>
+          <div id="pouls_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
+            <div class="check-list" style="display:flex; flex-wrap:wrap; gap:4px;">
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_radial" onchange="updateProgress()"><span>Radial</span></label>
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_ulnaire" onchange="updateProgress()"><span>Ulnaire</span></label>
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_humeral" onchange="updateProgress()"><span>Humeral (brachial)</span></label>
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_carotidien" onchange="updateProgress()"><span>Carotidien</span></label>
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_femoral" onchange="updateProgress()"><span>Femoral</span></label>
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_poplite" onchange="updateProgress()"><span>Poplite</span></label>
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_tibial_post" onchange="updateProgress()"><span>Tibial posterieur</span></label>
+              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_pedieux" onchange="updateProgress()"><span>Pedieux</span></label>
+            </div>
+          </div>
+          <div class="check-list" style="margin-top:6px;">
+            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_souffle_carotidien" onchange="updateProgress()"><span>Pas de souffle carotidien</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_souffle_femoral" onchange="updateProgress()"><span>Pas de souffle femoral</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_tvp" onchange="updateProgress()"><span>Pas de signes de TVP (pas de ballottement du mollet, Homans negatif)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_varices" onchange="updateProgress()"><span>Pas de varices ni troubles trophiques</span></label>
           </div>
         </div>
       </div>
@@ -1342,69 +1549,197 @@
       <!-- 5.5 Pulmonaire -->
       <div class="subsection">
         <div class="subsection-title">5.5 — Examen Pleuro-Pulmonaire</div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="pulm_thorax_symetrique" onchange="updateProgress()"><span>Thorax symétrique, ampliation thoracique normale</span></label>
-          <label class="check-item"><input type="checkbox" name="pulm_pas_tirage" onchange="updateProgress()"><span>Pas de tirage ni signes de lutte respiratoire</span></label>
-          <label class="check-item"><input type="checkbox" name="pulm_pas_cyanose" onchange="updateProgress()"><span>Pas de cyanose</span></label>
-          <label class="check-item"><input type="checkbox" name="pulm_vv_normaux" onchange="updateProgress()"><span>Vibrations vocales symétriques et normales</span></label>
-          <label class="check-item"><input type="checkbox" name="pulm_mv_bilateral" onchange="updateProgress()"><span>Murmure vésiculaire présent et symétrique bilatéralement</span></label>
-          <label class="check-item"><input type="checkbox" name="pulm_pas_rales" onchange="updateProgress()"><span>Pas de râles crépitants ni sibilants</span></label>
-          <label class="check-item"><input type="checkbox" name="pulm_pas_matite" onchange="updateProgress()"><span>Pas de matité à la percussion (pas d'épanchement)</span></label>
-          <label class="check-item"><input type="checkbox" name="pulm_pas_frottement_pleural" onchange="updateProgress()"><span>Pas de frottement pleural</span></label>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Inspection</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="pulm_thorax_symetrique" onchange="updateProgress()"><span>Thorax symetrique, pas de deformation</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_tirage" onchange="updateProgress()"><span>Pas de tirage ni signes de lutte respiratoire</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_cyanose" onchange="updateProgress()"><span>Pas de cyanose</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_hippocratisme" onchange="updateProgress()"><span>Pas d'hippocratisme digital</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_tvj" onchange="updateProgress()"><span>Pas de turgescence des veines jugulaires (TVJ)</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_cicatrices_thorax" onchange="updateProgress()"><span>Pas de cicatrices thoraciques</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Palpation</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="pulm_ampliation_normale" onchange="updateProgress()"><span>Ampliation thoracique symetrique et normale</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_vv_normaux" onchange="updateProgress()"><span>Vibrations vocales bien transmises et symetriques</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Percussion</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="pulm_sonorite_normale" onchange="updateProgress()"><span>Sonorite normale</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_matite" onchange="updateProgress()"><span>Pas de matite (pas d'epanchement pleural)</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_tympanisme" onchange="updateProgress()"><span>Pas de tympanisme (pas de pneumothorax)</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Auscultation</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="pulm_mv_bilateral" onchange="updateProgress()"><span>Murmure vesiculaire present et symetrique bilateralement</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_crepitants" onchange="updateProgress()"><span>Pas de crepitants (OAP, pneumonie, fibrose)</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_sibilants" onchange="updateProgress()"><span>Pas de sibilants (asthme, BPCO)</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_ronflants" onchange="updateProgress()"><span>Pas de ronflants (secretions bronchiques)</span></label>
+            <label class="check-item"><input type="checkbox" name="pulm_pas_frottement_pleural" onchange="updateProgress()"><span>Pas de frottement pleural</span></label>
+          </div>
         </div>
         <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Précisions / anomalies pulmonaires</label>
-          <textarea name="pulm_details" class="field-input" placeholder="Ex: crépitants bases gauches, syndrome de condensation…" oninput="updateProgress()"></textarea>
+          <label class="field-label">Precisions / anomalies pulmonaires</label>
+          <textarea name="pulm_details" class="field-input" placeholder="Ex: crepitants bases gauches, syndrome de condensation, matite base droite..." oninput="updateProgress()"></textarea>
         </div>
       </div>
 
       <!-- 5.6 Neurologique -->
       <div class="subsection">
         <div class="subsection-title">5.6 — Examen Neurologique</div>
+        <div class="note-box">Examiner : conscience, fonctions superieures, marche/equilibre, nerfs craniens, motricite, sensibilite, coordination, reflexes, signes meninges.</div>
+
         <div class="subsubsection">
           <div class="subsubsection-title">Conscience & Orientation</div>
           <div class="check-list">
             <label class="check-item"><input type="checkbox" name="ep_neuro_conscient" onchange="updateProgress()"><span>Conscient, alerte</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_oriente_tps_espace" onchange="updateProgress()"><span>Orienté dans le temps et l'espace</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_oriente_tps_espace" onchange="updateProgress()"><span>Oriente dans le temps et l'espace</span></label>
             <label class="check-item"><input type="checkbox" name="ep_neuro_pas_confusion" onchange="updateProgress()"><span>Pas de confusion ni de troubles cognitifs</span></label>
           </div>
         </div>
+
         <div class="subsubsection">
-          <div class="subsubsection-title">Motricité & Coordination</div>
+          <div class="subsubsection-title">Fonctions superieures</div>
           <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_moteur" onchange="updateProgress()"><span>Pas de déficit moteur aux 4 membres</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_sensitif" onchange="updateProgress()"><span>Pas de déficit sensitif</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_ataxie" onchange="updateProgress()"><span>Pas d'ataxie cérébelleuse (marche, doigt-nez normaux)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_babinski_negatif" onchange="updateProgress()"><span>Signe de Babinski négatif</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_rot_present" onchange="updateProgress()"><span>ROT présents et symétriques aux 4 membres</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_clonus" onchange="updateProgress()"><span>Pas de clonus</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_langage_normal" onchange="updateProgress()"><span>Langage normal (comprehension et expression)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_memoire_normale" onchange="updateProgress()"><span>Memoire conservee (immediate et differee)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_praxies_normales" onchange="updateProgress()"><span>Praxies normales</span></label>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">Marche & Equilibre</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_marche_normale" onchange="updateProgress()"><span>Marche normale, symetrique, fluide</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_marche_tandem" onchange="updateProgress()"><span>Marche en tandem (talon-pointe) normale</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_romberg_negatif" onchange="updateProgress()"><span>Signe de Romberg negatif (yeux ouverts puis fermes)</span></label>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">Nerfs craniens (NC I-XII)</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_nc_all_normal" onchange="updateProgress()"><span>Nerfs craniens tous normaux (resume)</span></label>
+          </div>
+          <div id="nc_detail_panel" style="margin-top:8px;">
+            <button type="button" onclick="document.getElementById('nc_detail_expand').style.display = document.getElementById('nc_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Detailler les nerfs craniens</button>
+          </div>
+          <div id="nc_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
+            <div class="check-list">
+              <label class="check-item"><input type="checkbox" name="ep_nc_I_olfactif" onchange="updateProgress()"><span>NC I (Olfactif) : olfaction conservee</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_II_optique" onchange="updateProgress()"><span>NC II (Optique) : acuite visuelle, champ visuel, reflexes pupillaires normaux</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_III_IV_VI_oculomoteurs" onchange="updateProgress()"><span>NC III, IV, VI (Oculomoteurs) : pas de ptosis, mouvements oculaires normaux, pas de strabisme</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_V_trijumeau" onchange="updateProgress()"><span>NC V (Trijumeau) : sensibilite faciale (V1, V2, V3) normale, mastication normale</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_VII_facial" onchange="updateProgress()"><span>NC VII (Facial) : face symetrique, mimiques normales (sourire, froncement)</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_VIII_vestibulocochl" onchange="updateProgress()"><span>NC VIII (Cochleo-vestibulaire) : audition normale, pas de nystagmus</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_IX_X_glosso_vague" onchange="updateProgress()"><span>NC IX, X (Glosso-pharyngien, Vague) : reflexe nauseeux present, deglutition normale, voix normale</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_XI_accessoire" onchange="updateProgress()"><span>NC XI (Accessoire) : force trapeze et SCM normales</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_nc_XII_hypoglosse" onchange="updateProgress()"><span>NC XII (Hypoglosse) : langue mediane, pas d'atrophie ni fasciculations</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">Examen moteur</div>
+          <div class="note-box" style="font-size:0.78rem;">Epreuve de Barre (MS) et Mingazzini (MI) pour depister un deficit global. Force segmentaire : echelle MRC 0-5.</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_moteur" onchange="updateProgress()"><span>Pas de deficit moteur aux 4 membres</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_barre_negatif" onchange="updateProgress()"><span>Epreuve de Barre negative (pas de chute du MS)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_mingazzini_negatif" onchange="updateProgress()"><span>Epreuve de Mingazzini negative (pas de chute du MI)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_tonus_normal" onchange="updateProgress()"><span>Tonus musculaire normal (pas d'hypertonie spastique ni plastique)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_amyotrophie" onchange="updateProgress()"><span>Pas d'amyotrophie ni de fasciculations</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_mvts_anormaux" onchange="updateProgress()"><span>Pas de mouvements anormaux (tremblements, dystonie, choree)</span></label>
           </div>
           <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Précisions ROT / motricité</label>
-            <input type="text" name="ep_neuro_rot_details" class="field-input" placeholder="Ex: ROT vifs MS, abolis MI" oninput="updateProgress()">
+            <label class="field-label">Precisions motricite / force segmentaire</label>
+            <input type="text" name="ep_neuro_moteur_details" class="field-input" placeholder="Ex: force 5/5 aux 4 membres, roue dentee..." oninput="updateProgress()">
           </div>
         </div>
+
         <div class="subsubsection">
-          <div class="subsubsection-title">Signes méningés</div>
+          <div class="subsubsection-title">Examen sensitif</div>
           <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_nuque_souple" onchange="updateProgress()"><span>Nuque souple (pas de raideur méningée)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_kernig" onchange="updateProgress()"><span>Signe de Kernig négatif</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_brudzinski" onchange="updateProgress()"><span>Signe de Brudzinski négatif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_sensitif" onchange="updateProgress()"><span>Pas de deficit sensitif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_tactile_normal" onchange="updateProgress()"><span>Sensibilite tactile fine conservee (coton)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_douleur_normal" onchange="updateProgress()"><span>Sensibilite douloureuse conservee (piqure)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_vibratoire_normal" onchange="updateProgress()"><span>Sensibilite vibratoire (pallesthesie) conservee (diapason)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_proprioceptive_normal" onchange="updateProgress()"><span>Sensibilite proprioceptive conservee (sens de position)</span></label>
           </div>
         </div>
+
         <div class="subsubsection">
-          <div class="subsubsection-title">Examen cervical</div>
+          <div class="subsubsection-title">Coordination</div>
           <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_cerv_insp_normal" onchange="updateProgress()"><span>Pas de tuméfaction, turgescence jugulaire, goitre</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_cerv_thyroide_normale" onchange="updateProgress()"><span>Corps thyroïdien de taille normale, mobile à la déglutition</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_cerv_pas_adp" onchange="updateProgress()"><span>Pas d'adénopathies cervicales</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_ataxie" onchange="updateProgress()"><span>Pas d'ataxie cerebelleuse</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_doigt_nez_normal" onchange="updateProgress()"><span>Epreuve doigt-nez normale (pas de dysmetrie)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_talon_genou_normal" onchange="updateProgress()"><span>Epreuve talon-genou normale</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_diadoco_normal" onchange="updateProgress()"><span>Diadochocinese normale (mouvements alternés rapides)</span></label>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">Reflexes</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_rot_present" onchange="updateProgress()"><span>ROT presents et symetriques aux 4 membres</span></label>
+          </div>
+          <div id="rot_detail_panel" style="margin-top:8px;">
+            <button type="button" onclick="document.getElementById('rot_detail_expand').style.display = document.getElementById('rot_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Detailler les ROT</button>
+          </div>
+          <div id="rot_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
+            <div class="check-list">
+              <label class="check-item"><input type="checkbox" name="ep_rot_bicipital" onchange="updateProgress()"><span>Bicipital (C5-C6) : present / symetrique</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_rot_tricipital" onchange="updateProgress()"><span>Tricipital (C7) : present / symetrique</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_rot_stylo_radial" onchange="updateProgress()"><span>Stylo-radial (C6) : present / symetrique</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_rot_rotulien" onchange="updateProgress()"><span>Rotulien (L4) : present / symetrique</span></label>
+              <label class="check-item"><input type="checkbox" name="ep_rot_achilleen" onchange="updateProgress()"><span>Achilleen (S1) : present / symetrique</span></label>
+            </div>
+            <div class="field-group" style="margin-top:8px;">
+              <label class="field-label">Precisions ROT</label>
+              <input type="text" name="ep_neuro_rot_details" class="field-input" placeholder="Ex: ROT vifs MS, abolis MI, clonus cheville..." oninput="updateProgress()">
+            </div>
+          </div>
+          <div class="check-list" style="margin-top:6px;">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_babinski_negatif" onchange="updateProgress()"><span>Signe de Babinski negatif (reflexe cutane plantaire en flexion)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_clonus" onchange="updateProgress()"><span>Pas de clonus</span></label>
+          </div>
+        </div>
+
+        <div class="subsubsection">
+          <div class="subsubsection-title">Signes meninges</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_neuro_nuque_souple" onchange="updateProgress()"><span>Nuque souple (pas de raideur meningee)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_kernig" onchange="updateProgress()"><span>Signe de Kernig negatif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_neuro_brudzinski" onchange="updateProgress()"><span>Signe de Brudzinski negatif</span></label>
           </div>
         </div>
       </div>
 
-      <!-- 5.7 Ostéo-articulaire -->
+      <!-- 5.7 Examen Cervical & Thyroide -->
       <div class="subsection">
-        <div class="subsection-title">5.7 — Examen Ostéo-Articulaire</div>
+        <div class="subsection-title">5.7 — Examen Cervical &amp; Thyroidien</div>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" name="ep_cerv_insp_normal" onchange="updateProgress()"><span>Pas de tumefaction, turgescence jugulaire, goitre</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_cerv_thyroide_normale" onchange="updateProgress()"><span>Corps thyroidien de taille normale, mobile a la deglutition</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_cerv_pas_adp" onchange="updateProgress()"><span>Pas d'adenopathies cervicales</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_cerv_pas_compression" onchange="updateProgress()"><span>Pas de signes de compression (dyspnee, dysphagie, dysphonie)</span></label>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Thyroide : details palpation (taille, consistance, nodule, souffle)</label>
+          <input type="text" name="ep_cerv_thyroide_details" class="field-input" placeholder="Homogene, souple, pas de nodule..." oninput="updateProgress()">
+        </div>
+      </div>
+
+      <!-- 5.8 Osteo-articulaire -->
+      <div class="subsection">
+        <div class="subsection-title">5.8 — Examen Osteo-Articulaire</div>
+        <div class="note-box" style="font-size:0.78rem;">Methode GALS (Gait, Arms, Legs, Spine) pour un depistage rapide. Si anomalie, examiner l'articulation en detail : Inspection, Palpation, Mobilite active/passive, Tests specifiques.</div>
         <div class="fields-row">
           <div class="field-group">
             <label class="field-label">Localisation douleur</label>
@@ -1416,55 +1751,120 @@
           </div>
         </div>
         <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="ep_oa_raideur_matinale" onchange="updateProgress()"><span>Raideur matinale présente</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_oa_pas_douleur" onchange="updateProgress()"><span>Pas de douleur articulaire</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_oa_pas_raideur" onchange="updateProgress()"><span>Pas de raideur matinale</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_oa_raideur_matinale" onchange="updateProgress()"><span>Raideur matinale presente (preciser duree)</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_oa_pas_deformation" onchange="updateProgress()"><span>Pas de deformation articulaire ni amyotrophie</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_oa_pas_epanchement" onchange="updateProgress()"><span>Pas d'epanchement articulaire</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_oa_mobilite_conservee" onchange="updateProgress()"><span>Mobilites actives et passives conservees</span></label>
         </div>
-        <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Précisions (GALS, rachis, articulations…)</label>
-          <textarea name="ep_oa_details" class="field-input" placeholder="Mécanique / inflammatoire, amplitude, tests…" oninput="updateProgress()"></textarea>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Rachis</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_oa_rachis_normal" onchange="updateProgress()"><span>Courbures rachidiennes normales (lordose, cyphose)</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_oa_cervical_mobile" onchange="updateProgress()"><span>Rachis cervical : flexion, extension, rotation normales</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_oa_lombaire_mobile" onchange="updateProgress()"><span>Rachis lombaire : flexion (distance doigt-sol), extension normales</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_oa_lasegue_negatif" onchange="updateProgress()"><span>Signe de Lasegue negatif</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_oa_leri_negatif" onchange="updateProgress()"><span>Signe de Leri negatif</span></label>
+          </div>
+          <div class="field-group" style="margin-top:6px;">
+            <label class="field-label">Indice de Schober</label>
+            <input type="text" name="ep_oa_schober" class="field-input" placeholder="Ex: 10+5 = 15 cm (normal)" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Articulations specifiques (si atteinte)</div>
+          <div class="field-group">
+            <textarea name="ep_oa_details" class="field-input" rows="3" placeholder="Epaule: tests Neer/Hawkins/Jobe...&#10;Genou: choc rotulien, tiroir ant/post, McMurray...&#10;Hanche: Thomas, Trendelenburg, rotation interne..." oninput="updateProgress()"></textarea>
+          </div>
         </div>
       </div>
 
-      <!-- 5.8 Uro-génital -->
+      <!-- 5.9 Uro-Genital -->
       <div class="subsection">
-        <div class="subsection-title">5.8 — Examen Uro-Génital</div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="ep_ug_pas_globe_vesical" onchange="updateProgress()"><span>Pas de globe vésical</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_ug_pas_douleur_fosaillon" onchange="updateProgress()"><span>Pas de douleur à la palpation des fosses lombaires</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_ug_giordano_negatif" onchange="updateProgress()"><span>Signe de Giordano négatif</span></label>
+        <div class="subsection-title">5.9 — Examen Uro-Genital</div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Fosses lombaires</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_ug_pas_voussure_lombaire" onchange="updateProgress()"><span>Pas de voussure lombaire</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_ug_pas_douleur_fosaillon" onchange="updateProgress()"><span>Pas de douleur a la palpation des fosses lombaires</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_ug_pas_contact_lombaire" onchange="updateProgress()"><span>Pas de contact lombaire</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_ug_giordano_negatif" onchange="updateProgress()"><span>Signe de Giordano negatif (percussion)</span></label>
+          </div>
         </div>
-        <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Précisions (prostate, OGE, TV…)</label>
-          <textarea name="ep_ug_details" class="field-input" placeholder="Prostate, organes génitaux externes, toucher vaginal…" oninput="updateProgress()"></textarea>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Hypogastre</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_ug_pas_globe_vesical" onchange="updateProgress()"><span>Pas de globe vesical (pas de matite sus-pubienne)</span></label>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Organes genitaux externes / Toucher rectal</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_ug_oge_normal" onchange="updateProgress()"><span>OGE sans anomalie</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_ug_tr_non_realise" onchange="updateProgress()"><span>TR non realise</span></label>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">Precisions (prostate, OGE, TV, urines...)</label>
+            <textarea name="ep_ug_details" class="field-input" placeholder="Prostate: taille/consistance/sensibilite/sillon median&#10;Homme: scrotum, cordons spermatiques, transillumination&#10;Femme: TV, col uterin, annexes" oninput="updateProgress()"></textarea>
+          </div>
         </div>
       </div>
 
-      <!-- 5.9 Cutané & Buccal -->
+      <!-- 5.10 Cutane & Buccal -->
       <div class="subsection">
-        <div class="subsection-title">5.9 — Examen Cutané &amp; Cavité Buccale</div>
+        <div class="subsection-title">5.10 — Examen Cutane &amp; Cavite Buccale</div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Peau</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_cut_normal" onchange="updateProgress()"><span>Teguments sans lesion cutanee particuliere</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_cut_pas_paleur" onchange="updateProgress()"><span>Pas de paleur cutanee</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_cut_pas_ictere" onchange="updateProgress()"><span>Pas d'ictere</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_cut_pas_cyanose2" onchange="updateProgress()"><span>Pas de cyanose</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_cut_pas_purpura" onchange="updateProgress()"><span>Pas de purpura ni petechies</span></label>
+            <label class="check-item"><input type="checkbox" name="ep_cut_pas_erytheme" onchange="updateProgress()"><span>Pas d'erytheme ni dyschromie</span></label>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">Lesions cutanees (macule, papule, vesicule, bulle, pustule, plaque, nodule...)</label>
+            <textarea name="ep_cut_lesions" class="field-input" placeholder="Decrire : type, siege, taille, nombre, limites, couleur..." oninput="updateProgress()"></textarea>
+          </div>
+        </div>
+        <div class="subsubsection">
+          <div class="subsubsection-title">Cavite buccale</div>
+          <div class="check-list">
+            <label class="check-item"><input type="checkbox" name="ep_cb_normal" onchange="updateProgress()"><span>Cavite buccale sans anomalie (langue, levres, gencives normaux)</span></label>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">Anomalies buccales</label>
+            <input type="text" name="ep_cb_anomalies" class="field-input" placeholder="Haleine cetonique, aphtes, angine, macroglossie, denture..." oninput="updateProgress()">
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.11 Examen des Seins (femme) -->
+      <div class="subsection">
+        <div class="subsection-title">5.11 — Examen des Seins <span style="font-weight:400;color:#888;">(femme)</span></div>
+        <div class="note-box" style="font-size:0.78rem;">Inspecter en 4 positions : face, profil, mains sur les hanches, penchee en avant. Palper les 4 quadrants de chaque sein en DD, main sous la tete.</div>
         <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="ep_cut_normal" onchange="updateProgress()"><span>Téguments sans lésion cutanée particulière</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_cut_pas_paleur" onchange="updateProgress()"><span>Pas de pâleur cutanée</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_cut_pas_ictere" onchange="updateProgress()"><span>Pas d'ictère</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_cut_pas_cyanose2" onchange="updateProgress()"><span>Pas de cyanose</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_sein_non_realise" onchange="updateProgress()"><span>Non realise / Non applicable</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_sein_symetrique" onchange="updateProgress()"><span>Seins symetriques, sans deformation</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_sein_pas_retraction" onchange="updateProgress()"><span>Pas de retraction cutanee ni de peau d'orange</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_sein_pas_nodule" onchange="updateProgress()"><span>Pas de nodule palpable</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_sein_pas_ecoulement" onchange="updateProgress()"><span>Pas d'ecoulement mamelonnaire</span></label>
+          <label class="check-item"><input type="checkbox" name="ep_sein_adp_axillaires_libres" onchange="updateProgress()"><span>Adenopathies axillaires et sus-claviculaires absentes</span></label>
         </div>
         <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Lésions cutanées décrites (si présentes)</label>
-          <textarea name="ep_cut_lesions" class="field-input" placeholder="Macule, papule, vésicule, bulle, pustule, plaque…" oninput="updateProgress()"></textarea>
-        </div>
-        <div class="check-list" style="margin-top:6px;">
-          <label class="check-item"><input type="checkbox" name="ep_cb_normal" onchange="updateProgress()"><span>Cavité buccale sans anomalie (langue, lèvres, gencives normaux)</span></label>
-        </div>
-        <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Anomalies buccales</label>
-          <input type="text" name="ep_cb_anomalies" class="field-input" placeholder="Haleine cétonique, aphtes, angine, macroglossie…" oninput="updateProgress()">
+          <label class="field-label">Precisions (nodule, ecoulement, ganglion...)</label>
+          <textarea name="ep_sein_details" class="field-input" placeholder="Quadrant, taille, consistance, mobilite, sensibilite..." oninput="updateProgress()"></textarea>
         </div>
       </div>
 
       <!-- Zone libre -->
       <div class="subsection">
-        <div class="subsection-title">Zone Libre — Autres examens spécialisés</div>
+        <div class="subsection-title">Zone Libre — Autres examens specialises</div>
+        <div class="note-box" style="font-size:0.78rem;">Completer ici si un examen specialise est necessaire : gynecologique (speculum, TV), ophtalmologique (fond d'oeil), ORL (otoscopie), dermatologique detaille, psychiatrique...</div>
         <div class="field-group">
-          <textarea name="exam_autres" class="field-input" rows="3" placeholder="Fond d'œil, examen gynécologique, examen du sein, dermatologique, ORL…" oninput="updateProgress()"></textarea>
+          <textarea name="exam_autres" class="field-input" rows="4" placeholder="Fond d'oeil, examen gynecologique, speculum, TV, examen ORL, dermatologique detaille, examen psychiatrique..." oninput="updateProgress()"></textarea>
         </div>
       </div>
 
@@ -1484,10 +1884,11 @@
     </div>
     <div class="section-body">
 
-      <!-- Résumé clinique -->
+      <div class="note-box">La conclusion doit rappeler : identite + motif + ATCD pertinents + histoire de la maladie + signes physiques positifs, regroupes en syndrome(s). Les diagnostics sont cites du plus probable au moins probable avec arguments pour et contre.</div>
+      <!-- Resume clinique -->
       <div class="field-group">
-        <label class="field-label">Résumé clinique</label>
-        <textarea name="cc_resume_clinique" class="field-input" placeholder="Au total, il s'agit de M./Mme …, âgé(e) de …, qui consulte pour…" oninput="updateProgress()" rows="4"></textarea>
+        <label class="field-label">Resume clinique</label>
+        <textarea name="cc_resume_clinique" class="field-input" placeholder="Au total, il s'agit de M./Mme ..., age(e) de ..., [ATCD pertinents], qui consulte pour [motif] evoluant depuis [duree], chez qui on retrouve [signes physiques]..." oninput="updateProgress()" rows="4"></textarea>
       </div>
       <div class="field-group">
         <label class="field-label">et chez qui l'examen clinique objective</label>
@@ -2265,7 +2666,7 @@ function buildObservationText() {
 
   h1('III. Antécédents (ATCD)');
   h2('A. Personnels — 1. Médicaux');
-  ['atcd_diabete','atcd_hta','atcd_asthme','atcd_ulcere','atcd_tuberculose','atcd_mst','atcd_hospitalisations'].forEach(n=>chk(n));
+  ['atcd_diabete','atcd_hta','atcd_asthme','atcd_ulcere','atcd_tuberculose','atcd_cardiopathie','atcd_dyslipidemie','atcd_epilepsie','atcd_irc','atcd_mst','atcd_hospitalisations'].forEach(n=>chk(n));
   
   // Helper function to export treatments for any pathology
   function exportTreatments(pathology, displayName) {
@@ -2296,11 +2697,15 @@ function buildObservationText() {
   }
   
   // Export all standard pathologies
-  exportTreatments('diabete', 'Diabète');
+  exportTreatments('diabete', 'Diabete');
   exportTreatments('hta', 'HTA');
   exportTreatments('asthme', 'Asthme');
-  exportTreatments('ulcere', 'Ulcère');
+  exportTreatments('ulcere', 'Ulcere');
   exportTreatments('tuberculose', 'Tuberculose');
+  exportTreatments('cardiopathie', 'Cardiopathie');
+  exportTreatments('dyslipidemie', 'Dyslipidemie');
+  exportTreatments('epilepsie', 'Epilepsie');
+  exportTreatments('irc', 'IRC');
   exportTreatments('mst', 'MST');
   
   // Export custom pathologies
@@ -2352,7 +2757,14 @@ function buildObservationText() {
   field('Durée/Rythme',v('hdM_duree_rythme'));field('Mode évolutif',v('hdM_mode_evolutif'));field('Évolution',v('hdM_evolution_traitement'));
   h2('Signes généraux');
   ['hdM_asthenie','hdM_anorexie','hdM_fievre','hdM_frissons','hdM_sueurs_nocturnes'].forEach(n=>chk(n));
-  field('Amaigrissement',v('hdM_amaigrissement'));field('Signes associés',v('hdM_signes_associes'));field('Signes négatifs',v('hdM_signes_negatifs'));
+  field('Amaigrissement',v('hdM_amaigrissement'));
+  h2('Signes fonctionnels par appareil');
+  ['sf_douleur_thoracique','sf_dyspnee','sf_palpitations','sf_syncope_lipothymie','sf_claudication'].forEach(n=>chk(n));
+  ['sf_toux','sf_expectoration','sf_hemoptysie','sf_douleur_thoracique_respi'].forEach(n=>chk(n));
+  ['sf_nausees_vomissements','sf_douleur_abdominale','sf_trouble_transit','sf_hemorragie_digestive','sf_dysphagie'].forEach(n=>chk(n));
+  ['sf_cephalees','sf_vertiges','sf_deficit_moteur_sf','sf_trouble_vision','sf_convulsions'].forEach(n=>chk(n));
+  ['sf_dysurie','sf_pollakiurie','sf_hematurie','sf_oligurie'].forEach(n=>chk(n));
+  field('Signes associes',v('hdM_signes_associes'));field('Signes negatifs',v('hdM_signes_negatifs'));
 
   h1('V. Examen Clinique');
   h2('5.1 — Examen Général/Vital & Constantes');
