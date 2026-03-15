@@ -210,6 +210,22 @@
   .check-item span { font-size: 0.93rem; color: var(--text); line-height: 1.45; padding-top: 2px; }
   .check-item input[type="checkbox"]:checked ~ span { color: var(--green); font-weight: 500; }
 
+  /* Tri-state exam items */
+  .tri-list { display: flex; flex-direction: column; gap: 2px; }
+  .tri-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 8px; min-height: 40px; flex-wrap: wrap; }
+  .tri-item:hover { background: #f0f4f8; }
+  .tri-label { flex: 1; font-size: 0.88rem; color: var(--text); line-height: 1.4; min-width: 200px; }
+  .tri-radios { display: flex; gap: 4px; flex-shrink: 0; }
+  .tri-radios label { display: flex; align-items: center; justify-content: center; width: 36px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: 2px solid #ddd; transition: all 0.15s; user-select: none; }
+  .tri-radios label:hover { border-color: #aaa; }
+  .tri-radios input[type="radio"] { display: none; }
+  .tri-radios .tri-n input:checked ~ span { color: #fff; }
+  .tri-radios .tri-n:has(input:checked) { background: var(--green); border-color: var(--green); color: #fff; }
+  .tri-radios .tri-a:has(input:checked) { background: #dc3545; border-color: #dc3545; color: #fff; }
+  .tri-detail { width: 100%; padding-left: 10px; margin-top: 2px; }
+  .tri-detail input, .tri-detail textarea { font-size: 0.82rem; margin: 0; border-left: 3px solid #dc3545; }
+  .tri-group-title { font-size: 0.8rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.3px; padding: 8px 10px 4px; margin-top: 6px; }
+
   /* Row layouts */
   .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .fields-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
@@ -1371,23 +1387,22 @@
       <!-- 5.1 Examen Général/Vital -->
       <div class="subsection">
         <div class="subsection-title">5.1 — Examen Général/Vital &amp; Constantes</div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="eg_conscient_oriente" onchange="updateProgress()"><span>Conscient et orienté dans le temps et l'espace</span></label>
-          <label class="check-item"><input type="checkbox" name="eg_stable_hemo_respi" onchange="updateProgress()"><span>Stable sur le plan hémodynamique et respiratoire</span></label>
+        <div class="note-box">⚪ Non touché = non examiné (exclu du rapport) · <span style="color:var(--green);font-weight:700;">N</span> = Normal · <span style="color:#dc3545;font-weight:700;">A</span> = Anormal (décrire)</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Conscient et orienté dans le temps et l'espace</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_conscient_oriente" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_conscient_oriente" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_conscient_oriente_detail" placeholder="GCS, confusion, désorientation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Stable sur le plan hémodynamique et respiratoire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_stable_hemo_respi" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_stable_hemo_respi" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_stable_hemo_respi_detail" placeholder="Instabilité hémodynamique, détresse respiratoire…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Conjonctif normocoloré ?</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="eg_pas_paleur" onchange="updateProgress()"><span>Pas de pâleur cutanéo-muqueuse</span></label>
-            <label class="check-item"><input type="checkbox" name="eg_pas_ictere" onchange="updateProgress()"><span>Pas d'ictère</span></label>
-            <label class="check-item"><input type="checkbox" name="eg_pas_cyanose_generale" onchange="updateProgress()"><span>Pas de cyanose</span></label>
-          </div>
+        <div class="tri-group-title">Conjonctif normocoloré ?</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de pâleur cutanéo-muqueuse</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_pas_paleur" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_pas_paleur" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_pas_paleur_detail" placeholder="Pâleur conjonctivale, cutanée diffuse…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'ictère</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_pas_ictere" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_pas_ictere" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_pas_ictere_detail" placeholder="Ictère conjonctival, cutané…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de cyanose</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_pas_cyanose_generale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_pas_cyanose_generale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_pas_cyanose_generale_detail" placeholder="Cyanose des extrémités, centrale…"></div></div>
         </div>
-        <div class="check-list" style="margin-top:4px;">
-          <label class="check-item"><input type="checkbox" name="eg_pas_deshydratation" onchange="updateProgress()"><span>Pas de signe de déshydratation (pli cutané, TRC &lt; 3s)</span></label>
-          <label class="check-item"><input type="checkbox" name="eg_pas_signes_choc" onchange="updateProgress()"><span>Pas de signes de choc (marbrures, froideur extrémités)</span></label>
-          <label class="check-item"><input type="checkbox" name="eg_pas_denutrition" onchange="updateProgress()"><span>Pas de signe de dénutrition</span></label>
-          <label class="check-item"><input type="checkbox" name="eg_pas_omi" onchange="updateProgress()"><span>Pas d'œdème des membres inférieurs (OMI)</span></label>
+        <div class="tri-list" style="margin-top:4px;">
+          <div class="tri-item"><span class="tri-label">Pas de signe de déshydratation (pli cutané, TRC &lt; 3s)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_pas_deshydratation" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_pas_deshydratation" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_pas_deshydratation_detail" placeholder="Pli cutané persistant, sécheresse muqueuse, TRC allongé…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de signes de choc (marbrures, froideur extrémités)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_pas_signes_choc" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_pas_signes_choc" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_pas_signes_choc_detail" placeholder="Marbrures, extrémités froides, tachycardie, hypotension…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de signe de dénutrition</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_pas_denutrition" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_pas_denutrition" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_pas_denutrition_detail" placeholder="Amaigrissement, fonte musculaire, plis cutanés…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'œdème des membres inférieurs (OMI)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="eg_pas_omi" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="eg_pas_omi" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="eg_pas_omi_detail" placeholder="OMI bilatéral, prenant le godet, blanc, mou…"></div></div>
         </div>
         <hr class="divider">
         <div class="subsubsection-title" style="margin:10px 0 8px;">Constantes vitales</div>
@@ -1430,18 +1445,13 @@
       <!-- 5.2 Examen Ganglionnaire (full from v1) -->
       <div class="subsection">
         <div class="subsection-title">5.2 — Examen Ganglionnaire</div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="ep_gang_aires_libres" onchange="updateProgress()"><span>Les aires ganglionnaires sont libres</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_gang_sans_anomalie" onchange="toggleGangDetail(this); updateProgress()"><span>L'examen est sans anomalie aux niveaux des différentes aires</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_gang_troisier" onchange="updateProgress()"><span>Ganglion de Troisier absent (sus-claviculaire gauche)</span></label>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Les aires ganglionnaires sont libres</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_gang_aires_libres" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_gang_aires_libres" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_gang_aires_libres_detail" placeholder="Adénopathie palpable…"></div></div>
+          <div class="tri-item"><span class="tri-label">Examen sans anomalie aux différentes aires</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_gang_sans_anomalie" value="normal" onchange="triState(this); toggleGangPanel()"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_gang_sans_anomalie" value="anormal" onchange="triState(this); toggleGangPanel()"><span>A</span></label></div><div class="tri-detail" style="display:none;"></div></div>
+          <div class="tri-item"><span class="tri-label">Ganglion de Troisier absent (sus-claviculaire gauche)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_gang_troisier" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_gang_troisier" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_gang_troisier_detail" placeholder="Troisier palpable, taille, consistance…"></div></div>
         </div>
 
-        <!-- Bouton pour documenter une anomalie si "sans anomalie" N'EST PAS coché -->
-        <div id="gang_anomalie_btn" style="margin-top:8px;">
-          <button type="button" onclick="document.getElementById('gang_anomalie_panel').style.display = document.getElementById('gang_anomalie_panel').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--red); color:white; border:none; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer;">⚠️ Documenter une adénopathie / anomalie</button>
-        </div>
-
-        <!-- Panneau détail adénopathies -->
+        <!-- Panneau détail adénopathies (shown when "anormal" on aires) -->
         <div id="gang_anomalie_panel" style="display:none; margin-top:12px; padding:14px; background:#fff5f5; border-left:3px solid var(--red); border-radius:8px;">
           <div class="subsubsection-title" style="color:var(--red); margin-bottom:10px;">⚠️ Aires ganglionnaires palpées</div>
           <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:12px;">
@@ -1516,455 +1526,370 @@
       <!-- 5.3 Examen Abdominal -->
       <div class="subsection">
         <div class="subsection-title">5.3 — Examen Abdominal</div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">👀 Inspection</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="abd_resp_normale" onchange="updateProgress()"><span>Respiration abdominale normale</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_deformation" onchange="updateProgress()"><span>Pas de déformation ni distension abdominale</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_cicatrices" onchange="updateProgress()"><span>Pas de cicatrices chirurgicales</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_circulation_collaterale" onchange="updateProgress()"><span>Pas de circulation veineuse collatérale</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_voussures_vergetures" onchange="updateProgress()"><span>Pas de voussures, vergetures ni points de feu</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_ombilic_plisse" onchange="updateProgress()"><span>Ombilic bien plissé</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_teguments_normaux" onchange="updateProgress()"><span>Téguments d'aspect normal</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_asterixis" onchange="updateProgress()"><span>Pas d'astérixis</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_leuconychie_erytheme" onchange="updateProgress()"><span>Pas de leuconychie ni érythème palmaire</span></label>
-          </div>
+        <div class="tri-group-title">👀 Inspection</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Respiration abdominale normale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_resp_normale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_resp_normale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_resp_normale_detail" placeholder="Respiration paradoxale, immobilité…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de déformation ni distension abdominale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_deformation" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_deformation" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_deformation_detail" placeholder="Distension, asymétrie…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de cicatrices chirurgicales</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_cicatrices" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_cicatrices" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_cicatrices_detail" placeholder="Type, localisation de cicatrice…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de circulation veineuse collatérale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_circulation_collaterale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_circulation_collaterale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_circulation_collaterale_detail" placeholder="CVC type, tête de méduse…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de voussures, vergetures ni points de feu</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_voussures_vergetures" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_voussures_vergetures" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_voussures_vergetures_detail" placeholder="Décrire…"></div></div>
+          <div class="tri-item"><span class="tri-label">Ombilic bien plissé</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_ombilic_plisse" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_ombilic_plisse" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_ombilic_plisse_detail" placeholder="Ombilic déplissé, hernie ombilicale…"></div></div>
+          <div class="tri-item"><span class="tri-label">Téguments d'aspect normal</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_teguments_normaux" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_teguments_normaux" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_teguments_normaux_detail" placeholder="Érythème, lésions cutanées…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'astérixis</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_asterixis" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_asterixis" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_asterixis_detail" placeholder="Flapping tremor présent…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de leuconychie ni érythème palmaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_leuconychie_erytheme" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_leuconychie_erytheme" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_leuconychie_erytheme_detail" placeholder="Leuconychie, érythème palmaire…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">🖐️ Palpation</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="abd_souple_depressible" onchange="updateProgress()"><span>Abdomen souple et dépressible</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_defense_contracture" onchange="updateProgress()"><span>Pas de défense, contracture ni sensibilité localisée</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_organomegalie" onchange="updateProgress()"><span>Pas d'organomégalie (SPM, HPM)</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_hepatomegalie" onchange="updateProgress()"><span>Hépatomégalie présente</span></label>
-          </div>
-          <div class="field-group" style="margin-top:6px; margin-left:36px;">
-            <label class="field-label">Flèche hépatique (cm)</label>
-            <input type="number" name="abd_fleche_hepatique" class="field-input" placeholder="Ex: 12" step="0.5" oninput="updateProgress()">
-          </div>
-          <div class="check-list" style="margin-top:4px;">
-            <label class="check-item"><input type="checkbox" name="abd_splenomegalie" onchange="updateProgress()"><span>Splénomégalie présente</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_contact_lombaire" onchange="updateProgress()"><span>Pas de contact lombaire</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_masse_palpable" onchange="updateProgress()"><span>Pas de masse palpable</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_hernie" onchange="updateProgress()"><span>Orifices herniaires libres</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_signe_flot" onchange="updateProgress()"><span>Pas de signe du flot (ascite)</span></label>
-          </div>
-          <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Zone douloureuse</label>
-            <input type="text" name="abd_zone_douloureuse" class="field-input" placeholder="Ex: Fosse iliaque droite, hypochondre gauche…" oninput="updateProgress()">
-          </div>
+        <div class="tri-group-title">🖐️ Palpation</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Abdomen souple et dépressible</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_souple_depressible" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_souple_depressible" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_souple_depressible_detail" placeholder="Défense, rigidité, contracture…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de défense, contracture ni sensibilité localisée</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_defense_contracture" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_defense_contracture" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_defense_contracture_detail" placeholder="Siège, type (défense/contracture)…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'organomégalie (SPM, HPM)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_organomegalie" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_organomegalie" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_organomegalie_detail" placeholder="HPM, SPM, flèche hépatique…"><div class="field-group" style="margin-top:4px;"><label class="field-label">Flèche hépatique (cm)</label><input type="number" name="abd_fleche_hepatique" class="field-input" placeholder="Ex: 12" step="0.5" oninput="updateProgress()"></div></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de contact lombaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_contact_lombaire" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_contact_lombaire" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_contact_lombaire_detail" placeholder="Contact lombaire droit/gauche…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de masse palpable</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_masse_palpable" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_masse_palpable" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_masse_palpable_detail" placeholder="Siège, taille, consistance, mobilité…"></div></div>
+          <div class="tri-item"><span class="tri-label">Orifices herniaires libres</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_hernie" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_hernie" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_hernie_detail" placeholder="Hernie inguinale, ombilicale, crurale…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de signe du flot (ascite)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_signe_flot" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_signe_flot" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_signe_flot_detail" placeholder="Signe du flot positif, ascite…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">🔊 Percussion</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="abd_pas_matite" onchange="updateProgress()"><span>Pas de matité déclive (pas d'ascite)</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_tympanisme_normal" onchange="updateProgress()"><span>Tympanisme normal sur les 9 régions</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_meteorisme" onchange="updateProgress()"><span>Pas de météorisme</span></label>
-          </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Zone douloureuse</label>
+          <input type="text" name="abd_zone_douloureuse" class="field-input" placeholder="Ex: Fosse iliaque droite, hypochondre gauche…" oninput="updateProgress()">
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">🩺 Auscultation</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="abd_transit_audible" onchange="updateProgress()"><span>Bruits hydro-aériques présents (transit audible)</span></label>
-            <label class="check-item"><input type="checkbox" name="abd_pas_souffle_abdominal" onchange="updateProgress()"><span>Pas de souffle aortique ni rénal</span></label>
-          </div>
+        <div class="tri-group-title">🔊 Percussion</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de matité déclive (pas d'ascite)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_matite" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_matite" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_matite_detail" placeholder="Matité déclive, ascite…"></div></div>
+          <div class="tri-item"><span class="tri-label">Tympanisme normal sur les 9 régions</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_tympanisme_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_tympanisme_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_tympanisme_normal_detail" placeholder="Hypersonorité, tympanisme localisé…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de météorisme</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_meteorisme" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_meteorisme" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_meteorisme_detail" placeholder="Météorisme diffus/localisé…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Toucher Rectal (TR)</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="tr_non_realise" onchange="updateProgress()"><span>Non réalisé</span></label>
-            <label class="check-item"><input type="checkbox" name="tr_fissures" onchange="updateProgress()"><span>Fissures à l'inspection externe</span></label>
-            <label class="check-item"><input type="checkbox" name="tr_hemorroides" onchange="updateProgress()"><span>Hémorroïdes</span></label>
-            <label class="check-item"><input type="checkbox" name="tr_cri_douglas" onchange="updateProgress()"><span>Cri de Douglas (péritonite)</span></label>
-          </div>
-          <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">TR – Tonus / Prostate / Contenu / Doigtier</label>
-            <textarea name="tr_details" class="field-input" placeholder="Précisions…" oninput="updateProgress()"></textarea>
-          </div>
+        <div class="tri-group-title">🩺 Auscultation</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Bruits hydro-aériques présents (transit audible)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_transit_audible" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_transit_audible" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_transit_audible_detail" placeholder="Silence auscultatoire, BHA métalliques…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de souffle aortique ni rénal</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="abd_pas_souffle_abdominal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="abd_pas_souffle_abdominal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="abd_pas_souffle_abdominal_detail" placeholder="Souffle aortique, rénal…"></div></div>
+        </div>
+        <div class="tri-group-title">Toucher Rectal (TR)</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Non réalisé</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="tr_non_realise" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="tr_non_realise" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"></div></div>
+          <div class="tri-item"><span class="tri-label">Fissures à l'inspection externe</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="tr_fissures" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="tr_fissures" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="tr_fissures_detail" placeholder="Localisation, aspect…"></div></div>
+          <div class="tri-item"><span class="tri-label">Hémorroïdes</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="tr_hemorroides" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="tr_hemorroides" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="tr_hemorroides_detail" placeholder="Internes/externes, grade…"></div></div>
+          <div class="tri-item"><span class="tri-label">Cri de Douglas (péritonite)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="tr_cri_douglas" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="tr_cri_douglas" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="tr_cri_douglas_detail" placeholder="Cri de Douglas positif…"></div></div>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">TR – Tonus / Prostate / Contenu / Doigtier</label>
+          <textarea name="tr_details" class="field-input" placeholder="Précisions…" oninput="updateProgress()"></textarea>
         </div>
       </div>
 
       <!-- 5.4 Cardiaque -->
       <div class="subsection">
         <div class="subsection-title">5.4 — Examen Cardiaque</div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Signes périphériques</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="card_pas_hippocratisme" onchange="updateProgress()"><span>Pas d'hippocratisme digital</span></label>
-            <label class="check-item"><input type="checkbox" name="card_pas_xanthomes" onchange="updateProgress()"><span>Pas de xanthomes</span></label>
-            <label class="check-item"><input type="checkbox" name="card_trc_normal" onchange="updateProgress()"><span>TRC normal &lt; 2 secondes</span></label>
-            <label class="check-item"><input type="checkbox" name="card_pas_jvp" onchange="updateProgress()"><span>Pas d'élévation de la pression veineuse jugulaire (JVP)</span></label>
-            <label class="check-item"><input type="checkbox" name="card_pas_cyanose_centrale" onchange="updateProgress()"><span>Pas de cyanose centrale</span></label>
+        <div class="tri-group-title">Signes périphériques</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas d'hippocratisme digital</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="card_pas_hippocratisme" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="card_pas_hippocratisme" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="card_pas_hippocratisme_detail" placeholder="Hippocratisme digital présent…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de xanthomes</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="card_pas_xanthomes" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="card_pas_xanthomes" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="card_pas_xanthomes_detail" placeholder="Xanthomes tendineux, xanthélasma…"></div></div>
+          <div class="tri-item"><span class="tri-label">TRC normal &lt; 2 secondes</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="card_trc_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="card_trc_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="card_trc_normal_detail" placeholder="TRC allongé > 3s…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'élévation de la pression veineuse jugulaire (JVP)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="card_pas_jvp" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="card_pas_jvp" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="card_pas_jvp_detail" placeholder="JVP élevée, turgescence jugulaire…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de cyanose centrale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="card_pas_cyanose_centrale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="card_pas_cyanose_centrale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="card_pas_cyanose_centrale_detail" placeholder="Cyanose des lèvres, langue…"></div></div>
+        </div>
+        <div class="tri-group-title">👀 Inspection &amp; 🖐️ Palpation</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Thorax symétrique, pas de déformation</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_insp_thorax_symetrique" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_insp_thorax_symetrique" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_insp_thorax_symetrique_detail" placeholder="Déformation, voussure précordiale…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de circulation veineuse collatérale thoracique</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_insp_pas_circulation" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_insp_pas_circulation" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_insp_pas_circulation_detail" placeholder="CVC thoracique présente…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'œdème des membres inférieurs</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_insp_pas_oedeme_mi" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_insp_pas_oedeme_mi" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_insp_pas_oedeme_mi_detail" placeholder="OMI bilatéral, mou, prenant le godet…"></div></div>
+          <div class="tri-item"><span class="tri-label">Choc de pointe bien perçu, punctiforme, non déplacé</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_palp_choc_pointe" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_palp_choc_pointe" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_palp_choc_pointe_detail" placeholder="Choc déplacé, étalé, soulevant…"></div></div>
+          <div class="tri-item"><span class="tri-label">Signe de Harzer négatif</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_palp_harzer_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_palp_harzer_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_palp_harzer_negatif_detail" placeholder="Harzer positif (HVD)…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de thrill (frémissement) sus-sternal</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_palp_pas_thrill" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_palp_pas_thrill" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_palp_pas_thrill_detail" placeholder="Thrill palpable, localisation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de reflux hépato-jugulaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_palp_pas_reflux" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_palp_pas_reflux" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_palp_pas_reflux_detail" placeholder="RHJ positif (ICD)…"></div></div>
+        </div>
+        <div class="tri-group-title">🩺 Auscultation cardiaque</div>
+        <div class="note-box" style="font-size:0.78rem;">4 foyers : Aortique (2e EIC droit), Pulmonaire (2e EIC gauche), Tricuspide (bord sternal gauche bas), Mitral (apex).</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">B1 et B2 bien perçus aux 4 foyers</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_ausc_bruits_coeur_percus" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_ausc_bruits_coeur_percus" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_ausc_bruits_coeur_percus_detail" placeholder="B1/B2 assourdis, éclat de B2…"></div></div>
+          <div class="tri-item"><span class="tri-label">Systole et diastole libres à chaque foyer</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_ausc_systole_diastole_libres" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_ausc_systole_diastole_libres" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_ausc_systole_diastole_libres_detail" placeholder="Souffle systolique/diastolique, foyer…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de frottement péricardique</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_ausc_pas_frottement" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_ausc_pas_frottement" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_ausc_pas_frottement_detail" placeholder="Frottement péricardique…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de B3, B4 ni de souffle</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_ausc_pas_sons_surajoutes" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_ausc_pas_sons_surajoutes" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_ausc_pas_sons_surajoutes_detail" placeholder="B3 (galop protodiastolique), B4, souffle…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'insuffisance cardiaque droite ni gauche</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_pas_insuffisance" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_pas_insuffisance" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_pas_insuffisance_detail" placeholder="ICD: OMI, RHJ, TVJ / ICG: dyspnée, crépitants…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de crépitants aux bases pulmonaires (IVG)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_card_ausc_pas_crepitants_bases" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_card_ausc_pas_crepitants_bases" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_card_ausc_pas_crepitants_bases_detail" placeholder="Crépitants bilatéraux aux bases…"></div></div>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Souffle (si présent) : siège, temps, timbre, irradiation, intensité /6</label>
+          <textarea name="ep_card_details" class="field-input" placeholder="Ex: souffle systolique 3/6 au foyer mitral irradiant vers l'aisselle..." oninput="updateProgress()"></textarea>
+        </div>
+        <div class="tri-group-title">Examen vasculaire périphérique</div>
+        <div class="note-box" style="font-size:0.78rem;">Palper les pouls de façon symétrique. Ausculter les gros axes à la recherche de souffles.</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Tous les pouls périphériques perçus et symétriques</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_vasc_pouls_tous_percus" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_vasc_pouls_tous_percus" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_vasc_pouls_tous_percus_detail" placeholder="Pouls aboli/diminué, localisation…"></div></div>
+        </div>
+        <div id="pouls_detail_panel" style="margin-top:8px;">
+          <button type="button" onclick="document.getElementById('pouls_detail_expand').style.display = document.getElementById('pouls_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Détailler les pouls</button>
+        </div>
+        <div id="pouls_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
+          <div class="check-list" style="display:flex; flex-wrap:wrap; gap:4px;">
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_radial" onchange="updateProgress()"><span>Radial</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_ulnaire" onchange="updateProgress()"><span>Ulnaire</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_humeral" onchange="updateProgress()"><span>Huméral (brachial)</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_carotidien" onchange="updateProgress()"><span>Carotidien</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_femoral" onchange="updateProgress()"><span>Fémoral</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_poplite" onchange="updateProgress()"><span>Poplité</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_tibial_post" onchange="updateProgress()"><span>Tibial postérieur</span></label>
+            <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_pedieux" onchange="updateProgress()"><span>Pédieux</span></label>
           </div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">👀 Inspection & 🖐️ Palpation</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_card_insp_thorax_symetrique" onchange="updateProgress()"><span>Thorax symétrique, pas de déformation</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_insp_pas_circulation" onchange="updateProgress()"><span>Pas de circulation veineuse collatérale thoracique</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_insp_pas_oedeme_mi" onchange="updateProgress()"><span>Pas d'œdème des membres inférieurs</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_palp_choc_pointe" onchange="updateProgress()"><span>Choc de pointe bien perçu, punctiforme, non déplacé</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_palp_harzer_negatif" onchange="updateProgress()"><span>Signe de Harzer négatif</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_palp_pas_thrill" onchange="updateProgress()"><span>Pas de thrill (frémissement) sus-sternal</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_palp_pas_reflux" onchange="updateProgress()"><span>Pas de reflux hépato-jugulaire</span></label>
-          </div>
-        </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">🩺 Auscultation cardiaque</div>
-          <div class="note-box" style="font-size:0.78rem;">4 foyers : Aortique (2e EIC droit), Pulmonaire (2e EIC gauche), Tricuspide (bord sternal gauche bas), Mitral (apex).</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_bruits_coeur_percus" onchange="updateProgress()"><span>B1 et B2 bien percus aux 4 foyers</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_systole_diastole_libres" onchange="updateProgress()"><span>Systole et diastole libres a chaque foyer</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_frottement" onchange="updateProgress()"><span>Pas de frottement pericardique</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_sons_surajoutes" onchange="updateProgress()"><span>Pas de B3, B4 ni de souffle</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_pas_insuffisance" onchange="updateProgress()"><span>Pas d'insuffisance cardiaque droite ni gauche</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_card_ausc_pas_crepitants_bases" onchange="updateProgress()"><span>Pas de crepitants aux bases pulmonaires (IVG)</span></label>
-          </div>
-          <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Souffle (si present) : siege, temps (proto-meso-tele-holo / systolique/diastolique), timbre, irradiation, intensite /6</label>
-            <textarea name="ep_card_details" class="field-input" placeholder="Ex: souffle systolique 3/6 au foyer mitral irradiant vers l'aisselle..." oninput="updateProgress()"></textarea>
-          </div>
-        </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Examen vasculaire peripherique</div>
-          <div class="note-box" style="font-size:0.78rem;">Palper les pouls de facon symetrique. Ausculter les gros axes a la recherche de souffles.</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_vasc_pouls_tous_percus" onchange="updateProgress()"><span>Tous les pouls peripheriques percus et symetriques</span></label>
-          </div>
-          <div id="pouls_detail_panel" style="margin-top:8px;">
-            <button type="button" onclick="document.getElementById('pouls_detail_expand').style.display = document.getElementById('pouls_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Detailler les pouls</button>
-          </div>
-          <div id="pouls_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
-            <div class="check-list" style="display:flex; flex-wrap:wrap; gap:4px;">
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_radial" onchange="updateProgress()"><span>Radial</span></label>
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_ulnaire" onchange="updateProgress()"><span>Ulnaire</span></label>
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_humeral" onchange="updateProgress()"><span>Humeral (brachial)</span></label>
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_carotidien" onchange="updateProgress()"><span>Carotidien</span></label>
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_femoral" onchange="updateProgress()"><span>Femoral</span></label>
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_poplite" onchange="updateProgress()"><span>Poplite</span></label>
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_tibial_post" onchange="updateProgress()"><span>Tibial posterieur</span></label>
-              <label class="check-item" style="min-width:48%; flex:1;"><input type="checkbox" name="ep_pouls_pedieux" onchange="updateProgress()"><span>Pedieux</span></label>
-            </div>
-          </div>
-          <div class="check-list" style="margin-top:6px;">
-            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_souffle_carotidien" onchange="updateProgress()"><span>Pas de souffle carotidien</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_souffle_femoral" onchange="updateProgress()"><span>Pas de souffle femoral</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_tvp" onchange="updateProgress()"><span>Pas de signes de TVP (pas de ballottement du mollet, Homans negatif)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_vasc_pas_varices" onchange="updateProgress()"><span>Pas de varices ni troubles trophiques</span></label>
-          </div>
+        <div class="tri-list" style="margin-top:6px;">
+          <div class="tri-item"><span class="tri-label">Pas de souffle carotidien</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_vasc_pas_souffle_carotidien" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_vasc_pas_souffle_carotidien" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_vasc_pas_souffle_carotidien_detail" placeholder="Souffle carotidien D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de souffle fémoral</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_vasc_pas_souffle_femoral" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_vasc_pas_souffle_femoral" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_vasc_pas_souffle_femoral_detail" placeholder="Souffle fémoral D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de signes de TVP (Homans négatif)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_vasc_pas_tvp" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_vasc_pas_tvp" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_vasc_pas_tvp_detail" placeholder="Douleur du mollet, signe de Homans positif, œdème unilatéral…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de varices ni troubles trophiques</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_vasc_pas_varices" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_vasc_pas_varices" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_vasc_pas_varices_detail" placeholder="Varices, troubles trophiques, ulcères…"></div></div>
         </div>
       </div>
 
       <!-- 5.5 Pulmonaire -->
       <div class="subsection">
         <div class="subsection-title">5.5 — Examen Pleuro-Pulmonaire</div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Inspection</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="pulm_thorax_symetrique" onchange="updateProgress()"><span>Thorax symetrique, pas de deformation</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_tirage" onchange="updateProgress()"><span>Pas de tirage ni signes de lutte respiratoire</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_cyanose" onchange="updateProgress()"><span>Pas de cyanose</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_hippocratisme" onchange="updateProgress()"><span>Pas d'hippocratisme digital</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_tvj" onchange="updateProgress()"><span>Pas de turgescence des veines jugulaires (TVJ)</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_cicatrices_thorax" onchange="updateProgress()"><span>Pas de cicatrices thoraciques</span></label>
-          </div>
+        <div class="tri-group-title">Inspection</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Thorax symétrique, pas de déformation</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_thorax_symetrique" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_thorax_symetrique" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_thorax_symetrique_detail" placeholder="Asymétrie, thorax en tonneau, pectus…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de tirage ni signes de lutte respiratoire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_tirage" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_tirage" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_tirage_detail" placeholder="Tirage intercostal, sus-sternal, balancement…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de cyanose</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_cyanose" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_cyanose" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_cyanose_detail" placeholder="Cyanose périphérique/centrale…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'hippocratisme digital</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_hippocratisme" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_hippocratisme" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_hippocratisme_detail" placeholder="Hippocratisme digital présent…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de turgescence des veines jugulaires (TVJ)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_tvj" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_tvj" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_tvj_detail" placeholder="TVJ présente…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de cicatrices thoraciques</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_cicatrices_thorax" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_cicatrices_thorax" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_cicatrices_thorax_detail" placeholder="Cicatrice de thoracotomie, drain…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Palpation</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="pulm_ampliation_normale" onchange="updateProgress()"><span>Ampliation thoracique symetrique et normale</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_vv_normaux" onchange="updateProgress()"><span>Vibrations vocales bien transmises et symetriques</span></label>
-          </div>
+        <div class="tri-group-title">Palpation</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Ampliation thoracique symétrique et normale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_ampliation_normale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_ampliation_normale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_ampliation_normale_detail" placeholder="Ampliation diminuée à droite/gauche…"></div></div>
+          <div class="tri-item"><span class="tri-label">Vibrations vocales bien transmises et symétriques</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_vv_normaux" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_vv_normaux" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_vv_normaux_detail" placeholder="VV diminuées/abolies/augmentées, localisation…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Percussion</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="pulm_sonorite_normale" onchange="updateProgress()"><span>Sonorite normale</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_matite" onchange="updateProgress()"><span>Pas de matite (pas d'epanchement pleural)</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_tympanisme" onchange="updateProgress()"><span>Pas de tympanisme (pas de pneumothorax)</span></label>
-          </div>
+        <div class="tri-group-title">Percussion</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Sonorité normale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_sonorite_normale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_sonorite_normale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_sonorite_normale_detail" placeholder="Matité, hypersonorité, localisation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de matité (pas d'épanchement pleural)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_matite" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_matite" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_matite_detail" placeholder="Matité base D/G, ligne de Damoiseau…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de tympanisme (pas de pneumothorax)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_tympanisme" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_tympanisme" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_tympanisme_detail" placeholder="Tympanisme apex D/G…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Auscultation</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="pulm_mv_bilateral" onchange="updateProgress()"><span>Murmure vesiculaire present et symetrique bilateralement</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_crepitants" onchange="updateProgress()"><span>Pas de crepitants (OAP, pneumonie, fibrose)</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_sibilants" onchange="updateProgress()"><span>Pas de sibilants (asthme, BPCO)</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_ronflants" onchange="updateProgress()"><span>Pas de ronflants (secretions bronchiques)</span></label>
-            <label class="check-item"><input type="checkbox" name="pulm_pas_frottement_pleural" onchange="updateProgress()"><span>Pas de frottement pleural</span></label>
-          </div>
+        <div class="tri-group-title">Auscultation</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Murmure vésiculaire présent et symétrique bilatéralement</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_mv_bilateral" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_mv_bilateral" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_mv_bilateral_detail" placeholder="MV diminué/aboli à D/G, silence auscultatoire…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de crépitants (OAP, pneumonie, fibrose)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_crepitants" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_crepitants" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_crepitants_detail" placeholder="Crépitants fins/gros aux bases, diffus…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de sibilants (asthme, BPCO)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_sibilants" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_sibilants" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_sibilants_detail" placeholder="Sibilants expiratoires diffus…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de ronflants (sécrétions bronchiques)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_ronflants" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_ronflants" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_ronflants_detail" placeholder="Ronchi diffus…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de frottement pleural</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="pulm_pas_frottement_pleural" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="pulm_pas_frottement_pleural" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="pulm_pas_frottement_pleural_detail" placeholder="Frottement pleural D/G…"></div></div>
         </div>
         <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Precisions / anomalies pulmonaires</label>
-          <textarea name="pulm_details" class="field-input" placeholder="Ex: crepitants bases gauches, syndrome de condensation, matite base droite..." oninput="updateProgress()"></textarea>
+          <label class="field-label">Précisions / anomalies pulmonaires</label>
+          <textarea name="pulm_details" class="field-input" placeholder="Ex: crépitants bases gauches, syndrome de condensation, matité base droite..." oninput="updateProgress()"></textarea>
         </div>
       </div>
 
       <!-- 5.6 Neurologique -->
       <div class="subsection">
         <div class="subsection-title">5.6 — Examen Neurologique</div>
-        <div class="note-box">Examiner : conscience, fonctions superieures, marche/equilibre, nerfs craniens, motricite, sensibilite, coordination, reflexes, signes meninges.</div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Conscience & Orientation</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_conscient" onchange="updateProgress()"><span>Conscient, alerte</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_oriente_tps_espace" onchange="updateProgress()"><span>Oriente dans le temps et l'espace</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_confusion" onchange="updateProgress()"><span>Pas de confusion ni de troubles cognitifs</span></label>
+        <div class="note-box">Examiner : conscience, fonctions supérieures, marche/équilibre, nerfs crâniens, motricité, sensibilité, coordination, réflexes, signes méningés.</div>
+        <div class="tri-group-title">Conscience &amp; Orientation</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Conscient, alerte</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_conscient" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_conscient" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_conscient_detail" placeholder="Obnubilé, stuporeux, comateux, GCS…"></div></div>
+          <div class="tri-item"><span class="tri-label">Orienté dans le temps et l'espace</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_oriente_tps_espace" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_oriente_tps_espace" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_oriente_tps_espace_detail" placeholder="Désorienté temps/espace/personnes…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de confusion ni de troubles cognitifs</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_pas_confusion" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_pas_confusion" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_pas_confusion_detail" placeholder="Syndrome confusionnel, agitation…"></div></div>
+        </div>
+        <div class="tri-group-title">Fonctions supérieures</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Langage normal (compréhension et expression)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_langage_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_langage_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_langage_normal_detail" placeholder="Aphasie de Broca/Wernicke, dysarthrie…"></div></div>
+          <div class="tri-item"><span class="tri-label">Mémoire conservée (immédiate et différée)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_memoire_normale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_memoire_normale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_memoire_normale_detail" placeholder="Amnésie antérograde/rétrograde…"></div></div>
+          <div class="tri-item"><span class="tri-label">Praxies normales</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_praxies_normales" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_praxies_normales" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_praxies_normales_detail" placeholder="Apraxie idéomotrice, idéatoire…"></div></div>
+        </div>
+        <div class="tri-group-title">Marche &amp; Équilibre</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Marche normale, symétrique, fluide</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_marche_normale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_marche_normale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_marche_normale_detail" placeholder="Marche ataxique, spastique, dandinante…"></div></div>
+          <div class="tri-item"><span class="tri-label">Marche en tandem (talon-pointe) normale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_marche_tandem" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_marche_tandem" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_marche_tandem_detail" placeholder="Instabilité, déviation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Signe de Romberg négatif</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_romberg_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_romberg_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_romberg_negatif_detail" placeholder="Romberg positif, latéralisé…"></div></div>
+        </div>
+        <div class="tri-group-title">Nerfs crâniens (NC I-XII)</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Nerfs crâniens tous normaux (résumé)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_nc_all_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_nc_all_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_nc_all_normal_detail" placeholder="NC atteint, type de déficit…"></div></div>
+        </div>
+        <div id="nc_detail_panel" style="margin-top:8px;">
+          <button type="button" onclick="document.getElementById('nc_detail_expand').style.display = document.getElementById('nc_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Détailler les nerfs crâniens</button>
+        </div>
+        <div id="nc_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
+          <div class="tri-list">
+            <div class="tri-item"><span class="tri-label">NC I (Olfactif) : olfaction conservée</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_I_olfactif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_I_olfactif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_I_olfactif_detail" placeholder="Anosmie, hyposmie…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC II (Optique) : acuité, champ visuel, réflexes pupillaires normaux</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_II_optique" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_II_optique" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_II_optique_detail" placeholder="BAV, hémianopsie, anisocorie, DPAR…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC III, IV, VI (Oculomoteurs) : pas de ptosis, MOE normaux</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_III_IV_VI_oculomoteurs" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_III_IV_VI_oculomoteurs" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_III_IV_VI_oculomoteurs_detail" placeholder="Ptosis, strabisme, diplopie, mydriase…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC V (Trijumeau) : sensibilité faciale normale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_V_trijumeau" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_V_trijumeau" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_V_trijumeau_detail" placeholder="Hypoesthésie V1/V2/V3, névralgie…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC VII (Facial) : face symétrique, mimiques normales</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_VII_facial" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_VII_facial" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_VII_facial_detail" placeholder="PF centrale/périphérique, côté…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC VIII (Cochléo-vestibulaire) : audition normale, pas de nystagmus</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_VIII_vestibulocochl" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_VIII_vestibulocochl" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_VIII_vestibulocochl_detail" placeholder="Surdité, nystagmus, vertiges…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC IX, X (Glosso-pharyngien, Vague) : réflexe nauséeux, déglutition, voix normaux</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_IX_X_glosso_vague" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_IX_X_glosso_vague" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_IX_X_glosso_vague_detail" placeholder="Dysphonie, fausses routes, voile asymétrique…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC XI (Accessoire) : force trapèze et SCM normales</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_XI_accessoire" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_XI_accessoire" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_XI_accessoire_detail" placeholder="Faiblesse trapèze/SCM…"></div></div>
+            <div class="tri-item"><span class="tri-label">NC XII (Hypoglosse) : langue médiane, pas de fasciculations</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_nc_XII_hypoglosse" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_nc_XII_hypoglosse" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_nc_XII_hypoglosse_detail" placeholder="Déviation langue, atrophie, fasciculations…"></div></div>
           </div>
         </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Fonctions superieures</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_langage_normal" onchange="updateProgress()"><span>Langage normal (comprehension et expression)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_memoire_normale" onchange="updateProgress()"><span>Memoire conservee (immediate et differee)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_praxies_normales" onchange="updateProgress()"><span>Praxies normales</span></label>
-          </div>
-        </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Marche & Equilibre</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_marche_normale" onchange="updateProgress()"><span>Marche normale, symetrique, fluide</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_marche_tandem" onchange="updateProgress()"><span>Marche en tandem (talon-pointe) normale</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_romberg_negatif" onchange="updateProgress()"><span>Signe de Romberg negatif (yeux ouverts puis fermes)</span></label>
-          </div>
-        </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Nerfs craniens (NC I-XII)</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_nc_all_normal" onchange="updateProgress()"><span>Nerfs craniens tous normaux (resume)</span></label>
-          </div>
-          <div id="nc_detail_panel" style="margin-top:8px;">
-            <button type="button" onclick="document.getElementById('nc_detail_expand').style.display = document.getElementById('nc_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Detailler les nerfs craniens</button>
-          </div>
-          <div id="nc_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" name="ep_nc_I_olfactif" onchange="updateProgress()"><span>NC I (Olfactif) : olfaction conservee</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_II_optique" onchange="updateProgress()"><span>NC II (Optique) : acuite visuelle, champ visuel, reflexes pupillaires normaux</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_III_IV_VI_oculomoteurs" onchange="updateProgress()"><span>NC III, IV, VI (Oculomoteurs) : pas de ptosis, mouvements oculaires normaux, pas de strabisme</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_V_trijumeau" onchange="updateProgress()"><span>NC V (Trijumeau) : sensibilite faciale (V1, V2, V3) normale, mastication normale</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_VII_facial" onchange="updateProgress()"><span>NC VII (Facial) : face symetrique, mimiques normales (sourire, froncement)</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_VIII_vestibulocochl" onchange="updateProgress()"><span>NC VIII (Cochleo-vestibulaire) : audition normale, pas de nystagmus</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_IX_X_glosso_vague" onchange="updateProgress()"><span>NC IX, X (Glosso-pharyngien, Vague) : reflexe nauseeux present, deglutition normale, voix normale</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_XI_accessoire" onchange="updateProgress()"><span>NC XI (Accessoire) : force trapeze et SCM normales</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_nc_XII_hypoglosse" onchange="updateProgress()"><span>NC XII (Hypoglosse) : langue mediane, pas d'atrophie ni fasciculations</span></label>
-            </div>
-          </div>
-        </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Examen moteur</div>
-          <div class="note-box" style="font-size:0.78rem;">Epreuve de Barre (MS) et Mingazzini (MI) pour depister un deficit global. Force segmentaire : echelle MRC 0-5.</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_moteur" onchange="updateProgress()"><span>Pas de deficit moteur aux 4 membres</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_barre_negatif" onchange="updateProgress()"><span>Epreuve de Barre negative (pas de chute du MS)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_mingazzini_negatif" onchange="updateProgress()"><span>Epreuve de Mingazzini negative (pas de chute du MI)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_tonus_normal" onchange="updateProgress()"><span>Tonus musculaire normal (pas d'hypertonie spastique ni plastique)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_amyotrophie" onchange="updateProgress()"><span>Pas d'amyotrophie ni de fasciculations</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_mvts_anormaux" onchange="updateProgress()"><span>Pas de mouvements anormaux (tremblements, dystonie, choree)</span></label>
-          </div>
-          <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Precisions motricite / force segmentaire</label>
-            <input type="text" name="ep_neuro_moteur_details" class="field-input" placeholder="Ex: force 5/5 aux 4 membres, roue dentee..." oninput="updateProgress()">
-          </div>
-        </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Examen sensitif</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_deficit_sensitif" onchange="updateProgress()"><span>Pas de deficit sensitif</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_tactile_normal" onchange="updateProgress()"><span>Sensibilite tactile fine conservee (coton)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_douleur_normal" onchange="updateProgress()"><span>Sensibilite douloureuse conservee (piqure)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_vibratoire_normal" onchange="updateProgress()"><span>Sensibilite vibratoire (pallesthesie) conservee (diapason)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_proprioceptive_normal" onchange="updateProgress()"><span>Sensibilite proprioceptive conservee (sens de position)</span></label>
-          </div>
-        </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Coordination</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_ataxie" onchange="updateProgress()"><span>Pas d'ataxie cerebelleuse</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_doigt_nez_normal" onchange="updateProgress()"><span>Epreuve doigt-nez normale (pas de dysmetrie)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_talon_genou_normal" onchange="updateProgress()"><span>Epreuve talon-genou normale</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_diadoco_normal" onchange="updateProgress()"><span>Diadochocinese normale (mouvements alternés rapides)</span></label>
-          </div>
-        </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Reflexes</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_rot_present" onchange="updateProgress()"><span>ROT presents et symetriques aux 4 membres</span></label>
-          </div>
-          <div id="rot_detail_panel" style="margin-top:8px;">
-            <button type="button" onclick="document.getElementById('rot_detail_expand').style.display = document.getElementById('rot_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Detailler les ROT</button>
-          </div>
-          <div id="rot_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" name="ep_rot_bicipital" onchange="updateProgress()"><span>Bicipital (C5-C6) : present / symetrique</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_rot_tricipital" onchange="updateProgress()"><span>Tricipital (C7) : present / symetrique</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_rot_stylo_radial" onchange="updateProgress()"><span>Stylo-radial (C6) : present / symetrique</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_rot_rotulien" onchange="updateProgress()"><span>Rotulien (L4) : present / symetrique</span></label>
-              <label class="check-item"><input type="checkbox" name="ep_rot_achilleen" onchange="updateProgress()"><span>Achilleen (S1) : present / symetrique</span></label>
-            </div>
-            <div class="field-group" style="margin-top:8px;">
-              <label class="field-label">Precisions ROT</label>
-              <input type="text" name="ep_neuro_rot_details" class="field-input" placeholder="Ex: ROT vifs MS, abolis MI, clonus cheville..." oninput="updateProgress()">
-            </div>
-          </div>
-          <div class="check-list" style="margin-top:6px;">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_babinski_negatif" onchange="updateProgress()"><span>Signe de Babinski negatif (reflexe cutane plantaire en flexion)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_pas_clonus" onchange="updateProgress()"><span>Pas de clonus</span></label>
-          </div>
-        </div>
-
-        <div class="subsubsection">
-          <div class="subsubsection-title">Signes meninges</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_neuro_nuque_souple" onchange="updateProgress()"><span>Nuque souple (pas de raideur meningee)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_kernig" onchange="updateProgress()"><span>Signe de Kernig negatif</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_neuro_brudzinski" onchange="updateProgress()"><span>Signe de Brudzinski negatif</span></label>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5.7 Examen Cervical & Thyroide -->
-      <div class="subsection">
-        <div class="subsection-title">5.7 — Examen Cervical &amp; Thyroidien</div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="ep_cerv_insp_normal" onchange="updateProgress()"><span>Pas de tumefaction, turgescence jugulaire, goitre</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_cerv_thyroide_normale" onchange="updateProgress()"><span>Corps thyroidien de taille normale, mobile a la deglutition</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_cerv_pas_adp" onchange="updateProgress()"><span>Pas d'adenopathies cervicales</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_cerv_pas_compression" onchange="updateProgress()"><span>Pas de signes de compression (dyspnee, dysphagie, dysphonie)</span></label>
+        <div class="tri-group-title">Examen moteur</div>
+        <div class="note-box" style="font-size:0.78rem;">Épreuve de Barré (MS) et Mingazzini (MI). Force segmentaire : échelle MRC 0-5.</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de déficit moteur aux 4 membres</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_pas_deficit_moteur" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_pas_deficit_moteur" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_pas_deficit_moteur_detail" placeholder="Hémiparésie, paraplégie, force segmentaire…"></div></div>
+          <div class="tri-item"><span class="tri-label">Épreuve de Barré négative (pas de chute du MS)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_barre_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_barre_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_barre_negatif_detail" placeholder="Chute MS D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Épreuve de Mingazzini négative (pas de chute du MI)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_mingazzini_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_mingazzini_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_mingazzini_negatif_detail" placeholder="Chute MI D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Tonus musculaire normal (pas d'hypertonie)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_tonus_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_tonus_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_tonus_normal_detail" placeholder="Hypertonie spastique/plastique, roue dentée…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'amyotrophie ni de fasciculations</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_pas_amyotrophie" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_pas_amyotrophie" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_pas_amyotrophie_detail" placeholder="Amyotrophie localisation, fasciculations…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de mouvements anormaux (tremblements, dystonie)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_pas_mvts_anormaux" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_pas_mvts_anormaux" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_pas_mvts_anormaux_detail" placeholder="Tremblements repos/action, chorée, dystonie…"></div></div>
         </div>
         <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Thyroide : details palpation (taille, consistance, nodule, souffle)</label>
-          <input type="text" name="ep_cerv_thyroide_details" class="field-input" placeholder="Homogene, souple, pas de nodule..." oninput="updateProgress()">
+          <label class="field-label">Précisions motricité / force segmentaire</label>
+          <input type="text" name="ep_neuro_moteur_details" class="field-input" placeholder="Ex: force 5/5 aux 4 membres, roue dentée..." oninput="updateProgress()">
+        </div>
+        <div class="tri-group-title">Examen sensitif</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de déficit sensitif</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_pas_deficit_sensitif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_pas_deficit_sensitif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_pas_deficit_sensitif_detail" placeholder="Hypoesthésie, anesthésie, territoire…"></div></div>
+          <div class="tri-item"><span class="tri-label">Sensibilité tactile fine conservée (coton)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_tactile_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_tactile_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_tactile_normal_detail" placeholder="Hypoesthésie, territoire…"></div></div>
+          <div class="tri-item"><span class="tri-label">Sensibilité douloureuse conservée (piqûre)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_douleur_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_douleur_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_douleur_normal_detail" placeholder="Hypoalgésie, territoire…"></div></div>
+          <div class="tri-item"><span class="tri-label">Sensibilité vibratoire (pallesthésie) conservée</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_vibratoire_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_vibratoire_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_vibratoire_normal_detail" placeholder="Pallesthésie abolie MI…"></div></div>
+          <div class="tri-item"><span class="tri-label">Sensibilité proprioceptive conservée</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_proprioceptive_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_proprioceptive_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_proprioceptive_normal_detail" placeholder="Trouble proprioceptif MI…"></div></div>
+        </div>
+        <div class="tri-group-title">Coordination</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas d'ataxie cérébelleuse</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_pas_ataxie" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_pas_ataxie" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_pas_ataxie_detail" placeholder="Ataxie cérébelleuse, syndrome cérébelleux…"></div></div>
+          <div class="tri-item"><span class="tri-label">Épreuve doigt-nez normale (pas de dysmétrie)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_doigt_nez_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_doigt_nez_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_doigt_nez_normal_detail" placeholder="Dysmétrie D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Épreuve talon-genou normale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_talon_genou_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_talon_genou_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_talon_genou_normal_detail" placeholder="Dysmétrie MI…"></div></div>
+          <div class="tri-item"><span class="tri-label">Diadococinèse normale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_diadoco_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_diadoco_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_diadoco_normal_detail" placeholder="Adiadococinésie D/G…"></div></div>
+        </div>
+        <div class="tri-group-title">Réflexes</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">ROT présents et symétriques aux 4 membres</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_rot_present" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_rot_present" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_rot_present_detail" placeholder="ROT vifs, abolis, asymétriques…"></div></div>
+        </div>
+        <div id="rot_detail_panel" style="margin-top:8px;">
+          <button type="button" onclick="document.getElementById('rot_detail_expand').style.display = document.getElementById('rot_detail_expand').style.display==='none'?'block':'none'" style="padding:7px 14px; background:var(--blue-light); border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;">Détailler les ROT</button>
+        </div>
+        <div id="rot_detail_expand" style="display:none; margin-top:10px; padding:12px; background:#f8faff; border-radius:8px; border:1px solid #d0e0ff;">
+          <div class="tri-list">
+            <div class="tri-item"><span class="tri-label">Bicipital (C5-C6)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_rot_bicipital" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_rot_bicipital" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_rot_bicipital_detail" placeholder="Vif/aboli/diffusé D/G…"></div></div>
+            <div class="tri-item"><span class="tri-label">Tricipital (C7)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_rot_tricipital" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_rot_tricipital" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_rot_tricipital_detail" placeholder="Vif/aboli D/G…"></div></div>
+            <div class="tri-item"><span class="tri-label">Stylo-radial (C6)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_rot_stylo_radial" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_rot_stylo_radial" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_rot_stylo_radial_detail" placeholder="Vif/aboli D/G…"></div></div>
+            <div class="tri-item"><span class="tri-label">Rotulien (L4)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_rot_rotulien" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_rot_rotulien" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_rot_rotulien_detail" placeholder="Vif/aboli D/G…"></div></div>
+            <div class="tri-item"><span class="tri-label">Achilléen (S1)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_rot_achilleen" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_rot_achilleen" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_rot_achilleen_detail" placeholder="Vif/aboli D/G…"></div></div>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <label class="field-label">Précisions ROT</label>
+            <input type="text" name="ep_neuro_rot_details" class="field-input" placeholder="Ex: ROT vifs MS, abolis MI, clonus cheville..." oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="tri-list" style="margin-top:6px;">
+          <div class="tri-item"><span class="tri-label">Signe de Babinski négatif (réflexe cutané plantaire en flexion)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_babinski_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_babinski_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_babinski_negatif_detail" placeholder="Babinski positif D/G/bilatéral…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de clonus</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_pas_clonus" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_pas_clonus" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_pas_clonus_detail" placeholder="Clonus rotulien/achilléen…"></div></div>
+        </div>
+        <div class="tri-group-title">Signes méningés</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Nuque souple (pas de raideur méningée)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_nuque_souple" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_nuque_souple" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_nuque_souple_detail" placeholder="Raideur de nuque…"></div></div>
+          <div class="tri-item"><span class="tri-label">Signe de Kernig négatif</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_kernig" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_kernig" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_kernig_detail" placeholder="Kernig positif…"></div></div>
+          <div class="tri-item"><span class="tri-label">Signe de Brudzinski négatif</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_neuro_brudzinski" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_neuro_brudzinski" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_neuro_brudzinski_detail" placeholder="Brudzinski positif…"></div></div>
         </div>
       </div>
 
-      <!-- 5.8 Osteo-articulaire -->
+      <!-- 5.7 Examen Cervical & Thyroïde -->
       <div class="subsection">
-        <div class="subsection-title">5.8 — Examen Osteo-Articulaire</div>
-        <div class="note-box" style="font-size:0.78rem;">Methode GALS (Gait, Arms, Legs, Spine) pour un depistage rapide. Si anomalie, examiner l'articulation en detail : Inspection, Palpation, Mobilite active/passive, Tests specifiques.</div>
+        <div class="subsection-title">5.7 — Examen Cervical &amp; Thyroïdien</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de tuméfaction, turgescence jugulaire, goitre</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cerv_insp_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cerv_insp_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cerv_insp_normal_detail" placeholder="Goitre, tuméfaction cervicale…"></div></div>
+          <div class="tri-item"><span class="tri-label">Corps thyroïdien de taille normale, mobile à la déglutition</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cerv_thyroide_normale" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cerv_thyroide_normale" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cerv_thyroide_normale_detail" placeholder="Thyroïde augmentée, nodule, fixée…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'adénopathies cervicales</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cerv_pas_adp" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cerv_pas_adp" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cerv_pas_adp_detail" placeholder="ADP cervicale, chaîne, taille…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de signes de compression (dyspnée, dysphagie, dysphonie)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cerv_pas_compression" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cerv_pas_compression" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cerv_pas_compression_detail" placeholder="Dyspnée, dysphagie, dysphonie, Claude Bernard Horner…"></div></div>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Thyroïde : détails palpation (taille, consistance, nodule, souffle)</label>
+          <input type="text" name="ep_cerv_thyroide_details" class="field-input" placeholder="Homogène, souple, pas de nodule..." oninput="updateProgress()">
+        </div>
+      </div>
+
+      <!-- 5.8 Ostéo-articulaire -->
+      <div class="subsection">
+        <div class="subsection-title">5.8 — Examen Ostéo-Articulaire</div>
+        <div class="note-box" style="font-size:0.78rem;">Méthode GALS (Gait, Arms, Legs, Spine). Si anomalie, examiner en détail : Inspection, Palpation, Mobilité active/passive, Tests spécifiques.</div>
         <div class="fields-row">
-          <div class="field-group">
-            <label class="field-label">Localisation douleur</label>
-            <input type="text" name="ep_oa_douleur_localisation" class="field-input" placeholder="Ex: genou droit" oninput="updateProgress()">
-          </div>
-          <div class="field-group">
-            <label class="field-label">EVA /10</label>
-            <input type="number" name="ep_oa_intensite_eva" class="field-input" placeholder="5" min="0" max="10" oninput="updateProgress()">
-          </div>
+          <div class="field-group"><label class="field-label">Localisation douleur</label><input type="text" name="ep_oa_douleur_localisation" class="field-input" placeholder="Ex: genou droit" oninput="updateProgress()"></div>
+          <div class="field-group"><label class="field-label">EVA /10</label><input type="number" name="ep_oa_intensite_eva" class="field-input" placeholder="5" min="0" max="10" oninput="updateProgress()"></div>
         </div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="ep_oa_pas_douleur" onchange="updateProgress()"><span>Pas de douleur articulaire</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_oa_pas_raideur" onchange="updateProgress()"><span>Pas de raideur matinale</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_oa_raideur_matinale" onchange="updateProgress()"><span>Raideur matinale presente (preciser duree)</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_oa_pas_deformation" onchange="updateProgress()"><span>Pas de deformation articulaire ni amyotrophie</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_oa_pas_epanchement" onchange="updateProgress()"><span>Pas d'epanchement articulaire</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_oa_mobilite_conservee" onchange="updateProgress()"><span>Mobilites actives et passives conservees</span></label>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de douleur articulaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_pas_douleur" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_pas_douleur" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_pas_douleur_detail" placeholder="Douleur, articulation, type…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de raideur matinale</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_pas_raideur" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_pas_raideur" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_pas_raideur_detail" placeholder="Raideur matinale, durée…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de déformation articulaire ni amyotrophie</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_pas_deformation" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_pas_deformation" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_pas_deformation_detail" placeholder="Déformation, type, localisation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'épanchement articulaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_pas_epanchement" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_pas_epanchement" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_pas_epanchement_detail" placeholder="Épanchement, choc rotulien, articulation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Mobilités actives et passives conservées</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_mobilite_conservee" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_mobilite_conservee" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_mobilite_conservee_detail" placeholder="Limitation, articulation, amplitude…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Rachis</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_oa_rachis_normal" onchange="updateProgress()"><span>Courbures rachidiennes normales (lordose, cyphose)</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_oa_cervical_mobile" onchange="updateProgress()"><span>Rachis cervical : flexion, extension, rotation normales</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_oa_lombaire_mobile" onchange="updateProgress()"><span>Rachis lombaire : flexion (distance doigt-sol), extension normales</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_oa_lasegue_negatif" onchange="updateProgress()"><span>Signe de Lasegue negatif</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_oa_leri_negatif" onchange="updateProgress()"><span>Signe de Leri negatif</span></label>
-          </div>
-          <div class="field-group" style="margin-top:6px;">
-            <label class="field-label">Indice de Schober</label>
-            <input type="text" name="ep_oa_schober" class="field-input" placeholder="Ex: 10+5 = 15 cm (normal)" oninput="updateProgress()">
-          </div>
+        <div class="tri-group-title">Rachis</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Courbures rachidiennes normales (lordose, cyphose)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_rachis_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_rachis_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_rachis_normal_detail" placeholder="Scoliose, hyperlordose, cyphose accentuée…"></div></div>
+          <div class="tri-item"><span class="tri-label">Rachis cervical : flexion, extension, rotation normales</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_cervical_mobile" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_cervical_mobile" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_cervical_mobile_detail" placeholder="Limitation rotation, douleur…"></div></div>
+          <div class="tri-item"><span class="tri-label">Rachis lombaire : flexion, extension normales</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_lombaire_mobile" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_lombaire_mobile" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_lombaire_mobile_detail" placeholder="Raideur lombaire, distance doigt-sol…"></div></div>
+          <div class="tri-item"><span class="tri-label">Signe de Lasègue négatif</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_lasegue_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_lasegue_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_lasegue_negatif_detail" placeholder="Lasègue positif à X° D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Signe de Léri négatif</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_oa_leri_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_oa_leri_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_oa_leri_negatif_detail" placeholder="Léri positif D/G…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Articulations specifiques (si atteinte)</div>
-          <div class="field-group">
-            <textarea name="ep_oa_details" class="field-input" rows="3" placeholder="Epaule: tests Neer/Hawkins/Jobe...&#10;Genou: choc rotulien, tiroir ant/post, McMurray...&#10;Hanche: Thomas, Trendelenburg, rotation interne..." oninput="updateProgress()"></textarea>
-          </div>
+        <div class="field-group" style="margin-top:6px;"><label class="field-label">Indice de Schober</label><input type="text" name="ep_oa_schober" class="field-input" placeholder="Ex: 10+5 = 15 cm (normal)" oninput="updateProgress()"></div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Articulations spécifiques (si atteinte)</label>
+          <textarea name="ep_oa_details" class="field-input" rows="3" placeholder="Épaule: tests Neer/Hawkins/Jobe...&#10;Genou: choc rotulien, tiroir ant/post, McMurray...&#10;Hanche: Thomas, Trendelenburg, rotation interne..." oninput="updateProgress()"></textarea>
         </div>
       </div>
 
-      <!-- 5.9 Uro-Genital -->
+      <!-- 5.9 Uro-Génital -->
       <div class="subsection">
-        <div class="subsection-title">5.9 — Examen Uro-Genital</div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Fosses lombaires</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_ug_pas_voussure_lombaire" onchange="updateProgress()"><span>Pas de voussure lombaire</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_ug_pas_douleur_fosaillon" onchange="updateProgress()"><span>Pas de douleur a la palpation des fosses lombaires</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_ug_pas_contact_lombaire" onchange="updateProgress()"><span>Pas de contact lombaire</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_ug_giordano_negatif" onchange="updateProgress()"><span>Signe de Giordano negatif (percussion)</span></label>
-          </div>
+        <div class="subsection-title">5.9 — Examen Uro-Génital</div>
+        <div class="tri-group-title">Fosses lombaires</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de voussure lombaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_ug_pas_voussure_lombaire" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_ug_pas_voussure_lombaire" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_ug_pas_voussure_lombaire_detail" placeholder="Voussure lombaire D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de douleur à la palpation des fosses lombaires</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_ug_pas_douleur_fosaillon" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_ug_pas_douleur_fosaillon" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_ug_pas_douleur_fosaillon_detail" placeholder="Douleur fosse lombaire D/G…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de contact lombaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_ug_pas_contact_lombaire" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_ug_pas_contact_lombaire" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_ug_pas_contact_lombaire_detail" placeholder="Contact lombaire D/G, gros rein…"></div></div>
+          <div class="tri-item"><span class="tri-label">Signe de Giordano négatif (percussion)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_ug_giordano_negatif" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_ug_giordano_negatif" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_ug_giordano_negatif_detail" placeholder="Giordano positif D/G…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Hypogastre</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_ug_pas_globe_vesical" onchange="updateProgress()"><span>Pas de globe vesical (pas de matite sus-pubienne)</span></label>
-          </div>
+        <div class="tri-group-title">Hypogastre</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Pas de globe vésical (pas de matité sus-pubienne)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_ug_pas_globe_vesical" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_ug_pas_globe_vesical" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_ug_pas_globe_vesical_detail" placeholder="Globe vésical, matité sus-pubienne…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Organes genitaux externes / Toucher rectal</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_ug_oge_normal" onchange="updateProgress()"><span>OGE sans anomalie</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_ug_tr_non_realise" onchange="updateProgress()"><span>TR non realise</span></label>
-          </div>
-          <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Precisions (prostate, OGE, TV, urines...)</label>
-            <textarea name="ep_ug_details" class="field-input" placeholder="Prostate: taille/consistance/sensibilite/sillon median&#10;Homme: scrotum, cordons spermatiques, transillumination&#10;Femme: TV, col uterin, annexes" oninput="updateProgress()"></textarea>
-          </div>
+        <div class="tri-group-title">Organes génitaux externes</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">OGE sans anomalie</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_ug_oge_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_ug_oge_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_ug_oge_normal_detail" placeholder="Anomalie OGE…"></div></div>
+          <div class="tri-item"><span class="tri-label">TR non réalisé</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_ug_tr_non_realise" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_ug_tr_non_realise" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_ug_tr_non_realise_detail" placeholder="Anomalie au TR…"></div></div>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Précisions (prostate, OGE, TV, urines...)</label>
+          <textarea name="ep_ug_details" class="field-input" placeholder="Prostate: taille/consistance/sensibilité/sillon médian&#10;Homme: scrotum, cordons spermatiques&#10;Femme: TV, col utérin, annexes" oninput="updateProgress()"></textarea>
         </div>
       </div>
 
-      <!-- 5.10 Cutane & Buccal -->
+      <!-- 5.10 Cutané & Buccal -->
       <div class="subsection">
-        <div class="subsection-title">5.10 — Examen Cutane &amp; Cavite Buccale</div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Peau</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_cut_normal" onchange="updateProgress()"><span>Teguments sans lesion cutanee particuliere</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_cut_pas_paleur" onchange="updateProgress()"><span>Pas de paleur cutanee</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_cut_pas_ictere" onchange="updateProgress()"><span>Pas d'ictere</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_cut_pas_cyanose2" onchange="updateProgress()"><span>Pas de cyanose</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_cut_pas_purpura" onchange="updateProgress()"><span>Pas de purpura ni petechies</span></label>
-            <label class="check-item"><input type="checkbox" name="ep_cut_pas_erytheme" onchange="updateProgress()"><span>Pas d'erytheme ni dyschromie</span></label>
-          </div>
-          <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Lesions cutanees (macule, papule, vesicule, bulle, pustule, plaque, nodule...)</label>
-            <textarea name="ep_cut_lesions" class="field-input" placeholder="Decrire : type, siege, taille, nombre, limites, couleur..." oninput="updateProgress()"></textarea>
-          </div>
+        <div class="subsection-title">5.10 — Examen Cutané &amp; Cavité Buccale</div>
+        <div class="tri-group-title">Peau</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Téguments sans lésion cutanée particulière</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cut_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cut_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cut_normal_detail" placeholder="Lésion cutanée, type, siège…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de pâleur cutanée</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cut_pas_paleur" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cut_pas_paleur" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cut_pas_paleur_detail" placeholder="Pâleur diffuse…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'ictère</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cut_pas_ictere" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cut_pas_ictere" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cut_pas_ictere_detail" placeholder="Ictère cutané, conjonctival…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de cyanose</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cut_pas_cyanose2" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cut_pas_cyanose2" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cut_pas_cyanose2_detail" placeholder="Cyanose extrémités…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de purpura ni pétéchies</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cut_pas_purpura" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cut_pas_purpura" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cut_pas_purpura_detail" placeholder="Purpura pétéchial/ecchymotique, localisation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'érythème ni dyschromie</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cut_pas_erytheme" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cut_pas_erytheme" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cut_pas_erytheme_detail" placeholder="Érythème, localisation, étendue…"></div></div>
         </div>
-        <div class="subsubsection">
-          <div class="subsubsection-title">Cavite buccale</div>
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" name="ep_cb_normal" onchange="updateProgress()"><span>Cavite buccale sans anomalie (langue, levres, gencives normaux)</span></label>
-          </div>
-          <div class="field-group" style="margin-top:8px;">
-            <label class="field-label">Anomalies buccales</label>
-            <input type="text" name="ep_cb_anomalies" class="field-input" placeholder="Haleine cetonique, aphtes, angine, macroglossie, denture..." oninput="updateProgress()">
-          </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Lésions cutanées (macule, papule, vésicule, bulle, pustule, plaque, nodule...)</label>
+          <textarea name="ep_cut_lesions" class="field-input" placeholder="Décrire : type, siège, taille, nombre, limites, couleur..." oninput="updateProgress()"></textarea>
+        </div>
+        <div class="tri-group-title">Cavité buccale</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Cavité buccale sans anomalie (langue, lèvres, gencives normaux)</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_cb_normal" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_cb_normal" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_cb_normal_detail" placeholder="Aphtes, angine, macroglossie, haleine cétonique…"></div></div>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="field-label">Anomalies buccales</label>
+          <input type="text" name="ep_cb_anomalies" class="field-input" placeholder="Haleine cétonique, aphtes, angine, macroglossie, denture..." oninput="updateProgress()">
         </div>
       </div>
 
       <!-- 5.11 Examen des Seins (femme) -->
       <div class="subsection">
         <div class="subsection-title">5.11 — Examen des Seins <span style="font-weight:400;color:#888;">(femme)</span></div>
-        <div class="note-box" style="font-size:0.78rem;">Inspecter en 4 positions : face, profil, mains sur les hanches, penchee en avant. Palper les 4 quadrants de chaque sein en DD, main sous la tete.</div>
-        <div class="check-list">
-          <label class="check-item"><input type="checkbox" name="ep_sein_non_realise" onchange="updateProgress()"><span>Non realise / Non applicable</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_sein_symetrique" onchange="updateProgress()"><span>Seins symetriques, sans deformation</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_sein_pas_retraction" onchange="updateProgress()"><span>Pas de retraction cutanee ni de peau d'orange</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_sein_pas_nodule" onchange="updateProgress()"><span>Pas de nodule palpable</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_sein_pas_ecoulement" onchange="updateProgress()"><span>Pas d'ecoulement mamelonnaire</span></label>
-          <label class="check-item"><input type="checkbox" name="ep_sein_adp_axillaires_libres" onchange="updateProgress()"><span>Adenopathies axillaires et sus-claviculaires absentes</span></label>
+        <div class="note-box" style="font-size:0.78rem;">Inspecter en 4 positions. Palper les 4 quadrants de chaque sein en DD.</div>
+        <div class="tri-list">
+          <div class="tri-item"><span class="tri-label">Non réalisé / Non applicable</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_sein_non_realise" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_sein_non_realise" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"></div></div>
+          <div class="tri-item"><span class="tri-label">Seins symétriques, sans déformation</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_sein_symetrique" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_sein_symetrique" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_sein_symetrique_detail" placeholder="Asymétrie, déformation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de rétraction cutanée ni de peau d'orange</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_sein_pas_retraction" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_sein_pas_retraction" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_sein_pas_retraction_detail" placeholder="Rétraction, peau d'orange, localisation…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas de nodule palpable</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_sein_pas_nodule" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_sein_pas_nodule" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_sein_pas_nodule_detail" placeholder="Nodule, quadrant, taille, consistance, mobilité…"></div></div>
+          <div class="tri-item"><span class="tri-label">Pas d'écoulement mamelonnaire</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_sein_pas_ecoulement" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_sein_pas_ecoulement" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_sein_pas_ecoulement_detail" placeholder="Écoulement, aspect, uni/bilatéral…"></div></div>
+          <div class="tri-item"><span class="tri-label">Adénopathies axillaires et sus-claviculaires absentes</span><div class="tri-radios"><label class="tri-n"><input type="radio" name="ep_sein_adp_axillaires_libres" value="normal" onchange="triState(this)"><span>N</span></label><label class="tri-a"><input type="radio" name="ep_sein_adp_axillaires_libres" value="anormal" onchange="triState(this)"><span>A</span></label></div><div class="tri-detail" style="display:none;"><input type="text" class="field-input" name="ep_sein_adp_axillaires_libres_detail" placeholder="ADP axillaire/sus-claviculaire, taille…"></div></div>
         </div>
         <div class="field-group" style="margin-top:8px;">
-          <label class="field-label">Precisions (nodule, ecoulement, ganglion...)</label>
-          <textarea name="ep_sein_details" class="field-input" placeholder="Quadrant, taille, consistance, mobilite, sensibilite..." oninput="updateProgress()"></textarea>
+          <label class="field-label">Précisions (nodule, écoulement, ganglion...)</label>
+          <textarea name="ep_sein_details" class="field-input" placeholder="Quadrant, taille, consistance, mobilité, sensibilité..." oninput="updateProgress()"></textarea>
         </div>
       </div>
 
@@ -2551,6 +2476,38 @@ function updatePathologyName(pathId) {
 }
 
 // ─── Toggle Familiaux / contextual details ────────────────────────────────
+// ─── Tri-state exam handler ───────────────────────────────────────────────
+function triState(radio) {
+  const item = radio.closest('.tri-item');
+  if (!item) return;
+  const detail = item.querySelector('.tri-detail');
+  if (detail) detail.style.display = radio.value === 'anormal' ? 'block' : 'none';
+  updateProgress();
+}
+function triReset(name) {
+  // Uncheck all radios for this name (reset to "non examiné")
+  document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+  const item = document.querySelector(`input[name="${name}"]`)?.closest('.tri-item');
+  if (item) { const d = item.querySelector('.tri-detail'); if(d) d.style.display = 'none'; }
+  updateProgress();
+}
+function getTriValue(name) {
+  const checked = document.querySelector(`input[name="${name}"]:checked`);
+  return checked ? checked.value : '';
+}
+function getTriLabel(name) {
+  const el = document.querySelector(`input[name="${name}"]`);
+  if (!el) return name;
+  const item = el.closest('.tri-item');
+  if (!item) return name;
+  const lbl = item.querySelector('.tri-label');
+  return lbl ? lbl.textContent.trim() : name;
+}
+function getTriDetail(name) {
+  const el = document.querySelector(`[name="${name}_detail"]`);
+  return el ? el.value.trim() : '';
+}
+
 function toggleTdmDetails() {
   const panel = document.getElementById('tdm_details');
   const cb = document.querySelector('input[name="cat_tdm"]');
@@ -2572,18 +2529,14 @@ function toggleFamDetail(key) {
 }
 
 // ─── Toggle Ganglionnaire anomalie panel ──────────────────────────────────
-function toggleGangDetail(cb) {
-  const btn = document.getElementById('gang_anomalie_btn');
+function toggleGangPanel() {
   const panel = document.getElementById('gang_anomalie_panel');
-  if (cb.checked) {
-    // "sans anomalie" checked → hide anomalie tools
-    if (btn) btn.style.display = 'none';
-    if (panel) panel.style.display = 'none';
-  } else {
-    // unchecked → show the documenter button
-    if (btn) btn.style.display = 'block';
-  }
+  if (!panel) return;
+  const val = getTriValue('ep_gang_sans_anomalie');
+  // Show panel only when "anormal" is selected (anomaly found)
+  panel.style.display = val === 'anormal' ? 'block' : 'none';
 }
+function toggleGangDetail(cb) { toggleGangPanel(); }
 
 // ─── ECOG preview ─────────────────────────────────────────────────────────
 function showEcog() {
@@ -3018,40 +2971,58 @@ function buildObservationText() {
   field('Signes associes',v('hdM_signes_associes'));field('Signes negatifs',v('hdM_signes_negatifs'));
 
   h1('V. Examen Clinique');
+  // Tri-state helper: skip if not examined, print label if normal, print label + detail if anormal
+  function triTxt(name) {
+    const val = getTriValue(name);
+    if (!val) return; // not examined → skip
+    const label = getTriLabel(name);
+    if (val === 'normal') { lines.push(`  ✔ ${label}`); }
+    else { const d = getTriDetail(name); lines.push(`  ✘ ${label}${d ? ' → ' + d : ''}`); }
+  }
+  function triTxtAll(names) { names.forEach(triTxt); }
+
   h2('5.1 — Examen Général/Vital & Constantes');
-  ['eg_conscient_oriente','eg_stable_hemo_respi'].forEach(n=>chk(n));
-  ['eg_pas_paleur','eg_pas_ictere','eg_pas_cyanose_generale'].forEach(n=>chk(n));
-  ['eg_pas_deshydratation','eg_pas_signes_choc','eg_pas_denutrition','eg_pas_omi'].forEach(n=>chk(n));
+  triTxtAll(['eg_conscient_oriente','eg_stable_hemo_respi','eg_pas_paleur','eg_pas_ictere','eg_pas_cyanose_generale','eg_pas_deshydratation','eg_pas_signes_choc','eg_pas_denutrition','eg_pas_omi']);
   field('GCS',v('eg_gcs')?v('eg_gcs')+'/15':'');field('Température',v('eg_temp')?v('eg_temp')+' °C':'');
   field('TA MS droit',v('eg_ta_droit')?v('eg_ta_droit')+' mmHg':'');field('TA MS gauche',v('eg_ta_gauche')?v('eg_ta_gauche')+' mmHg':'');
   field('FC',v('eg_fc')?v('eg_fc')+' bpm':'');field('FR',v('eg_fr')?v('eg_fr')+' cpm':'');field('SpO₂',v('eg_spo2')?v('eg_spo2')+' %':'');
   field('Poids',v('eg_poids')?v('eg_poids')+' kg':'');field('Taille',v('eg_taille')?v('eg_taille')+' cm':'');field('IMC',v('eg_imc'));
   field('Tour de taille',v('eg_tour_taille')?v('eg_tour_taille')+' cm':'');
   h2('5.2 — Examen Ganglionnaire');
-  ['ep_gang_aires_libres','ep_gang_sans_anomalie','ep_gang_troisier'].forEach(n=>chk(n));field('Adénopathies',v('ep_gang_details'));
+  triTxtAll(['ep_gang_aires_libres','ep_gang_sans_anomalie','ep_gang_troisier']);field('Adénopathies',v('ep_gang_details'));
   h2('5.3 — Examen Abdominal');
-  ['abd_resp_normale','abd_pas_deformation','abd_pas_cicatrices','abd_pas_circulation_collaterale','abd_pas_voussures_vergetures','abd_ombilic_plisse','abd_teguments_normaux','abd_pas_asterixis','abd_pas_leuconychie_erytheme'].forEach(n=>chk(n));
-  ['abd_souple_depressible','abd_pas_defense_contracture','abd_pas_organomegalie','abd_hepatomegalie','abd_splenomegalie','abd_pas_contact_lombaire','abd_pas_masse_palpable','abd_pas_hernie','abd_pas_signe_flot'].forEach(n=>chk(n));
+  triTxtAll(['abd_resp_normale','abd_pas_deformation','abd_pas_cicatrices','abd_pas_circulation_collaterale','abd_pas_voussures_vergetures','abd_ombilic_plisse','abd_teguments_normaux','abd_pas_asterixis','abd_pas_leuconychie_erytheme']);
+  triTxtAll(['abd_souple_depressible','abd_pas_defense_contracture','abd_pas_organomegalie','abd_pas_contact_lombaire','abd_pas_masse_palpable','abd_pas_hernie','abd_pas_signe_flot']);
   field('Zone douloureuse',v('abd_zone_douloureuse'));field('Flèche hépatique',v('abd_fleche_hepatique')?v('abd_fleche_hepatique')+' cm':'');
-  ['abd_pas_matite','abd_tympanisme_normal','abd_pas_meteorisme','abd_transit_audible','abd_pas_souffle_abdominal'].forEach(n=>chk(n));
-  ['tr_non_realise','tr_fissures','tr_hemorroides','tr_cri_douglas'].forEach(n=>chk(n));field('TR',v('tr_details'));
+  triTxtAll(['abd_pas_matite','abd_tympanisme_normal','abd_pas_meteorisme','abd_transit_audible','abd_pas_souffle_abdominal']);
+  triTxtAll(['tr_non_realise','tr_fissures','tr_hemorroides','tr_cri_douglas']);field('TR',v('tr_details'));
   h2('5.4 — Examen Cardiaque');
-  ['card_pas_hippocratisme','card_pas_xanthomes','card_trc_normal','card_pas_jvp','card_pas_cyanose_centrale','ep_card_insp_thorax_symetrique','ep_card_insp_pas_circulation','ep_card_insp_pas_oedeme_mi','ep_card_palp_choc_pointe','ep_card_palp_harzer_negatif','ep_card_palp_pas_thrill','ep_card_palp_pas_reflux','ep_card_ausc_bruits_coeur_percus','ep_card_ausc_systole_diastole_libres','ep_card_ausc_pas_frottement','ep_card_ausc_pas_sons_surajoutes','ep_card_pas_insuffisance'].forEach(n=>chk(n));
+  triTxtAll(['card_pas_hippocratisme','card_pas_xanthomes','card_trc_normal','card_pas_jvp','card_pas_cyanose_centrale','ep_card_insp_thorax_symetrique','ep_card_insp_pas_circulation','ep_card_insp_pas_oedeme_mi','ep_card_palp_choc_pointe','ep_card_palp_harzer_negatif','ep_card_palp_pas_thrill','ep_card_palp_pas_reflux','ep_card_ausc_bruits_coeur_percus','ep_card_ausc_systole_diastole_libres','ep_card_ausc_pas_frottement','ep_card_ausc_pas_sons_surajoutes','ep_card_pas_insuffisance']);
   field('Rythme / Souffle',v('ep_card_details'));
   h2('5.5 — Examen Pulmonaire');
-  ['pulm_thorax_symetrique','pulm_pas_tirage','pulm_pas_cyanose','pulm_vv_normaux','pulm_mv_bilateral','pulm_pas_rales','pulm_pas_matite','pulm_pas_frottement_pleural'].forEach(n=>chk(n));
+  triTxtAll(['pulm_thorax_symetrique','pulm_pas_tirage','pulm_pas_cyanose','pulm_vv_normaux','pulm_mv_bilateral','pulm_pas_rales','pulm_pas_matite','pulm_pas_frottement_pleural']);
   field('Précisions',v('pulm_details'));
   h2('5.6 — Examen Neurologique');
-  ['ep_neuro_conscient','ep_neuro_oriente_tps_espace','ep_neuro_pas_confusion','ep_neuro_pas_deficit_moteur','ep_neuro_pas_deficit_sensitif','ep_neuro_pas_ataxie','ep_neuro_babinski_negatif','ep_neuro_rot_present','ep_neuro_pas_clonus'].forEach(n=>chk(n));
+  triTxtAll(['ep_neuro_conscient','ep_neuro_oriente_tps_espace','ep_neuro_pas_confusion','ep_neuro_pas_deficit_moteur','ep_neuro_pas_deficit_sensitif','ep_neuro_pas_ataxie','ep_neuro_babinski_negatif','ep_neuro_rot_present','ep_neuro_pas_clonus']);
   field('ROT',v('ep_neuro_rot_details'));
-  ['ep_neuro_nuque_souple','ep_neuro_kernig','ep_neuro_brudzinski','ep_cerv_insp_normal','ep_cerv_thyroide_normale','ep_cerv_pas_adp'].forEach(n=>chk(n));
-  h2('5.7 — Examen Ostéo-Articulaire');
-  field('Localisation',v('ep_oa_douleur_localisation'));field('EVA',v('ep_oa_intensite_eva')?v('ep_oa_intensite_eva')+'/10':'');chk('ep_oa_raideur_matinale');field('Précisions',v('ep_oa_details'));
-  h2('5.8 — Examen Uro-Génital');
-  ['ep_ug_pas_globe_vesical','ep_ug_pas_douleur_fosaillon','ep_ug_giordano_negatif'].forEach(n=>chk(n));field('Précisions',v('ep_ug_details'));
-  h2('5.9 — Cutané & Buccal');
-  ['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2'].forEach(n=>chk(n));
-  field('Lésions cutanées',v('ep_cut_lesions'));chk('ep_cb_normal');field('Anomalies buccales',v('ep_cb_anomalies'));field('Autres',v('exam_autres'));
+  triTxtAll(['ep_neuro_nuque_souple','ep_neuro_kernig','ep_neuro_brudzinski']);
+  h2('5.7 — Examen Cervical & Thyroïdien');
+  triTxtAll(['ep_cerv_insp_normal','ep_cerv_thyroide_normale','ep_cerv_pas_adp','ep_cerv_pas_compression']);
+  field('Thyroïde détails',v('ep_cerv_thyroide_details'));
+  h2('5.8 — Examen Ostéo-Articulaire');
+  field('Localisation',v('ep_oa_douleur_localisation'));field('EVA',v('ep_oa_intensite_eva')?v('ep_oa_intensite_eva')+'/10':'');
+  triTxtAll(['ep_oa_pas_douleur','ep_oa_pas_raideur','ep_oa_pas_deformation','ep_oa_pas_epanchement','ep_oa_mobilite_conservee','ep_oa_rachis_normal','ep_oa_cervical_mobile','ep_oa_lombaire_mobile','ep_oa_lasegue_negatif','ep_oa_leri_negatif']);
+  field('Schober',v('ep_oa_schober'));field('Précisions',v('ep_oa_details'));
+  h2('5.9 — Examen Uro-Génital');
+  triTxtAll(['ep_ug_pas_voussure_lombaire','ep_ug_pas_douleur_fosaillon','ep_ug_pas_contact_lombaire','ep_ug_giordano_negatif','ep_ug_pas_globe_vesical','ep_ug_oge_normal','ep_ug_tr_non_realise']);
+  field('Précisions',v('ep_ug_details'));
+  h2('5.10 — Cutané & Buccal');
+  triTxtAll(['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2','ep_cut_pas_purpura','ep_cut_pas_erytheme']);
+  field('Lésions cutanées',v('ep_cut_lesions'));triTxt('ep_cb_normal');field('Anomalies buccales',v('ep_cb_anomalies'));
+  h2('5.11 — Examen des Seins');
+  triTxtAll(['ep_sein_non_realise','ep_sein_symetrique','ep_sein_pas_retraction','ep_sein_pas_nodule','ep_sein_pas_ecoulement','ep_sein_adp_axillaires_libres']);
+  field('Précisions seins',v('ep_sein_details'));
+  field('Autres',v('exam_autres'));
 
   h1('VI. Biologie Médicale');
   const sex = getSex();
@@ -3302,39 +3273,57 @@ async function generateDocx() {
 
     // V
     addH1('V. Examen Clinique');
+    // Tri-state helper for docx
+    function triDocx(name) {
+      const val = getTriValue(name);
+      if (!val) return; // not examined → skip
+      const label = getTriLabel(name);
+      if (val === 'normal') { children.push(checkRow(label)); }
+      else { const d = getTriDetail(name); children.push(new Paragraph({children:[new TextRun({text:'✘  ',color:'dc3545',bold:true,size:20}),new TextRun({text:label+(d?' → '+d:''),size:20})],spacing:{after:40},indent:{left:360}})); }
+    }
+    function triDocxAll(names) { names.forEach(triDocx); }
+
     addH2('5.1 — Examen Général/Vital & Constantes');
-    addChecks(['eg_conscient_oriente','eg_stable_hemo_respi','eg_pas_paleur','eg_pas_ictere','eg_pas_cyanose_generale','eg_pas_deshydratation','eg_pas_signes_choc','eg_pas_denutrition','eg_pas_omi']);
+    triDocxAll(['eg_conscient_oriente','eg_stable_hemo_respi','eg_pas_paleur','eg_pas_ictere','eg_pas_cyanose_generale','eg_pas_deshydratation','eg_pas_signes_choc','eg_pas_denutrition','eg_pas_omi']);
     ['eg_gcs','eg_temp','eg_ta_droit','eg_ta_gauche','eg_fc','eg_fr','eg_spo2','eg_poids','eg_taille','eg_imc','eg_tour_taille'].forEach(name=>{
       const labels={'eg_gcs':'GCS','eg_temp':'Température','eg_ta_droit':'TA MS droit','eg_ta_gauche':'TA MS gauche','eg_fc':'FC','eg_fr':'FR','eg_spo2':'SpO₂','eg_poids':'Poids','eg_taille':'Taille','eg_imc':'IMC','eg_tour_taille':'Tour de taille'};
       const units={'eg_gcs':'/15','eg_temp':' °C','eg_ta_droit':' mmHg','eg_ta_gauche':' mmHg','eg_fc':' bpm','eg_fr':' cpm','eg_spo2':' %','eg_poids':' kg','eg_taille':' cm','eg_imc':'','eg_tour_taille':' cm'};
       const val=v(name);if(val)children.push(row(labels[name],val+(units[name]||'')));
     });
     addH2('5.2 — Examen Ganglionnaire');
-    addChecks(['ep_gang_aires_libres','ep_gang_sans_anomalie','ep_gang_troisier']);addRow('Adénopathies','ep_gang_details');
+    triDocxAll(['ep_gang_aires_libres','ep_gang_sans_anomalie','ep_gang_troisier']);addRow('Adénopathies','ep_gang_details');
     addH2('5.3 — Examen Abdominal');
-    addChecks(['abd_resp_normale','abd_pas_deformation','abd_pas_cicatrices','abd_pas_circulation_collaterale','abd_pas_voussures_vergetures','abd_ombilic_plisse','abd_teguments_normaux','abd_pas_asterixis','abd_pas_leuconychie_erytheme','abd_souple_depressible','abd_pas_defense_contracture','abd_pas_organomegalie','abd_hepatomegalie','abd_splenomegalie','abd_pas_contact_lombaire','abd_pas_masse_palpable','abd_pas_hernie','abd_pas_signe_flot','abd_pas_matite','abd_tympanisme_normal','abd_pas_meteorisme','abd_transit_audible','abd_pas_souffle_abdominal']);
+    triDocxAll(['abd_resp_normale','abd_pas_deformation','abd_pas_cicatrices','abd_pas_circulation_collaterale','abd_pas_voussures_vergetures','abd_ombilic_plisse','abd_teguments_normaux','abd_pas_asterixis','abd_pas_leuconychie_erytheme','abd_souple_depressible','abd_pas_defense_contracture','abd_pas_organomegalie','abd_pas_contact_lombaire','abd_pas_masse_palpable','abd_pas_hernie','abd_pas_signe_flot']);
     addRow('Zone douloureuse','abd_zone_douloureuse');
     const fleche=v('abd_fleche_hepatique');if(fleche)children.push(row('Flèche hépatique',fleche+' cm'));
-    addChecks(['tr_non_realise','tr_fissures','tr_hemorroides','tr_cri_douglas']);addRow('TR','tr_details');
+    triDocxAll(['abd_pas_matite','abd_tympanisme_normal','abd_pas_meteorisme','abd_transit_audible','abd_pas_souffle_abdominal']);
+    triDocxAll(['tr_non_realise','tr_fissures','tr_hemorroides','tr_cri_douglas']);addRow('TR','tr_details');
     addH2('5.4 — Examen Cardiaque');
-    addChecks(['card_pas_hippocratisme','card_pas_xanthomes','card_trc_normal','card_pas_jvp','card_pas_cyanose_centrale','ep_card_insp_thorax_symetrique','ep_card_insp_pas_circulation','ep_card_insp_pas_oedeme_mi','ep_card_palp_choc_pointe','ep_card_palp_harzer_negatif','ep_card_palp_pas_thrill','ep_card_palp_pas_reflux','ep_card_ausc_bruits_coeur_percus','ep_card_ausc_systole_diastole_libres','ep_card_ausc_pas_frottement','ep_card_ausc_pas_sons_surajoutes','ep_card_pas_insuffisance']);
+    triDocxAll(['card_pas_hippocratisme','card_pas_xanthomes','card_trc_normal','card_pas_jvp','card_pas_cyanose_centrale','ep_card_insp_thorax_symetrique','ep_card_insp_pas_circulation','ep_card_insp_pas_oedeme_mi','ep_card_palp_choc_pointe','ep_card_palp_harzer_negatif','ep_card_palp_pas_thrill','ep_card_palp_pas_reflux','ep_card_ausc_bruits_coeur_percus','ep_card_ausc_systole_diastole_libres','ep_card_ausc_pas_frottement','ep_card_ausc_pas_sons_surajoutes','ep_card_pas_insuffisance']);
     addRow('Rythme / Souffle','ep_card_details');
     addH2('5.5 — Examen Pulmonaire');
-    addChecks(['pulm_thorax_symetrique','pulm_pas_tirage','pulm_pas_cyanose','pulm_vv_normaux','pulm_mv_bilateral','pulm_pas_rales','pulm_pas_matite','pulm_pas_frottement_pleural']);addRow('Précisions','pulm_details');
+    triDocxAll(['pulm_thorax_symetrique','pulm_pas_tirage','pulm_pas_cyanose','pulm_vv_normaux','pulm_mv_bilateral','pulm_pas_rales','pulm_pas_matite','pulm_pas_frottement_pleural']);addRow('Précisions','pulm_details');
     addH2('5.6 — Examen Neurologique');
-    addChecks(['ep_neuro_conscient','ep_neuro_oriente_tps_espace','ep_neuro_pas_confusion','ep_neuro_pas_deficit_moteur','ep_neuro_pas_deficit_sensitif','ep_neuro_pas_ataxie','ep_neuro_babinski_negatif','ep_neuro_rot_present','ep_neuro_pas_clonus']);
+    triDocxAll(['ep_neuro_conscient','ep_neuro_oriente_tps_espace','ep_neuro_pas_confusion','ep_neuro_pas_deficit_moteur','ep_neuro_pas_deficit_sensitif','ep_neuro_pas_ataxie','ep_neuro_babinski_negatif','ep_neuro_rot_present','ep_neuro_pas_clonus']);
     addRow('ROT','ep_neuro_rot_details');
-    addChecks(['ep_neuro_nuque_souple','ep_neuro_kernig','ep_neuro_brudzinski','ep_cerv_insp_normal','ep_cerv_thyroide_normale','ep_cerv_pas_adp']);
-    addH2('5.7 — Examen Ostéo-Articulaire');
+    triDocxAll(['ep_neuro_nuque_souple','ep_neuro_kernig','ep_neuro_brudzinski']);
+    addH2('5.7 — Examen Cervical & Thyroïdien');
+    triDocxAll(['ep_cerv_insp_normal','ep_cerv_thyroide_normale','ep_cerv_pas_adp','ep_cerv_pas_compression']);
+    addRow('Thyroïde détails','ep_cerv_thyroide_details');
+    addH2('5.8 — Examen Ostéo-Articulaire');
     const dloc=v('ep_oa_douleur_localisation');if(dloc)children.push(row('Localisation',dloc));
     const evaoa=v('ep_oa_intensite_eva');if(evaoa)children.push(row('EVA',evaoa+'/10'));
-    if(isChecked('ep_oa_raideur_matinale'))children.push(checkRow('Raideur matinale présente'));addRow('Précisions','ep_oa_details');
-    addH2('5.8 — Examen Uro-Génital');
-    addChecks(['ep_ug_pas_globe_vesical','ep_ug_pas_douleur_fosaillon','ep_ug_giordano_negatif']);addRow('Précisions','ep_ug_details');
-    addH2('5.9 — Examen Cutané & Buccal');
-    addChecks(['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2']);addRow('Lésions cutanées','ep_cut_lesions');
-    if(isChecked('ep_cb_normal'))children.push(checkRow('Cavité buccale sans anomalie'));
-    addRow('Anomalies buccales','ep_cb_anomalies');addRow('Autres examens','exam_autres');
+    triDocxAll(['ep_oa_pas_douleur','ep_oa_pas_raideur','ep_oa_pas_deformation','ep_oa_pas_epanchement','ep_oa_mobilite_conservee','ep_oa_rachis_normal','ep_oa_cervical_mobile','ep_oa_lombaire_mobile','ep_oa_lasegue_negatif','ep_oa_leri_negatif']);
+    addRow('Schober','ep_oa_schober');addRow('Précisions','ep_oa_details');
+    addH2('5.9 — Examen Uro-Génital');
+    triDocxAll(['ep_ug_pas_voussure_lombaire','ep_ug_pas_douleur_fosaillon','ep_ug_pas_contact_lombaire','ep_ug_giordano_negatif','ep_ug_pas_globe_vesical','ep_ug_oge_normal','ep_ug_tr_non_realise']);addRow('Précisions','ep_ug_details');
+    addH2('5.10 — Cutané & Buccal');
+    triDocxAll(['ep_cut_normal','ep_cut_pas_paleur','ep_cut_pas_ictere','ep_cut_pas_cyanose2','ep_cut_pas_purpura','ep_cut_pas_erytheme']);addRow('Lésions cutanées','ep_cut_lesions');
+    triDocx('ep_cb_normal');addRow('Anomalies buccales','ep_cb_anomalies');
+    addH2('5.11 — Examen des Seins');
+    triDocxAll(['ep_sein_non_realise','ep_sein_symetrique','ep_sein_pas_retraction','ep_sein_pas_nodule','ep_sein_pas_ecoulement','ep_sein_adp_axillaires_libres']);
+    addRow('Précisions seins','ep_sein_details');
+    addRow('Autres examens','exam_autres');
 
     // VI - Biologie Médicale
     addH1('VI. Biologie Médicale');
