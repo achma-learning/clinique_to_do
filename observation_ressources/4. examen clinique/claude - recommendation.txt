@@ -1,0 +1,41 @@
+can you apply this only to observation.html, under examen clinique :
+
+this is the recommendation fo a ai tool
+
+I completely understand your reasoning — it's a really important clinical distinction. An unchecked box is ambiguous: does it mean "normal" or "not examined"? Those are two very different things in a medical observation.
+
+Let me first check what's currently in your examen clinique structure so we can plan this properly.Now let me also check the current observation.html to see the existing examen clinique implementation:Excellent — now I have a complete picture of both the current implementation and the reference material. Your reasoning is spot-on. Let me build you the full structured plan.
+
+The core UX pattern per item becomes a tri-state system:
+
+⚪ Not touched (default) = "Non examiné" → nothing appears in the .txt output 🟢 Normal = auto-generates the specific normal phrase 🔴 Anormal = opens a text field to describe findings
+
+Let me lay this out system by system:Your idea is clinically sound. Here's the structured plan — the concept is a tri-state per exam finding:
+
+⚪ Non examiné (default, no radio selected) → excluded from output 🟢 Normal → auto-generates a specific, proper semiological phrase 🔴 Anormal → reveals a text field for free description
+
+Let me visualize the proposed UX pattern and the full data map:Now here's the complete data structure — every exam item organized by system, with the exact "normal" phrase that auto-generates when you tap "Normal":Here's a summary of the key design decisions for your workflow:
+
+The tri-state solves your exact problem: You examine a patient bedside on phone/tablet → tap Normal or Anormal per item → items you didn't examine simply don't appear in the output. No more ambiguity between "normal" and "not checked."
+
+Special cases to keep in mind:
+
+
+
+
+
+Constantes vitales (TA, FC, FR, SpO2, T°, Poids, Taille, GCS) stay as number inputs — these are always measured and don't fit the normal/anormal pattern
+
+
+
+Toucher rectal defaults to "Non réalisé" in the .txt even when left untouched (it's expected to document this)
+
+
+
+Seins and Uro-génital are collapsible sections that start entirely hidden — they only appear if the clinician explicitly opens them
+
+
+
+Each "Anormal" text field should have a placeholder with common findings to guide quick entry (e.g., "MV diminué à gauche, crépitants bases...")
+
+The .txt output logic becomes clean: For each item → if no radio selected: skip entirely → if Normal: print the auto-phrase → if Anormal: print the item name + user's free text.
