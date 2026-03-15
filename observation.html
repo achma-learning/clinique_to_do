@@ -307,18 +307,17 @@
         <a href="https://ammps.sante.gov.ma" target="_blank">AMMPS — Agence du Médicament</a>
         <hr>
         <div class="dropdown-header">CHU du Maroc</div>
-        <a href="https://www.chuibnrochd.ma" target="_blank">CHU Ibn Rochd — Casablanca</a>
-        <a href="https://www.churabat.ma" target="_blank">CHU Ibn Sina — Rabat</a>
-        <a href="https://www.chufes.ma" target="_blank">CHU Hassan II — Fès</a>
+        <a href="https://chuibnrochd.ma" target="_blank">CHU Ibn Rochd — Casablanca</a>
+        <a href="https://churabat.ma" target="_blank">CHU Ibn Sina — Rabat</a>
+        <a href="http://www.chu-fes.ma/" target="_blank">CHU Hassan II — Fès</a>
         <a href="https://www.chumarrakech.ma" target="_blank">CHU Mohammed VI — Marrakech</a>
-        <a href="https://www.chuoujda.ma" target="_blank">CHU Mohammed VI — Oujda</a>
-        <a href="https://www.chutanger.ma" target="_blank">CHU Tanger — Tanger</a>
+        <a href="http://www.chuoujda.ma/index.html" target="_blank">CHU Mohammed VI — Oujda</a>
+        <a href="https://www.chutanger.ma" target="_blank">CHU Mohammed VI — Tanger</a>
         <a href="https://www.chuagadir.ma" target="_blank">CHU Souss Massa — Agadir</a>
         <a href="https://www.chubenimelal.ma" target="_blank">CHU Béni Mellal — Béni Mellal</a>
         <a href="https://www.chuguelmim.ma" target="_blank">CHU Guelmim — Guelmim</a>
         <a href="https://www.chulaayoune.ma" target="_blank">CHU Laâyoune — Laâyoune</a>
         <a href="https://www.chuerrachidia.ma" target="_blank">CHU Errachidia — Errachidia</a>
-        <a href="https://www.chusettat.ma" target="_blank">CHU Settat — Settat</a>
       </div>
     </div>
     <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
@@ -2254,8 +2253,99 @@
             <label class="check-item"><input type="checkbox" name="cat_rx_asa" onchange="updateProgress()"><span>ASP / RX Abdomen</span></label>
             <label class="check-item"><input type="checkbox" name="cat_echo_abdo" onchange="updateProgress()"><span>Échographie abdominale</span></label>
             <label class="check-item"><input type="checkbox" name="cat_echo_cardiaque" onchange="updateProgress()"><span>Échocardiographie (ETT/ETO)</span></label>
-            <label class="check-item"><input type="checkbox" name="cat_tdm" onchange="updateProgress()"><span>TDM (scanner)</span></label>
-            <label class="check-item"><input type="checkbox" name="cat_irm" onchange="updateProgress()"><span>IRM</span></label>
+            <label class="check-item" style="align-items:flex-start;"><input type="checkbox" name="cat_tdm" onchange="toggleTdmDetails(); updateProgress()" style="margin-top:4px;"><span>TDM (scanner)</span></label>
+            <div id="tdm_details" style="display:none; padding-left:36px; margin-bottom:10px; border-left:3px solid var(--blue); margin-left:12px;">
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">Étage</label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_etage_cerebral" onchange="updateProgress()"> Cérébral</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_etage_cervical" onchange="updateProgress()"> Cervical</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_etage_thoracique" onchange="updateProgress()"> Thoracique</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_etage_abdominal" onchange="updateProgress()"> Abdominal</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_etage_pelvien" onchange="updateProgress()"> Pelvien</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_etage_tap" onchange="updateProgress()"> TDM TAP</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_etage_bodyscan" onchange="updateProgress()"> Body scan</label>
+                </div>
+                <input type="text" name="cat_tdm_etage_autre" class="field-input" style="margin-top:4px;font-size:0.82rem;" placeholder="Autre étage…" oninput="updateProgress()">
+              </div>
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">Fenêtre</label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_fenetre_osseuse" onchange="updateProgress()"> Osseuse</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_fenetre_parenchymateuse" onchange="updateProgress()"> Parenchymateuse</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_fenetre_pulmonaire" onchange="updateProgress()"> Pulmonaire</label>
+                </div>
+                <input type="text" name="cat_tdm_fenetre_autre" class="field-input" style="margin-top:4px;font-size:0.82rem;" placeholder="Autre fenêtre…" oninput="updateProgress()">
+              </div>
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">Injection</label>
+                <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;cursor:pointer;"><input type="radio" name="cat_tdm_injection" value="avec" onchange="updateProgress()"> Avec injection de produit de contraste</label>
+                  <label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;cursor:pointer;"><input type="radio" name="cat_tdm_injection" value="sans" onchange="updateProgress()"> Sans injection de produit de contraste</label>
+                </div>
+              </div>
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">En coupe</label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_coupe_axiale" onchange="updateProgress()"> Axiale</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_coupe_sagittale" onchange="updateProgress()"> Sagittale</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_tdm_coupe_frontale" onchange="updateProgress()"> Frontale</label>
+                </div>
+              </div>
+            </div>
+            <label class="check-item" style="align-items:flex-start;"><input type="checkbox" name="cat_irm" onchange="toggleIrmDetails(); updateProgress()" style="margin-top:4px;"><span>IRM</span></label>
+            <div id="irm_details" style="display:none; padding-left:36px; margin-bottom:10px; border-left:3px solid var(--blue); margin-left:12px;">
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">Étage</label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_etage_cerebral" onchange="updateProgress()"> Cérébral</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_etage_cervical" onchange="updateProgress()"> Cervical</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_etage_thoracique" onchange="updateProgress()"> Thoracique</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_etage_abdominal" onchange="updateProgress()"> Abdominal</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_etage_pelvien" onchange="updateProgress()"> Pelvien</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_etage_medullaire" onchange="updateProgress()"> Médullaire</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_etage_articulaire" onchange="updateProgress()"> Articulaire</label>
+                </div>
+                <input type="text" name="cat_irm_etage_autre" class="field-input" style="margin-top:4px;font-size:0.82rem;" placeholder="Autre étage…" oninput="updateProgress()">
+              </div>
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">Fenêtre</label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_fenetre_osseuse" onchange="updateProgress()"> Osseuse</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_fenetre_parenchymateuse" onchange="updateProgress()"> Parenchymateuse</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_fenetre_pulmonaire" onchange="updateProgress()"> Pulmonaire</label>
+                </div>
+                <input type="text" name="cat_irm_fenetre_autre" class="field-input" style="margin-top:4px;font-size:0.82rem;" placeholder="Autre fenêtre…" oninput="updateProgress()">
+              </div>
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">Injection</label>
+                <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;cursor:pointer;"><input type="radio" name="cat_irm_injection" value="avec" onchange="updateProgress()"> Avec injection de gadolinium</label>
+                  <label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;cursor:pointer;"><input type="radio" name="cat_irm_injection" value="sans" onchange="updateProgress()"> Sans injection</label>
+                </div>
+              </div>
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">En coupe</label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_coupe_axiale" onchange="updateProgress()"> Axiale</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_coupe_sagittale" onchange="updateProgress()"> Sagittale</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_coupe_frontale" onchange="updateProgress()"> Frontale</label>
+                </div>
+              </div>
+              <div class="field-group" style="margin-top:6px;">
+                <label class="field-label">Pondération / Séquences</label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_pond_t1" onchange="updateProgress()"> T1</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_pond_t2" onchange="updateProgress()"> T2</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_pond_flair" onchange="updateProgress()"> T2 FLAIR</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_pond_t2star" onchange="updateProgress()"> T2* (écho de gradient)</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_pond_diffusion" onchange="updateProgress()"> Diffusion + ADC</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_pond_tof" onchange="updateProgress()"> ToF (temps de vol)</label>
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.82rem;cursor:pointer;"><input type="checkbox" name="cat_irm_pond_stir" onchange="updateProgress()"> STIR</label>
+                </div>
+                <input type="text" name="cat_irm_pond_autre" class="field-input" style="margin-top:4px;font-size:0.82rem;" placeholder="Autres séquences…" oninput="updateProgress()">
+              </div>
+            </div>
             <label class="check-item"><input type="checkbox" name="cat_doppler" onchange="updateProgress()"><span>Écho-Doppler vasculaire</span></label>
           </div>
           <div class="field-group" style="margin-top:8px;">
@@ -2461,6 +2551,16 @@ function updatePathologyName(pathId) {
 }
 
 // ─── Toggle Familiaux / contextual details ────────────────────────────────
+function toggleTdmDetails() {
+  const panel = document.getElementById('tdm_details');
+  const cb = document.querySelector('input[name="cat_tdm"]');
+  if(panel && cb) panel.style.display = cb.checked ? 'block' : 'none';
+}
+function toggleIrmDetails() {
+  const panel = document.getElementById('irm_details');
+  const cb = document.querySelector('input[name="cat_irm"]');
+  if(panel && cb) panel.style.display = cb.checked ? 'block' : 'none';
+}
 function toggleFamDetail(key) {
   const panel = document.getElementById(`detail_${key}`);
   if (!panel) return;
@@ -3010,6 +3110,33 @@ function buildObservationText() {
   chk('cat_biologie');
   h2('Bilan Radiologique');
   ['cat_imagerie','cat_rx_thorax','cat_rx_asa','cat_echo_abdo','cat_echo_cardiaque','cat_tdm','cat_irm','cat_doppler'].forEach(n=>chk(n));
+  if(isChecked('cat_tdm')) {
+    const tdmEtages = ['cerebral','cervical','thoracique','abdominal','pelvien','tap','bodyscan'].filter(e=>isChecked(`cat_tdm_etage_${e}`)).map(e=>({cerebral:'Cérébral',cervical:'Cervical',thoracique:'Thoracique',abdominal:'Abdominal',pelvien:'Pelvien',tap:'TDM TAP',bodyscan:'Body scan'}[e]));
+    if(v('cat_tdm_etage_autre')) tdmEtages.push(v('cat_tdm_etage_autre'));
+    if(tdmEtages.length) lines.push(`    Étage : ${tdmEtages.join(', ')}`);
+    const tdmFen = ['osseuse','parenchymateuse','pulmonaire'].filter(f=>isChecked(`cat_tdm_fenetre_${f}`)).map(f=>f.charAt(0).toUpperCase()+f.slice(1));
+    if(v('cat_tdm_fenetre_autre')) tdmFen.push(v('cat_tdm_fenetre_autre'));
+    if(tdmFen.length) lines.push(`    Fenêtre : ${tdmFen.join(', ')}`);
+    const tdmInj = document.querySelector('input[name="cat_tdm_injection"]:checked');
+    if(tdmInj) lines.push(`    Injection : ${tdmInj.value === 'avec' ? 'Avec injection de produit de contraste' : 'Sans injection de produit de contraste'}`);
+    const tdmCoupes = ['axiale','sagittale','frontale'].filter(c=>isChecked(`cat_tdm_coupe_${c}`)).map(c=>c.charAt(0).toUpperCase()+c.slice(1));
+    if(tdmCoupes.length) lines.push(`    En coupe : ${tdmCoupes.join(', ')}`);
+  }
+  if(isChecked('cat_irm')) {
+    const irmEtages = ['cerebral','cervical','thoracique','abdominal','pelvien','medullaire','articulaire'].filter(e=>isChecked(`cat_irm_etage_${e}`)).map(e=>({cerebral:'Cérébral',cervical:'Cervical',thoracique:'Thoracique',abdominal:'Abdominal',pelvien:'Pelvien',medullaire:'Médullaire',articulaire:'Articulaire'}[e]));
+    if(v('cat_irm_etage_autre')) irmEtages.push(v('cat_irm_etage_autre'));
+    if(irmEtages.length) lines.push(`    Étage : ${irmEtages.join(', ')}`);
+    const irmFen = ['osseuse','parenchymateuse','pulmonaire'].filter(f=>isChecked(`cat_irm_fenetre_${f}`)).map(f=>f.charAt(0).toUpperCase()+f.slice(1));
+    if(v('cat_irm_fenetre_autre')) irmFen.push(v('cat_irm_fenetre_autre'));
+    if(irmFen.length) lines.push(`    Fenêtre : ${irmFen.join(', ')}`);
+    const irmInj = document.querySelector('input[name="cat_irm_injection"]:checked');
+    if(irmInj) lines.push(`    Injection : ${irmInj.value === 'avec' ? 'Avec injection de gadolinium' : 'Sans injection'}`);
+    const irmCoupes = ['axiale','sagittale','frontale'].filter(c=>isChecked(`cat_irm_coupe_${c}`)).map(c=>c.charAt(0).toUpperCase()+c.slice(1));
+    if(irmCoupes.length) lines.push(`    En coupe : ${irmCoupes.join(', ')}`);
+    const irmPond = ['t1','t2','flair','t2star','diffusion','tof','stir'].filter(p=>isChecked(`cat_irm_pond_${p}`)).map(p=>({t1:'T1',t2:'T2',flair:'T2 FLAIR',t2star:'T2*',diffusion:'Diffusion + ADC',tof:'ToF',stir:'STIR'}[p]));
+    if(v('cat_irm_pond_autre')) irmPond.push(v('cat_irm_pond_autre'));
+    if(irmPond.length) lines.push(`    Pondération : ${irmPond.join(', ')}`);
+  }
   field('Imagerie détails',v('cat_imagerie_details'));
   h2('Bilan Anatomopathologique');
   ['cat_anapath','cat_biopsie','cat_cytoponction','cat_piece_operatoire'].forEach(n=>chk(n));
