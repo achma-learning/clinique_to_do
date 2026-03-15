@@ -2552,21 +2552,15 @@ async function triState(radio) {
   const newVal = radio.value;
   const newLabel = newVal === 'normal' ? 'Normal' : 'Anormal';
 
-  // Check if there was a previous selection (switching N↔A)
-  // We detect this by checking if the item already had has-selection class
-  const hadSelection = item.classList.contains('has-selection');
-  // Determine old value: if switching, the other radio was previously checked
-  const otherVal = newVal === 'normal' ? 'anormal' : 'normal';
-  const otherRadio = item.querySelector(`input[value="${otherVal}"]`);
+  // Track previous value via data attribute on the item
+  const prevVal = item.dataset.triValue || '';
 
-  if (hadSelection && otherRadio && !otherRadio.checked) {
-    // Item already had a selection and we're clicking the same value again — no-op
-  } else if (hadSelection) {
+  if (prevVal && prevVal !== newVal) {
     // Switching from one state to the other — ask for confirmation
     _triSwitching = true;
     const labelText = getTriLabel(name);
-    const oldLabel = otherVal === 'normal' ? 'Normal' : 'Anormal';
-    const oldClass = otherVal === 'normal' ? 'val-normal' : 'val-anormal';
+    const oldLabel = prevVal === 'normal' ? 'Normal' : 'Anormal';
+    const oldClass = prevVal === 'normal' ? 'val-normal' : 'val-anormal';
     const newClass = newVal === 'normal' ? 'val-normal' : 'val-anormal';
     const msg = `Voulez-vous changer le choix pour :<br><strong>${labelText}</strong><br><span class="tri-confirm-val ${oldClass}">${oldLabel}</span> → <span class="tri-confirm-val ${newClass}">${newLabel}</span>`;
     const confirmed = await triConfirm(msg, 'Oui, changer', 'Non, garder');
@@ -2574,11 +2568,13 @@ async function triState(radio) {
     if (!confirmed) {
       // Revert: re-check the old radio
       radio.checked = false;
-      otherRadio.checked = true;
+      const otherRadio = item.querySelector(`input[value="${prevVal}"]`);
+      if (otherRadio) otherRadio.checked = true;
       return;
     }
   }
 
+  item.dataset.triValue = newVal;
   _triEnsureResetBtn(item);
   _triUpdateItem(item, newVal);
   updateProgress();
@@ -2601,6 +2597,7 @@ function triReset(name) {
   const item = document.querySelector(`input[name="${name}"]`)?.closest('.tri-item');
   if (item) {
     item.classList.remove('has-selection');
+    delete item.dataset.triValue;
     const d = item.querySelector('.tri-detail'); if(d) d.style.display = 'none';
     const detailInput = item.querySelector(`[name="${name}_detail"]`);
     if (detailInput) detailInput.value = '';
@@ -2914,7 +2911,7 @@ function resetAll() {
   document.querySelectorAll('input[type="text"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],textarea').forEach(el=>el.value='');
   document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
   document.querySelectorAll('input[type="checkbox"],input[type="radio"]').forEach(el=>el.checked=false);
-  document.querySelectorAll('.tri-item.has-selection').forEach(el=>el.classList.remove('has-selection'));
+  document.querySelectorAll('.tri-item.has-selection').forEach(el=>{ el.classList.remove('has-selection'); delete el.dataset.triValue; });
   document.querySelectorAll('.tri-detail').forEach(el=>el.style.display='none');
   // Clear biological values
   document.querySelectorAll('.bio-table .value-input').forEach(input => {
