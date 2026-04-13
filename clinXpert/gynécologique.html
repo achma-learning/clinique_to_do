@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Gynecologique - Guide clinXpert</title>
+<style>
+    :root {
+        --blue: #0056b3;
+        --blue-light: #e8f0fc;
+        --blue-dark: #0d3d72;
+        --gray: #6c757d;
+        --border: #dee2e6;
+        --bg: #f0f2f5;
+        --card-bg: #fff;
+        --text: #212529;
+        --subtext: #495057;
+        --radius: 12px;
+        --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        padding: 20px;
+        padding-top: 80px;
+        line-height: 1.5;
+    }
+    .top-nav {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(20,20,20,0.88);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .top-nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+    .top-nav a:hover { background-color: rgba(255,255,255,0.15); }
+    .top-nav .brand {
+        font-family: 'Papyrus', 'Segoe Script', fantasy;
+        font-size: 0.95em;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+    .container { max-width: 820px; margin: 0 auto; }
+    .page-title {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 2em;
+        color: var(--blue-dark);
+        text-align: center;
+        margin-bottom: 20px;
+        letter-spacing: 1.5px;
+    }
+    .card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius);
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        border: 0;
+    }
+    .guide h2 {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 1.3em;
+        color: var(--blue);
+        margin: 22px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--blue-light);
+        letter-spacing: 1px;
+    }
+    .guide h2:first-child { margin-top: 0; }
+    .guide h3 {
+        font-size: 1em;
+        color: var(--blue-dark);
+        margin: 14px 0 6px;
+        font-weight: 600;
+    }
+    .guide ul {
+        list-style-type: disc;
+        padding-left: 22px;
+        margin-bottom: 8px;
+    }
+    .guide ul ul { list-style-type: circle; margin-top: 4px; }
+    .guide ul ul ul { list-style-type: square; }
+    .guide li {
+        font-size: 0.95em;
+        line-height: 1.55;
+        margin-bottom: 4px;
+        color: var(--text);
+    }
+    .source {
+        margin-top: 22px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border);
+        font-size: 0.82em;
+        color: var(--gray);
+        text-align: center;
+    }
+    .source a { color: var(--blue); text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+    @media (max-width: 500px) {
+        body { padding: 12px; padding-top: 75px; }
+        .card { padding: 16px; }
+        .page-title { font-size: 1.6em; }
+        .guide h2 { font-size: 1.15em; }
+    }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="../index.html">&#8592; Accueil</a>
+    <span class="brand">clinXpert</span>
+</div>
+
+<div class="container">
+    <h1 class="page-title">&#9792; Examen Gyn&eacute;cologique</h1>
+
+    <div class="card">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/IM8mhMT77IE"
+                    title="Examen Gynecologique"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="card guide">
+        <h2>1. Introduction</h2>
+        <ul>
+            <li>Lavez vos mains.</li>
+            <li>Pr&eacute;sentez-vous avec votre nom et r&ocirc;le.</li>
+            <li>Confirmez l&rsquo;identit&eacute; de la patiente (nom et date de naissance).</li>
+            <li>Expliquez l&rsquo;examen en termes simples et rassurants.</li>
+            <li>Obtenez le consentement pour continuer.</li>
+        </ul>
+
+        <h2>2. Examen abdominal</h2>
+        <h3>Inspection</h3>
+        <ul>
+            <li>Recherchez des cicatrices chirurgicales.</li>
+            <li>V&eacute;rifiez la pr&eacute;sence de hernies ou de voussures.</li>
+        </ul>
+        <h3>Palpation</h3>
+        <ul>
+            <li>Masse abdominale palpable.</li>
+            <li>Zones de sensibilit&eacute; ou douleur.</li>
+        </ul>
+
+        <h2>3. Examen des seins</h2>
+        <h3>Inspection (positions vari&eacute;es)</h3>
+        <ul>
+            <li>Face, profil, mains sur les hanches, pench&eacute;e en avant.</li>
+            <li>Taille, forme.</li>
+            <li>Anomalies : peau d&rsquo;orange, rougeurs, mamelon ombiliqu&eacute;, d&eacute;formation, maladie de Paget.</li>
+        </ul>
+        <h3>Palpation</h3>
+        <ul>
+            <li>Position en d&eacute;cubitus dorsal, main sous la t&ecirc;te, les 4 quadrants syst&eacute;matiquement examin&eacute;s.</li>
+            <li>Recherche de nodules, zones douloureuses, mastose, &eacute;coulements mamelonnaires.</li>
+            <li>Palpation des aires ganglionnaires axillaires, sus-claviculaires et cervicales.</li>
+        </ul>
+
+        <h2>4. Examen pelvi-p&eacute;rin&eacute;al</h2>
+        <h3>Inspection</h3>
+        <ul>
+            <li>Aspect des organes g&eacute;nitaux externes : trophicit&eacute;, pilosit&eacute;, pigmentation, d&eacute;veloppement des grandes et petites l&egrave;vres, clitoris.</li>
+            <li>S&eacute;quelles obst&eacute;tricales : &eacute;pisiotomies, d&eacute;chirures, fistules.</li>
+            <li>Distance ano-vulvaire.</li>
+            <li>Effort de toux pour &eacute;valuer un prolapsus.</li>
+        </ul>
+        <h3>Palpation vulvaire</h3>
+        <ul>
+            <li>Masse ou nodule.</li>
+        </ul>
+
+        <h2>5. Examen au sp&eacute;culum</h2>
+        <h3>Pr&eacute;paration</h3>
+        <ul>
+            <li>Pr&eacute;parez le sp&eacute;culum et lubrifiez-le au s&eacute;rum physiologique sans toucher les lames.</li>
+        </ul>
+        <h3>Insertion</h3>
+        <ul>
+            <li>&Eacute;cartez les l&egrave;vres avec la main non dominante.</li>
+            <li>Ins&eacute;rez doucement le sp&eacute;culum (lames ferm&eacute;es, poign&eacute;e lat&eacute;rale).</li>
+            <li>Tournez la poign&eacute;e vers le haut une fois ins&eacute;r&eacute;.</li>
+            <li>Ouvrez les lames et verrouillez-les pour visualiser le col ut&eacute;rin.</li>
+        </ul>
+        <h3>Observation</h3>
+        <ul>
+            <li>Col : forme, taille, &eacute;coulement, glaire cervicale (quantit&eacute;, transparence, filance).</li>
+            <li>Vagin : anomalies visibles.</li>
+        </ul>
+        <h3>Retrait</h3>
+        <ul>
+            <li>Rel&acirc;chez doucement le sp&eacute;culum en inspectant les parois vaginales.</li>
+        </ul>
+
+        <h2>6. Toucher vaginal (TV) avec palpation abdominale</h2>
+        <ul>
+            <li>Col ut&eacute;rin :
+                <ul>
+                    <li>Longueur, mobilit&eacute;, sensibilit&eacute;.</li>
+                </ul>
+            </li>
+            <li>Ut&eacute;rus :
+                <ul>
+                    <li>Taille, position, consistance, mobilit&eacute;.</li>
+                </ul>
+            </li>
+            <li>Annexes :
+                <ul>
+                    <li>Palpation pour masses ou douleurs.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>7. Conclusion et finalisation de l&rsquo;examen</h2>
+        <ul>
+            <li>Expliquez &agrave; la patiente que l&rsquo;examen est termin&eacute;.</li>
+            <li>Remerciez la patiente pour sa coop&eacute;ration.</li>
+            <li>Fournissez un espace priv&eacute; pour que la patiente se rhabille.</li>
+            <li>Lavez vos mains et &eacute;liminez les EPI.</li>
+            <li>R&eacute;sumez vos observations.</li>
+        </ul>
+
+        <div class="source">
+            Source : <a href="https://clinxpert.glide.page/dl/ClinXpert/s/85159a/r/HzCGu5ijR-CscB.oVfGTxg" target="_blank">ClinXpert</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
