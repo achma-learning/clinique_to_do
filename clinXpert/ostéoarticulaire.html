@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Osteo-articulaire - Guide clinXpert</title>
+<style>
+    :root {
+        --blue: #0056b3;
+        --blue-light: #e8f0fc;
+        --blue-dark: #0d3d72;
+        --gray: #6c757d;
+        --border: #dee2e6;
+        --bg: #f0f2f5;
+        --card-bg: #fff;
+        --text: #212529;
+        --subtext: #495057;
+        --radius: 12px;
+        --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        padding: 20px;
+        padding-top: 80px;
+        line-height: 1.5;
+    }
+    .top-nav {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(20,20,20,0.88);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .top-nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+    .top-nav a:hover { background-color: rgba(255,255,255,0.15); }
+    .top-nav .brand {
+        font-family: 'Papyrus', 'Segoe Script', fantasy;
+        font-size: 0.95em;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+    .container { max-width: 820px; margin: 0 auto; }
+    .page-title {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 2em;
+        color: var(--blue-dark);
+        text-align: center;
+        margin-bottom: 20px;
+        letter-spacing: 1.5px;
+    }
+    .card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius);
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        border: 0;
+    }
+    .guide h2 {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 1.3em;
+        color: var(--blue);
+        margin: 22px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--blue-light);
+        letter-spacing: 1px;
+    }
+    .guide h2:first-child { margin-top: 0; }
+    .guide h3 {
+        font-size: 1em;
+        color: var(--blue-dark);
+        margin: 14px 0 6px;
+        font-weight: 600;
+    }
+    .guide ul {
+        list-style-type: disc;
+        padding-left: 22px;
+        margin-bottom: 8px;
+    }
+    .guide ul ul { list-style-type: circle; margin-top: 4px; }
+    .guide ul ul ul { list-style-type: square; }
+    .guide li {
+        font-size: 0.95em;
+        line-height: 1.55;
+        margin-bottom: 4px;
+        color: var(--text);
+    }
+    .source {
+        margin-top: 22px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border);
+        font-size: 0.82em;
+        color: var(--gray);
+        text-align: center;
+    }
+    .source a { color: var(--blue); text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+    @media (max-width: 500px) {
+        body { padding: 12px; padding-top: 75px; }
+        .card { padding: 16px; }
+        .page-title { font-size: 1.6em; }
+        .guide h2 { font-size: 1.15em; }
+    }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="../index.html">&#8592; Accueil</a>
+    <span class="brand">clinXpert</span>
+</div>
+
+<div class="container">
+    <h1 class="page-title">&#129471; Examen Ost&eacute;o-articulaire</h1>
+
+    <div class="card">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/KU9tNia7NYo"
+                    title="Examen Osteoarticulaire"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="card guide">
+        <h2>1. Introduction</h2>
+        <ul>
+            <li>Lavez vos mains.</li>
+            <li>Pr&eacute;sentez-vous avec votre nom et r&ocirc;le.</li>
+            <li>Confirmez l&rsquo;identit&eacute; du patient (nom et date de naissance).</li>
+            <li>Expliquez ce que l&rsquo;examen impliquera avec des termes simples et rassurants.</li>
+            <li>Obtenez le consentement pour proc&eacute;der.</li>
+            <li>V&eacute;rifiez si le patient ressent une douleur avant de commencer.</li>
+        </ul>
+
+        <h2>2. Inspection g&eacute;n&eacute;rale</h2>
+        <ul>
+            <li>Observez le patient de face, de c&ocirc;t&eacute; et de dos :
+                <ul>
+                    <li>Alignement corporel.</li>
+                    <li>D&eacute;formations ou asym&eacute;tries.</li>
+                    <li>Signes de maladies syst&eacute;miques (amyotrophies, cicatrices, rougeurs).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>3. GALS Screen</h2>
+        <p style="font-size:0.9em; color:var(--subtext); margin-bottom:8px;"><em>&Eacute;valuation g&eacute;n&eacute;rale des articulations.</em></p>
+        <ul>
+            <li>Marche : fluidit&eacute;, sym&eacute;trie, anomalies de la marche.</li>
+            <li>Membres sup&eacute;rieurs :
+                <ul>
+                    <li>Flexion, extension, mouvements combin&eacute;s.</li>
+                    <li>V&eacute;rifiez la force de pr&eacute;hension et les mouvements fins.</li>
+                    <li>Squeeze test (PR).</li>
+                </ul>
+            </li>
+            <li>Membres inf&eacute;rieurs :
+                <ul>
+                    <li>Flexion/extension passives des genoux.</li>
+                    <li>Rotation interne des hanches.</li>
+                    <li>Squeeze test.</li>
+                </ul>
+            </li>
+            <li>Rachis :
+                <ul>
+                    <li>Courbures : lordose, cyphose.</li>
+                    <li>Cervical : flexion, extension, rotation, inclinaison lat&eacute;rale.</li>
+                    <li>Thoracique : ampliation thoracique.</li>
+                    <li>Lombaire : flexion (distance doigt-sol), extension, rotation, indice de Sch&ouml;ber.</li>
+                    <li>Tests radiculaires :
+                        <ul>
+                            <li>Signe de Las&egrave;gue (rachis lombaire).</li>
+                            <li>Signe de L&eacute;ri (rachis lombaire).</li>
+                        </ul>
+                    </li>
+                    <li>Examen des sacro-iliaques :
+                        <ul>
+                            <li>Palpation de l&rsquo;interligne.</li>
+                            <li>Signe du Tr&eacute;pied.</li>
+                            <li>Test d&rsquo;&eacute;cartement / rapprochement.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>4. Examen de l&rsquo;&eacute;paule</h2>
+        <h3>Tests sp&eacute;cifiques</h3>
+        <ul>
+            <li>Recherche de conflit sous-acromial :
+                <ul>
+                    <li>Test de Neer.</li>
+                    <li>Test de Hawkins.</li>
+                    <li>Test de Yocum.</li>
+                </ul>
+            </li>
+            <li>Recherche de tendinopathie sp&eacute;cifique :
+                <ul>
+                    <li>Test de Jobe : muscle supra-&eacute;pineux.</li>
+                    <li>Test de Patte : muscle infra-&eacute;pineux et petit rond.</li>
+                    <li>Palm-up test : long biceps.</li>
+                    <li>Belly press test : muscle sous-scapulaire.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>5. Examen de la hanche</h2>
+        <h3>Tests sp&eacute;cifiques</h3>
+        <ul>
+            <li>Boiterie.</li>
+            <li>Trendelenburg : faiblesse des abducteurs.</li>
+            <li>Test de Thomas : d&eacute;formation en flexion fixe.</li>
+            <li>Man&oelig;uvre du salut coxal : incapacit&eacute; de maintenir le MI tendu &agrave; 30&deg; du lit.</li>
+        </ul>
+
+        <h2>6. Examen du genou</h2>
+        <h3>Palpation</h3>
+        <ul>
+            <li>Palpez l&rsquo;articulation en extension et flexion : cr&eacute;pitations.</li>
+            <li>Signe du flot, choc rotulien.</li>
+        </ul>
+        <h3>Mouvements</h3>
+        <ul>
+            <li>Flexion et extension (actives et passives).</li>
+        </ul>
+        <h3>Tests sp&eacute;cifiques</h3>
+        <ul>
+            <li>Tiroir ant&eacute;rieur/post&eacute;rieur : ligaments crois&eacute;s.</li>
+            <li>McMurray : atteinte m&eacute;niscale.</li>
+            <li>Zohlen et Rabot : atteinte f&eacute;moro-patellaire.</li>
+        </ul>
+
+        <h2>7. Conclusion</h2>
+        <ul>
+            <li>Expliquez au patient que l&rsquo;examen est termin&eacute;.</li>
+            <li>Remerciez le patient pour sa coop&eacute;ration.</li>
+            <li>Lavez vos mains.</li>
+            <li>R&eacute;sumez vos observations.</li>
+        </ul>
+
+        <div class="source">
+            Source : <a href="https://clinxpert.glide.page/dl/ClinXpert/s/85159a/r/wgw975SfSyucdJommAvJ2A" target="_blank">ClinXpert</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

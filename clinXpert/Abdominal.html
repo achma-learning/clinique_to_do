@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Abdominal - Guide clinXpert</title>
+<style>
+    :root {
+        --blue: #0056b3;
+        --blue-light: #e8f0fc;
+        --blue-dark: #0d3d72;
+        --gray: #6c757d;
+        --border: #dee2e6;
+        --bg: #f0f2f5;
+        --card-bg: #fff;
+        --text: #212529;
+        --subtext: #495057;
+        --radius: 12px;
+        --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        padding: 20px;
+        padding-top: 80px;
+        line-height: 1.5;
+    }
+    .top-nav {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(20,20,20,0.88);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .top-nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+    .top-nav a:hover { background-color: rgba(255,255,255,0.15); }
+    .top-nav .brand {
+        font-family: 'Papyrus', 'Segoe Script', fantasy;
+        font-size: 0.95em;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+    .container { max-width: 820px; margin: 0 auto; }
+    .page-title {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 2em;
+        color: var(--blue-dark);
+        text-align: center;
+        margin-bottom: 20px;
+        letter-spacing: 1.5px;
+    }
+    .card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius);
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        border: 0;
+    }
+    .guide h2 {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 1.3em;
+        color: var(--blue);
+        margin: 22px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--blue-light);
+        letter-spacing: 1px;
+    }
+    .guide h2:first-child { margin-top: 0; }
+    .guide h3 {
+        font-size: 1em;
+        color: var(--blue-dark);
+        margin: 14px 0 6px;
+        font-weight: 600;
+    }
+    .guide ul {
+        list-style-type: disc;
+        padding-left: 22px;
+        margin-bottom: 8px;
+    }
+    .guide ul ul { list-style-type: circle; margin-top: 4px; }
+    .guide ul ul ul { list-style-type: square; }
+    .guide li {
+        font-size: 0.95em;
+        line-height: 1.55;
+        margin-bottom: 4px;
+        color: var(--text);
+    }
+    .source {
+        margin-top: 22px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border);
+        font-size: 0.82em;
+        color: var(--gray);
+        text-align: center;
+    }
+    .source a { color: var(--blue); text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+    @media (max-width: 500px) {
+        body { padding: 12px; padding-top: 75px; }
+        .card { padding: 16px; }
+        .page-title { font-size: 1.6em; }
+        .guide h2 { font-size: 1.15em; }
+    }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="../index.html">&#8592; Accueil</a>
+    <span class="brand">clinXpert</span>
+</div>
+
+<div class="container">
+    <h1 class="page-title">&#128137; Examen Abdominal</h1>
+
+    <div class="card">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/xmw01rl-SmA"
+                    title="Examen Abdominal"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="card guide">
+        <h2>1. Introduction</h2>
+        <ul>
+            <li>Se laver les mains.</li>
+            <li>Se pr&eacute;senter : nom et r&ocirc;le.</li>
+            <li>Confirmer l&rsquo;identit&eacute; du patient (nom, date de naissance).</li>
+            <li>Expliquer l&rsquo;examen avec des termes simples et rassurants.</li>
+            <li>Obtenir le consentement pour continuer.</li>
+            <li>Demander si le patient ressent une douleur avant de commencer.</li>
+            <li>Patient en d&eacute;cubitus dorsal, placez-vous &agrave; droite du patient.</li>
+        </ul>
+
+        <h2>2. Inspection</h2>
+        <ul>
+            <li>Rechercher des signes cliniques visibles :
+                <ul>
+                    <li>Respiration abdominale.</li>
+                    <li>Cicatrices chirurgicales.</li>
+                    <li>Distension abdominale ou voussure.</li>
+                    <li>Hernie ou &eacute;ventration.</li>
+                    <li>Points de feu ou l&eacute;sions cutan&eacute;es.</li>
+                    <li>Circulation veineuse collat&eacute;rale.</li>
+                    <li>Pr&eacute;sence d&rsquo;ict&egrave;re ou autres anomalies.</li>
+                </ul>
+            </li>
+            <li>Inspecter les &eacute;quipements autour du patient : stomie, drains, cath&eacute;ters, etc.</li>
+        </ul>
+
+        <h2>3. Palpation</h2>
+        <ul>
+            <li>V&eacute;rifier si l&rsquo;abdomen est souple ou non.</li>
+            <li>Identifier une d&eacute;fense ou une contracture.</li>
+            <li>D&eacute;tecter une sensibilit&eacute; localis&eacute;e.</li>
+            <li>Palper pour rechercher :
+                <ul>
+                    <li>H&eacute;patom&eacute;galie (mesurer la fl&egrave;che si pr&eacute;sente).</li>
+                    <li>Spl&eacute;nom&eacute;galie.</li>
+                    <li>Masse abdominale ou autre anomalie.</li>
+                </ul>
+            </li>
+            <li>Palpation sp&eacute;cifique :
+                <ul>
+                    <li>Orifices herniaires.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>4. Percussion</h2>
+        <p style="font-size:0.9em; color:var(--subtext); margin-bottom:8px;"><em>D&eacute;limiter les organes et d&eacute;tecter les anomalies.</em></p>
+        <ul>
+            <li>Tympanisme ou matit&eacute; sur les neuf r&eacute;gions.</li>
+            <li>Signe du flot (pr&eacute;sence d&rsquo;ascite).</li>
+            <li>Signe du gla&ccedil;on pour une masse mobile.</li>
+        </ul>
+
+        <h2>5. Auscultation</h2>
+        <p style="font-size:0.9em; color:var(--subtext); margin-bottom:8px;"><em>&Eacute;couter les bruits abdominaux.</em></p>
+        <ul>
+            <li>Rechercher des bruits hydro-a&eacute;riques (pr&eacute;sents ou absents).</li>
+            <li>Identifier un souffle abdominal :
+                <ul>
+                    <li>Aortique.</li>
+                    <li>R&eacute;nal.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>6. Toucher rectal</h2>
+        <ul>
+            <li>Inspection externe : fissures, h&eacute;morro&iuml;des, fistules, excoriations.</li>
+            <li>&Eacute;valuation interne :
+                <ul>
+                    <li>Tonus sphinct&eacute;rien.</li>
+                    <li>Masse ou f&eacute;calome dans l&rsquo;ampoule rectale.</li>
+                    <li>Palpation de la prostate (chez l&rsquo;homme).</li>
+                </ul>
+            </li>
+            <li>&Eacute;tat du doigtier apr&egrave;s examen : sang, pus, etc.</li>
+            <li>Recherche du cri de Douglas.</li>
+        </ul>
+
+        <h2>7. Fin de l&rsquo;examen</h2>
+        <ul>
+            <li>Informer le patient que l&rsquo;examen est termin&eacute;.</li>
+            <li>Remercier le patient pour sa coop&eacute;ration.</li>
+            <li>R&eacute;sumer vos conclusions et proposer des investigations compl&eacute;mentaires si n&eacute;cessaire.</li>
+        </ul>
+
+        <div class="source">
+            Source : <a href="https://clinxpert.glide.page/dl/ClinXpert/s/85159a/r/PzaQruyoRe-SooWsi0j-cg" target="_blank">ClinXpert</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

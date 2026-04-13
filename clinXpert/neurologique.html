@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Neurologique - Guide clinXpert</title>
+<style>
+    :root {
+        --blue: #0056b3;
+        --blue-light: #e8f0fc;
+        --blue-dark: #0d3d72;
+        --gray: #6c757d;
+        --border: #dee2e6;
+        --bg: #f0f2f5;
+        --card-bg: #fff;
+        --text: #212529;
+        --subtext: #495057;
+        --radius: 12px;
+        --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        padding: 20px;
+        padding-top: 80px;
+        line-height: 1.5;
+    }
+    .top-nav {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(20,20,20,0.88);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .top-nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+    .top-nav a:hover { background-color: rgba(255,255,255,0.15); }
+    .top-nav .brand {
+        font-family: 'Papyrus', 'Segoe Script', fantasy;
+        font-size: 0.95em;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+    .container { max-width: 820px; margin: 0 auto; }
+    .page-title {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 2em;
+        color: var(--blue-dark);
+        text-align: center;
+        margin-bottom: 20px;
+        letter-spacing: 1.5px;
+    }
+    .card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius);
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        border: 0;
+    }
+    .guide h2 {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 1.3em;
+        color: var(--blue);
+        margin: 22px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--blue-light);
+        letter-spacing: 1px;
+    }
+    .guide h2:first-child { margin-top: 0; }
+    .guide h3 {
+        font-size: 1em;
+        color: var(--blue-dark);
+        margin: 14px 0 6px;
+        font-weight: 600;
+    }
+    .guide ul {
+        list-style-type: disc;
+        padding-left: 22px;
+        margin-bottom: 8px;
+    }
+    .guide ul ul { list-style-type: circle; margin-top: 4px; }
+    .guide ul ul ul { list-style-type: square; }
+    .guide li {
+        font-size: 0.95em;
+        line-height: 1.55;
+        margin-bottom: 4px;
+        color: var(--text);
+    }
+    .source {
+        margin-top: 22px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border);
+        font-size: 0.82em;
+        color: var(--gray);
+        text-align: center;
+    }
+    .source a { color: var(--blue); text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+    @media (max-width: 500px) {
+        body { padding: 12px; padding-top: 75px; }
+        .card { padding: 16px; }
+        .page-title { font-size: 1.6em; }
+        .guide h2 { font-size: 1.15em; }
+    }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="../index.html">&#8592; Accueil</a>
+    <span class="brand">clinXpert</span>
+</div>
+
+<div class="container">
+    <h1 class="page-title">&#129504; Examen Neurologique</h1>
+
+    <div class="card">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Us4BapUPRJw"
+                    title="Examen Neurologique"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="card guide">
+        <h2>1. Introduction</h2>
+        <ul>
+            <li>Lavez vos mains.</li>
+            <li>Pr&eacute;sentez-vous avec votre nom et r&ocirc;le.</li>
+            <li>Confirmez l&rsquo;identit&eacute; du patient (nom et date de naissance).</li>
+            <li>Expliquez ce que l&rsquo;examen neurologique impliquera en termes simples et rassurants.</li>
+            <li>V&eacute;rifiez si le patient a des douleurs ou des g&ecirc;nes avant de commencer.</li>
+            <li>Obtenez le consentement pour proc&eacute;der.</li>
+            <li>Positionnez le patient selon les &eacute;tapes n&eacute;cessaires (debout, assis ou couch&eacute;).</li>
+        </ul>
+
+        <h2>2. &Eacute;tude de la marche et de l&rsquo;&eacute;quilibre</h2>
+        <ul>
+            <li>Observez la marche normale : sym&eacute;trie, fluidit&eacute;, coordination.</li>
+            <li>&Eacute;valuez la d&eacute;marche en tandem (talon-pointe).</li>
+            <li>Recherchez un signe de Romberg :
+                <ul>
+                    <li>Yeux ouverts puis ferm&eacute;s.</li>
+                    <li>Oscillation + chute = Romberg positif (atteinte proprioceptive).</li>
+                    <li>Oscillation sans chute = Romberg n&eacute;gatif (atteinte c&eacute;r&eacute;belleuse).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>3. &Eacute;tude des fonctions sup&eacute;rieures</h2>
+        <ul>
+            <li>&Eacute;valuez :
+                <ul>
+                    <li>Langage (compr&eacute;hension, expression).</li>
+                    <li>M&eacute;moire (imm&eacute;diate, diff&eacute;r&eacute;e).</li>
+                    <li>Orientation spatio-temporelle.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>4. Examen des nerfs cr&acirc;niens</h2>
+        <ul>
+            <li>NC I (Olfactif) :
+                <ul><li>Caf&eacute;, vanille...</li></ul>
+            </li>
+            <li>NC II (Optique) :
+                <ul><li>Inspectez les pupilles, testez l&rsquo;acuit&eacute; visuelle, champs visuels et r&eacute;flexes pupillaires.</li></ul>
+            </li>
+            <li>NC III, IV, VI (Oculomoteurs) :
+                <ul>
+                    <li>Inspectez les paupi&egrave;res pour un ptosis.</li>
+                    <li>&Eacute;valuez les mouvements oculaires et recherchez un strabisme.</li>
+                </ul>
+            </li>
+            <li>NC V (Trijumeau) :
+                <ul>
+                    <li>Testez la sensibilit&eacute; faciale (front, joue, menton).</li>
+                    <li>Palpez les muscles masticateurs.</li>
+                    <li>Testez le r&eacute;flexe corn&eacute;en.</li>
+                </ul>
+            </li>
+            <li>NC VII (Facial) :
+                <ul>
+                    <li>Observez les asym&eacute;tries faciales.</li>
+                    <li>Testez les expressions faciales (sourire, froncement de sourcils).</li>
+                </ul>
+            </li>
+            <li>NC VIII (Cochl&eacute;o-vestibulaire) :
+                <ul>
+                    <li>&Eacute;valuez l&rsquo;audition.</li>
+                    <li>Testez la fonction vestibulaire : Romberg.</li>
+                </ul>
+            </li>
+            <li>NC IX et X (Glosso-pharyngien et Vague) :
+                <ul><li>Testez la phonation (&laquo;&nbsp;ahh&nbsp;&raquo;), le r&eacute;flexe naus&eacute;eux et la d&eacute;glutition.</li></ul>
+            </li>
+            <li>NC XI (Accessoire) :
+                <ul><li>&Eacute;valuez la force du trap&egrave;ze et du SCM.</li></ul>
+            </li>
+            <li>NC XII (Hypoglosse) :
+                <ul><li>Observez la langue pour atrophie, fasciculations et d&eacute;viation.</li></ul>
+            </li>
+        </ul>
+
+        <h2>5. Examen moteur</h2>
+        <h3>Inspection</h3>
+        <ul>
+            <li>Recherchez une amyotrophie, des mouvements anormaux (tremblements, fasciculations).</li>
+        </ul>
+        <h3>Tonus</h3>
+        <ul>
+            <li>&Eacute;valuez le tonus musculaire (hypertonie spastique ou plastique).</li>
+            <li>Recherchez un clonus &agrave; la cheville, roue dent&eacute;e.</li>
+        </ul>
+        <h3>Force musculaire</h3>
+        <ul>
+            <li>Testez globalement :
+                <ul>
+                    <li>&Eacute;preuve de Barr&eacute; (MS).</li>
+                    <li>&Eacute;preuve de Mingazzini (MI).</li>
+                </ul>
+            </li>
+            <li>Testez par segment selon l&rsquo;&eacute;chelle MRC (0 &agrave; 5) pour :
+                <ul>
+                    <li>&Eacute;paules, coudes, poignets, doigts (MS).</li>
+                    <li>Hanches, genoux, chevilles, orteils (MI).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>6. Examen sensitif</h2>
+        <ul>
+            <li>Testez :
+                <ul>
+                    <li>Sensibilit&eacute; tactile fine (coton).</li>
+                    <li>Sensibilit&eacute; douloureuse (piq&ucirc;re d&rsquo;&eacute;pingle).</li>
+                    <li>Sensibilit&eacute; vibratoire (diapason).</li>
+                    <li>Sensibilit&eacute; proprioceptive (mouvement passif d&rsquo;un doigt ou d&rsquo;un orteil).</li>
+                </ul>
+            </li>
+            <li>&Eacute;valuez la sensibilit&eacute; dermatome par dermatome.</li>
+        </ul>
+
+        <h2>7. &Eacute;tude de la coordination</h2>
+        <ul>
+            <li>Testez :
+                <ul>
+                    <li>&Eacute;preuve doigt-nez : dysm&eacute;trie, hyperm&eacute;trie, dyschronom&eacute;trie.</li>
+                    <li>&Eacute;preuve talon-genou : incoordination au MI.</li>
+                    <li>Dysdiadochocin&eacute;sie (mouvements altern&eacute;s rapides).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>8. &Eacute;tude des r&eacute;flexes</h2>
+        <h3>R&eacute;flexes ost&eacute;o-tendineux</h3>
+        <ul>
+            <li>Bicipital, tricipital, stylo-radial (MS).</li>
+            <li>Rotulien, achill&eacute;en (MI).</li>
+        </ul>
+        <h3>R&eacute;flexes cutan&eacute;s</h3>
+        <ul>
+            <li>R&eacute;flexe cutan&eacute; plantaire : flexion ou signe de Babinski (extension pathologique).</li>
+        </ul>
+
+        <h2>9. Recherche des signes m&eacute;ning&eacute;s</h2>
+        <ul>
+            <li>Raideur de nuque : incapacit&eacute; de fl&eacute;chir le cou.</li>
+            <li>Signe de Kernig : douleur en extension du genou en position de flexion de la hanche.</li>
+            <li>Signe de Brudzinski : flexion des genoux lors de la flexion de la nuque.</li>
+        </ul>
+
+        <h2>10. Conclusion</h2>
+        <ul>
+            <li>Expliquez au patient que l&rsquo;examen est termin&eacute;.</li>
+            <li>Remerciez le patient pour sa coop&eacute;ration.</li>
+            <li>Lavez vos mains et &eacute;liminez les EPI.</li>
+            <li>R&eacute;sumez vos observations et proposez des investigations compl&eacute;mentaires (imagerie, examens &eacute;lectrophysiologiques, etc.).</li>
+        </ul>
+
+        <div class="source">
+            Source : <a href="https://clinxpert.glide.page/dl/ClinXpert/s/85159a/r/67OruJs.T7Cqf64oEvJZMg" target="_blank">ClinXpert</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Pleuro-pulmonaire - Guide clinXpert</title>
+<style>
+    :root {
+        --blue: #0056b3;
+        --blue-light: #e8f0fc;
+        --blue-dark: #0d3d72;
+        --gray: #6c757d;
+        --border: #dee2e6;
+        --bg: #f0f2f5;
+        --card-bg: #fff;
+        --text: #212529;
+        --subtext: #495057;
+        --radius: 12px;
+        --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        padding: 20px;
+        padding-top: 80px;
+        line-height: 1.5;
+    }
+    .top-nav {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(20,20,20,0.88);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .top-nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+    .top-nav a:hover { background-color: rgba(255,255,255,0.15); }
+    .top-nav .brand {
+        font-family: 'Papyrus', 'Segoe Script', fantasy;
+        font-size: 0.95em;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+    .container { max-width: 820px; margin: 0 auto; }
+    .page-title {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 2em;
+        color: var(--blue-dark);
+        text-align: center;
+        margin-bottom: 20px;
+        letter-spacing: 1.5px;
+    }
+    .card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius);
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        border: 0;
+    }
+    .guide h2 {
+        font-family: 'Papyrus', 'Segoe Script', 'Comic Sans MS', fantasy;
+        font-size: 1.3em;
+        color: var(--blue);
+        margin: 22px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--blue-light);
+        letter-spacing: 1px;
+    }
+    .guide h2:first-child { margin-top: 0; }
+    .guide h3 {
+        font-size: 1em;
+        color: var(--blue-dark);
+        margin: 14px 0 6px;
+        font-weight: 600;
+    }
+    .guide ul {
+        list-style-type: disc;
+        padding-left: 22px;
+        margin-bottom: 8px;
+    }
+    .guide ul ul { list-style-type: circle; margin-top: 4px; }
+    .guide ul ul ul { list-style-type: square; }
+    .guide li {
+        font-size: 0.95em;
+        line-height: 1.55;
+        margin-bottom: 4px;
+        color: var(--text);
+    }
+    .source {
+        margin-top: 22px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border);
+        font-size: 0.82em;
+        color: var(--gray);
+        text-align: center;
+    }
+    .source a { color: var(--blue); text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+    @media (max-width: 500px) {
+        body { padding: 12px; padding-top: 75px; }
+        .card { padding: 16px; }
+        .page-title { font-size: 1.6em; }
+        .guide h2 { font-size: 1.15em; }
+    }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="../index.html">&#8592; Accueil</a>
+    <span class="brand">clinXpert</span>
+</div>
+
+<div class="container">
+    <h1 class="page-title">&#127787; Examen Pleuro-pulmonaire</h1>
+
+    <div class="card">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/mAjc1TGxgtE"
+                    title="Examen Pleuropulmonaire"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="card guide">
+        <h2>1. Introduction</h2>
+        <ul>
+            <li>Lavez vos mains.</li>
+            <li>Pr&eacute;sentez-vous avec votre nom et r&ocirc;le.</li>
+            <li>Confirmez l&rsquo;identit&eacute; du patient (nom et date de naissance).</li>
+            <li>Expliquez l&rsquo;examen avec des termes simples et rassurants.</li>
+            <li>Obtenez le consentement pour proc&eacute;der.</li>
+            <li>Demandez si le patient ressent une douleur ou une g&ecirc;ne respiratoire avant de continuer.</li>
+        </ul>
+
+        <h2>2. Inspection</h2>
+        <ul>
+            <li>Recherchez des signes de gravit&eacute; :
+                <ul>
+                    <li>Cyanose.</li>
+                    <li>D&eacute;tresse respiratoire.</li>
+                    <li>Fr&eacute;quence respiratoire (tachypn&eacute;e ou bradypn&eacute;e).</li>
+                </ul>
+            </li>
+            <li>Observez les mains :
+                <ul>
+                    <li>Taches de goudron.</li>
+                    <li>Hippocratisme digital.</li>
+                </ul>
+            </li>
+            <li>V&eacute;rifiez :
+                <ul>
+                    <li>Turgescence des veines jugulaires (TVJ).</li>
+                    <li>Distension thoracique.</li>
+                    <li>Circulation veineuse collat&eacute;rale thoracique.</li>
+                    <li>Sym&eacute;trie thoracique ou non.</li>
+                    <li>Pr&eacute;sence de cicatrices chirurgicales thoraciques.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>3. Palpation</h2>
+        <ul>
+            <li>Vibrations vocales (bien transmises ou diminu&eacute;es).</li>
+            <li>Expansion thoracique (sym&eacute;trique ou r&eacute;duite).</li>
+        </ul>
+
+        <h2>4. Percussion</h2>
+        <ul>
+            <li>Notez la sonorit&eacute; thoracique :
+                <ul>
+                    <li>Normale (sonore).</li>
+                    <li>Matit&eacute; (&eacute;panchement pleural).</li>
+                    <li>Tympanisme (pneumothorax).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>5. Auscultation</h2>
+        <ul>
+            <li>&Eacute;valuez le murmure v&eacute;siculaire :
+                <ul>
+                    <li>Pr&eacute;sent, diminu&eacute; ou absent.</li>
+                </ul>
+            </li>
+            <li>Recherchez des r&acirc;les :
+                <ul>
+                    <li>Sibilants (obstruction bronchique : asthme ou BPCO).</li>
+                    <li>Cr&eacute;pitants (&oelig;d&egrave;me pulmonaire, pneumonie, fibrose).</li>
+                    <li>Ronflants (s&eacute;cr&eacute;tions bronchiques).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>6. Finalisation</h2>
+        <ul>
+            <li>V&eacute;rifiez la pr&eacute;sence de :
+                <ul>
+                    <li>&OElig;d&egrave;me sacr&eacute; et des membres inf&eacute;rieurs.</li>
+                    <li>Ballotement du mollet (TVP).</li>
+                    <li>Signe de Homans (TVP).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>7. Conclusion</h2>
+        <ul>
+            <li>Expliquez au patient que l&rsquo;examen est termin&eacute;.</li>
+            <li>Remerciez le patient.</li>
+            <li>Lavez vos mains et &eacute;liminez l&rsquo;EPI.</li>
+            <li>R&eacute;sumez vos observations et proposez les examens compl&eacute;mentaires n&eacute;cessaires.</li>
+        </ul>
+
+        <div class="source">
+            Source : <a href="https://clinxpert.glide.page/dl/ClinXpert/s/85159a/r/hZs71-PyQcygkBtJWaPWwA" target="_blank">ClinXpert</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
