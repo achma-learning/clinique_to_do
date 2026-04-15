@@ -1,4 +1,5 @@
-# clinique_to_do
+# (clinique_to_do)[https://achma-learning.github.io/clinique_to_do/]
+
 here is a website for (interrogatoire et examen clinique) = observation medical , check list for minimum qu'un medecin ne doit pas rater
 ### index.html = hub
   button 1 : simplechecklist for mobile use
