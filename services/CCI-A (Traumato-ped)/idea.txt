@@ -1,0 +1,19 @@
+same observation as home with some notes :
+generale plan
+  1. Identité
+  2. Motif de consulation
+  3. ATCDs
+  4. Histoire de la Maladie
+  5. Examen clinique
+  6. exman para-clinique
+    bilan demander et conclusion
+  7. conclusion clinico-paraclinique
+  8. CAT
+    A. medical
+      i. but
+      ii. moyens
+    B. chirurgicale
+      i. indication chirurgicale, les elements qui nous pousse a indique la prise en charge chirugicale
+      ii. but
+      iii. moyens
+    C. Kinesitherapie
