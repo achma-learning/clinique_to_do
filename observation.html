@@ -3,7 +3,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Observation médicale complète pour médecine générale — anamnèse, examen clinique, paraclinique, conclusion, CAT. Brouillon sauvegardé automatiquement sur l'appareil.">
+<meta name="theme-color" content="#1a5fa8">
 <title>📋 Observation Médicale</title>
 <style>
   :root {
@@ -317,6 +319,38 @@
   .bio-table .value-input.normal { background-color: #e6ffe6; border-color: var(--green); } /* Light Green */
   .bio-table .value-input.low { background-color: #fff3e6; border-color: var(--orange); }   /* Light Orange */
   .bio-table .value-input.high { background-color: #ffe6e6; border-color: var(--red); }    /* Light Red */
+
+  /* ─── Autosave indicator ───────────────────────────────────────────────── */
+  .save-status { font-size: 0.72em; color: #7ecfff; font-weight: 600; margin-top: 2px; min-height: 1em; opacity: 0; transition: opacity 0.25s; }
+  .save-status.show { opacity: 1; }
+
+  /* ─── Desktop layout: sticky section navigator ─────────────────────────── */
+  .obs-layout { width: 100%; }
+  .side-nav { display: none; }
+  .side-nav-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray); padding: 4px 12px 8px; }
+  .side-nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; cursor: pointer; color: var(--subtext); font-size: 0.84rem; line-height: 1.25; transition: background 0.15s, color 0.15s; border-left: 3px solid transparent; }
+  .side-nav-item:hover { background: var(--blue-light); color: var(--blue-dark); }
+  .side-nav-item.active { background: var(--blue-light); color: var(--blue-dark); border-left-color: var(--blue); font-weight: 600; }
+  .side-nav-num { width: 24px; height: 24px; border-radius: 50%; background: #e3ecf7; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; transition: background 0.15s, color 0.15s; }
+  .side-nav-item.done .side-nav-num { background: var(--green); color: #fff; }
+  .side-nav-item.active .side-nav-num { background: var(--blue); color: #fff; }
+  .side-nav-label { flex: 1; }
+  .side-nav-count { font-size: 0.68rem; color: var(--gray); font-weight: 600; white-space: nowrap; }
+
+  @media (min-width: 1000px) {
+    .obs-layout { display: grid; grid-template-columns: 248px minmax(0, 980px); justify-content: center; align-items: start; gap: 26px; }
+    .container { max-width: none; margin: 0; padding: 0 4px; }
+    .side-nav { display: block; position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 180px); overflow-y: auto; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 10px 6px; }
+    /* Compact the long checkbox / tri-state lists into two columns to use the width */
+    .check-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; row-gap: 2px; align-items: start; }
+    .check-list > *:not(.check-item) { grid-column: 1 / -1; }
+    .tri-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; row-gap: 2px; align-items: start; }
+    .sticky-bar { justify-content: center; }
+    .sticky-bar .btn { flex: 0 1 230px; }
+  }
+  @media (min-width: 1400px) {
+    .obs-layout { grid-template-columns: 268px minmax(0, 1100px); gap: 32px; }
+  }
 </style>
 </head>
 <body>
@@ -330,6 +364,7 @@
     <div class="island-center">
         <h1>📋 Observation Médicale</h1>
         <p>Médecine Générale · Saisie · Checklist · Export</p>
+        <div class="save-status" id="saveStatus"></div>
     </div>
     <a href="index.html" class="home-button">🏠</a>
     <div class="logo-dropdown">
@@ -362,6 +397,8 @@
 
 <div id="toast"></div>
 
+<div class="obs-layout">
+<aside class="side-nav" id="sideNav" aria-label="Navigation des sections"></aside>
 <div class="container">
   <div class="top-actions">
     <button class="top-btn" onclick="expandAll()">⬇ Tout ouvrir</button>
@@ -2351,6 +2388,7 @@
   </div>
 
 </div><!-- /container -->
+</div><!-- /obs-layout -->
 
 <div class="sticky-bar">
   <button class="btn btn-danger" onclick="resetAll()">🗑 Réinit.</button>
@@ -2715,6 +2753,7 @@ function updateProgress() {
   const pct = total ? Math.min(100, Math.round((filled/total)*100)) : 0;
   document.getElementById('progressBar').style.width = pct+'%';
   [1,2,3,4,5,6,7].forEach(n => updateBadge(n));
+  updateSideNav();
 }
 function updateBadge(n) {
   const badge = document.getElementById('badge-'+n);
@@ -2858,6 +2897,13 @@ function checkBioValue(event) {
 function renderBiologicalTables() {
   try {
     const sex = getSex();
+    // Preserve any values/checks already entered so re-rendering (on sex change
+    // or unit toggle) never wipes the clinician's data — fixes the previous bug
+    // where switching SI↔Usuelles or sex cleared the whole biology table.
+    const _bioPrev = {};
+    document.querySelectorAll('.bio-table [name]').forEach(el => {
+      _bioPrev[el.name] = (el.type === 'checkbox') ? el.checked : el.value;
+    });
     for (const cat in biologicalValues) {
       const tbody = document.querySelector(`#bio_${cat} tbody`);
       if (!tbody) {
@@ -2890,6 +2936,16 @@ function renderBiologicalTables() {
         }
       });
     }
+    // Re-apply preserved values + re-colour according to the active unit system.
+    Object.keys(_bioPrev).forEach(name => {
+      const el = document.querySelector(`.bio-table [name="${name}"]`);
+      if (!el) return;
+      if (el.type === 'checkbox') { el.checked = _bioPrev[name]; }
+      else if (_bioPrev[name] !== '') {
+        el.value = _bioPrev[name];
+        if (el.classList.contains('value-input')) checkBioValue({ target: el });
+      }
+    });
   } catch (err) {
     console.error("Critical error in renderBiologicalTables:", err);
   }
@@ -2923,7 +2979,14 @@ function resetAll() {
   document.getElementById('diagTableBody').innerHTML='';
   diagRowCount=0;
   addDiagRow(); addDiagRow(); addDiagRow();
+  // Also clear the auto-saved local draft, and briefly suppress autosave so the
+  // reset interactions (trailing clicks / updateProgress) don't re-persist an
+  // empty draft.
+  obsClearSaved();
   updateProgress();
+  _obsSuspendSave = true;
+  clearTimeout(_obsSaveTimer);
+  setTimeout(() => { _obsSuspendSave = false; }, 1000);
   showToast('✅ Observation réinitialisée');
 }
 
@@ -3408,9 +3471,280 @@ function getMedRows() {
   return rows;
 }
 
+// ─── Sticky section navigator (desktop) ───────────────────────────────────
+function makeNavItem(target, num, label) {
+  const it = document.createElement('div');
+  it.className = 'side-nav-item';
+  it.dataset.target = target.id;
+  it.innerHTML = '<span class="side-nav-num"></span><span class="side-nav-label"></span><span class="side-nav-count"></span>';
+  it.querySelector('.side-nav-num').textContent = num;
+  it.querySelector('.side-nav-label').textContent = label;
+  it.addEventListener('click', () => {
+    const body = target.querySelector('.section-body');
+    if (body && !body.classList.contains('open')) {
+      const h = body.previousElementSibling;
+      if (h && h.classList.contains('section-header')) toggleSection(h);
+    }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  return it;
+}
+function buildSideNav() {
+  const nav = document.getElementById('sideNav');
+  if (!nav) return;
+  nav.innerHTML = '';
+  const title = document.createElement('div');
+  title.className = 'side-nav-title';
+  title.textContent = 'Sections';
+  nav.appendChild(title);
+  const clin = document.querySelector('.clinician-card');
+  if (clin) { if (!clin.id) clin.id = 'obs-clinician'; nav.appendChild(makeNavItem(clin, '★', 'Clinicien')); }
+  document.querySelectorAll('.section-card').forEach((card, i) => {
+    if (!card.id) card.id = 'obs-sec-' + (i + 1);
+    const numEl = card.querySelector('.section-num');
+    const num = (numEl ? numEl.textContent : (i + 1)).toString().trim();
+    const titleEl = card.querySelector('.section-title');
+    let label = 'Section ' + (i + 1);
+    if (titleEl) {
+      const firstNode = titleEl.childNodes[0];
+      label = (firstNode && firstNode.textContent.trim()) || titleEl.textContent.trim();
+    }
+    nav.appendChild(makeNavItem(card, num, label));
+  });
+}
+function updateSideNav() {
+  const items = document.querySelectorAll('.side-nav-item');
+  if (!items.length) return;
+  items.forEach(it => {
+    const card = document.getElementById(it.dataset.target);
+    if (!card) return;
+    const scope = card.querySelector('.section-body') || card;
+    const checked = scope.querySelectorAll('input[type="checkbox"]:checked').length;
+    const filled = Array.from(scope.querySelectorAll('input[type="text"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],textarea,select'))
+      .filter(el => el.value && el.value.trim() && !el.readOnly).length;
+    const cnt = it.querySelector('.side-nav-count');
+    if (checked > 0 || filled > 0) {
+      it.classList.add('done');
+      if (cnt) cnt.textContent = [checked ? '✓' + checked : '', filled ? filled + 'ch' : ''].filter(Boolean).join(' ');
+    } else {
+      it.classList.remove('done');
+      if (cnt) cnt.textContent = '';
+    }
+  });
+}
+let _navObserver = null;
+function setupSideNavObserver() {
+  const items = document.querySelectorAll('.side-nav-item');
+  if (!items.length || !('IntersectionObserver' in window)) return;
+  const map = {};
+  items.forEach(it => { map[it.dataset.target] = it; });
+  _navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const it = map[e.target.id];
+        if (it) { items.forEach(i => i.classList.remove('active')); it.classList.add('active'); }
+      }
+    });
+  }, { rootMargin: '-90px 0px -65% 0px', threshold: 0 });
+  document.querySelectorAll('.clinician-card, .section-card').forEach(c => { if (c.id) _navObserver.observe(c); });
+}
+
+// ─── Autosave / restore of the local draft ────────────────────────────────
+// The whole observation is kept in localStorage on this device so nothing is
+// lost on refresh, accidental navigation, tab close or crash. No data leaves
+// the browser.
+const OBS_STORAGE_KEY = 'observation_state_v1';
+let _obsSaveTimer = null, _obsRestoring = false, _obsSuspendSave = false, _obsFlashTimer = null;
+function cssEsc(s) { return String(s).replace(/["\\]/g, '\\$&'); }
+
+function collectMedRowsRaw() {
+  const rows = [];
+  document.querySelectorAll('#med_table_body tr').forEach(tr => {
+    const inp = tr.querySelectorAll('input');
+    if (inp.length >= 5) rows.push([inp[0].value, inp[1].value, inp[2].value, inp[3].value, inp[4].value]);
+  });
+  return rows;
+}
+function obsCollectState() {
+  const values = {}, checks = {};
+  document.querySelectorAll('[name]').forEach(el => {
+    const type = el.type;
+    if (el.tagName === 'INPUT' && type === 'checkbox') {
+      // Checkbox names are unique; key by name only (many have no value attribute)
+      checks['c|' + el.name] = el.checked;
+    } else if (el.tagName === 'INPUT' && type === 'radio') {
+      // Radios share a name → disambiguate by value (their value attribute exists)
+      checks['r|' + el.name + '|' + (el.value || '')] = el.checked;
+    } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+      values[el.name] = el.value;
+    }
+  });
+  const dyn = { diag: '', custom: '', treatments: {} };
+  const diag = document.getElementById('diagTableBody'); if (diag) dyn.diag = diag.innerHTML;
+  const custom = document.getElementById('custom_pathologies_container'); if (custom) dyn.custom = custom.innerHTML;
+  document.querySelectorAll('[id$="_treatments_container"]').forEach(c => { dyn.treatments[c.id] = c.innerHTML; });
+  const open = Array.from(document.querySelectorAll('.section-body')).map(b => b.classList.contains('open'));
+  return { v: values, c: checks, dyn, med: collectMedRowsRaw(), open, unit: currentUnitSystem, ts: Date.now() };
+}
+function obsStateHasContent(st) {
+  if (st.v) for (const k in st.v) { if (st.v[k] && String(st.v[k]).trim()) return true; }
+  // Ignore the default-checked unit toggle so a pristine form counts as empty
+  if (st.c) for (const k in st.c) { if (st.c[k] && k !== 'r|unit_system|SI' && k !== 'r|unit_system|USUAL') return true; }
+  if (st.med && st.med.some(r => r.some(x => x && x.trim()))) return true;
+  return false;
+}
+function obsSaveNow() {
+  if (_obsRestoring || _obsSuspendSave) return;
+  try {
+    const st = obsCollectState();
+    if (!obsStateHasContent(st)) { obsClearSaved(); return; } // never persist an empty draft
+    localStorage.setItem(OBS_STORAGE_KEY, JSON.stringify(st));
+    obsFlashSaved();
+  } catch (e) {}
+}
+function obsScheduleSave() {
+  if (_obsRestoring || _obsSuspendSave) return;
+  clearTimeout(_obsSaveTimer);
+  _obsSaveTimer = setTimeout(obsSaveNow, 700);
+}
+function obsClearSaved() {
+  try { localStorage.removeItem(OBS_STORAGE_KEY); } catch (e) {}
+  const ss = document.getElementById('saveStatus'); if (ss) ss.classList.remove('show');
+}
+function obsFlashSaved() {
+  const el = document.getElementById('saveStatus'); if (!el) return;
+  const t = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  el.textContent = '💾 Enregistré · ' + t;
+  el.classList.add('show');
+  clearTimeout(_obsFlashTimer);
+  _obsFlashTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+function obsRestoreCounters() {
+  let maxDiag = 0;
+  document.querySelectorAll('#diagTableBody [name^="diag_hyp_"]').forEach(el => {
+    const n = parseInt(el.name.replace('diag_hyp_', '')); if (!isNaN(n) && n > maxDiag) maxDiag = n;
+  });
+  diagRowCount = maxDiag;
+  if (typeof renumberDiagRows === 'function') renumberDiagRows();
+  document.querySelectorAll('[id$="_treatments_container"]').forEach(c => {
+    const patho = c.id.replace('_treatments_container', '');
+    let mx = 0;
+    c.querySelectorAll('.treatment-item').forEach(it => { const di = parseInt(it.getAttribute('data-index')); if (!isNaN(di) && di > mx) mx = di; });
+    treatmentCounters[patho] = mx + 1;
+  });
+  let maxC = -1;
+  document.querySelectorAll('#custom_pathologies_container [id^="custom_patho_"]').forEach(el => {
+    const m = el.id.match(/^custom_patho_(\d+)$/); if (m) { const n = parseInt(m[1]); if (n > maxC) maxC = n; }
+  });
+  customPathologyCount = maxC + 1;
+}
+function obsRefreshConditionalUI() {
+  // ATCD detail panels (including custom pathologies)
+  document.querySelectorAll('[id^="atcd_details_"]').forEach(panel => {
+    const key = panel.id.replace('atcd_details_', '');
+    const cb = document.querySelector('[name="atcd_' + cssEsc(key) + '"]');
+    panel.style.display = (cb && cb.checked) ? 'block' : 'none';
+  });
+  // Familial / contextual detail panels (detail_*)
+  document.querySelectorAll('[id^="detail_"]').forEach(panel => {
+    const key = panel.id.replace('detail_', '');
+    const trig = document.querySelector('[name="atcd_' + cssEsc(key) + '"]') || document.querySelector('[name="' + cssEsc(key) + '"]');
+    panel.style.display = (trig && trig.checked) ? 'block' : 'none';
+  });
+  if (typeof toggleTdmDetails === 'function') toggleTdmDetails();
+  if (typeof toggleIrmDetails === 'function') toggleIrmDetails();
+  if (typeof toggleGangPanel === 'function') toggleGangPanel();
+  if (typeof showEcog === 'function') showEcog();
+  if (typeof calcIMC === 'function') calcIMC();
+  // Tri-state items: derive the visual state from the checked radio
+  document.querySelectorAll('.tri-item').forEach(item => {
+    const r = item.querySelector('input[type="radio"]:checked');
+    if (r) {
+      item.dataset.triValue = r.value;
+      item.classList.add('has-selection');
+      if (typeof _triEnsureResetBtn === 'function') _triEnsureResetBtn(item);
+      if (typeof _triUpdateItem === 'function') _triUpdateItem(item, r.value);
+    } else {
+      item.classList.remove('has-selection');
+      delete item.dataset.triValue;
+      const d = item.querySelector('.tri-detail'); if (d) d.style.display = 'none';
+    }
+  });
+}
+function obsRestoreState() {
+  let raw; try { raw = localStorage.getItem(OBS_STORAGE_KEY); } catch (e) { return false; }
+  if (!raw) return false;
+  let s; try { s = JSON.parse(raw); } catch (e) { return false; }
+  _obsRestoring = true;
+  try {
+    // Apply sex first so biology reference ranges render with the right column
+    if (s.v && s.v['sexe'] !== undefined) { const sx = document.querySelector('[name="sexe"]'); if (sx) sx.value = s.v['sexe']; }
+    currentUnitSystem = (s.unit === 'USUAL') ? 'USUAL' : 'SI';
+    renderBiologicalTables();
+    // Rebuild dynamic structures (extra treatment rows, custom pathologies, diag rows)
+    if (s.dyn) {
+      if (typeof s.dyn.diag === 'string') { const t = document.getElementById('diagTableBody'); if (t) t.innerHTML = s.dyn.diag; }
+      if (typeof s.dyn.custom === 'string') { const c = document.getElementById('custom_pathologies_container'); if (c) c.innerHTML = s.dyn.custom; }
+      if (s.dyn.treatments) Object.keys(s.dyn.treatments).forEach(id => { const c = document.getElementById(id); if (c) c.innerHTML = s.dyn.treatments[id]; });
+    }
+    // Rebuild the medication table (its inputs have no name attribute)
+    if (Array.isArray(s.med)) {
+      const body = document.getElementById('med_table_body');
+      if (body) { body.innerHTML = ''; s.med.forEach(r => addMedRow(r[0], r[1], r[2], r[3], r[4])); }
+    }
+    // Apply text / select / textarea values
+    if (s.v) Object.keys(s.v).forEach(name => {
+      const el = document.querySelector('[name="' + cssEsc(name) + '"]');
+      if (el && el.type !== 'checkbox' && el.type !== 'radio') el.value = s.v[name];
+    });
+    // Apply checkbox / radio states
+    if (s.c) Object.keys(s.c).forEach(key => {
+      const parts = key.split('|');
+      if (parts[0] === 'c') {
+        document.querySelectorAll('input[type="checkbox"][name="' + cssEsc(parts[1]) + '"]').forEach(el => { el.checked = s.c[key]; });
+      } else if (parts[0] === 'r') {
+        const name = parts[1], val = parts.slice(2).join('|');
+        const el = val
+          ? document.querySelector('input[type="radio"][name="' + cssEsc(name) + '"][value="' + cssEsc(val) + '"]')
+          : document.querySelector('input[type="radio"][name="' + cssEsc(name) + '"]');
+        if (el) el.checked = s.c[key];
+      }
+    });
+    obsRestoreCounters();
+    obsRefreshConditionalUI();
+    document.querySelectorAll('.bio-table .value-input').forEach(input => checkBioValue({ target: input }));
+    // Restore which sections were open
+    if (Array.isArray(s.open)) {
+      const bodies = document.querySelectorAll('.section-body');
+      s.open.forEach((op, idx) => {
+        const b = bodies[idx]; if (!b) return;
+        b.classList.toggle('open', !!op);
+        const ic = b.previousElementSibling && b.previousElementSibling.querySelector('.toggle-icon');
+        if (ic) { ic.textContent = op ? '−' : '+'; ic.classList.toggle('open', !!op); }
+      });
+    }
+  } catch (e) { console.error('Restore error:', e); }
+  _obsRestoring = false;
+  updateProgress();
+  return true;
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   renderBiologicalTables();
+  buildSideNav();
+  const restored = obsRestoreState();
   updateProgress();
+  setupSideNavObserver();
+  // Autosave: debounced on edits / structural clicks, flushed when the tab is
+  // hidden (phone locked / app switched) or about to close.
+  document.addEventListener('input', obsScheduleSave, true);
+  document.addEventListener('change', obsScheduleSave, true);
+  document.addEventListener('click', e => { if (e.target.closest('button, .section-header, .side-nav-item')) obsScheduleSave(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') obsSaveNow(); });
+  window.addEventListener('pagehide', obsSaveNow);
+  window.addEventListener('beforeunload', obsSaveNow);
+  if (restored) showToast('✓ Brouillon restauré');
 });
 // Close logo dropdown on click outside
 document.addEventListener('click', function(e) {
