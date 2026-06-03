@@ -21,6 +21,20 @@ _Changes on `claude/add-context-documentation-aBKjZ`, not yet merged to `main`._
 
 ---
 
+## 2026-06-03 — autosave everywhere + desktop layout + mobile persistence
+_Branch `claude/sweet-bardeen-11lFI`._
+
+### Added
+- **`observation.html` local autosave/restore.** The whole observation (all 450+ fields, tri-state exams, biology values, dynamically-added treatment rows, custom pathologies, extra diagnostic rows, medication table, and which sections were open) is now kept in `localStorage` (`observation_state_v1`) and restored on load — nothing is lost on refresh, accidental navigation, tab close or crash. Saves are debounced on edit and flushed on `visibilitychange`/`pagehide`/`beforeunload`. A "💾 Enregistré · HH:MM" indicator shows in the header; empty drafts are never persisted; `Réinit.` clears the draft.
+- **`observation.html` desktop layout.** A sticky left section-navigator (jump-to-section + per-section progress + active-section highlight via `IntersectionObserver`), a wider centred grid (≥1000px), and 2-column compaction of the long checkbox/tri-state lists to use the screen width. Mobile is unchanged (single column, navigator hidden).
+- **`simplechecklist.html` resilient persistence.** State is now flushed the moment the page is hidden (phone locked / app switched) via `visibilitychange`/`pagehide`/`beforeunload`, so data survives the OS killing the tab. Open/closed sections are remembered, a save indicator + "Données restaurées" toast were added, plus an expand/collapse-all button. PWA/app meta tags (`theme-color`, `apple-mobile-web-app-*`) and iOS safe-area (notch) handling added.
+
+### Fixed
+- **Biology table wiped its own data.** Switching SI↔Usuelles units *or* changing the patient's sex called `renderBiologicalTables()`, which rebuilt the table with empty inputs — silently erasing every lab value the clinician had typed. `renderBiologicalTables()` now snapshots and re-applies existing values/checks (and re-colours) across a rebuild.
+- Removed `maximum-scale=1.0` from both files' viewport (was blocking pinch-zoom — an accessibility anti-pattern).
+
+---
+
 ## 2026-04-15 — hub rewrite v2 + Traumato-ped stub
 
 ### Added
