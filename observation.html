@@ -3455,7 +3455,7 @@ function addMedRow(substance,specialite,dosage,forme,posologie) {
 function searchAMMPS() {
   const query = document.getElementById('ammps_search_input').value.trim();
   if(!query) return;
-  const url = `https://ammps.sante.gov.ma/basesdedonnes/listes-medicaments?search=${encodeURIComponent(query)}`;
+  const url = `https://ammps.gov.ma/recherche-medicaments?search=${encodeURIComponent(query)}`;
   window.open(url, '_blank');
   document.getElementById('ammps_results').innerHTML = `<span style="color:var(--green);">Recherche ouverte pour «${query}» sur AMMPS. Recopiez les informations dans le tableau ci-dessus.</span>`;
 }
